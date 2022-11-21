@@ -1,0 +1,37 @@
+.self-ui-switch {
+  display: inline-flex;
+  vertical-align: top;
+  &-input {
+    height: 0;
+    width: 0;
+    display: none;
+  }
+  &-label {
+    position: relative;
+    width: 51px;
+    height: 31px;
+    background-color: rgba(120, 120, 128, 0.16);;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  &-button {
+    position: absolute;
+    height: calc(100% - 4px);
+    width: 50%;
+    top: 50%;
+    left: 2px;
+    border-radius: 46px;
+    transform: translateY(-50%);
+    background-color: #fff;
+    transition: all 0.2s;
+    box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
+  }
+  &-label &-input:checked+&-button {
+    left: calc(100% - 2px);
+    transform: translateX(-100%) translateY(-50%);
+  }
+  &-label:active &-button {
+    width: 66%;
+  }
+}

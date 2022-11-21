@@ -1,0 +1,32 @@
+.tui-chat-header {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  &-left {
+    display: flex;
+    align-items: center;
+    .header-content {
+      padding: 0 8px;
+    }
+
+  }
+  &-right {
+    .header-handle {
+      &-more {
+       padding: 10px 3px;
+      }
+    }
+  }
+  .title {
+    font-family: PingFangSC-Medium;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+  }
+  .system {
+    height: 32px;
+  }
+}

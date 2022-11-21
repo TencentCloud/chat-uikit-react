@@ -1,0 +1,20 @@
+.conversation-search-result.no-result {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &-icon {
+    margin: 100px auto 50px;
+  }
+  &-message {
+    color: #999999;
+    font-weight: 400;
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    line-height: 22px;
+  }
+}
+.conversation-search-input {
+  height: 36px;
+  width: 100%;
+}

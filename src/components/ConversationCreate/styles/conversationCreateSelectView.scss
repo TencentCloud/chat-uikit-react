@@ -1,0 +1,33 @@
+.conversation-create-select-view {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  .select-view-info{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: calc((100% - 10px) / 5);
+    padding: 6px;
+    box-sizing: border-box;
+    position: relative;
+    .select-view-info-close {
+      position: absolute;
+      right: 15px;
+      top: 6px;
+      z-index: 2;
+    }
+    .select-view-info-nick {
+      font-family: PingFangSC-Medium;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 17px;
+      font-style: normal;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}

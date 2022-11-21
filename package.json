@@ -1,0 +1,70 @@
+{
+  "name": "@tencentcloud/chat-uikit-react",
+  "version": "0.0.1",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "chat",
+    "im",
+    "messaging",
+    "conversation",
+    "typescript"
+  ],
+  "scripts": {
+    "build": "yarn clean && yarn run rollup -c",
+    "start": "yarn run rollup -c -w",
+    "clean": "rimraf ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TencentCloud/chat-uikit-react.git"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.19.1",
+    "@babel/preset-env": "^7.19.1",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-node-resolve": "^14.1.0",
+    "@rollup/plugin-typescript": "^8.5.0",
+    "@rollup/plugin-url": "^7.0.0",
+    "@types/react": "^18.0.20",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
+    "autoprefixer": "^10.4.11",
+    "eslint": "^8.23.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-import-resolver-typescript": "^3.5.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.31.8",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "postcss": "^8.4.16",
+    "react": "^18.2.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.79.0",
+    "rollup-plugin-dts": "^4.2.2",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-terser": "^7.0.2",
+    "sass": "^1.54.9",
+    "tslib": "^2.4.1",
+    "typescript": "^4.8.3"
+  },
+  "dependencies": {
+    "date-fns": "^2.29.3",
+    "react-date-picker": "^9.0.0",
+    "tim-js-sdk": "^2.24.2",
+    "tim-upload-plugin": "^1.0.5"
+  },
+  "peerDependencies": {
+    "date-fns": "^2.29.3",
+    "react": "^18.2.0",
+    "tim-js-sdk": "^2.24.2",
+    "tim-upload-plugin": "^1.0.5",
+    "tslib": "^2.4.1"
+  }
+}

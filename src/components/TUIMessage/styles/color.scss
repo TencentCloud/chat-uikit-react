@@ -1,0 +1,32 @@
+.message-text, .message-custom{
+  border: 1px solid #DDDDDD;
+}
+
+.bubble {
+  &-out {
+    background: #F2F7FF;
+    border: 1px solid #F2F7FF;
+  }
+}
+
+.meesage-bubble-reply-out {
+  background: #F2F7FF;
+  .meesage-bubble-reply-main {
+    .message-text{
+      background: none;
+    }
+  }
+}
+
+
+.message-tip {
+  color: #999999;
+}
+
+.tip {
+  .bubble {
+    .edit {
+      color: #147aff;
+    }
+  }
+}
