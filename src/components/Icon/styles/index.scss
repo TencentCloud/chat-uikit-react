@@ -1,0 +1,31 @@
+$primary-color: royalblue;
+
+.tui-kit-icon {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  .icon-image {
+    width: 100%;
+    height: 100%;
+  }
+  &:hover{
+    color: $primary-color;
+    border-color: currentColor;
+  }
+  &::after{
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    box-shadow: 0 0 0 6px $primary-color;
+    transition: .3s;
+  }
+  &:active::after{
+    box-shadow: none;
+    opacity: 0.4;
+    transition: 0s;
+  }
+}

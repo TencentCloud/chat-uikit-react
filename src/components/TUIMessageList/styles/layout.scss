@@ -1,0 +1,28 @@
+ul,li,div,p,label,span {
+  margin: 0;
+  padding: 0;
+} 
+ul li {
+  list-style: none;
+}
+.message-list{
+  flex: 1;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  padding: 0 20px;
+  &-item {
+    display: grid;
+    padding: 5px 0;
+  }
+  .no-more {
+    text-align: center;
+    font-family: PingFangSC-Medium;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 17px;
+    color: #999999;
+  }
+}

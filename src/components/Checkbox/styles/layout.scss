@@ -1,0 +1,25 @@
+.checkbox {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  &-default {
+    box-sizing: border-box;
+    width: 14px;
+    height: 14px;
+    border-radius: 14px;
+    border: 1px solid #DDDDDD;
+  }
+  &-input {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+}

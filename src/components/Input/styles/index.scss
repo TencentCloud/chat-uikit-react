@@ -1,0 +1,44 @@
+.tui-kit-input-box {
+  //width: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  background:  rgba(249, 249, 249, 0.94);
+  padding: 0 8px;
+  height: 36px;
+  box-sizing: border-box;
+
+  &.tui-kit-input-box--focus {
+    outline: 1px solid #147AFF;
+  }
+  &.tui-kit-input-border--bottom {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    outline: none;
+    border-radius: 0;
+  }
+  .tui-kit-input {
+    margin-left: 6px;
+    margin-right: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: transparent;
+    border-radius: 10px;
+    border: none;
+    box-sizing: border-box;
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
+
+    &::placeholder {
+      font-weight: 400;
+      color: rgba(67, 60, 63, 0.6);
+      padding: 2px 0;
+    }
+  }
+
+}

@@ -1,0 +1,64 @@
+.tui-conversation-group-type-info {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+
+  .group-type-info-box {
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    border-radius: 16px;
+    padding: 12px 16px;
+    margin-top: 12px;
+    cursor: pointer;
+
+    &:hover {
+      border: 1px solid #147AFF;
+    }
+
+    &.group-type-info-box--active {
+      border: 1px solid #147AFF;
+    }
+    .group-type-info-title {
+      font-size: 16px;
+      font-family: PingFangSC-Medium;
+      line-height: 22px;
+      color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      .box-active-icon {
+        margin-right: 8px;
+      }
+    }
+
+    .group-type-info-description {
+      font-size: 12px;
+      font-family: PingFangSC-Medium;
+      line-height: 17px;
+      text-align: justify;
+      color: rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  .group-type-info-document {
+    font-size: 16px;
+    font-family: PingFangSC-Medium;
+    line-height: 22px;
+    text-align: justify;
+    text-decoration: none;
+    margin: 1rem auto;
+
+    &:link {
+      color: #104EF5;
+    }
+
+    &:active {
+      color: #104EF5;
+    }
+
+    &:visited {
+      color: #104EF5;
+    }
+  }
+}

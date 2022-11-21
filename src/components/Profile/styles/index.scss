@@ -1,0 +1,19 @@
+.profile {
+  font-family: PingFangSC-Medium;
+  background: #F9FAFB;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  .profile-content {
+    display: flex;
+    align-items: center;
+    .profile-name {
+      font-family: PingFangSC-Medium;
+      font-weight: 600;
+      margin-left: 10px;
+      font-size: 14px;
+    }
+  }
+}

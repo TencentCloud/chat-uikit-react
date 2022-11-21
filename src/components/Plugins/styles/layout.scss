@@ -1,0 +1,18 @@
+.plugin {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.plugin-popup {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 8px;
+  &-box {
+    position: absolute;
+    z-index: 2;
+    bottom: 100%;
+  }
+}
