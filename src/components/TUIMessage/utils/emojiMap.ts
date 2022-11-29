@@ -150,6 +150,150 @@ export const emojiMap:IEmojiMap = {
   '[鼓掌]': 'emoji_140@2x.png',
   '[龇牙]': 'emoji_141@2x.png',
 };
+export const emojiEnKey:IEmojiMap = {
+  '[NO]': '[no]',
+  '[OK]': '[ok]',
+  '[下雨]': '[rain]',
+  '[么么哒]': '[muah]',
+  '[乒乓]': '[ping pong]',
+  '[便便]': '[poo]',
+  '[信封]': '[mail]',
+  '[偷笑]': '[snicker]',
+  '[傲慢]': '[arrogant]',
+  '[再见]': '[bye]',
+  '[冷汗]': '[sweat]',
+  '[凋谢]': '[wither]',
+  '[刀]': '[knife]',
+  '[删除]': '[delete]',
+  '[勾引]': '[hook]',
+  '[发呆]': '[daze]',
+  '[发抖]': '[shaking]',
+  '[可怜]': '[pitiful]',
+  '[可爱]': '[cute]',
+  '[右哼哼]': '[right hum]',
+  '[右太极]': '[right Tai Chi]',
+  '[右车头]': '[right head]',
+  '[吐]': '[vomit]',
+  '[吓]': '[scare]',
+  '[咒骂]': '[curse]',
+  '[咖啡]': '[cafe]',
+  '[啤酒]': '[beer]',
+  '[嘘]': '[hiss]',
+  '[回头]': '[look back]',
+  '[困]': '[sleepy]',
+  '[坏笑]': '[bad laugh]',
+  '[多云]': '[cloud]',
+  '[大兵]': '[soldiers]',
+  '[大哭]': '[cry]',
+  '[太阳]': '[sun]',
+  '[奋斗]': '[struggle]',
+  '[奶瓶]': '[feeding bottle]',
+  '[委屈]': '[wronged]',
+  '[害羞]': '[shy]',
+  '[尴尬]': '[awkward]',
+  '[左哼哼]': '[left hem]',
+  '[左太极]': '[left Tai Chi]',
+  '[左车头]': '[left head]',
+  '[差劲]': '[poor]',
+  '[弱]': '[weak]',
+  '[强]': '[stong]',
+  '[彩带]': '[ribbon]',
+  '[彩球]': '[ball]',
+  '[得意]': '[proud]',
+  '[微笑]': '[smile]',
+  '[心碎了]': '[heartbroken]',
+  '[快哭了]': '[almost cry]',
+  '[怄火]': '[ire]',
+  '[怒]': '[anger]',
+  '[惊恐]': '[terrify]',
+  '[惊讶]': '[flummox]',
+  '[憨笑]': '[smirk]',
+  '[手枪]': '[gun]',
+  '[打哈欠]': '[yawn]',
+  '[抓狂]': '[crazy]',
+  '[折磨]': '[torment]',
+  '[抠鼻]': '[nose picking]',
+  '[抱抱]': '[hug]',
+  '[抱拳]': '[hug fist]',
+  '[拳头]': '[fist]',
+  '[挥手]': '[waving hands]',
+  '[握手]': '[shake hands]',
+  '[撇嘴]': '[pouted]',
+  '[擦汗]': '[wipe sweat]',
+  '[敲打]': '[knock on the head]',
+  '[晕]': '[faint]',
+  '[月亮]': '[moon]',
+  '[棒棒糖]': '[lollipop]',
+  '[汽车]': '[car]',
+  '[沙发]': '[sofa]',
+  '[流汗]': '[sweat]',
+  '[流泪]': '[tears]',
+  '[激动]': '[excitement]',
+  '[灯泡]': '[light]',
+  '[炸弹]': '[bomb]',
+  '[熊猫]': '[panda]',
+  '[爆筋]': '[exploding muscle]',
+  '[爱你]': '[love you]',
+  '[爱心]': '[love heart]',
+  '[爱情]': '[love]',
+  '[猪头]': '[pig]',
+  '[猫咪]': '[cat]',
+  '[献吻]': '[kiss]',
+  '[玫瑰]': '[rose]',
+  '[瓢虫]': '[ladybird]',
+  '[疑问]': '[what]',
+  '[白眼]': '[rolling eyes]',
+  '[皮球]': '[rubber ball]',
+  '[睡觉]': '[sleep]',
+  '[磕头]': '[kowtow]',
+  '[示爱]': '[show love]',
+  '[礼品袋]': '[gift bag]',
+  '[礼物]': '[gift]',
+  '[篮球]': '[basketball]',
+  '[米饭]': '[rice]',
+  '[糗大了]': '[shame]',
+  '[红双喜]': '[happiness]',
+  '[红灯笼]': '[lantern]',
+  '[纸巾]': '[tissue]',
+  '[胜利]': '[victory]',
+  '[色]': '[lecherous]',
+  '[药]': '[medicine]',
+  '[菜刀]': '[kitchen knife]',
+  '[蛋糕]': '[coke]',
+  '[蜡烛]': '[candle]',
+  '[街舞]': '[hip hop]',
+  '[衰]': '[decline]',
+  '[西瓜]': '[lemon]',
+  '[调皮]': '[naughty]',
+  '[象棋]': '[chess]',
+  '[跳绳]': '[jump rope]',
+  '[跳跳]': '[jump]',
+  '[车厢]': '[compartment]',
+  '[转圈]': '[turn in circles]',
+  '[鄙视]': '[contempt]',
+  '[酷]': '[cool]',
+  '[钞票]': '[money]',
+  '[钻戒]': '[diamond]',
+  '[闪电]': '[lightning]',
+  '[闭嘴]': '[shut up]',
+  '[闹钟]': '[clock]',
+  '[阴险]': '[sinister]',
+  '[难过]': '[sad]',
+  '[雨伞]': '[umbrella]',
+  '[青蛙]': '[frog]',
+  '[面条]': '[noodles]',
+  '[鞭炮]': '[firecracker]',
+  '[风车]': '[windmill]',
+  '[飞吻]': '[blow kisses]',
+  '[飞机]': '[air]',
+  '[饥饿]': '[hunger]',
+  '[香蕉]': '[banana]',
+  '[骷髅]': '[skull]',
+  '[麦克风]': '[mic]',
+  '[麻将]': '[mahjong]',
+  '[鼓掌]': '[handclap]',
+  '[龇牙]': '[happy]',
+};
 export const emojiName:Array<string> = [
   '[龇牙]',
   '[调皮]',
@@ -309,3 +453,40 @@ export const bigEmojiList:Array<IBigEmojiListItem> = [
       'gcs08', 'gcs09', 'gcs10', 'gcs11', 'gcs12', 'gcs13', 'gcs14', 'gcs15', 'gcs16'],
   },
 ];
+
+/**
+ * Convert to expression key
+ * @param { string } data text
+ * @param { number } type 0:Convert to Chinese expression key 1: Convert to English expression key
+ * @returns { string } the converted text
+ */
+export function formatEmojiString(data: string, type = 0) {
+  let text = data;
+  const replace = {
+    key: type === 0 ? 1 : 0,
+    value: type,
+  };
+  Object.entries(emojiEnKey).map((item) => {
+    if (text.includes(item[replace.key])) {
+      text = transText(text, item[replace.key], item[replace.value]);
+    }
+    return item;
+  });
+  return text;
+}
+
+/**
+ * recursive replacement text
+ * @param { string } data text
+ * @param { string } replaceVal the value to replace
+ * @param { string } value replace Value
+ * @returns { string } the replaced value
+ */
+function transText(data: string, replaceVal:string, value: string) {
+  let text = data;
+  text = text.replace(replaceVal, value);
+  if (text.includes(replaceVal)) {
+    text = transText(text, replaceVal, value);
+  }
+  return text;
+}

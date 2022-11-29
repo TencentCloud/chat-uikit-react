@@ -11,6 +11,7 @@ import {
   useTUIChatStateContext,
   useTUIKitContext,
 } from '../../../context';
+import { formatEmojiString } from '../../TUIMessage/utils/emojiMap';
 import { useHandleQuoteMessage } from './useHandleQuoteMessage';
 import type { IbaseStateProps, ICursorPos } from './useMessageInputState';
 
@@ -66,7 +67,7 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
     }
     const options:any = {
       payload: {
-        text: state.text,
+        text: formatEmojiString(state.text),
       },
     };
     if (cloudCustomData.messageReply) {
@@ -105,7 +106,7 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
       if (!(e.clipboardData && e.clipboardData.items)) {
         return;
       }
-      const str = e.clipboardData.getData('text');
+      const str = formatEmojiString(e.clipboardData.getData('text'), 1);
       if (str) {
         dispatch({
           type: CONSTANT_DISPATCH_TYPE.SET_TEXT,

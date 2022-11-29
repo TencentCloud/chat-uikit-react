@@ -4,6 +4,7 @@ import {
   useCallback,
 } from 'react';
 import { useTUIChatActionContext } from '../../../context';
+import { emojiEnKey } from '../../TUIMessage/utils/emojiMap';
 import type { IbaseStateProps } from './useMessageInputState';
 
 export interface EmojiData {
@@ -25,7 +26,7 @@ export function useEmojiPicker<T extends useEmojiPickerProps>(props:PropsWithChi
   const { sendMessage, createFaceMessage } = useTUIChatActionContext('useEmojiPicker');
 
   const onSelectEmoji = (emoji:EmojiData) => {
-    insertText(emoji.data);
+    insertText(emojiEnKey[emoji.data]);
   };
 
   const sendFaceMessage = useCallback((emoji:EmojiData) => {
