@@ -3,7 +3,8 @@ import { useTUIMessageInputContext } from '../../context/TUIMessageInputContext'
 import { Icon, IconTypes } from '../Icon';
 import { Popup } from '../Popup';
 import {
-  emojiUrl, emojiName, emojiMap, bigEmojiList, faceUrl, IBigEmojiListItem,
+  emojiUrl, emojiName, emojiMap,
+  // bigEmojiList, faceUrl, IBigEmojiListItem,
 } from '../TUIMessage/utils/emojiMap';
 
 import type { EmojiData } from './hooks';

@@ -51,7 +51,7 @@ export default [
       typescript(),
       terser(),
     ],
-    external: ['react', 'date-fns', 'tslib'],
+    external: ['react', 'date-fns', 'tslib', 'react-date-picker'],
   },
   {
     ...baseConfig,

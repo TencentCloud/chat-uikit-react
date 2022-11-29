@@ -6,6 +6,7 @@ import { useTUIChatActionContext } from '../../context';
 import { Icon, IconTypes } from '../Icon';
 import { MESSAGE_OPERATE } from '../../constants';
 import { useHandleQuoteMessage } from './hooks/useHandleQuoteMessage';
+import { formatEmojiString } from '../TUIMessage/utils/emojiMap';
 
 interface InputQuoteProps {
   message?: Message
@@ -33,7 +34,7 @@ export function InputQuoteDefalut <T extends InputQuoteProps>(
     <div className="input-quote">
       <div className="input-quote-content">
         <label htmlFor="input-quote-content">{message?.nick || message?.from}</label>
-        <span>{context?.messageAbstract}</span>
+        <span>{formatEmojiString(context?.messageAbstract, 1)}</span>
       </div>
       <Icon className="icon" width={12} height={12} type={IconTypes.CLOSE} onClick={handleClose} />
     </div>

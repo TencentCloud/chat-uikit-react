@@ -4,6 +4,7 @@ import {
 import React from 'react';
 import TIM, { Conversation, Group, Profile } from 'tim-js-sdk';
 import { defaultGroupAvatarWork, defaultUserAvatar } from '../Avatar';
+import { formatEmojiString } from '../TUIMessage/utils/emojiMap';
 
 export const getDisplayTitle = (
   conversation: Conversation,
@@ -79,7 +80,7 @@ export const getDisplayMessage = (conversation:Conversation, myProfile:Profile) 
     }}
     >
       <span>{from}</span>
-      <span>{lastMessage.isRevoked ? 'recalled a message' : lastMessage.messageForShow}</span>
+      <span>{lastMessage.isRevoked ? 'recalled a message' : formatEmojiString(lastMessage.messageForShow, 1)}</span>
     </div>
   );
 };

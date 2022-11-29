@@ -28,11 +28,13 @@ $ npm i @tencentcloud/chat-uikit-react
 import React, { useEffect, useState } from 'react';
 import { TUIKit } from '@tencentcloud/chat-uikit-react';
 import '@tencentcloud/chat-uikit-react/dist/cjs/index.css';
-import TIM, { TIMUploadPlugin } from 'tim-js-sdk';
+import TIM, { ChatSDK } from 'tim-js-sdk/tim-js-friendship';
+import TIMUploadPlugin from 'tim-upload-plugin';
+
 
 const init = async () => {
    return new Promise((resolve, reject) => {
-      const tim = TIM.create({ SDKAppID: 000 });
+      const tim = TIM.create({ SDKAppID: 0 });
       tim?.registerPlugin({ 'tim-upload-plugin': TIMUploadPlugin });
       const onReady = () => { resolve(tim); };
       tim.on(TIM.EVENT.SDK_READY, onReady);
@@ -44,7 +46,7 @@ const init = async () => {
 }
 
 export function SampleChat() {
-   const [tim, setTim] = useState<TIM>();
+   const [tim, setTim] = useState<ChatSDK>();
    useEffect(() => {
       (async ()=>{
          const tim = await init()
