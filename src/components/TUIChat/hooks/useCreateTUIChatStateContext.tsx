@@ -12,6 +12,10 @@ function useCreateTUIChatStateContext(props:CreateTUIChatStateContextProp) {
     conversation,
     messageList,
     messageListRef,
+    messageConfig,
+    cloudCustomData,
+    TUIMessageInputConfig,
+    TUIMessageListConfig,
     ...state
   } = props;
   const TUIChatStateContext = useMemo(() => ({
@@ -19,12 +23,20 @@ function useCreateTUIChatStateContext(props:CreateTUIChatStateContextProp) {
     conversation,
     messageList,
     messageListRef,
+    messageConfig,
+    cloudCustomData,
+    TUIMessageInputConfig,
+    TUIMessageListConfig,
     ...state,
   }), [
     tim,
     conversation,
     messageList,
     messageListRef,
+    messageConfig,
+    cloudCustomData,
+    TUIMessageInputConfig,
+    TUIMessageListConfig,
     state,
   ]);
 

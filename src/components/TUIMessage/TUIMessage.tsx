@@ -1,18 +1,34 @@
 import React, { PropsWithChildren, ReactEventHandler } from 'react';
 import { Message } from 'tim-js-sdk';
 
-import { UnknowPorps, useComponentContext } from '../../context';
+import { UnknowPorps, useComponentContext, useTUIChatStateContext } from '../../context';
 
-import { TUIMessageContextProvider } from '../../context/TUIMessageContext';
+import { messageShowType, TUIMessageContextProvider } from '../../context/TUIMessageContext';
 import { useMessageHandler } from './hooks';
 
 import './styles/index.scss';
 import { TUIMessageDefault } from './TUIMessageDefault';
-import { MessagePlugins as MessagePluginsDefault } from './MessagePlugins';
+import { MessagePlugins as MessagePluginsDefault, MessagePluginsProps } from './MessagePlugins';
 import { MessageContext as MessageContextDefault } from './MessageContext';
 
-export interface TUIMessageProps {
-  message: Message,
+interface TUIMessageBasicProps {
+  className?: string,
+  filter?: (data:Message) => void,
+  isShowTime?: boolean,
+  isShowRead?: boolean,
+  plugin?: MessagePluginsProps,
+  prefix?: React.ReactElement | string,
+  suffix?: React.ReactElement | string,
+  customName?: React.ReactElement,
+  showAvatar?: messageShowType,
+  showName?: messageShowType,
+  customAvatar?: React.ReactElement,
+  isShowProgress?: boolean,
+  Progress?: React.ComponentType<{message: Message}>,
+}
+
+export interface TUIMessageProps extends TUIMessageBasicProps {
+  message?: Message,
   className?: string,
   TUIMessage?: React.ComponentType,
   MessageContext?: React.ComponentType<UnknowPorps>,
@@ -32,7 +48,7 @@ function TUIMessageWithContext <T extends TUIMessageProps>(
   props: PropsWithChildren<T>,
 ):React.ReactElement {
   const {
-    message,
+    message: propsMessage,
     TUIMessage: propTUIMessage,
     MessagePlugins: propMessagePlugins,
     MessageContext: propMessageContext,
@@ -46,6 +62,19 @@ function TUIMessageWithContext <T extends TUIMessageProps>(
     MergerElement,
     LocationElement,
     FaceElement,
+    className,
+    filter: propsFilter,
+    isShowTime,
+    isShowRead,
+    plugin,
+    prefix,
+    suffix,
+    customName,
+    showAvatar,
+    showName,
+    customAvatar,
+    isShowProgress,
+    Progress,
   } = props;
 
   const {
@@ -53,29 +82,52 @@ function TUIMessageWithContext <T extends TUIMessageProps>(
     MessageContext: ContextMessageContext,
   } = useComponentContext('TUIMessage');
 
+  const {
+    messageConfig,
+  } = useTUIChatStateContext('TUIMessage');
+
   const TUIMessageUIComponent = propTUIMessage || TUIMessageDefault;
   const MessagePlugins = propMessagePlugins || ContextMessagePlugins || MessagePluginsDefault;
   const MessageContext = propMessageContext || ContextMessageContext || MessageContextDefault;
 
+  const filter = propsFilter || messageConfig?.filter;
+  const message = propsMessage || messageConfig?.message;
+  if (filter) {
+    filter(message);
+  }
+
   const messageContextValue = {
     message,
-    handleDelete,
-    CustemElement,
-    TextElement,
-    ImageElement,
-    VideoElement,
-    AudioElement,
-    FileElement,
-    MergerElement,
-    LocationElement,
-    FaceElement,
+    handleDelete: handleDelete || messageConfig?.handleDelete,
+    CustemElement: CustemElement || messageConfig?.CustemElement,
+    TextElement: TextElement || messageConfig?.TextElement,
+    ImageElement: ImageElement || messageConfig?.ImageElement,
+    VideoElement: VideoElement || messageConfig?.VideoElement,
+    AudioElement: AudioElement || messageConfig?.AudioElement,
+    FileElement: FileElement || messageConfig?.FileElement,
+    MergerElement: MergerElement || messageConfig?.MergerElement,
+    LocationElement: LocationElement || messageConfig?.LocationElement,
+    FaceElement: FaceElement || messageConfig?.FaceElement,
+    isShowTime: isShowTime || messageConfig?.isShowTime,
+    isShowRead: isShowRead || messageConfig?.isShowRead,
+    plugin: plugin || messageConfig?.plugin,
+    prefix: prefix || messageConfig?.prefix,
+    suffix: suffix || messageConfig?.suffix,
+    customName: customName || messageConfig?.customName,
+    showAvatar: showAvatar || messageConfig?.showAvatar,
+    showName: showName || messageConfig?.showName,
+    customAvatar: customAvatar || messageConfig?.customAvatar,
+    isShowProgress: isShowProgress || messageConfig?.isShowProgress,
+    Progress: Progress || messageConfig?.Progress,
   };
+
   return (
     <TUIMessageContextProvider value={messageContextValue}>
       <TUIMessageUIComponent
         message={message}
         MessageContext={MessageContext}
         MessagePlugins={MessagePlugins}
+        className={className || messageConfig?.className}
       />
     </TUIMessageContextProvider>
   );

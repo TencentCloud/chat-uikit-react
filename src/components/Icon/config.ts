@@ -28,6 +28,19 @@ import IconQuoteUrl from './images/quote.png';
 import IconRevocationUrl from './images/revocation.png';
 import IconEffortUrl from './images/effort.png';
 import IconCryUrl from './images/cry.png';
+import IconSendUrl from './images/send.png';
+import IconOwnerUrl from './images/owner.png';
+import IconLivingUrl from './images/living.png';
+import IconMemberUrl from './images/member.png';
+import IconLikerUrl from './images/like.png';
+import IconUnlikeUrl from './images/unlike.png';
+import IconLikedUrl from './images/liked.png';
+import IconUnlikedUrl from './images/unliked.png';
+import IconUnionUrl from './images/union.png';
+import IconUnunionUrl from './images/ununion.png';
+import IconVectorUrl from './images/vector.png';
+import IconUnvectorUrl from './images/unvector.png';
+import IconVoiceUrl from './images/voice.png';
 
 import { IconTypes } from './type';
 
@@ -160,5 +173,57 @@ export const ICON_CONFIG:IconConfig = {
   [IconTypes.CRY]: {
     url: IconCryUrl,
     className: 'tui-kit-icon-cry',
+  },
+  [IconTypes.OWNER]: {
+    url: IconOwnerUrl,
+    className: 'tui-kit-icon-owner',
+  },
+  [IconTypes.SEND]: {
+    url: IconSendUrl,
+    className: 'tui-kit-icon-send',
+  },
+  [IconTypes.LIVING]: {
+    url: IconLivingUrl,
+    className: 'tui-kit-icon-living',
+  },
+  [IconTypes.MEMBER]: {
+    url: IconMemberUrl,
+    className: 'tui-kit-icon-member',
+  },
+  [IconTypes.LIKE]: {
+    url: IconLikerUrl,
+    className: 'tui-kit-icon-like',
+  },
+  [IconTypes.UNLIKE]: {
+    url: IconUnlikeUrl,
+    className: 'tui-kit-icon-unlike',
+  },
+  [IconTypes.LIKED]: {
+    url: IconLikedUrl,
+    className: 'tui-kit-icon-liked',
+  },
+  [IconTypes.UNLIKED]: {
+    url: IconUnlikedUrl,
+    className: 'tui-kit-icon-unliked',
+  },
+  [IconTypes.UNION]: {
+    url: IconUnionUrl,
+    className: 'tui-kit-icon-union',
+  },
+  [IconTypes.UNUNION]: {
+    url: IconUnunionUrl,
+    className: 'tui-kit-icon-ununion',
+  },
+  [IconTypes.VECTOR]: {
+    url: IconVectorUrl,
+    className: 'tui-kit-icon-vector',
+  },
+  [IconTypes.UNVECTOR]: {
+    url: IconUnvectorUrl,
+    className: 'tui-kit-icon-unvector',
+  },
+  [IconTypes.VOICE]: {
+    url: IconVoiceUrl,
+    className: 'tui-kit-icon-voice',
   },
 };

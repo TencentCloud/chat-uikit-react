@@ -16,6 +16,7 @@ export function useUploadPicker<T extends IbaseStateProps>(props:PropsWithChildr
     createImageMessage,
     createVideoMessage,
     createFileMessage,
+    updataUploadPenddingMessageList,
   } = useTUIChatActionContext('useUploadPicker');
 
   const creatUploadMessage = {
@@ -29,6 +30,7 @@ export function useUploadPicker<T extends IbaseStateProps>(props:PropsWithChildr
       payload: file,
       onProgress(num:number) {
         message.progress = num;
+        updataUploadPenddingMessageList(message);
       },
     });
     sendMessage(message);

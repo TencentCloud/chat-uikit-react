@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import TIM, { ChatSDK, Conversation, Message } from 'tim-js-sdk';
 
 export interface CreateMessageProps {
@@ -6,6 +6,7 @@ export interface CreateMessageProps {
   conversation?: Conversation,
   to?: string,
   type?: TIM.TYPES,
+  cloudCustomData?: string,
 }
 export interface BasicCreateMessageProps {
   needReadReceipt?: boolean,
@@ -36,7 +37,39 @@ export interface CreateUploadMessageProps extends BasicCreateMessageProps{
 
 export interface CreateForwardMessageProps extends BasicCreateMessageProps{
   conversation: Conversation,
-  message: Message,
+  message: Message
+}
+
+export interface CreateCustomMessageProps extends BasicCreateMessageProps{
+  payload: {
+    data: string,
+    description: string,
+    extension: string,
+  }
+}
+
+export interface CreateTextAtMessageProps extends BasicCreateMessageProps{
+  payload: {
+    text: string,
+    atUserList: Array<string>,
+  }
+}
+
+export interface CreateLocationMessageProps extends BasicCreateMessageProps{
+  payload: {
+    description: string,
+    longitude: number,
+    latitude: number,
+  }
+}
+
+export interface CreateMergerMessageProps extends BasicCreateMessageProps{
+  payload: {
+    messageList: Array<Message>,
+    title: string,
+    abstractList: string,
+    compatibleText: string,
+  }
 }
 
 export function useCreateMessage<T extends CreateMessageProps>(props:T) {
@@ -45,16 +78,23 @@ export function useCreateMessage<T extends CreateMessageProps>(props:T) {
     conversation,
     to = '',
     type: propType,
+    cloudCustomData,
   } = props;
 
   const { type: conversationType, userProfile, groupProfile } = conversation;
 
   const type = propType || conversationType;
 
-  const basicConfig = {
+  const [basicConfig, setBasicConfig] = useState({
     to: to || (type === TIM.TYPES.CONV_C2C ? userProfile?.userID : groupProfile?.groupID),
     conversationType: type,
-  };
+    cloudCustomData,
+  });
+
+  useEffect(() => {
+    basicConfig.cloudCustomData = cloudCustomData;
+    setBasicConfig(basicConfig);
+  }, [cloudCustomData]);
 
   const createTextMessage = useCallback((params: CreateTextMessageProps) => tim.createTextMessage({
     ...basicConfig,
@@ -106,6 +146,42 @@ export function useCreateMessage<T extends CreateMessageProps>(props:T) {
     });
   }, [tim]);
 
+  const createCustomMessage = useCallback((
+    params: CreateCustomMessageProps,
+    // ChatSDK < V2.26.0 createCustomMessage ts declaration error
+  ) => (tim as any).createCustomMessage({
+    ...basicConfig,
+    ...params,
+  }), [tim]);
+
+  const createAudioMessage = useCallback((
+    params: CreateUploadMessageProps,
+  ) => tim.createAudioMessage({
+    ...basicConfig,
+    ...params,
+  }), [tim]);
+
+  const createTextAtMessage = useCallback((
+    params: CreateTextAtMessageProps,
+  ) => tim.createTextAtMessage({
+    ...basicConfig,
+    ...params,
+  }), [tim]);
+
+  const createLocationMessage = useCallback((
+    params: CreateLocationMessageProps,
+  ) => tim.createLocationMessage({
+    ...basicConfig,
+    ...params,
+  }), [tim]);
+
+  const createMergerMessage = useCallback((
+    params: CreateMergerMessageProps,
+  ) => tim.createMergerMessage({
+    ...basicConfig,
+    ...params,
+  }), [tim]);
+
   return {
     createTextMessage,
     createFaceMessage,
@@ -113,5 +189,10 @@ export function useCreateMessage<T extends CreateMessageProps>(props:T) {
     createVideoMessage,
     createFileMessage,
     createForwardMessage,
+    createCustomMessage,
+    createAudioMessage,
+    createTextAtMessage,
+    createLocationMessage,
+    createMergerMessage,
   };
 }

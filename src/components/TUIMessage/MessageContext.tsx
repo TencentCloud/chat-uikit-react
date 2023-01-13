@@ -64,9 +64,12 @@ function MessageContextWithContext <T extends MessageContextProps>(
   };
 
   const Elements = CustemComponents[message?.type] || components[message?.type];
-
   return Elements
-  && <Elements context={context} message={message}><MessageStatus message={message} /></Elements>;
+  && (
+  <Elements context={context} message={message}>
+    <MessageStatus message={message} />
+  </Elements>
+  );
 }
 
 const MemoizedMessageContext = React.memo(MessageContextWithContext) as

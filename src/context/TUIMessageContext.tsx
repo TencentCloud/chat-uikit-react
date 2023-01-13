@@ -1,5 +1,13 @@
 import React, { PropsWithChildren, ReactEventHandler, useContext } from 'react';
 import { Message } from 'tim-js-sdk';
+import { MessagePluginsProps } from '../components';
+
+export enum messageShowType {
+   IN = 'in',
+   OUT = 'out',
+   ALL = 'all',
+   NONE = 'none',
+}
 
 export interface TUIMessageContextValue {
   message?: Message,
@@ -13,6 +21,18 @@ export interface TUIMessageContextValue {
   MergerElement?: React.ComponentType<{message: Message}>,
   LocationElement?: React.ComponentType<{message: Message}>,
   FaceElement?: React.ComponentType<{message: Message}>,
+  filter?: (data:Message) => void,
+  isShowTime?: boolean,
+  isShowRead?: boolean,
+  plugin?: MessagePluginsProps,
+  prefix?: React.ReactElement | string,
+  suffix?: React.ReactElement | string,
+  customName?: React.ReactElement,
+  showAvatar?: messageShowType,
+  showName?: messageShowType,
+  customAvatar?: React.ReactElement,
+  isShowProgress?: boolean,
+  Progress?: React.ComponentType<{message: Message}>,
 }
 
 export const TUIMessageContext = React.createContext<TUIMessageContextValue>(undefined);

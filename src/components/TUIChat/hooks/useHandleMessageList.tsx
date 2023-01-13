@@ -61,10 +61,18 @@ export function useHandleMessageList<T extends CreateMessageProps>(props:T) {
     });
   }, [dispatch]);
 
+  const updataUploadPenddingMessageList = useCallback((message: Message) => {
+    dispatch({
+      type: CONSTANT_DISPATCH_TYPE.UPDATE_UPLOAD_PENDDING_MESSAGE_LIST,
+      value: message,
+    });
+  }, [dispatch]);
+
   return {
     getMessageList,
     updateMessage,
     removeMessage,
     editLocalmessage,
+    updataUploadPenddingMessageList,
   };
 }

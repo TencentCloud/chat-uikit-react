@@ -28,8 +28,8 @@ import { useHandleMessageList } from './hooks/useHandleMessageList';
 import { useHandleMessage } from './hooks/useHandleMessage';
 
 import { TUIChatHeader as TUIChatHeaderElement } from '../TUIChatHeader';
-import { TUIMessageList } from '../TUIMessageList';
-import { TUIMessageInput as TUIMessageInputElement } from '../TUIMessageInput';
+import { MessageListProps, TUIMessageList } from '../TUIMessageList';
+import { TUIMessageInput as TUIMessageInputElement, TUIMessageInputBasicProps } from '../TUIMessageInput';
 import { EmptyStateIndicator } from '../EmptyStateIndicator';
 import { Toast } from '../Toast';
 
@@ -37,7 +37,7 @@ interface TUIChatProps {
   className?: string,
   conversation?: Conversation,
   EmptyPlaceholder?: React.ReactElement,
-  TUIMessage?: React.ComponentType<TUIMessageProps>,
+  TUIMessage?: React.ComponentType<TUIMessageProps | UnknowPorps>,
   TUIChatHeader?: React.ComponentType<TUIChatHeaderDefaultProps>,
   MessageContext?: React.ComponentType<MessageContextProps>,
   TUIMessageInput?: React.ComponentType<UnknowPorps>,
@@ -48,8 +48,12 @@ interface TUIChatProps {
     updateMessage: (event?: Array<Message>) => void,
     event: any,
   ) => void,
-  sendMessage?: (message:Message) => Promise<Message>,
+  sendMessage?: (message:Message, options?:any) => Promise<Message>,
   revokeMessage?: (message:Message) => Promise<Message>,
+  messageConfig?: TUIMessageProps,
+  cloudCustomData?: string,
+  TUIMessageInputConfig?: TUIMessageInputBasicProps,
+  TUIMessageListConfig?: MessageListProps,
   [propName: string]: any,
 }
 
@@ -100,6 +104,10 @@ function TUIChatInner <T extends TUIChatInnerProps>(
     onMessageRecevied,
     sendMessage: propsSendMessage,
     revokeMessage,
+    messageConfig,
+    cloudCustomData,
+    TUIMessageInputConfig,
+    TUIMessageListConfig,
   } = props;
 
   const [state, dispatch] = useReducer<ChatStateReducer>(
@@ -114,6 +122,10 @@ function TUIChatInner <T extends TUIChatInnerProps>(
     conversation,
     messageListRef,
     textareaRef,
+    messageConfig,
+    cloudCustomData,
+    TUIMessageInputConfig,
+    TUIMessageListConfig,
     ...state,
   });
 
@@ -124,30 +136,39 @@ function TUIChatInner <T extends TUIChatInnerProps>(
     createVideoMessage,
     createFileMessage,
     createForwardMessage,
-  } = useCreateMessage({ tim, conversation });
+    createCustomMessage,
+    createAudioMessage,
+    createTextAtMessage,
+    createLocationMessage,
+    createMergerMessage,
+  } = useCreateMessage({ tim, conversation, cloudCustomData });
 
   const {
     getMessageList,
     updateMessage,
     editLocalmessage,
     removeMessage,
+    updataUploadPenddingMessageList,
   } = useHandleMessageList({
     tim, conversation, state, dispatch,
   });
 
   const {
     operateMessage,
+    setAudioSource,
+    setVideoSource,
+    setHighlightedMessageId,
   } = useHandleMessage({
     state, dispatch,
   });
 
-  const sendMessage = async (message: Message) => {
+  const sendMessage = async (message: Message, options?:any) => {
     updateMessage([message]);
     try {
       if (propsSendMessage) {
-        await propsSendMessage(message);
+        await propsSendMessage(message, options);
       } else {
-        await tim.sendMessage(message);
+        await tim.sendMessage(message, options);
       }
       editLocalmessage(message);
     } catch (error) {
@@ -219,10 +240,19 @@ function TUIChatInner <T extends TUIChatInnerProps>(
       createVideoMessage,
       createFileMessage,
       createForwardMessage,
+      createCustomMessage,
+      createAudioMessage,
+      createTextAtMessage,
+      createLocationMessage,
+      createMergerMessage,
       editLocalmessage,
       operateMessage,
       loadMore,
       revokeMessage,
+      setAudioSource,
+      setVideoSource,
+      setHighlightedMessageId,
+      updataUploadPenddingMessageList,
     }),
     [
       sendMessage,
@@ -234,10 +264,19 @@ function TUIChatInner <T extends TUIChatInnerProps>(
       createVideoMessage,
       createFileMessage,
       createForwardMessage,
+      createCustomMessage,
+      createAudioMessage,
+      createTextAtMessage,
+      createLocationMessage,
+      createMergerMessage,
       editLocalmessage,
       operateMessage,
       loadMore,
       revokeMessage,
+      setAudioSource,
+      setVideoSource,
+      setHighlightedMessageId,
+      updataUploadPenddingMessageList,
     ],
   );
 

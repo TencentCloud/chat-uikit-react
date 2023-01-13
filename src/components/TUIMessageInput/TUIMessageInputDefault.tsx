@@ -3,6 +3,7 @@ import { MESSAGE_OPERATE } from '../../constants';
 import { useTUIChatStateContext } from '../../context';
 
 import { useTUIMessageInputContext } from '../../context/TUIMessageInputContext';
+import { formatEmojiString } from '../TUIMessage/utils/emojiMap';
 
 export function TUIMessageInputDefault():React.ReactElement {
   const {
@@ -23,7 +24,7 @@ export function TUIMessageInputDefault():React.ReactElement {
   // operateData
   useEffect(() => {
     if (operateData[MESSAGE_OPERATE.REVOKE]) {
-      setText(operateData[MESSAGE_OPERATE.REVOKE].payload.text);
+      setText(formatEmojiString(operateData[MESSAGE_OPERATE.REVOKE].payload.text, 1));
     }
   }, [operateData]);
 

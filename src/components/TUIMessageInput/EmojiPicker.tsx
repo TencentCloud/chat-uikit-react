@@ -12,6 +12,7 @@ import type { EmojiData } from './hooks';
 export function EmojiPicker():React.ReactElement {
   const [show, setShow] = useState(false);
   const [index, setIndex] = useState(0);
+  const [className, setClassName] = useState('');
 
   const handleShow = () => {
     setShow(!show);
@@ -37,13 +38,18 @@ export function EmojiPicker():React.ReactElement {
     }
   };
 
+  const handleVisible = (data) => {
+    setClassName(`${!data.top && 'emoji-plugin-top'} ${!data.left && 'emoji-plugin-right'}`);
+  };
+
   return (
     <div className="emoji-picker input-plugin-popup">
       <Icon width={20} height={20} type={IconTypes.EMOJI} onClick={handleShow} />
       <Popup
-        className="input-plugin-popup-box"
+        className={`input-plugin-popup-box ${className}`}
         show={show}
         close={handleShow}
+        handleVisible={handleVisible}
       >
         <ul className="face-list">
           {

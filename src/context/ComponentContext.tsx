@@ -8,7 +8,7 @@ export interface UnknowPorps {
 }
 
 export interface ComponentContextValue {
-  TUIMessage?: React.ComponentType<TUIMessageProps>,
+  TUIMessage?: React.ComponentType<TUIMessageProps | UnknowPorps>,
   TUIChatHeader?: React.ComponentType<TUIChatHeaderDefaultProps>,
   EmptyStateIndicator?: React.ComponentType<EmptyStateIndicatorProps>,
   TUIMessageInput?: React.ComponentType<UnknowPorps>,

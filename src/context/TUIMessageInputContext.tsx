@@ -5,6 +5,7 @@ import React, {
   KeyboardEventHandler,
   MutableRefObject,
 } from 'react';
+import { PluginConfigProps } from '../components';
 import type { ICursorPos } from '../components/TUIMessageInput/hooks';
 import type { EmojiData } from '../components/TUIMessageInput/hooks/useEmojiPicker';
 import type { filesData } from '../components/TUIMessageInput/hooks/useUploadPicker';
@@ -28,11 +29,9 @@ export interface TUIMessageInputContextValue {
   insertText?: (textToInsert: string) => void,
   setText?: (textToInsert: string) => void,
   focus?: boolean,
-  plugins?: Array<React.ReactElement>,
-  showNumber?: number,
-  MoreIcon?: React.ReactElement,
   handlePasete?: (e:ClipboardEvent) => void,
   setCursorPos?: (e:ICursorPos) => void,
+  pluginConfig?: PluginConfigProps,
 }
 
 export const TUIMessageInputContext = React.createContext<TUIMessageInputContextValue>(undefined);

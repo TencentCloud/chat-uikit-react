@@ -11,9 +11,7 @@ export const useCreateMessageInputContext = (value:any) => {
     disabled,
     focus,
     operateData,
-    plugins,
-    showNumber,
-    MoreIcon,
+    pluginConfig,
   } = value;
   const messageInputContext = useMemo(
     () => ({
@@ -26,9 +24,7 @@ export const useCreateMessageInputContext = (value:any) => {
       disabled,
       focus,
       operateData,
-      plugins,
-      showNumber,
-      MoreIcon,
+      pluginConfig,
       ...value,
     }),
     [
@@ -40,10 +36,8 @@ export const useCreateMessageInputContext = (value:any) => {
       sendFaceMessage,
       disabled,
       focus,
-      plugins,
-      showNumber,
-      MoreIcon,
       operateData,
+      pluginConfig,
     ],
   );
 
