@@ -9,13 +9,19 @@ import { useTUIKitContext } from '../../context';
 
 export interface TUIChatHeaderDefaultProps {
   title?: string,
-  avatar?: string,
+  avatar?: React.ReactElement | string,
   isOnline?: boolean,
   conversation?: Conversation,
   pluginComponentList?: Array<React.ComponentType>,
+
 }
 
-function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderDefaultProps>(
+export interface TUIChatHeaderBasicProps extends TUIChatHeaderDefaultProps {
+  isLive?: boolean,
+  opateIcon?: React.ReactElement | string,
+}
+
+function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderBasicProps>(
   props: PropsWithChildren<T>,
 ):React.ReactElement {
   const {
@@ -23,14 +29,18 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderDefaultProps>(
     avatar: propAvatar,
     isOnline,
     conversation,
+    isLive,
+    opateIcon,
   } = props;
 
   const [title, setTitle] = useState('');
-  const [avatar, setAvatar] = useState('');
+  const [avatar, setAvatar] = useState<React.ReactElement | string>('');
 
   useEffect(() => {
     setTitle(propTitle);
-    setAvatar(propAvatar);
+    if (propAvatar) {
+      setAvatar(propAvatar);
+    }
     switch (conversation?.type) {
       case TIM.TYPES.CONV_C2C:
         handleC2C(conversation.userProfile);
@@ -51,8 +61,8 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderDefaultProps>(
     if (!title) {
       setTitle(userProfile?.nick || userProfile?.userID);
     }
-    if (!avatar) {
-      setAvatar(handleDisplayAvatar(userProfile.avatar));
+    if (!propAvatar) {
+      setAvatar(<Avatar size={32} image={handleDisplayAvatar(userProfile.avatar)} />);
     }
   };
 
@@ -60,8 +70,11 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderDefaultProps>(
     if (!title) {
       setTitle(groupProfile?.name || groupProfile?.groupID);
     }
-    if (!avatar) {
-      setAvatar(handleDisplayAvatar(groupProfile.avatar, TIM.TYPES.CONV_GROUP));
+    if (!propAvatar) {
+      setAvatar(<Avatar
+        size={32}
+        image={handleDisplayAvatar(groupProfile.avatar, TIM.TYPES.CONV_GROUP)}
+      />);
     }
   };
   const { setTUIManageShow } = useTUIKitContext();
@@ -70,16 +83,23 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderDefaultProps>(
   };
 
   return (
-    <header className="tui-chat-header" key={conversation?.conversationID}>
-      <div className={`tui-chat-header-left ${conversation?.type === TIM.TYPES.CONV_SYSTEM ? 'system' : ''}`}>
-        {conversation?.type !== TIM.TYPES.CONV_SYSTEM && <Avatar size={32} image={avatar} />}
-        <div className="header-content">
-          <h3 className="title">{title}</h3>
-        </div>
+    <header
+      className={`tui-chat-header ${isLive ? 'tui-chat-live-header' : ''}`}
+      key={conversation?.conversationID}
+    >
+      <div
+        className={`tui-chat-header-left ${conversation?.type === TIM.TYPES.CONV_SYSTEM ? 'system' : ''}`}
+      >
+        {conversation?.type !== TIM.TYPES.CONV_SYSTEM && avatar}
+      </div>
+      <div className="header-content">
+        <h3 className="title">{title}</h3>
       </div>
       <div className="tui-chat-header-right">
         <div className="header-handle">
-          <Icon className="header-handle-more" onClick={openTUIManage} type={IconTypes.ELLIPSE} width={18} height={5} />
+          {
+            opateIcon || <Icon className="header-handle-more" onClick={openTUIManage} type={IconTypes.ELLIPSE} width={18} height={5} />
+          }
         </div>
       </div>
 
@@ -90,7 +110,7 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderDefaultProps>(
 const MemoizedTUIChatHeaderDefault = React.memo(TUIChatHeaderDefaultWithContext) as
 typeof TUIChatHeaderDefaultWithContext;
 
-export function TUIChatHeaderDefault(props: TUIChatHeaderDefaultProps)
+export function TUIChatHeaderDefault(props: TUIChatHeaderBasicProps)
 :React.ReactElement {
   const options = { ...props };
   return <MemoizedTUIChatHeaderDefault {...options} />;

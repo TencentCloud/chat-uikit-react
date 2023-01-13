@@ -7,18 +7,85 @@ import { useUploadElement } from './hooks/useUploadElement';
 import { MESSAGE_TYPE_NAME } from '../../constants';
 import { useTUIMessageInputContext } from '../../context/TUIMessageInputContext';
 import { Icon, IconTypes } from '../Icon';
+import { useTUIChatStateContext } from '../../context';
 
 export function InputPluginsDefalut():React.ReactElement {
   const {
     sendUploadMessage,
-    plugins: propPlugins,
-    showNumber,
-    MoreIcon,
+    // pluginConfig: {
+    //   plugins: propsPlugins,
+    //   showNumber: propsShowNumber,
+    //   MoreIcon: propsMoreIcon,
+    //   isEmojiPicker: porpsIsEmojiPicker,
+    //   isImagePicker: porpsIsImagePicker,
+    //   isVideoPicker: porpsIsVideoPicker,
+    //   isFilePicker: porpsIsFilePicker,
+    // },
+    pluginConfig: propsPluginConfig,
   } = useTUIMessageInputContext('TUIMessageInputDefault');
+
+  const { TUIMessageInputConfig } = useTUIChatStateContext('TUIMessageInput');
+
+  // const {
+  //   pluginConfig: {
+  //     plugins: contextPlugins,
+  //     showNumber: contextShowNumber,
+  //     MoreIcon: contextMoreIcon,
+  //     isEmojiPicker: contextIsEmojiPicker,
+  //     isImagePicker: contextIsImagePicker,
+  //     isVideoPicker: contextIsVideoPicker,
+  //     isFilePicker: contextIsFilePicker,
+  //   },
+  // } = TUIMessageInputConfig;
+
+  // const propPlugins = propsPlugins || contextPlugins || [];
+  // const showNumber = propsShowNumber || contextShowNumber || 1;
+  // const MoreIcon = propsMoreIcon || contextMoreIcon;
+
+  const propPlugins = propsPluginConfig?.plugins
+  || TUIMessageInputConfig?.pluginConfig?.plugins || [];
+  const showNumber = propsPluginConfig?.showNumber
+  || TUIMessageInputConfig?.pluginConfig?.showNumber || 1;
+  const MoreIcon = propsPluginConfig?.MoreIcon || TUIMessageInputConfig?.pluginConfig?.MoreIcon;
+
+  const handlePluginBoolenParams = (
+    porpsVal?:boolean | undefined,
+    contextVal?:boolean | undefined,
+    defaultVal?: boolean,
+  ) => {
+    if (typeof (porpsVal) === 'boolean') {
+      return porpsVal;
+    }
+    if (typeof (contextVal) === 'boolean') {
+      return contextVal;
+    }
+    return defaultVal;
+  };
+
+  const isEmojiPicker = handlePluginBoolenParams(
+    propsPluginConfig?.isEmojiPicker,
+    TUIMessageInputConfig?.pluginConfig?.isEmojiPicker,
+    true,
+  );
+  const isImagePicker = handlePluginBoolenParams(
+    propsPluginConfig?.isImagePicker,
+    TUIMessageInputConfig?.pluginConfig?.isImagePicker,
+    true,
+  );
+  const isVideoPicker = handlePluginBoolenParams(
+    propsPluginConfig?.isVideoPicker,
+    TUIMessageInputConfig?.pluginConfig?.isVideoPicker,
+    true,
+  );
+  const isFilePicker = handlePluginBoolenParams(
+    propsPluginConfig?.isFilePicker,
+    TUIMessageInputConfig?.pluginConfig?.isFilePicker,
+    true,
+  );
 
   const pluginsRef = useRef(null);
 
-  const ImagePicker = useUploadElement({
+  const ImagePicker = isImagePicker && useUploadElement({
     children: (
       <div className="input-plugin-item">
         <Icon width={20} height={20} type={IconTypes.IMAGE} />
@@ -33,7 +100,7 @@ export function InputPluginsDefalut():React.ReactElement {
     },
   });
 
-  const VideoPicker = useUploadElement({
+  const VideoPicker = isVideoPicker && useUploadElement({
     children: (
       <div className="input-plugin-item">
         <Icon width={20} height={20} type={IconTypes.VIDEO} />
@@ -48,7 +115,7 @@ export function InputPluginsDefalut():React.ReactElement {
     },
   });
 
-  const FilePicker = useUploadElement({
+  const FilePicker = isFilePicker && useUploadElement({
     children: (
       <div className="input-plugin-item">
         <Icon width={20} height={20} type={IconTypes.DOCUMENT} />
@@ -62,8 +129,9 @@ export function InputPluginsDefalut():React.ReactElement {
       sendUploadMessage({ file }, MESSAGE_TYPE_NAME.FILE);
     },
   });
-  const plugins = propPlugins
-  || [<EmojiPicker />, ImagePicker, VideoPicker, FilePicker];
+  const plugins = [
+    isEmojiPicker && <EmojiPicker />, ImagePicker, VideoPicker, FilePicker, ...propPlugins,
+  ].filter((item) => item);
 
   return <Plugins ref={pluginsRef} plugins={plugins} showNumber={showNumber} MoreIcon={MoreIcon} />;
 }

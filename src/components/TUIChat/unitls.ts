@@ -53,3 +53,16 @@ export const handleRemoveMessage = (
   list.splice(index, 1);
   return list;
 };
+
+export const handleUploadPenddingMessage = (
+  messageList: Array<Message>,
+  message: Message,
+) => {
+  const list = [...messageList];
+  if (!list.some((item:Message) => item.ID === message.ID)) {
+    list.push(message);
+  }
+  const index = list.findIndex((item) => item?.ID === message?.ID);
+  list[index] = message;
+  return list;
+};

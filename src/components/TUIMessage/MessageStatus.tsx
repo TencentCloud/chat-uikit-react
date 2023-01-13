@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { Message } from 'tim-js-sdk';
+import { useTUIMessageContext } from '../../context';
 import { getTimeStamp } from '../untils';
 
 export interface MessageContextProps {
@@ -13,7 +14,11 @@ function MessageStatustWithContext <T extends MessageContextProps>(
     message,
   } = props;
 
-  const timeElement = <div className="time">{message?.time ? getTimeStamp(message.time * 1000) : 0}</div>;
+  const {
+    isShowTime,
+  } = useTUIMessageContext('MessageStatustWithContext');
+
+  const timeElement = (typeof isShowTime === 'undefined' || isShowTime) && <div className="time">{message?.time ? getTimeStamp(message.time * 1000) : 0}</div>;
 
   return (
     <div className="message-status">

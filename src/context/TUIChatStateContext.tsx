@@ -2,6 +2,7 @@ import React, {
   PropsWithChildren, useContext, MutableRefObject, RefObject,
 } from 'react';
 import { Conversation, Message } from 'tim-js-sdk';
+import { MessageListProps, TUIMessageInputBasicProps, TUIMessageProps } from '../components';
 import { OperateMessageParams } from '../components/TUIChat/hooks/useHandleMessage';
 
 export interface TUIChatStateContextValue {
@@ -17,6 +18,13 @@ export interface TUIChatStateContextValue {
   textareaRef?: MutableRefObject<HTMLTextAreaElement | undefined>,
   operateData?: OperateMessageParams,
   noMore?: boolean,
+  messageConfig?: TUIMessageProps,
+  cloudCustomData?: string,
+  TUIMessageInputConfig?: TUIMessageInputBasicProps,
+  audioSource?: HTMLAudioElement,
+  vidoeSource?: HTMLVideoElement,
+  TUIMessageListConfig?: MessageListProps,
+  uploadPenddingMessageList?: Array<Message>,
 }
 
 export const TUIChatStateContext = React.createContext<TUIChatStateContextValue>(null);

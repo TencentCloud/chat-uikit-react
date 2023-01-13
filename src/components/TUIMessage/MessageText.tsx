@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Message } from 'tim-js-sdk';
+import TIM, { Message } from 'tim-js-sdk';
 import { UnknowPorps } from '../../context';
 
 export interface MessageContextProps {
@@ -18,12 +18,12 @@ function MessageTextWithContext <T extends MessageContextProps>(
   } = props;
 
   return (
-    <div className={`bubble message-text bubble-${message.flow}`}>
+    <div className={`bubble message-text bubble-${message.flow} ${message?.conversationType === TIM.TYPES.CONV_GROUP ? 'group' : ''}`}>
       <div className="message-text-content">
         {context.text.map((item, index) => {
           const key = message.ID + index;
           if (item.name === 'text') {
-            return item.text;
+            return <p className="message-text-content-p" key={item.src + key}>{item.text}</p>;
           }
           return <img className="text-img" key={item.src + key} src={item.src} alt="" />;
         })}

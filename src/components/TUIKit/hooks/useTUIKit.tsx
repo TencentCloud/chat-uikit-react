@@ -2,10 +2,11 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { ChatSDK, Conversation, Profile } from 'tim-js-sdk';
 
 export interface UseChatParams{
-  tim: ChatSDK
+  tim: ChatSDK,
+  activeConversation?: Conversation,
 }
-export const useTUIKit = ({ tim }:UseChatParams) => {
-  const [conversation, setConversation] = useState<Conversation>();
+export const useTUIKit = ({ tim, activeConversation: paramsActiveConversation }:UseChatParams) => {
+  const [conversation, setConversation] = useState<Conversation>(paramsActiveConversation);
   const [myProfile, setMyProfile] = useState<Profile>();
   const [TUIManageShow, setTUIManageShow] = useState<boolean>(false);
   const [TUIProfileShow, setTUIProfileShow] = useState<boolean>(false);
@@ -28,6 +29,9 @@ export const useTUIKit = ({ tim }:UseChatParams) => {
     },
     [tim],
   );
+  useEffect(() => {
+    setConversation(paramsActiveConversation);
+  }, [paramsActiveConversation]);
   return {
     conversation,
     setActiveConversation,

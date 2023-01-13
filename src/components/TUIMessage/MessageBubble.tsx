@@ -5,15 +5,17 @@ import React, {
 } from 'react';
 import TIM, { Message } from 'tim-js-sdk';
 import { MESSAGE_STATUS } from '../../constants';
+import { useTUIChatActionContext } from '../../context';
 import { Icon, IconTypes } from '../Icon';
 import { useMessageReply } from './hooks/useMessageReply';
+import { MessageProgress } from './MessageProgress';
 
 export interface MessageBubbleProps {
   message?: Message,
   className?: string,
   children?: ReactNode,
   Context?: React.ComponentType<any>,
-  Plugins?: React.ComponentType<any>,
+  Plugins?: React.ComponentType<any> | undefined,
 }
 
 function MessageBubbleWithContext <T extends MessageBubbleProps>(
@@ -34,6 +36,8 @@ function MessageBubbleWithContext <T extends MessageBubbleProps>(
     sender,
   } = useMessageReply({ message });
 
+  const { setHighlightedMessageId } = useTUIChatActionContext('MessageBubbleWithContext');
+
   const handleLoading = () => !!((
     message?.type === TIM.TYPES.MSG_IMAGE
     || message?.type === TIM.TYPES.MSG_VIDEO
@@ -45,6 +49,10 @@ function MessageBubbleWithContext <T extends MessageBubbleProps>(
   };
   const handleMouseLeave = () => {
     setPluginsShow(false);
+  };
+
+  const handleReplyMessage = () => {
+    setHighlightedMessageId(replyMessage?.ID);
   };
 
   return (
@@ -63,17 +71,27 @@ function MessageBubbleWithContext <T extends MessageBubbleProps>(
         >
           {
             messageReply && (
-            <main className="meesage-bubble-reply-main">
+            <div
+              className="meesage-bubble-reply-main"
+              role="menuitem"
+              tabIndex={0}
+              onClick={handleReplyMessage}
+            >
               <header className="title">{sender}</header>
               {Context && <Context message={replyMessage} />}
-            </main>
+            </div>
             )
           }
           {children}
+          <MessageProgress message={message} />
         </div>
-        <div className="message-plugin">
-          {PluginsShow && Plugins && <Plugins />}
-        </div>
+        {
+          Plugins && (
+          <div className="message-plugin">
+            {PluginsShow && <Plugins />}
+          </div>
+          )
+        }
       </div>
       <div className="message-bubble-status icon">
         {

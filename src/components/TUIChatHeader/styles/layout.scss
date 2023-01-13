@@ -7,10 +7,10 @@
   &-left {
     display: flex;
     align-items: center;
-    .header-content {
-      padding: 0 8px;
-    }
-
+  }
+  .header-content {
+    flex: 1;
+    padding: 0 8px;
   }
   &-right {
     .header-handle {
@@ -29,4 +29,8 @@
   .system {
     height: 32px;
   }
+}
+
+.tui-chat-live-header {
+
 }

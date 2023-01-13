@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+import TIM from 'tim-js-sdk';
 import type { MessageContextProps } from './MessageText';
 
 function MessageMergerWithContext <T extends MessageContextProps>(
@@ -11,7 +12,7 @@ function MessageMergerWithContext <T extends MessageContextProps>(
   } = props;
 
   return (
-    <div className={`bubble message-merger bubble-${message.flow}`}>
+    <div className={`bubble message-merger bubble-${message.flow} ${message?.conversationType === TIM.TYPES.CONV_GROUP ? 'group' : ''}`}>
       <h3>{context.title}</h3>
       <ul className="message-merger-list">
         {

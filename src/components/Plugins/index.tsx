@@ -49,16 +49,17 @@ function PluginsWithContext<T extends PluginsProps>(
   };
 
   return (
-    <ul className={`plugin ${className}`}>
-      {showPicker?.length > 0 && showPicker.map((Item, index:number) => {
-        const key = `${Item}${index}`;
-        return (
-          <li className="plugin-item" key={key}>
-            {Item}
-          </li>
-        );
-      })}
-      {
+    (showPicker.length > 0 || elements?.length > 0) && (
+      <ul className={`plugin ${className}`}>
+        {showPicker?.length > 0 && showPicker.map((Item, index:number) => {
+          const key = `${Item}${index}`;
+          return (
+            <li className="plugin-item" key={key}>
+              {Item}
+            </li>
+          );
+        })}
+        {
         elements?.length > 0 && (
           <div className="plugin-popup">
             <div role="menuitem" tabIndex={0} className="more" onClick={handleShow}>
@@ -90,7 +91,8 @@ function PluginsWithContext<T extends PluginsProps>(
           </div>
         )
       }
-    </ul>
+      </ul>
+    )
   );
 }
 const Plugins = forwardRef(PluginsWithContext);

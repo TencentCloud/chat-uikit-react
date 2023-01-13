@@ -2,22 +2,21 @@ import React, {
   useCallback,
   ChangeEventHandler,
   MutableRefObject,
-  useEffect,
-  useState,
 } from 'react';
-import { CONSTANT_DISPATCH_TYPE, MESSAGE_OPERATE } from '../../../constants';
+import { CONSTANT_DISPATCH_TYPE, MESSAGE_OPERATE, MESSAGE_TYPE_NAME } from '../../../constants';
 import {
   useTUIChatActionContext,
-  useTUIChatStateContext,
   useTUIKitContext,
 } from '../../../context';
 import { formatEmojiString } from '../../TUIMessage/utils/emojiMap';
 import { useHandleQuoteMessage } from './useHandleQuoteMessage';
 import type { IbaseStateProps, ICursorPos } from './useMessageInputState';
+import { filesData } from './useUploadPicker';
 
 interface useMessageInputTextProps extends IbaseStateProps {
   focus?: boolean,
   textareaRef?: MutableRefObject<HTMLTextAreaElement | undefined>,
+  sendUploadMessage?: (file: filesData, type: MESSAGE_TYPE_NAME) => void
 }
 
 export const useMessageInputText = (props:useMessageInputTextProps) => {
@@ -26,19 +25,11 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
     dispatch,
     focus,
     textareaRef,
+    sendUploadMessage,
   } = props;
-
-  const [quoteMessage, setQuoteMessage] = useState(null);
 
   const { tim } = useTUIKitContext('useMessageInputText');
   const { sendMessage, createTextMessage, operateMessage } = useTUIChatActionContext('TUIMessageInput');
-  const {
-    operateData,
-  } = useTUIChatStateContext('TUIMessageInputDefault');
-
-  useEffect(() => {
-    setQuoteMessage(operateData[MESSAGE_OPERATE.QUOTE]);
-  }, [operateData]);
 
   const { cloudCustomData } = useHandleQuoteMessage();
 
@@ -101,27 +92,34 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
   );
 
   const handlePasete = useCallback(
-    async (e: ClipboardEvent) => {
+    async (e: React.ClipboardEvent | any) => {
       e.preventDefault();
       if (!(e.clipboardData && e.clipboardData.items)) {
         return;
       }
-      const str = formatEmojiString(e.clipboardData.getData('text'), 1);
-      if (str) {
-        dispatch({
-          type: CONSTANT_DISPATCH_TYPE.SET_TEXT,
-          getNewText: (text:string) => `${text}${str}`,
-        });
-      }
-      //  else {
-      //   for (let i = 0; i < e.clipboardData.items.length; i += 1) {
-      //     const item = e.clipboardData.items[i];
-      //     if (item.kind === 'file') {
-      //       const f = item.getAsFile();
-      //       console.log('file', f);
-      //     }
-      //   }
-      // }
+      const { types, items } = e.clipboardData;
+      types.find((type, index) => {
+        const item = items[index];
+        switch (type) {
+          case 'text/plain':
+            item.getAsString((str) => {
+              dispatch({
+                type: CONSTANT_DISPATCH_TYPE.SET_TEXT,
+                getNewText: (text:string) => `${text}${str}`,
+              });
+            });
+            return true;
+          case 'Files': {
+            const file = item.getAsFile();
+            if (item && item.kind === 'file' && item.type.match(/^image\//i)) {
+              sendUploadMessage({ file }, MESSAGE_TYPE_NAME.IMAGE);
+            }
+            return true;
+          }
+          default:
+            return false;
+        }
+      });
     },
     [textareaRef],
   );

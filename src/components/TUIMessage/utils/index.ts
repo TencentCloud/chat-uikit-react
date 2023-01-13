@@ -118,21 +118,21 @@ export function handleTipMessageShowContext(message: Message) {
   }
   switch (message.payload.operationType) {
     case TIM.TYPES.GRP_TIP_MBR_JOIN:
-      options.text = `${userName} ${t('message.tip.加入群组')}`;
+      options.text = `${userName} ${t('message.tip.Join in group')}`;
       break;
     case TIM.TYPES.GRP_TIP_MBR_QUIT:
-      options.text = `${t('message.tip.群成员')}：${userName} ${t('message.tip.退出群组')}`;
+      options.text = `${t('message.tip.member')}：${userName} ${t('message.tip.quit group')}`;
       break;
     case TIM.TYPES.GRP_TIP_MBR_KICKED_OUT:
-      options.text = `${t('message.tip.群成员')}：${userName} ${t('message.tip.被')}${message.payload.operatorID}${t(
-        'message.tip.踢出群组',
+      options.text = `${t('message.tip.member')}：${userName} ${t('message.tip.by')}${message.payload.operatorID}${t(
+        'message.tip.kicked out of group',
       )}`;
       break;
     case TIM.TYPES.GRP_TIP_MBR_SET_ADMIN:
-      options.text = `${t('message.tip.群成员')}：${userName} ${t('message.tip.成为管理员')}`;
+      options.text = `${t('message.tip.member')}：${userName} ${t('message.tip.become admin')}`;
       break;
     case TIM.TYPES.GRP_TIP_MBR_CANCELED_ADMIN:
-      options.text = `${t('message.tip.群成员')}：${userName} ${t('message.tip.被撤销管理员')}`;
+      options.text = `${t('message.tip.member')}：${userName} ${t('message.tip.by revoked administrator')}`;
       break;
     case TIM.TYPES.GRP_TIP_GRP_PROFILE_UPDATED:
       // options.text =  `${userName} 修改群组资料`;
@@ -141,15 +141,15 @@ export function handleTipMessageShowContext(message: Message) {
     case TIM.TYPES.GRP_TIP_MBR_PROFILE_UPDATED:
       message.payload.memberList.map((member:any) => {
         if (member.muteTime > 0) {
-          options.text = `${t('message.tip.群成员')}：${member.userID}${t('message.tip.被禁言')}`;
+          options.text = `${t('message.tip.member')}：${member.userID}${t('message.tip.muted')}`;
         } else {
-          options.text = `${t('message.tip.群成员')}：${member.userID}${t('message.tip.被取消禁言')}`;
+          options.text = `${t('message.tip.member')}：${member.userID}${t('message.tip.unmuted')}`;
         }
         return member;
       });
       break;
     default:
-      options.text = `[${t('message.tip.群提示消息')}]`;
+      options.text = `[${t('message.tip.reminder message')}]`;
       break;
   }
   return options;
@@ -164,19 +164,19 @@ function handleTipGrpUpdated(message: Message) {
   switch (name) {
     case 'muteAllMembers':
       if (newGroupProfile[name]) {
-        text = `${t('message.tip.管理员')} ${operatorID} ${t('message.tip.开启全员禁言')}`;
+        text = `${t('message.tip.admin')} ${operatorID} ${t('message.tip.enable all staff mute')}`;
       } else {
-        text = `${t('message.tip.管理员')} ${operatorID} ${t('message.tip.取消全员禁言')}`;
+        text = `${t('message.tip.admin')} ${operatorID} ${t('message.tip.unmute everyone')}`;
       }
       break;
     case 'ownerID':
-      text = `${newGroupProfile[name]} ${t('message.tip.成为新的群主')}`;
+      text = `${newGroupProfile[name]} ${t('message.tip.become the new owner')}`;
       break;
     case 'groupName':
-      text = `${operatorID} ${t('message.tip.修改群名为')} ${newGroupProfile[name]}`;
+      text = `${operatorID} ${t('message.tip.modify group name')} ${newGroupProfile[name]}`;
       break;
     case 'notification':
-      text = `${operatorID} ${t('message.tip.发布新公告')}`;
+      text = `${operatorID} ${t('message.tip.post a new announcement')}`;
       break;
     default:
       break;

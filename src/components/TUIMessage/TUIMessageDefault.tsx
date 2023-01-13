@@ -6,12 +6,11 @@ import { MessageBubble } from './MessageBubble';
 import { MessageTip } from './MessageTip';
 
 import './styles/index.scss';
-import { Avatar } from '../Avatar';
-import { useComponentContext } from '../../context';
-import { handleDisplayAvatar } from '../untils';
+import { messageShowType, useComponentContext, useTUIMessageContext } from '../../context';
 import { MessageSystem } from './MessageSystem';
 import { MessageRevoke } from './MessageRevoke';
-import { MESSAGE_FLOW } from '../../constants';
+import { MessageName } from './MessageName';
+import { MessageAvatar } from './MessageAvatar';
 
 function TUIMessageDefaultWithContext <T extends TUIMessageProps>(
   props: PropsWithChildren<T>,
@@ -20,6 +19,7 @@ function TUIMessageDefaultWithContext <T extends TUIMessageProps>(
     message,
     MessageContext: propsMessageContext,
     MessagePlugins: propsMessagePlugins,
+    className,
   } = props;
 
   const {
@@ -27,11 +27,27 @@ function TUIMessageDefaultWithContext <T extends TUIMessageProps>(
     MessagePlugins: contextMessagePlugins,
   } = useComponentContext('TUIMessage');
 
+  const {
+    prefix,
+    suffix,
+    customName,
+    showAvatar = messageShowType.IN,
+    showName = messageShowType.IN,
+    customAvatar,
+  } = useTUIMessageContext('TUIMessage');
+
   const MessageContextUIComponent = propsMessageContext || contextMessageContext;
   const MessagePlugins = propsMessagePlugins || contextMessagePlugins;
 
   return (
-    <div className={`message-default ${(message?.type === TIM.TYPES.MSG_GRP_TIP || message?.isRevoked) ? 'tip' : message?.flow}`}>
+    <div
+      className={
+      `message-default
+      ${(message?.type === TIM.TYPES.MSG_GRP_TIP || message?.isRevoked) ? 'tip' : message?.flow}
+      ${className}
+      `
+      }
+    >
       {
         message?.type === TIM.TYPES.MSG_GRP_TIP
         && (<MessageTip message={message} />)
@@ -53,17 +69,10 @@ function TUIMessageDefaultWithContext <T extends TUIMessageProps>(
         key={message?.ID}
         data-message-id={message?.ID}
       >
-        {message?.flow === MESSAGE_FLOW.IN
-                    && (
-                    <Avatar size={32} image={handleDisplayAvatar(message?.avatar)} />
-                    )}
+        {prefix}
+        <MessageAvatar message={message} CustomAvatar={customAvatar} showType={showAvatar} />
         <main className="content">
-          {message?.conversationType === TIM.TYPES.CONV_GROUP
-                && message?.flow === MESSAGE_FLOW.IN && (
-                <label htmlFor="content" className="name">
-                  {message?.nick || message?.from}
-                </label>
-          )}
+          <MessageName message={message} CustomName={customName} showType={showName} />
           <MessageBubble
             message={message}
             Context={MessageContextUIComponent}
@@ -72,6 +81,7 @@ function TUIMessageDefaultWithContext <T extends TUIMessageProps>(
             <MessageContextUIComponent message={message} />
           </MessageBubble>
         </main>
+        {suffix}
       </div>
       )}
     </div>

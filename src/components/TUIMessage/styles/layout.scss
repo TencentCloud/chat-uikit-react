@@ -1,4 +1,6 @@
 .message-default {
+  width: 100%;
+  flex: 1;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -27,6 +29,7 @@
 }
 
 .in {
+  flex: 1;
   display: flex;
   flex-direction: row;
   justify-self: flex-start;
@@ -36,6 +39,7 @@
   }
 }
 .out {
+  flex: 1;
   display: flex;
   flex-direction: row-reverse;
   justify-self: flex-end;
@@ -45,13 +49,17 @@
   }
 }
 .tip {
-  justify-self: center;
+  justify-self: center !important;
+  width: auto;
 }
 
 .bubble {
   padding: 8px 16px;
   &-in {
     border-radius: 16px 16px 16px 0;
+    &.group {
+      border-radius: 0px 16px 16px 16px;
+    }
   }
   &-out {
     border-radius: 16px 16px 0 16px;
@@ -96,6 +104,10 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
+    &-p {
+      display: inline;
+      vertical-align: middle;
+    }
     .message-status {
       display: inline-flex;
       float: right;
@@ -104,7 +116,7 @@
   }
 }
 
-.message-text, 
+.message-text,
 .message-tip {
   font-family: PingFangSC-Regular;
   font-style: normal;
@@ -114,6 +126,7 @@
   .text-img {
     width: 20px;
     height: 20px;
+    vertical-align: middle;
   }
 }
 
@@ -261,6 +274,7 @@
   &-context {
     display: flex;
     align-items: center;
+    padding: 0 8px;
     .message-context{
       flex: 1;
     }
@@ -391,4 +405,75 @@
 
 .message-revoke {
   color: #999999;
+}
+
+.message-audio {
+  display: flex;
+  align-items: center;
+  .out {
+    transform: rotate(180deg);
+  }
+  &-none {
+    display: none;
+  }
+  &-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  &-out {
+    flex-direction: row-reverse;
+  }
+  .playing {
+    animation: playingAnimation 1s ease-in-out infinite;
+  }
+
+  @keyframes playingAnimation {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+.high-lighted {
+  animation: highLightedAnimation 1s ease-in-out forwards;
+}
+
+@keyframes highLightedAnimation {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.progress-box {
+  width: 100%;
+  height: 5px;
+  display: flex;
+  justify-content: flex-start;
+  .progress {
+    display: inline-block;
+    width: 0;
+    background: #147aff;
+    height: 5px;
+    border-radius: 2px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  }
 }

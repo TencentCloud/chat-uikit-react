@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+import TIM from 'tim-js-sdk';
 import { JSONStringToParse } from '../untils';
 import type { MessageContextProps } from './MessageText';
 
@@ -23,7 +24,7 @@ function MessageCustomWithContext <T extends MessageContextProps>(
   };
 
   return (
-    <div className={`bubble message-custom bubble-${message.flow}`}>
+    <div className={`bubble message-custom bubble-${message.flow}  ${message?.conversationType === TIM.TYPES.CONV_GROUP ? 'group' : ''}`}>
       {handleContext(context?.custom)}
       {children}
     </div>

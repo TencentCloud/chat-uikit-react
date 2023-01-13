@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+import TIM from 'tim-js-sdk';
 import { Icon, IconTypes } from '../Icon';
 import type { MessageContextProps } from './MessageText';
 
@@ -10,9 +11,14 @@ function MessageFileWithContext <T extends MessageContextProps>(
     message,
     children,
   } = props;
-
   return (
-    <div className={`bubble message-file bubble-${message.flow}`}>
+    <a
+      href={context.url}
+      download={context.name}
+      target="_parent"
+      className={`bubble message-file bubble-${message.flow} ${message?.conversationType === TIM.TYPES.CONV_GROUP ? 'group' : ''}`}
+      rel="noreferrer"
+    >
       <main className="message-file-main">
         <Icon className="icon" width={15} height={20} type={IconTypes.FILE} />
         <label htmlFor="message-file">{ context.name }</label>
@@ -21,7 +27,7 @@ function MessageFileWithContext <T extends MessageContextProps>(
         <span className="message-file-size">{ context.size }</span>
         {children}
       </div>
-    </div>
+    </a>
   );
 }
 

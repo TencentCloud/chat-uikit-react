@@ -8,6 +8,7 @@ import {
   handleMessageList,
   handleEditMessage,
   handleRemoveMessage,
+  handleUploadPenddingMessage,
 } from './unitls';
 
 export type ChatStateReducerAction =
@@ -60,6 +61,18 @@ export type ChatStateReducerAction =
       type: CONSTANT_DISPATCH_TYPE.SET_NO_MORE,
       value?: boolean,
     }
+  | {
+      type: CONSTANT_DISPATCH_TYPE.SET_AUDIO_SOURCE,
+      value?: HTMLAudioElement | null,
+    }
+  | {
+      type: CONSTANT_DISPATCH_TYPE.SET_VIDEO_SOURCE,
+      value?: HTMLVideoElement | null,
+    }
+  | {
+      type: CONSTANT_DISPATCH_TYPE.UPDATE_UPLOAD_PENDDING_MESSAGE_LIST,
+      value?: Message,
+    }
 export type ChatStateReducer = Reducer<TUIChatStateContextValue, ChatStateReducerAction>;
 
 export const chatReducer = (
@@ -111,6 +124,17 @@ export const chatReducer = (
       return { ...state, operateData: { ...action.value } };
     case CONSTANT_DISPATCH_TYPE.SET_NO_MORE:
       return { ...state, noMore: action.value };
+    case CONSTANT_DISPATCH_TYPE.SET_AUDIO_SOURCE:
+      return { ...state, audioSource: action.value };
+    case CONSTANT_DISPATCH_TYPE.SET_VIDEO_SOURCE:
+      return { ...state, vidoeSource: action.value };
+    case CONSTANT_DISPATCH_TYPE.UPDATE_UPLOAD_PENDDING_MESSAGE_LIST:
+      return {
+        ...state,
+        uploadPenddingMessageList: [
+          ...handleUploadPenddingMessage(state.uploadPenddingMessageList, action.value),
+        ],
+      };
     default: return state;
   }
 };
@@ -126,4 +150,7 @@ export const initialState:TUIChatStateContextValue = {
   isSameLastMessageID: false,
   operateData: {},
   noMore: false,
+  audioSource: null,
+  vidoeSource: null,
+  uploadPenddingMessageList: [],
 };

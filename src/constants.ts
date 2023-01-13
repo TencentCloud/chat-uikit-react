@@ -42,6 +42,9 @@ export enum CONSTANT_DISPATCH_TYPE {
   OPERATE_MESSAGE = 'operateMessage',
   SET_NO_MORE = 'setNoMore',
   SET_CURSOR_POS = 'setCursorPos',
+  SET_AUDIO_SOURCE = 'setAudioSource',
+  SET_VIDEO_SOURCE = 'setVideoSource',
+  UPDATE_UPLOAD_PENDDING_MESSAGE_LIST = 'updateUploadPenddingMessageList'
 }
 
 export enum MESSAGE_TYPE {

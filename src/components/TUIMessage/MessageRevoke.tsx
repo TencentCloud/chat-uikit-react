@@ -27,7 +27,7 @@ function MessageRevokeWithContext <T extends MessageContextProps>(
       {
         message?.flow !== MESSAGE_FLOW.IN && <span>you </span>
       }
-      <span>recalled a message</span>
+      <span> recalled a message</span>
       {
         message?.flow === MESSAGE_FLOW.OUT
         && message?.type === TIM.TYPES.MSG_TEXT

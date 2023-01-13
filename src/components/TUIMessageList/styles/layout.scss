@@ -1,7 +1,7 @@
 ul,li,div,p,label,span {
   margin: 0;
   padding: 0;
-} 
+}
 ul li {
   list-style: none;
 }
@@ -12,6 +12,9 @@ ul li {
   overflow-y: auto;
   position: relative;
   padding: 0 20px;
+  &.hide {
+    opacity: 0;
+  }
   &-item {
     display: grid;
     padding: 5px 0;
@@ -24,5 +27,14 @@ ul li {
     font-weight: 500;
     line-height: 17px;
     color: #999999;
+  }
+  &-time {
+    color: #7a7a7a;
+    font-family: PingFangSC-Medium;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    padding: 10px;
+    text-align: center;
   }
 }

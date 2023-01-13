@@ -51,6 +51,13 @@ const reducer = (state:IinitState, action) => {
 export const useMessageInputState = (props:TUIMessageInputProps) => {
   const [state, dispatch] = useReducer(reducer, initState);
   const { focus, textareaRef } = props;
+
+  const {
+    sendUploadMessage,
+  } = useUploadPicker({
+    state,
+    dispatch,
+  });
   const {
     handleChange,
     handleSubmit,
@@ -64,6 +71,7 @@ export const useMessageInputState = (props:TUIMessageInputProps) => {
     dispatch,
     textareaRef,
     focus,
+    sendUploadMessage,
   });
 
   const {
@@ -74,13 +82,6 @@ export const useMessageInputState = (props:TUIMessageInputProps) => {
     dispatch,
     textareaRef,
     insertText,
-  });
-
-  const {
-    sendUploadMessage,
-  } = useUploadPicker({
-    state,
-    dispatch,
   });
 
   return {

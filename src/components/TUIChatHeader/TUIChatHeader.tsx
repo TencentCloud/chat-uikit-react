@@ -11,6 +11,8 @@ interface TUIChatHeaderProps {
   title?: string,
   TUIChatHeader?: React.ComponentType<TUIChatHeaderDefaultProps>,
   conversation?: Conversation,
+  avatar?: React.ReactElement | string,
+  headerOpateIcon?: React.ReactElement | string,
 }
 
 function UnMemoizedTUIChatHeader<T extends TUIChatHeaderProps>(
@@ -20,6 +22,8 @@ function UnMemoizedTUIChatHeader<T extends TUIChatHeaderProps>(
     title,
     conversation: propsConversation,
     TUIChatHeader: propTUIChatHeader,
+    avatar,
+    headerOpateIcon,
   } = props;
 
   const { conversation: contextConversation } = useTUIChatStateContext('TUIChatHeader');
@@ -33,6 +37,8 @@ function UnMemoizedTUIChatHeader<T extends TUIChatHeaderProps>(
     <TUIChatHeaderUIComponent
       title={title}
       conversation={conversation}
+      avatar={avatar}
+      opateIcon={headerOpateIcon}
     />
   );
 }
