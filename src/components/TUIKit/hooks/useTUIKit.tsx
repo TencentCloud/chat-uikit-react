@@ -1,5 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { ChatSDK, Conversation, Profile } from 'tim-js-sdk';
+import TIM, {
+  ChatSDK,
+  Conversation,
+  Group,
+  Profile,
+} from 'tim-js-sdk';
 
 export interface UseChatParams{
   tim: ChatSDK,
@@ -29,6 +34,7 @@ export const useTUIKit = ({ tim, activeConversation: paramsActiveConversation }:
     },
     [tim],
   );
+
   useEffect(() => {
     setConversation(paramsActiveConversation);
   }, [paramsActiveConversation]);

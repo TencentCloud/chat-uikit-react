@@ -1,5 +1,9 @@
 import React, { PropsWithChildren, useContext } from 'react';
-import { ChatSDK, Conversation, Profile } from 'tim-js-sdk';
+import {
+  ChatSDK,
+  Conversation,
+  Profile,
+} from 'tim-js-sdk';
 
 export interface TUIKitContextValue {
     tim: ChatSDK,

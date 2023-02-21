@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useCallback } from 'react';
+import React, { PropsWithChildren, useCallback, useEffect } from 'react';
 import './styles/index.scss';
 
 import { Message } from 'tim-js-sdk';
@@ -16,11 +16,11 @@ export function InputQuoteDefalut <T extends InputQuoteProps>(
   props:PropsWithChildren<T>,
 ):React.ReactElement {
   const {
-    message,
+    message: propsMessage,
   } = props;
 
   const { operateMessage } = useTUIChatActionContext('MessageRevokeWithContext');
-  const { cloudCustomData } = useHandleQuoteMessage(message);
+  const { cloudCustomData, message } = useHandleQuoteMessage(propsMessage);
 
   const handleClose = useCallback(() => {
     operateMessage({

@@ -33,7 +33,7 @@ function useMessageListElement <T extends MessageListElementProps>(
          isShowIntervalsTImer && <div className="message-list-time" key={`${currrentTimer + index}`}>{currrentTimer ? getTimeStamp(currrentTimer * 1000) : 0}</div>
        }
         <li className="message-list-item" key={key}>
-          <TUIMessage message={item} />
+          <TUIMessage message={item} key={key} />
         </li>
 
       </>

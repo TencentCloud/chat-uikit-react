@@ -1,0 +1,229 @@
+.tui-live {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  video {
+    width: 100%;
+  }
+  &-list {
+    display: flex;
+  }
+  &-item {
+    display: flex;
+    align-items: center;
+    margin: 0 6px;
+    gap: 10px;
+    .list-item-text{
+      display: inline-flex;
+      // min-width: 22px;
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 14px;
+      display: flex;
+      align-items: center;
+      color: #000000;
+    }
+  }
+  .tag-list {
+    flex: 1;
+    flex-wrap: wrap;
+  }
+  .tag-item {
+    position: relative;
+    padding: 4px 8px 4px 26px;
+    background: #7187D3;
+    border-radius: 47px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    &::before {
+      position: absolute;
+      content: "#";
+      color: #FFFFFF;
+      left: 11px;
+      display: flex;
+      align-items: center;
+    }
+  }
+  &-header {
+    padding: 12px 20px ;
+    display: flex;
+    flex-direction: column;
+    &-name {
+      padding: 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      h1 {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+        color: #000000;
+      }
+    }
+    &-content {
+      display: flex;
+    }
+    &-label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      margin-right: 6px;
+      background: #FF0000;
+      border-radius: 47px;
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 14px;
+      display: flex;
+      align-items: center;
+      color: #FFFFFF;
+    }
+  }
+  &-content {
+    width: 100%;
+    height: 100%;
+  }
+  &-footer {
+    padding: 20px 20px 30px;
+    display: flex;
+    align-items: center;
+    .owner-avatar {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border-radius: 40px;
+    }
+    &-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      .owner-name {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 0 10px 8px;
+        h1 {
+          font-family: 'Roboto';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 19px;
+          display: flex;
+          align-items: center;
+          color: #000000;
+        }
+      }
+    }
+    .opate-list {
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      .opate-item:last-child {
+        .list-item-text {
+          color: #147AFF;
+        }
+      }
+    }
+    .opate-item {
+      display: flex;
+      align-items: center;
+      padding: 4px 8px;
+      gap: 10px;
+      background: rgba(249, 249, 249, 0.94);
+      border-radius: 40px;
+      .opate-box {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+      }
+      &-suffix {
+        padding-left: 10px;
+      }
+    }
+    .tag-item {
+      background: rgba(20, 122, 255, 0.5);
+      padding: 4px 8px;
+      margin: 0 4px;
+      &::before {
+        content: "";
+      }
+    }
+  }
+  &-members {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    .list {
+      padding: 7px 0;
+      &-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        background: rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        h1 {
+          flex: 1;
+          font-family: 'Roboto';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 14px;
+          color: #000000;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+      }
+      &-item {
+        display: flex;
+        align-items: center;
+        padding: 8px 10px;
+        gap: 4px;
+        .nick {
+          font-family: 'Roboto';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 14px;
+          color: #000000;
+        }
+      }
+    }
+    .close-arrow {
+      .tui-kit-icon {
+        transform: rotate(-90deg);
+      }
+    }
+  }
+}
+
+.line {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 90%;
+    width: 1px;
+    background: #EEEEEE;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+  }
+}

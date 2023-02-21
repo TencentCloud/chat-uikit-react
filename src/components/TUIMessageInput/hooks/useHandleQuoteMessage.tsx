@@ -59,5 +59,6 @@ export function useHandleQuoteMessage(msg?:Message) {
   return {
     cloudCustomData,
     handleQuoteMessage,
+    message: msg || operateData[MESSAGE_OPERATE.QUOTE],
   };
 }
