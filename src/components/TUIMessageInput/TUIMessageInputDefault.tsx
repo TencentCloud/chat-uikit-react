@@ -32,7 +32,7 @@ export function TUIMessageInputDefault():React.ReactElement {
   useEffect(() => {
     if (focus && textareaRef.current) {
       textareaRef.current.autofocus = true;
-      textareaRef.current.focus();
+      textareaRef?.current?.focus();
       textareaRef?.current?.addEventListener('paste', handlePasete);
     }
     return () => {

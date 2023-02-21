@@ -13,7 +13,6 @@ export interface TUIChatHeaderDefaultProps {
   isOnline?: boolean,
   conversation?: Conversation,
   pluginComponentList?: Array<React.ComponentType>,
-
 }
 
 export interface TUIChatHeaderBasicProps extends TUIChatHeaderDefaultProps {
@@ -25,7 +24,7 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderBasicProps>(
   props: PropsWithChildren<T>,
 ):React.ReactElement {
   const {
-    title: propTitle,
+    title: propTitle = '',
     avatar: propAvatar,
     isOnline,
     conversation,
@@ -33,7 +32,7 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderBasicProps>(
     opateIcon,
   } = props;
 
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState(propTitle);
   const [avatar, setAvatar] = useState<React.ReactElement | string>('');
 
   useEffect(() => {

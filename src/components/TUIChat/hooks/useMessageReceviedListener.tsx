@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 import TIM, { Message } from 'tim-js-sdk';
 import { useTUIKitContext } from '../../../context';
 
@@ -10,7 +10,7 @@ export function useMessageReceviedListener(
   ) => void,
 ) {
   const { tim } = useTUIKitContext('useMessageReceviedListener');
-  useLayoutEffect(() => {
+  useEffect(() => {
     const handleMessageRecevied = (event: any) => {
       if (customHandler && typeof customHandler === 'function') {
         customHandler(setMessageList, event);

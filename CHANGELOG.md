@@ -1,3 +1,15 @@
+## [1.0.1] (2023-02-16)
+
+#### feat
+* feat: TUIMessageInput add isTransmitter
+* feat: TUIChat add TUIMessageInput config
+* feat: MessageCustom add system custom message
+* feat: add export Popup component
+
+#### chore
+* chore: Optimize ts format
+* chore: remove useless code
+
 ## [1.0.0] (2023-01-13)
 
 #### feat

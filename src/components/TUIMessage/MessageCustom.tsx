@@ -15,7 +15,19 @@ function MessageCustomWithContext <T extends MessageContextProps>(
   const handleContext = (data) => {
     if (data.data === 'Hyperlink') {
       const extension = JSONStringToParse(data?.extension);
-      return extension?.item.map((item) => <a target="_blank" key={item.value} href={item.value} rel="noreferrer">{item.value}</a>);
+      if (extension?.item) {
+        return extension?.item.map((item) => <a target="_blank" key={item.value} href={item.value} rel="noreferrer">{item.value}</a>);
+      }
+      if (extension?.hyperlinks_text) {
+        const hyperlinks = extension.hyperlinks_text;
+        return (
+          <>
+            {extension.title}
+            {' '}
+            <a target="_blank" key={hyperlinks?.value} href={hyperlinks?.value} rel="noreferrer">{hyperlinks.key}</a>
+          </>
+        );
+      }
     }
     if (data.data === 'group_create') {
       return `${message?.nick || message?.from} Create a group`;

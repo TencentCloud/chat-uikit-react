@@ -12,35 +12,10 @@ import { useTUIChatStateContext } from '../../context';
 export function InputPluginsDefalut():React.ReactElement {
   const {
     sendUploadMessage,
-    // pluginConfig: {
-    //   plugins: propsPlugins,
-    //   showNumber: propsShowNumber,
-    //   MoreIcon: propsMoreIcon,
-    //   isEmojiPicker: porpsIsEmojiPicker,
-    //   isImagePicker: porpsIsImagePicker,
-    //   isVideoPicker: porpsIsVideoPicker,
-    //   isFilePicker: porpsIsFilePicker,
-    // },
     pluginConfig: propsPluginConfig,
   } = useTUIMessageInputContext('TUIMessageInputDefault');
 
   const { TUIMessageInputConfig } = useTUIChatStateContext('TUIMessageInput');
-
-  // const {
-  //   pluginConfig: {
-  //     plugins: contextPlugins,
-  //     showNumber: contextShowNumber,
-  //     MoreIcon: contextMoreIcon,
-  //     isEmojiPicker: contextIsEmojiPicker,
-  //     isImagePicker: contextIsImagePicker,
-  //     isVideoPicker: contextIsVideoPicker,
-  //     isFilePicker: contextIsFilePicker,
-  //   },
-  // } = TUIMessageInputConfig;
-
-  // const propPlugins = propsPlugins || contextPlugins || [];
-  // const showNumber = propsShowNumber || contextShowNumber || 1;
-  // const MoreIcon = propsMoreIcon || contextMoreIcon;
 
   const propPlugins = propsPluginConfig?.plugins
   || TUIMessageInputConfig?.pluginConfig?.plugins || [];

@@ -81,9 +81,14 @@ function UnMemoizedTUIMessageInput<T extends TUIMessageInputProps>(props: PropsW
     TUIMessageInput: PropTUIMessageInput,
     InputPlugins: PropInputPlugins,
     InputQuote: PropInputQuote,
-    isTransmitter = false,
-    className,
+    isTransmitter: propsIsTransmitter,
+    className: propsClassName,
   } = props;
+
+  const { TUIMessageInputConfig } = useTUIChatStateContext('TUIMessageInput');
+
+  const className = propsClassName || TUIMessageInputConfig?.className;
+  const isTransmitter = propsIsTransmitter || TUIMessageInputConfig?.isTransmitter || false;
 
   const {
     TUIMessageInput: ContextInput,
