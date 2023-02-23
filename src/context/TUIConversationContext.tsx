@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
+import { Conversation } from 'tim-js-sdk';
 import { TUIConversationList } from '../components';
 
 export interface TUIConversationContextValue {
   createConversation?:(conversationID:string) => Promise<any>,
   deleteConversation?:(conversationID:string) => Promise<any>,
+  filterConversation?:(conversationList: Array<Conversation>) => Array<Conversation>,
 }
 
 export const TUIConversationContext = React.createContext<TUIConversationContextValue>(undefined);

@@ -9,14 +9,19 @@ export const useConversationUpdate = (
     event: any
   ) => void,
   forceUpdate?: () => void,
+  filterConversation?:(conversationList: Array<Conversation>) => Array<Conversation>,
 ) => {
   const { tim } = useTUIKitContext('useConversationUpdate');
   useEffect(() => {
     const onConversationListUpdated = (event:any) => {
       if (setConversationList) {
-        setConversationList(event.data.filter(
-          (item) => item.type !== TIM.TYPES.CONV_SYSTEM,
-        ));
+        if (filterConversation) {
+          setConversationList(filterConversation(event.data));
+        } else {
+          setConversationList(event.data.filter(
+            (item) => item.type !== TIM.TYPES.CONV_SYSTEM,
+          ));
+        }
       }
       if (forceUpdate) {
         forceUpdate();
