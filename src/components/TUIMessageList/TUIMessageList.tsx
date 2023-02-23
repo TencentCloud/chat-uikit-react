@@ -101,7 +101,7 @@ function TUIMessageListWithContext <T extends MessageListProps>(
   return (
     <div className={`message-list ${!firstRender ? 'hide' : ''}`} ref={messageListRef}>
       {noMore}
-      {noMore && <p className="no-more">no More</p>}
+      {noMore && <p className="no-more">No More</p>}
       <InfiniteScroll
         className="message-list-infinite-scroll"
         hasMore

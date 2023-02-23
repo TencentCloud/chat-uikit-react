@@ -14,6 +14,7 @@ import { ConversationCreate } from '../ConversationCreate';
 import { Icon, IconTypes } from '../Icon';
 import { getDisplayTitle } from '../ConversationPreview/utils';
 import { useConversationUpdate } from './hooks/useConversationUpdate';
+import { useTUIConversationContext } from '../../context/TUIConversationContext';
 
 interface Props {
   filters?: object,
@@ -25,16 +26,22 @@ interface Props {
     setConversationList: React.Dispatch<React.SetStateAction<Array<Conversation>>>,
     event: () => void
   ) => void,
+  filterConversation?:(conversationList: Array<Conversation>) => Array<Conversation>,
 }
 export function UnMemoTUIConversationList<T extends Props>(props: T):React.ReactElement {
   const {
     Preview,
     Container = ConversationListContainer,
     onConversationListUpdated,
+    filterConversation: propsFilterConversation,
   } = props;
   const {
     tim, customClasses, conversation, setActiveConversation, setTUIProfileShow,
   } = useTUIKitContext('TUIConversationList');
+  const {
+    filterConversation: contextFilterConversation,
+  } = useTUIConversationContext('TUIConversationList');
+  const filterConversation = propsFilterConversation || contextFilterConversation;
   const [conversationUpdateCount, setConversationUpdateCount] = useState(0);
   const forceUpdate = () => setConversationUpdateCount((count) => count + 1);
 
@@ -50,8 +57,13 @@ export function UnMemoTUIConversationList<T extends Props>(props: T):React.React
   const {
     conversationList,
     setConversationList,
-  } = useConversationList(tim, activeConversationHandler);
-  useConversationUpdate(setConversationList, onConversationListUpdated, forceUpdate);
+  } = useConversationList(tim, activeConversationHandler, filterConversation);
+  useConversationUpdate(
+    setConversationList,
+    onConversationListUpdated,
+    forceUpdate,
+    filterConversation,
+  );
   const [searchValue, setSearchValue] = useState('');
   const [searchResult, setSearchResult] = useState(conversationList);
   const [conversationCreated, setConversationCreated] = useState(false);
