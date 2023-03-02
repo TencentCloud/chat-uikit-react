@@ -65,7 +65,8 @@ export const getDisplayMessage = (conversation:Conversation, myProfile:Profile) 
   let from = '';
   switch (type) {
     case TIM.TYPES.CONV_GROUP:
-      from = lastMessage?.fromAccount === myProfile?.userID ? 'You: ' : `${nameCard || nick || fromAccount}: `;
+      from = lastMessage?.fromAccount === myProfile?.userID ? 'You' : `${nameCard || nick || fromAccount || ''}`;
+      from = `${from ? `${from}:` : ''}`;
       break;
     case TIM.TYPES.CONV_C2C:
       from = isRevoked ? 'you ' : '';
