@@ -1,3 +1,11 @@
+## [1.0.2] (2023-03-02)
+
+#### feat
+* feat: TUIConversation add filterConversation
+
+#### fix
+* fix: TUIConversation AVChatRoom display
+
 ## [1.0.1] (2023-02-16)
 
 #### feat

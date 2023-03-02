@@ -1,3 +1,4 @@
+_English | [简体中文](readme.zh_cn.md)_
 # [chat-uikit-react](https://www.tencentcloud.com/document/product/1047/34279/)
 >chat-uikit-react is a UI component library based on Tencent Cloud IM SDK. It provides universal UI components to offer features such as conversation, chat, relationship chain, group, and audio/video call features.
 With these UI components, you can quickly build your own business logic.

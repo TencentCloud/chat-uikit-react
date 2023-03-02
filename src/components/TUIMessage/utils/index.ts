@@ -74,6 +74,9 @@ export function handleShowLastMessage(item: Conversation) {
     && conversation.messageRemindType === TIM.TYPES.MSG_REMIND_ACPT_NOT_NOTE
     ? t(`[${conversation.unreadCount > 99 ? '99+' : conversation.unreadCount}条]`)
     : '';
+  if (!lastMessage.lastTime) {
+    return '';
+  }
   // Determine the lastmessage sender of the group.
   // Namecard / Nick / userid is displayed by priority
   if (conversation.type === TIM.TYPES.CONV_GROUP) {
