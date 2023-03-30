@@ -1,10 +1,12 @@
-## [1.0.2] (2023-03-02)
+## [1.0.2] (2023-03-13)
 
 #### feat
 * feat: TUIConversation add filterConversation
 
 #### fix
+* fix: tim-sdk-js reference path problem
 * fix: TUIConversation AVChatRoom display
+* fix: isJSON function judgment error problem
 
 ## [1.0.1] (2023-02-16)
 
