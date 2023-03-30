@@ -11,18 +11,16 @@ import { defaultGroupAvatarWork, defaultUserAvatar } from './Avatar';
 
 // Determine if it is a JSON string
 export function isJSON(str: string) {
-  // eslint-disable-next-line no-useless-escape
-  if (
-    /^[\],:{}\s]*$/.test(
-      str
-      // eslint-disable-next-line no-useless-escape
-        .replace(/\\["\\\/bfnrtu]/g, '@')
-      // eslint-disable-next-line no-useless-escape
-        .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
-        .replace(/(?:^|:|,)(?:\s*\[)+/g, ''),
-    )
-  ) {
-    return true;
+  if (typeof str === 'string') {
+    try {
+      const data = JSON.parse(str);
+      if (data) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
   }
   return false;
 }
