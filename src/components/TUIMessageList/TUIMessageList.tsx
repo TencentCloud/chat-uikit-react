@@ -28,6 +28,7 @@ function TUIMessageListWithContext <T extends MessageListProps>(
     highlightedMessageId: propsHighlightedMessageId,
     loadMore: propsLoadMore,
     intervalsTimer: propsIntervalsTimer,
+    className: propsClassName,
   } = props;
 
   const [ulElement, setUlElement] = useState<HTMLUListElement | null>(null);
@@ -99,7 +100,7 @@ function TUIMessageListWithContext <T extends MessageListProps>(
   }, [highlightedMessageId]);
 
   return (
-    <div className={`message-list ${!firstRender ? 'hide' : ''}`} ref={messageListRef}>
+    <div className={`message-list ${propsClassName} ${!firstRender ? 'hide' : ''}`} ref={messageListRef}>
       {noMore}
       {noMore && <p className="no-more">No More</p>}
       <InfiniteScroll
