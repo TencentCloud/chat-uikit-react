@@ -119,7 +119,7 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
           calendarClassName="tui-profile-birthday-calendar"
           isOpen
           format="y-MM-dd"
-          onChange={(value) => { editBirthday(value); }}
+          onChange={(value:Date) => { editBirthday(value); }}
           value={showBirthdayFormat(`${userInfo?.birthday}`)}
         />
       ),
