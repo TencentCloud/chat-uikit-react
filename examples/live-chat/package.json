@@ -16,7 +16,7 @@
     "tim-js-sdk": "file:../../node_modules/tim-js-sdk",
     "typescript": "^4.8.3",
     "web-vitals": "^2.1.4",
-    "@tencentcloud/chat-uikit-react": "file:../../"
+    "@tencentcloud/chat-uikit-react": "^1.0.2"
   },
   "homepage": "./",
   "scripts": {
