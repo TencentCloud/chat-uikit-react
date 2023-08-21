@@ -71,9 +71,12 @@ export function ConversationCreatGroupDetail(props: ConversationCreatGroupDetail
   const getDes = () => typeInfoList.find((item) => item.type === groupType).des;
 
   const next = async () => {
+    const memberList = profileList.map((item) => ({
+      userID: item.userID,
+    }));
     const avatar = getDefaultAvatar(groupType);
     const conversation = await createConversation({
-      name: groupName, type: GroupType[groupType], groupID, avatar,
+      name: groupName, type: GroupType[groupType], groupID, avatar, memberList,
     });
     setActiveConversation(conversation);
     setConversationCreated(false);

@@ -1,24 +1,11 @@
-.App {
-  width: 100vw;
-  height: 100vh;
-  box-sizing: border-box;
-  // background: url("./assets/image/background.png") no-repeat;
-  // background-size: 100% 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 1200px;
-  overflow-x: auto;
-  // padding-left: 300px;
-}
 .live {
   position:relative;
+  margin: 0 auto;
   width: calc(100% - 20rem);
   min-width: 850px;
   height: 86%;
   box-sizing: border-box;
   border-radius: 12px;
-  // overflow: hidden;
   box-shadow: 0 11px 20px 0 rgb(0 0 0 / 30%);
   min-width: 950px;
   .tui-kit {
