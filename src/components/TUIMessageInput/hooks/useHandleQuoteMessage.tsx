@@ -1,25 +1,25 @@
 import { useEffect, useState } from 'react';
-import TIM, { Message } from 'tim-js-sdk';
+import TencentCloudChat, { Message } from '@tencentcloud/chat';
 import { MESSAGE_OPERATE } from '../../../constants';
 import { useTUIChatStateContext } from '../../../context';
 
 const quoteConfigType = {
-  [TIM.TYPES.MSG_TEXT]: 1,
-  [TIM.TYPES.MSG_CUSTOM]: 2,
-  [TIM.TYPES.MSG_IMAGE]: 3,
-  [TIM.TYPES.MSG_AUDIO]: 4,
-  [TIM.TYPES.MSG_VIDEO]: 5,
-  [TIM.TYPES.MSG_FILE]: 6,
-  [TIM.TYPES.MSG_FACE]: 8,
+  [TencentCloudChat.TYPES.MSG_TEXT]: 1,
+  [TencentCloudChat.TYPES.MSG_CUSTOM]: 2,
+  [TencentCloudChat.TYPES.MSG_IMAGE]: 3,
+  [TencentCloudChat.TYPES.MSG_AUDIO]: 4,
+  [TencentCloudChat.TYPES.MSG_VIDEO]: 5,
+  [TencentCloudChat.TYPES.MSG_FILE]: 6,
+  [TencentCloudChat.TYPES.MSG_FACE]: 8,
 };
 
 const quoteConfigForShow = {
-  [TIM.TYPES.MSG_CUSTOM]: '[custom]',
-  [TIM.TYPES.MSG_IMAGE]: '[image]',
-  [TIM.TYPES.MSG_AUDIO]: '[audio]',
-  [TIM.TYPES.MSG_VIDEO]: '[video]',
-  [TIM.TYPES.MSG_FILE]: '[file]',
-  [TIM.TYPES.MSG_FACE]: '[face]',
+  [TencentCloudChat.TYPES.MSG_CUSTOM]: '[custom]',
+  [TencentCloudChat.TYPES.MSG_IMAGE]: '[image]',
+  [TencentCloudChat.TYPES.MSG_AUDIO]: '[audio]',
+  [TencentCloudChat.TYPES.MSG_VIDEO]: '[video]',
+  [TencentCloudChat.TYPES.MSG_FILE]: '[file]',
+  [TencentCloudChat.TYPES.MSG_FACE]: '[face]',
 };
 
 export function useHandleQuoteMessage(msg?:Message) {
@@ -31,7 +31,7 @@ export function useHandleQuoteMessage(msg?:Message) {
 
   const handleQuoteMessage = (message: Message) => {
     const messageType = quoteConfigType[message?.type];
-    const messageAbstract = message?.type === TIM.TYPES.MSG_TEXT
+    const messageAbstract = message?.type === TencentCloudChat.TYPES.MSG_TEXT
       ? message?.payload?.text
       : quoteConfigForShow[message?.type];
 

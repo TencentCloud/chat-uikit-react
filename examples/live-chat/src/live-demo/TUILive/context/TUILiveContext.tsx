@@ -4,7 +4,7 @@ import {
   Group,
   GroupMember,
   Profile,
-} from 'tim-js-sdk';
+} from '@tencentcloud/chat';
 
 export interface OwnerLabelListItem {
   key?: string,

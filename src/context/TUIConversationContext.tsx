@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Conversation } from 'tim-js-sdk';
+import { Conversation } from '@tencentcloud/chat';
 import { TUIConversationList } from '../components';
 
 export interface TUIConversationContextValue {

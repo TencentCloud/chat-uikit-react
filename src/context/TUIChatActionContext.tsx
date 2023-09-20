@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useContext } from 'react';
-import { Message } from 'tim-js-sdk';
+import { Message } from '@tencentcloud/chat';
 import type {
   CreateCustomMessageProps,
   CreateFaceMessageProps,
@@ -27,14 +27,14 @@ export interface TUIChatActionContextValue {
   createTextAtMessage?: (options: CreateTextAtMessageProps) => Message,
   createLocationMessage?: (options: CreateLocationMessageProps) => Message,
   createMergerMessage?: (options: CreateMergerMessageProps) => Message,
-  editLocalmessage?: (message: Message) => void,
+  editLocalMessage?: (message: Message) => void,
   operateMessage?: (data?: OperateMessageParams) => void,
   loadMore?: () => Promise<void>,
   revokeMessage?: (message:Message) => Promise<Message>,
   setAudioSource?: (source: HTMLAudioElement | null) => void,
   setVideoSource?: (source: HTMLVideoElement | null) => void,
   setHighlightedMessageId?: (highlightedMessageId: string) => void,
-  updataUploadPenddingMessageList?: (message?:Message) => void,
+  updateUploadPendingMessageList?: (message?:Message) => void,
 }
 
 export const TUIChatActionContext = React.createContext<

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Conversation } from 'tim-js-sdk';
+import { Conversation } from '@tencentcloud/chat';
 import { TUIKitContextValue, useTUIKitContext } from '../../context';
 import { ConversationPreviewContent } from './ConversationPreviewContent';
 import { AvatarProps } from '../Avatar';

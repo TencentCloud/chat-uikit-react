@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import TIM, { ChatSDK, Conversation } from 'tim-js-sdk';
+import TencentCloudChat, { ChatSDK, Conversation } from '@tencentcloud/chat';
 
 function useConversationList(
-  tim: ChatSDK,
+  chat: ChatSDK,
   activeConversationHandler?:(
     conversationList: Array<Conversation>,
     setConversationList: React.Dispatch<React.SetStateAction<Array<Conversation>>>,
@@ -16,14 +16,14 @@ function useConversationList(
     }
     const offset = queryType === 'reload' ? 0 : conversationList.length;
 
-    const res = await tim?.getConversationList();
+    const res = await chat?.getConversationList();
     if (res?.code === 0) {
       let resConversationList = [];
       if (filterConversation) {
         resConversationList = filterConversation(res.data.conversationList);
       } else {
         resConversationList = res.data.conversationList.filter(
-          (item) => item.type !== TIM.TYPES.CONV_SYSTEM,
+          (item) => item.type !== TencentCloudChat.TYPES.CONV_SYSTEM,
         );
       }
       const newConversationList = queryType === 'reload'
@@ -37,7 +37,7 @@ function useConversationList(
   };
   useEffect(() => {
     queryConversation('reload');
-  }, [tim]);
+  }, [chat]);
   return {
     conversationList,
     setConversationList,

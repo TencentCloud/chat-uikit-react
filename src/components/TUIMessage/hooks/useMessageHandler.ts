@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Message } from 'tim-js-sdk';
+import { Message } from '@tencentcloud/chat';
 import { MESSAGE_FLOW, MESSAGE_OPERATE } from '../../../constants';
 import { useTUIChatActionContext, useTUIKitContext } from '../../../context';
 import { Toast } from '../../Toast';
@@ -17,20 +17,20 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
 
   const {
     removeMessage,
-    editLocalmessage,
+    editLocalMessage,
     operateMessage,
     revokeMessage,
   } = useTUIChatActionContext('useDeleteHandler');
-  const { tim } = useTUIKitContext('useDeleteHandler');
+  const { chat } = useTUIKitContext('useDeleteHandler');
 
   const handleDelMessage = useCallback(async (event?) => {
     event.preventDefault();
-    if (!message?.ID || !tim || !removeMessage) {
+    if (!message?.ID || !chat || !removeMessage) {
       return;
     }
 
     try {
-      await tim.deleteMessage([message]);
+      await chat.deleteMessage([message]);
       removeMessage(message);
     } catch (error) {
       if (handleError) {
@@ -47,7 +47,7 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
 
   const handleRevokeMessage = useCallback(async (event?) => {
     event.preventDefault();
-    if (!message?.ID || !tim || !editLocalmessage) {
+    if (!message?.ID || !chat || !editLocalMessage) {
       return;
     }
 
@@ -55,9 +55,9 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
       if (revokeMessage) {
         await revokeMessage(message);
       } else {
-        await tim.revokeMessage(message);
+        await chat.revokeMessage(message);
       }
-      editLocalmessage(message);
+      editLocalMessage(message);
     } catch (error) {
       if (handleError) {
         handleError({
@@ -74,7 +74,7 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
 
   const handleReplyMessage = useCallback((event?) => {
     event.preventDefault();
-    if (!message?.ID || !tim || !operateMessage) {
+    if (!message?.ID || !chat || !operateMessage) {
       return;
     }
     operateMessage({
@@ -106,8 +106,8 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
 
   const handleResendMessage = useCallback(async (event?) => {
     try {
-      const res = await tim.resendMessage(message);
-      editLocalmessage(res?.data?.message);
+      const res = await chat.resendMessage(message);
+      editLocalMessage(res?.data?.message);
     } catch (error) {
       if (handleError) {
         handleError({
@@ -123,7 +123,7 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
 
   const handleForWardMessage = useCallback(async (event?) => {
     event.preventDefault();
-    if (!message?.ID || !tim || !operateMessage) {
+    if (!message?.ID || !chat || !operateMessage) {
       return;
     }
     operateMessage({

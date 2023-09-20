@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import TIM, { Message } from 'tim-js-sdk';
+import TencentCloudChat, { Message } from '@tencentcloud/chat';
 import { useTUIKitContext } from '../../../context';
 
 export function useMessageReceviedListener(
@@ -9,7 +9,7 @@ export function useMessageReceviedListener(
     event: any,
   ) => void,
 ) {
-  const { tim } = useTUIKitContext('useMessageReceviedListener');
+  const { chat } = useTUIKitContext('useMessageReceviedListener');
   useEffect(() => {
     const handleMessageRecevied = (event: any) => {
       if (customHandler && typeof customHandler === 'function') {
@@ -18,9 +18,9 @@ export function useMessageReceviedListener(
         setMessageList(event.data);
       }
     };
-    tim.on(TIM.EVENT.MESSAGE_RECEIVED, handleMessageRecevied, this);
+    chat.on(TencentCloudChat.EVENT.MESSAGE_RECEIVED, handleMessageRecevied, this);
     return () => {
-      tim.off(TIM.EVENT.MESSAGE_RECEIVED, handleMessageRecevied, this);
+      chat.off(TencentCloudChat.EVENT.MESSAGE_RECEIVED, handleMessageRecevied, this);
     };
-  }, [tim]);
+  }, [chat]);
 }

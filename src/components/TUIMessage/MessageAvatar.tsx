@@ -1,7 +1,7 @@
 import React, {
   PropsWithChildren,
 } from 'react';
-import TIM, { Message } from 'tim-js-sdk';
+import TencentCloudChat, { Message } from '@tencentcloud/chat';
 import { MESSAGE_FLOW } from '../../constants';
 import { messageShowType } from '../../context';
 import { Avatar } from '../Avatar';

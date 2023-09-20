@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import TIM from 'tim-js-sdk';
+import TencentCloudChat from '@tencentcloud/chat';
 import { useTUIKitContext } from '../../../context';
 
 export interface ProfileParams {
@@ -20,19 +20,19 @@ export interface ProfileParams {
 
 export function useMyProfile() {
   const [myProfile, setMyPofile] = useState(null);
-  const { tim, myProfile: contextProfile } = useTUIKitContext('useMyProfile');
+  const { chat, myProfile: contextProfile } = useTUIKitContext('useMyProfile');
 
   const getMyProfile = useCallback(async () => {
     if (contextProfile) {
       setMyPofile(contextProfile);
     } else {
-      const res = await tim?.getMyProfile();
+      const res = await chat?.getMyProfile();
       setMyPofile(res?.data);
     }
-  }, [tim]);
+  }, [chat]);
 
   const updateMyProfile = useCallback(async (options) => {
-    const res = await tim?.updateMyProfile(options);
+    const res = await chat?.updateMyProfile(options);
     const userInfo = { ...myProfile };
     const keys = Object.keys(res.data);
     keys.map((name) => {
@@ -41,7 +41,7 @@ export function useMyProfile() {
     });
     setMyPofile(userInfo);
     return res;
-  }, [tim]);
+  }, [chat]);
 
   const onProfileUpdated = (event) => {
     console.log('onProfileUpdated', event.data); // 包含 Profile 对象的数组
@@ -51,11 +51,11 @@ export function useMyProfile() {
     (async () => {
       await getMyProfile();
     })();
-    tim?.on(TIM.EVENT.PROFILE_UPDATED, onProfileUpdated);
+    chat?.on(TencentCloudChat.EVENT.PROFILE_UPDATED, onProfileUpdated);
     return () => {
-      tim?.off(TIM.EVENT.PROFILE_UPDATED, onProfileUpdated);
+      chat?.off(TencentCloudChat.EVENT.PROFILE_UPDATED, onProfileUpdated);
     };
-  }, [tim]);
+  }, [chat]);
 
   return {
     myProfile,

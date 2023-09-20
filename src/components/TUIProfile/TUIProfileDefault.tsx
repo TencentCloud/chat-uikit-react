@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useState } from 'react';
 import DatePicker from 'react-date-picker';
-import TIM, { Profile } from 'tim-js-sdk';
+import TencentCloudChat, { Profile } from '@tencentcloud/chat';
 
 import { useTUIKitContext } from '../../context';
 
@@ -11,9 +11,9 @@ import { handleDisplayAvatar } from '../untils';
 import { ProfileParams } from './hooks';
 
 const gender = {
-  [TIM.TYPES.GENDER_UNKNOWN]: 'unknow',
-  [TIM.TYPES.GENDER_MALE]: 'male',
-  [TIM.TYPES.GENDER_FEMALE]: 'female',
+  [TencentCloudChat.TYPES.GENDER_UNKNOWN]: 'unknow',
+  [TencentCloudChat.TYPES.GENDER_MALE]: 'male',
+  [TencentCloudChat.TYPES.GENDER_FEMALE]: 'female',
 };
 
 const avatarList = [
@@ -28,11 +28,11 @@ const avatarList = [
 const genderList = [
   {
     label: 'Male',
-    value: TIM.TYPES.GENDER_MALE,
+    value: TencentCloudChat.TYPES.GENDER_MALE,
   },
   {
     label: 'Female',
-    value: TIM.TYPES.GENDER_FEMALE,
+    value: TencentCloudChat.TYPES.GENDER_FEMALE,
   },
 ];
 

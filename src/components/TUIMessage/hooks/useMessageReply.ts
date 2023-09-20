@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from 'react';
-import TIM, { Message } from 'tim-js-sdk';
+import TencentCloudChat, { Message } from '@tencentcloud/chat';
 import { useTUIChatStateContext, useTUIKitContext } from '../../../context';
 import { JSONStringToParse } from '../../untils';
 
@@ -8,13 +8,13 @@ interface messageContextParams {
 }
 
 const replyType = {
-  [TIM.TYPES.MSG_TEXT]: 1,
-  [TIM.TYPES.MSG_FACE]: 8,
-  [TIM.TYPES.MSG_IMAGE]: 3,
-  [TIM.TYPES.MSG_AUDIO]: 4,
-  [TIM.TYPES.MSG_VIDEO]: 5,
-  [TIM.TYPES.MSG_FILE]: 6,
-  [TIM.TYPES.MSG_CUSTOM]: 2,
+  [TencentCloudChat.TYPES.MSG_TEXT]: 1,
+  [TencentCloudChat.TYPES.MSG_FACE]: 8,
+  [TencentCloudChat.TYPES.MSG_IMAGE]: 3,
+  [TencentCloudChat.TYPES.MSG_AUDIO]: 4,
+  [TencentCloudChat.TYPES.MSG_VIDEO]: 5,
+  [TencentCloudChat.TYPES.MSG_FILE]: 6,
+  [TencentCloudChat.TYPES.MSG_CUSTOM]: 2,
 };
 
 export const useMessageReply = <T extends messageContextParams>(params:T) => {
@@ -26,7 +26,7 @@ export const useMessageReply = <T extends messageContextParams>(params:T) => {
   const [replyMessage, setReplyMessage] = useState(null);
   const [messageID, setMessageID] = useState('');
 
-  const { tim } = useTUIKitContext('TUIChat');
+  const { chat } = useTUIKitContext('TUIChat');
   const { messageList } = useTUIChatStateContext('useMessageReply');
 
   useLayoutEffect(() => {
@@ -48,11 +48,11 @@ export const useMessageReply = <T extends messageContextParams>(params:T) => {
     const replyData = messageList.filter((item) => {
       const isSomeID = item.ID === reply?.messageID;
       const isSomeType = isSomeID && replyType[item.type] === reply.messageType;
-      const isSomeContent = item.type === TIM.TYPES.MSG_TEXT
+      const isSomeContent = item.type === TencentCloudChat.TYPES.MSG_TEXT
         ? item.payload.text === reply.messageAbstract : true;
       return isSomeID && isSomeType && isSomeContent;
     });
-    setReplyMessage(replyData[0] || tim.findMessage(reply?.messageID));
+    setReplyMessage(replyData[0] || chat.findMessage(reply?.messageID));
   };
 
   return {

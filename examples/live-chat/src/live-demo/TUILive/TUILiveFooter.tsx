@@ -4,12 +4,12 @@ import {
   Group,
   Profile,
   GroupMember,
-} from 'tim-js-sdk';
+} from '@tencentcloud/chat';
 import { OwnerLabelListItem, useTUILiveContext } from './context/TUILiveContext';
 
 import './styles/index.scss';
 
-import { useLiveAtiveElements } from './hooks/useLiveAtiveElements';
+import { useLiveActiveElements } from './hooks/useLiveActiveElements';
 import  { Icon, IconTypes, Avatar } from '@tencentcloud/chat-uikit-react';
 import { formateNumber } from './untils';
 
@@ -72,7 +72,7 @@ function UnMemoizedTUILiveFooter<T extends TUILiveFooterProps>(
   const ownerProfileCustomField = ownerLabelList || (ownerProfile?.memberCustomField
     || []).filter((item) => (item?.value));
 
-  const Follow = useLiveAtiveElements({
+  const Follow = useLiveActiveElements({
     icon: IconTypes.UNUNION,
     activeIcon: IconTypes.UNION,
     name: 'Follow',
@@ -82,7 +82,7 @@ function UnMemoizedTUILiveFooter<T extends TUILiveFooterProps>(
     value: false,
   });
 
-  const Subscribe = useLiveAtiveElements({
+  const Subscribe = useLiveActiveElements({
     icon: IconTypes.UNVECTOR,
     activeIcon: IconTypes.VECTOR,
     name: 'Subscribe',
@@ -90,10 +90,10 @@ function UnMemoizedTUILiveFooter<T extends TUILiveFooterProps>(
     value: false,
   });
 
-  const LikeOrUnlike = useLiveAtiveElements({
+  const LikeOrUnlike = useLiveActiveElements({
     icon: IconTypes.LIKE,
     activeIcon: IconTypes.LIKED,
-    name: formateNumber((groupCounters as any)?.LiveDemoLike, 1),
+    name: formateNumber((groupCounters as any)?.LiveDemoLike || 0, 1),
     value: false,
     key: 'LiveDemoLike',
     suffix: {

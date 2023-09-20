@@ -5,7 +5,7 @@ import React, {
   useState,
 } from 'react';
 import { Icon, IconTypes } from '@tencentcloud/chat-uikit-react';
-import { useTUILiveContext } from '../';
+import { useTUILiveContext } from '..';
 
 interface ativeClickReturn {
   value?: boolean,
@@ -28,7 +28,7 @@ export interface useLiveAtiveElementsParams extends useLiveAtiveBasicParams {
   suffix?: useLiveAtiveBasicParams;
 }
 
-export function useLiveAtiveElements<T extends useLiveAtiveElementsParams>(
+export function useLiveActiveElements<T extends useLiveAtiveElementsParams>(
   props:PropsWithChildren<T>,
 ) {
   const {

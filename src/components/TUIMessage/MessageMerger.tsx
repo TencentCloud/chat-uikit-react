@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import TIM from 'tim-js-sdk';
+import TencentCloudChat from '@tencentcloud/chat';
 import type { MessageContextProps } from './MessageText';
 
 function MessageMergerWithContext <T extends MessageContextProps>(
@@ -12,7 +12,7 @@ function MessageMergerWithContext <T extends MessageContextProps>(
   } = props;
 
   return (
-    <div className={`bubble message-merger bubble-${message.flow} ${message?.conversationType === TIM.TYPES.CONV_GROUP ? 'group' : ''}`}>
+    <div className={`bubble message-merger bubble-${message.flow} ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`}>
       <h3>{context.title}</h3>
       <ul className="message-merger-list">
         {

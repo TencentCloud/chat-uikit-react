@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import TIM, { Message } from 'tim-js-sdk';
+import TencentCloudChat, { Message } from '@tencentcloud/chat';
 
 import { MessageAudio } from './MessageAudio';
 import { MessageCustom } from './MessageCustom';
@@ -16,15 +16,15 @@ import { MessageStatus } from './MessageStatus';
 import { useTUIMessageContext } from '../../context';
 
 const components = {
-  [TIM.TYPES.MSG_TEXT]: MessageText,
-  [TIM.TYPES.MSG_FACE]: MessageFace,
-  [TIM.TYPES.MSG_IMAGE]: MessageImage,
-  [TIM.TYPES.MSG_AUDIO]: MessageAudio,
-  [TIM.TYPES.MSG_VIDEO]: MessageVideo,
-  [TIM.TYPES.MSG_FILE]: MessageFile,
-  [TIM.TYPES.MSG_CUSTOM]: MessageCustom,
-  [TIM.TYPES.MSG_MERGER]: MessageMerger,
-  [TIM.TYPES.MSG_LOCATION]: MessageLocation,
+  [TencentCloudChat.TYPES.MSG_TEXT]: MessageText,
+  [TencentCloudChat.TYPES.MSG_FACE]: MessageFace,
+  [TencentCloudChat.TYPES.MSG_IMAGE]: MessageImage,
+  [TencentCloudChat.TYPES.MSG_AUDIO]: MessageAudio,
+  [TencentCloudChat.TYPES.MSG_VIDEO]: MessageVideo,
+  [TencentCloudChat.TYPES.MSG_FILE]: MessageFile,
+  [TencentCloudChat.TYPES.MSG_CUSTOM]: MessageCustom,
+  [TencentCloudChat.TYPES.MSG_MERGER]: MessageMerger,
+  [TencentCloudChat.TYPES.MSG_LOCATION]: MessageLocation,
 };
 
 export interface MessageContextProps {
@@ -52,15 +52,15 @@ function MessageContextWithContext <T extends MessageContextProps>(
   } = useTUIMessageContext('MessageCustom');
 
   const CustemComponents = {
-    [TIM.TYPES.MSG_TEXT]: TextElement,
-    [TIM.TYPES.MSG_FACE]: FaceElement,
-    [TIM.TYPES.MSG_IMAGE]: ImageElement,
-    [TIM.TYPES.MSG_AUDIO]: AudioElement,
-    [TIM.TYPES.MSG_VIDEO]: VideoElement,
-    [TIM.TYPES.MSG_FILE]: FileElement,
-    [TIM.TYPES.MSG_CUSTOM]: CustemElement,
-    [TIM.TYPES.MSG_MERGER]: MergerElement,
-    [TIM.TYPES.MSG_LOCATION]: LocationElement,
+    [TencentCloudChat.TYPES.MSG_TEXT]: TextElement,
+    [TencentCloudChat.TYPES.MSG_FACE]: FaceElement,
+    [TencentCloudChat.TYPES.MSG_IMAGE]: ImageElement,
+    [TencentCloudChat.TYPES.MSG_AUDIO]: AudioElement,
+    [TencentCloudChat.TYPES.MSG_VIDEO]: VideoElement,
+    [TencentCloudChat.TYPES.MSG_FILE]: FileElement,
+    [TencentCloudChat.TYPES.MSG_CUSTOM]: CustemElement,
+    [TencentCloudChat.TYPES.MSG_MERGER]: MergerElement,
+    [TencentCloudChat.TYPES.MSG_LOCATION]: LocationElement,
   };
 
   const Elements = CustemComponents[message?.type] || components[message?.type];

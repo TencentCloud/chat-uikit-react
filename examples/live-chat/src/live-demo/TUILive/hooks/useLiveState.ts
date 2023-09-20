@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
-import TIM, { ChatSDK, Conversation, Group } from 'tim-js-sdk';
+import TencentCloudChat, { ChatSDK, Conversation, Group } from '@tencentcloud/chat';
 import { GroupCounterUpdatedOption } from '../';
 
 export interface UseLiveStateParams {
   conversation?: Conversation,
-  tim?: ChatSDK,
+  chat?: ChatSDK,
   groupID?: string,
   setActiveConversation?: (conversation?: Conversation | undefined) => void,
 }
 
 export function useLiveState<T extends UseLiveStateParams>(props:T) {
   const {
-    tim,
+    chat,
     conversation,
     groupID = '',
     setActiveConversation,
@@ -24,17 +24,39 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
   const [memberCount, setMemberCount] = useState(0);
   const [memberList, setMemberList] = useState<any>(undefined);
 
+  const searchGroupByID = (groupID:string, success: Function, failure: Function) => {
+    chat?.searchGroupByID(groupID).then((res) => {
+      if (res.data.group) {
+        success(groupID);
+      } else {
+        failure(groupID);
+      }
+    }).catch(() => {
+      failure(groupID);
+    })
+  }
+
   const getGroupProfile = useCallback(async () => {
     if (groupID && !group) {
-      const res = await tim?.getGroupProfile({ groupID });
-      setGroup(res?.data?.group);
-      await getOwnerProfile(res?.data?.group);
+      searchGroupByID(groupID, async ()=> {
+        const res = await chat?.getGroupProfile({ groupID });
+        setGroup(res?.data?.group);
+        await getOwnerProfile(res?.data?.group);
+      }, async () => {
+        const res = await chat?.createGroup({
+          type: TencentCloudChat.TYPES.GRP_AVCHATROOM,
+          groupID,
+          name: 'my live room'
+        });
+        setGroup(res?.data?.group);
+        await getOwnerProfile(res?.data?.group);
+      })
     }
-  }, [tim, groupID]);
+  }, [chat, groupID]);
 
   const getOwnerProfile = async (params:Group) => {
     if (params?.ownerID) {
-      const res = await tim?.getGroupMemberProfile({
+      const res = await chat?.getGroupMemberProfile({
         groupID,
         userIDList: [params?.ownerID],
       });
@@ -44,10 +66,10 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
 
   const getGroupOnlineMemberCount = useCallback(async () => {
     if (groupID) {
-      const imResponse = await tim?.getGroupOnlineMemberCount(groupID);
+      const imResponse = await chat?.getGroupOnlineMemberCount(groupID);
       const onlineMemberCount = imResponse?.data?.memberCount;
       if (onlineMemberCount > 0) {
-        const membersRes = await tim?.getGroupMemberList({ groupID, offset: 0 });
+        const membersRes = await chat?.getGroupMemberList({ groupID, offset: 0 });
         setMemberList(membersRes?.data?.memberList);
         const memberCount = membersRes?.data?.memberList.length;
         // The maximum value of getGroupMemberList is 1000
@@ -55,17 +77,17 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
         setMemberCount(Count)
       }
     }
-  }, [tim]);
+  }, [chat]);
 
   const getGroupCounters = useCallback(async () => {
     if (groupID) {
       const options = {
         groupID,
       };
-      const imResponse = await tim?.getGroupCounters(options);
+      const imResponse = await chat?.getGroupCounters(options);
       setGroupCounters(JSON.parse(JSON.stringify(imResponse.data.counters)));
     }
-  }, [tim, groupID]);
+  }, [chat, groupID]);
 
   const increaseGroupCounter = useCallback(async (data:GroupCounterUpdatedOption) => {
     if (groupID) {
@@ -73,10 +95,10 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
         groupID,
         ...data,
       };
-      const imResponse = await tim?.increaseGroupCounter(options);
+      const imResponse = await chat?.increaseGroupCounter(options);
       handleGroupCounters(imResponse.data.counters);
     }
-  }, [tim, groupID, groupCounters]);
+  }, [chat, groupID, groupCounters]);
 
   const decreaseGroupCounter = useCallback(async (data:GroupCounterUpdatedOption) => {
     if (groupID) {
@@ -84,10 +106,10 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
         groupID,
         ...data,
       };
-      const imResponse = await tim?.decreaseGroupCounter(options);
+      const imResponse = await chat?.decreaseGroupCounter(options);
       handleGroupCounters(imResponse.data.counters);
     }
-  }, [tim, groupID, groupCounters]);
+  }, [chat, groupID, groupCounters]);
 
   const onGroupAttributesUpdated = (event: { data: any; }) => {
     console.log('onGroupAttributesUpdated', event?.data);
@@ -128,21 +150,18 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
         setActiveConversation && setActiveConversation(conversation);
         setLiveConversation(conversation);
       } else {
-        const res = await tim?.getConversationProfile(getGroupConversationID(groupID));
+        const res = await chat?.getConversationProfile(getGroupConversationID(groupID));
         setActiveConversation && setActiveConversation(res?.data?.conversation);
         setLiveConversation(res?.data?.conversation);
       }
     })();
     return () => {
-      (async () => {
-        if (liveConversation) {
-          await tim?.deleteConversation(getGroupConversationID(groupID));
-          setLiveConversation(null);
-          await tim?.quitGroup(groupID);
-        }
-      })();
+      if (liveConversation) {
+        setLiveConversation(null);
+        chat?.quitGroup(groupID);
+      }
     };
-  }, [tim, conversation, liveConversation]);
+  }, [chat, conversation, liveConversation]);
 
   useEffect(() => {
     let timer: string | number | NodeJS.Timeout | null | undefined = null;
@@ -153,25 +172,30 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
         await getGroupOnlineMemberCount();
       }, 1000 * 10);
     })();
-    tim?.on(TIM.EVENT.GROUP_ATTRIBUTES_UPDATED, onGroupAttributesUpdated);
-    tim?.on(TIM.EVENT.GROUP_COUNTER_UPDATED, onGroupCounterUpdated);
+    chat?.on(TencentCloudChat.EVENT.GROUP_ATTRIBUTES_UPDATED, onGroupAttributesUpdated);
+    chat?.on(TencentCloudChat.EVENT.GROUP_COUNTER_UPDATED, onGroupCounterUpdated);
     return () => {
-      tim?.off(TIM.EVENT.GROUP_ATTRIBUTES_UPDATED, onGroupAttributesUpdated);
-      tim?.off(TIM.EVENT.GROUP_COUNTER_UPDATED, onGroupCounterUpdated);
+      chat?.off(TencentCloudChat.EVENT.GROUP_ATTRIBUTES_UPDATED, onGroupAttributesUpdated);
+      chat?.off(TencentCloudChat.EVENT.GROUP_COUNTER_UPDATED, onGroupCounterUpdated);
       if (timer) {
         clearInterval(timer);
       }
+      setGroup(undefined);
+      setGroupCounterUpdated(undefined);
+      setOwnerProfile(undefined);
+      setMemberList(undefined);
+      setMemberCount(0);
     };
-  }, [tim, groupID]);
+  }, [chat, groupID]);
 
   useEffect(() => {
     (async () => {
       if (liveConversation && group) {
-        await tim?.joinGroup({ groupID, type: TIM.TYPES.GRP_AVCHATROOM });
+        await chat?.joinGroup({ groupID, type: TencentCloudChat.TYPES.GRP_AVCHATROOM });
         await getGroupCounters();
       }
     })();
-  }, [tim, liveConversation, group]);
+  }, [chat, liveConversation, group]);
 
   return {
     group,

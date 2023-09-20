@@ -1,11 +1,11 @@
 import { Dispatch, useCallback } from 'react';
-import { ChatSDK, Conversation, Message } from 'tim-js-sdk';
+import TencentCloudChat, { ChatSDK, Conversation, Message } from '@tencentcloud/chat';
 import { CONSTANT_DISPATCH_TYPE } from '../../../constants';
 import type { TUIChatStateContextValue } from '../../../context';
 import type { ChatStateReducerAction } from '../TUIChatState';
 
 export interface CreateMessageProps {
-  tim?: ChatSDK,
+  chat?: ChatSDK,
   conversation?: Conversation,
   state?: TUIChatStateContextValue,
   dispatch?: Dispatch<ChatStateReducerAction>,
@@ -18,25 +18,38 @@ export interface GetMessageListProps{
 
 export function useHandleMessageList<T extends CreateMessageProps>(props:T) {
   const {
-    tim,
+    chat,
     conversation,
     state,
     dispatch,
   } = props;
 
-  const { conversationID } = conversation;
+  const { conversationID, groupProfile, type } = conversation;
+  const isC2CConversation = type === TencentCloudChat.TYPES.CONV_C2C;
 
   const basicConfig = {
     conversationID,
   };
 
-  const getMessageList = useCallback((params?: GetMessageListProps) => {
+  const getMessageList = useCallback(async (params?: GetMessageListProps) => {
     const data = params || {};
-    return tim.getMessageList({
-      ...basicConfig,
-      ...data,
-    });
-  }, [tim]);
+    let groupType = '';
+    if (groupProfile) {
+      try {
+        const res = await chat.searchGroupByID(groupProfile.groupID);
+        groupType = res?.data?.group?.type;
+      } catch (error) {
+        groupType = '';
+      }
+    }
+    if (isC2CConversation || (groupType && groupType !== TencentCloudChat.TYPES.GRP_AVCHATROOM)) {
+      return chat.getMessageList({
+        ...basicConfig,
+        ...data,
+      });
+    }
+    return null;
+  }, [chat]);
 
   const updateMessage = useCallback((messageList: Array<Message>) => {
     dispatch({
@@ -54,16 +67,16 @@ export function useHandleMessageList<T extends CreateMessageProps>(props:T) {
     });
   }, [dispatch]);
 
-  const editLocalmessage = useCallback((message: Message) => {
+  const editLocalMessage = useCallback((message: Message) => {
     dispatch({
       type: CONSTANT_DISPATCH_TYPE.SET_EDIT_MESSAGE,
       value: message,
     });
   }, [dispatch]);
 
-  const updataUploadPenddingMessageList = useCallback((message: Message) => {
+  const updateUploadPendingMessageList = useCallback((message: Message) => {
     dispatch({
-      type: CONSTANT_DISPATCH_TYPE.UPDATE_UPLOAD_PENDDING_MESSAGE_LIST,
+      type: CONSTANT_DISPATCH_TYPE.UPDATE_UPLOAD_PENDING_MESSAGE_LIST,
       value: message,
     });
   }, [dispatch]);
@@ -72,7 +85,7 @@ export function useHandleMessageList<T extends CreateMessageProps>(props:T) {
     getMessageList,
     updateMessage,
     removeMessage,
-    editLocalmessage,
-    updataUploadPenddingMessageList,
+    editLocalMessage,
+    updateUploadPendingMessageList,
   };
 }

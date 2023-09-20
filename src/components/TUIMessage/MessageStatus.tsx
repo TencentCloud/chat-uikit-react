@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Message } from 'tim-js-sdk';
+import { Message } from '@tencentcloud/chat';
 import { useTUIMessageContext } from '../../context';
 import { getTimeStamp } from '../untils';
 

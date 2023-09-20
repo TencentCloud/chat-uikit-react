@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
-import TIM, { Conversation, Group, Profile } from 'tim-js-sdk';
+import TencentCloudChat, { Conversation, Group, Profile } from '@tencentcloud/chat';
 import { Avatar } from '../Avatar';
 import { handleDisplayAvatar } from '../untils';
 
@@ -41,13 +41,13 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderBasicProps>(
       setAvatar(propAvatar);
     }
     switch (conversation?.type) {
-      case TIM.TYPES.CONV_C2C:
+      case TencentCloudChat.TYPES.CONV_C2C:
         handleC2C(conversation.userProfile);
         break;
-      case TIM.TYPES.CONV_GROUP:
+      case TencentCloudChat.TYPES.CONV_GROUP:
         handleGroup(conversation.groupProfile);
         break;
-      case TIM.TYPES.CONV_SYSTEM:
+      case TencentCloudChat.TYPES.CONV_SYSTEM:
         setTitle('System Notice');
         break;
       default:
@@ -72,7 +72,7 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderBasicProps>(
     if (!propAvatar) {
       setAvatar(<Avatar
         size={32}
-        image={handleDisplayAvatar(groupProfile.avatar, TIM.TYPES.CONV_GROUP)}
+        image={handleDisplayAvatar(groupProfile.avatar, TencentCloudChat.TYPES.CONV_GROUP)}
       />);
     }
   };
@@ -87,9 +87,9 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderBasicProps>(
       key={conversation?.conversationID}
     >
       <div
-        className={`tui-chat-header-left ${conversation?.type === TIM.TYPES.CONV_SYSTEM ? 'system' : ''}`}
+        className={`tui-chat-header-left ${conversation?.type === TencentCloudChat.TYPES.CONV_SYSTEM ? 'system' : ''}`}
       >
-        {conversation?.type !== TIM.TYPES.CONV_SYSTEM && avatar}
+        {conversation?.type !== TencentCloudChat.TYPES.CONV_SYSTEM && avatar}
       </div>
       <div className="header-content">
         <h3 className="title">{title}</h3>

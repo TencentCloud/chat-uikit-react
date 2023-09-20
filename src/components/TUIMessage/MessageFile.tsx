@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import TIM from 'tim-js-sdk';
+import TencentCloudChat from '@tencentcloud/chat';
 import { Icon, IconTypes } from '../Icon';
 import type { MessageContextProps } from './MessageText';
 
@@ -16,7 +16,7 @@ function MessageFileWithContext <T extends MessageContextProps>(
       href={context.url}
       download={context.name}
       target="_parent"
-      className={`bubble message-file bubble-${message.flow} ${message?.conversationType === TIM.TYPES.CONV_GROUP ? 'group' : ''}`}
+      className={`bubble message-file bubble-${message.flow} ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`}
       rel="noreferrer"
     >
       <main className="message-file-main">

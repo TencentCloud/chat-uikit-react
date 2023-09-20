@@ -1,11 +1,11 @@
 import { Dispatch, useCallback } from 'react';
-import { ChatSDK, Conversation, Message } from 'tim-js-sdk';
+import { ChatSDK, Conversation, Message } from '@tencentcloud/chat';
 import { CONSTANT_DISPATCH_TYPE } from '../../../constants';
 import type { TUIChatStateContextValue } from '../../../context';
 import type { ChatStateReducerAction } from '../TUIChatState';
 
 export interface CreateMessageProps {
-  tim?: ChatSDK,
+  chat?: ChatSDK,
   conversation?: Conversation,
   state?: TUIChatStateContextValue,
   dispatch?: Dispatch<ChatStateReducerAction>,

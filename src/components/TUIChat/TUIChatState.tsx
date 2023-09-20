@@ -1,5 +1,5 @@
 import type { Reducer } from 'react';
-import { Conversation, Message } from 'tim-js-sdk';
+import { Conversation, Message } from '@tencentcloud/chat';
 import { CONSTANT_DISPATCH_TYPE } from '../../constants';
 import type { TUIChatStateContextValue } from '../../context';
 import { OperateMessageParams } from './hooks/useHandleMessage';
@@ -8,7 +8,7 @@ import {
   handleMessageList,
   handleEditMessage,
   handleRemoveMessage,
-  handleUploadPenddingMessage,
+  handleUploadPendingMessage,
 } from './unitls';
 
 export type ChatStateReducerAction =
@@ -70,7 +70,7 @@ export type ChatStateReducerAction =
       value?: HTMLVideoElement | null,
     }
   | {
-      type: CONSTANT_DISPATCH_TYPE.UPDATE_UPLOAD_PENDDING_MESSAGE_LIST,
+      type: CONSTANT_DISPATCH_TYPE.UPDATE_UPLOAD_PENDING_MESSAGE_LIST,
       value?: Message,
     }
 export type ChatStateReducer = Reducer<TUIChatStateContextValue, ChatStateReducerAction>;
@@ -128,11 +128,11 @@ export const chatReducer = (
       return { ...state, audioSource: action.value };
     case CONSTANT_DISPATCH_TYPE.SET_VIDEO_SOURCE:
       return { ...state, vidoeSource: action.value };
-    case CONSTANT_DISPATCH_TYPE.UPDATE_UPLOAD_PENDDING_MESSAGE_LIST:
+    case CONSTANT_DISPATCH_TYPE.UPDATE_UPLOAD_PENDING_MESSAGE_LIST:
       return {
         ...state,
-        uploadPenddingMessageList: [
-          ...handleUploadPenddingMessage(state.uploadPenddingMessageList, action.value),
+        uploadPendingMessageList: [
+          ...handleUploadPendingMessage(state.uploadPendingMessageList, action.value),
         ],
       };
     default: return state;
@@ -152,5 +152,5 @@ export const initialState:TUIChatStateContextValue = {
   noMore: false,
   audioSource: null,
   vidoeSource: null,
-  uploadPenddingMessageList: [],
+  uploadPendingMessageList: [],
 };

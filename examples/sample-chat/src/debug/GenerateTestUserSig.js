@@ -1,16 +1,16 @@
 import LibGenerateTestUserSig from './lib-generate-test-usersig-es.min';
 
 /**
- * Tencent Cloud SDKAppId, which should be replaced with user's SDKAppId.
+ * Tencent Cloud SDKAppID, which should be replaced with user's SDKAppID.
  * Enter Tencent Cloud TRTC [Console] (https://console.cloud.tencent.com/trtc ) to create an application,
- * and you will see the SDKAppId.
+ * and you will see the SDKAppID.
  * It is a unique identifier used by Tencent Cloud to identify users.
  *
- * 腾讯云 SDKAppId，需要替换为您自己账号下的 SDKAppId。
- * 进入腾讯云实时音视频[控制台](https://console.cloud.tencent.com/rav ) 创建应用，即可看到 SDKAppId，
+ * 腾讯云 SDKAppID，需要替换为您自己账号下的 SDKAppID。
+ * 进入腾讯云实时音视频[控制台](https://console.cloud.tencent.com/rav ) 创建应用，即可看到 SDKAppID，
  * 它是腾讯云用于区分客户的唯一标识。
  */
-const SDKAPPID = 0;
+const SDKAppID = 0;
 
 
 /**
@@ -84,19 +84,16 @@ const SECRETKEY = '';
  * Reference：https://cloud.tencent.com/document/product/647/17275#Server
  */
 function genTestUserSig(userID) {
-  const generator = new LibGenerateTestUserSig(SDKAPPID, SECRETKEY, EXPIRETIME);
+  const generator = new LibGenerateTestUserSig(SDKAppID, SECRETKEY, EXPIRETIME);
   const userSig = generator.genTestUserSig(userID);
 
-  return {
-    sdkAppID: SDKAPPID,
-    userSig,
-  };
+  return { SDKAppID, userSig };
 }
 
 export default genTestUserSig;
 
 export {
   genTestUserSig,
-  SDKAPPID,
+  SDKAppID,
   EXPIRETIME,
 };

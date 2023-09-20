@@ -1,10 +1,10 @@
 import React from 'react';
-import TIM from 'tim-js-sdk';
+import TencentCloudChat from '@tencentcloud/chat';
 import { useTUIConversationContext } from '../context/TUIConversationContext';
 
 export interface CreateGroupConversationParams {
   name: string;
-  type?: TIM.TYPES;
+  type?: TencentCloudChat.TYPES;
   groupID?: string;
   introduction?: string;
   notification?: string;
@@ -15,7 +15,7 @@ export interface CreateGroupConversationParams {
   groupCustomField?: Array<object>;
   isSupportTopic?: boolean;
 }
-export const useConversation = (tim) => {
+export const useConversation = (chat) => {
   const {
     createConversation: contextCreateConversation,
     deleteConversation: contextDeleteConversation,
@@ -25,7 +25,7 @@ export const useConversation = (tim) => {
   ) => {
     // create c2c conversation
     if (typeof params === 'string') {
-      const { data } = await tim.getConversationProfile(params);
+      const { data } = await chat.getConversationProfile(params);
       return data.conversation;
     }
     // create group conversation
@@ -42,7 +42,7 @@ export const useConversation = (tim) => {
       groupCustomField = [],
       isSupportTopic,
     } = params;
-    const res = await tim.createGroup({
+    const res = await chat.createGroup({
       name,
       type,
       groupID,
@@ -56,20 +56,20 @@ export const useConversation = (tim) => {
       isSupportTopic,
     });
     const { groupID: createdGroupId } = res.data.group;
-    if (type === TIM.TYPES.GRP_AVCHATROOM) {
-      await tim.joinGroup({
+    if (type === TencentCloudChat.TYPES.GRP_AVCHATROOM) {
+      await chat.joinGroup({
         groupID: createdGroupId,
-        type: TIM.TYPES.GRP_AVCHATROOM,
+        type: TencentCloudChat.TYPES.GRP_AVCHATROOM,
       });
     }
-    const { data } = await tim.getConversationProfile(`GROUP${createdGroupId}`);
+    const { data } = await chat.getConversationProfile(`GROUP${createdGroupId}`);
     return data.conversation;
   };
   const pinConversation = (options: {
     conversationID: string;
     isPinned: boolean;
-  }) => tim.pinConversation(options);
-  const deleteConversation = (conversationID: string) => tim.deleteConversation(conversationID);
+  }) => chat.pinConversation(options);
+  const deleteConversation = (conversationID: string) => chat.deleteConversation(conversationID);
   return {
     createConversation: contextCreateConversation || createConversation,
     pinConversation,

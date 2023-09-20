@@ -1,14 +1,14 @@
 import React from 'react';
 import './styles/conversationGroupTypeInfo.scss';
-import TIM from 'tim-js-sdk';
+import TencentCloudChat from '@tencentcloud/chat';
 import { PageStateTypes } from './ConversationCreate';
 import { Icon, IconTypes } from '../Icon';
 
 export enum GroupType {
-  Work= TIM.TYPES.GRP_WORK,
-  Public= TIM.TYPES.GRP_PUBLIC,
-  Meeting= TIM.TYPES.GRP_MEETING,
-  AVChatRoom= TIM.TYPES.GRP_AVCHATROOM,
+  Work= TencentCloudChat.TYPES.GRP_WORK,
+  Public= TencentCloudChat.TYPES.GRP_PUBLIC,
+  Meeting= TencentCloudChat.TYPES.GRP_MEETING,
+  AVChatRoom= TencentCloudChat.TYPES.GRP_AVCHATROOM,
 }
 export interface ConversationGroupTypeInfoProps {
   groupType: string,

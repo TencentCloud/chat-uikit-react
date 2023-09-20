@@ -7,8 +7,7 @@ import {
   TUIChatHeader,
 } from '@tencentcloud/chat-uikit-react';
 import '@tencentcloud/chat-uikit-react/dist/cjs/index.css';
-import  { ChatSDK } from 'tim-js-sdk/tim-js-friendship';
-import { GroupMember, Message } from 'tim-js-sdk';
+import  { ChatSDK, GroupMember } from '@tencentcloud/chat';
 
 import overlapping from './image/overlapping.png';
 import expand from './image/expand.png';
@@ -99,16 +98,16 @@ export default function LiveDemo(props: any) {
     isTransmitter: true
   }
 
-  const [tim, setTim] = useState<ChatSDK>();
+  const [chat, setChat] = useState<ChatSDK>();
   const [isChatShow, setIsChatShow] = useState<boolean>(true);
   const [isMembersShow, setIsMembersShow] = useState<boolean>(false);
   const [customData, setCustomData] = useState(JSON.stringify({ mode: 'live', vip: 1 }));
 
   useEffect(() => {
     (async ()=>{
-      if (props?.tim && !tim) {
-        const { tim } = props;
-        setTim(tim)
+      if (props?.chat && !chat) {
+        const { chat } = props;
+        setChat(chat)
       }
     })()
   });
@@ -134,7 +133,7 @@ export default function LiveDemo(props: any) {
 
   return (
     <div className={`live ${className}`}>
-      <TUIKit tim={tim}>
+      <TUIKit chat={chat}>
         <TUILive
           className='live-player'
           menuIcon={!isChatShow ? <img className="icon icon-expand" src={expand} alt='Expand' onClick={toggleChat} /> : <></>}

@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import TIM from 'tim-js-sdk';
+import TencentCloudChat from '@tencentcloud/chat';
 import { JSONStringToParse } from '../untils';
 import type { MessageContextProps } from './MessageText';
 
@@ -36,7 +36,7 @@ function MessageCustomWithContext <T extends MessageContextProps>(
   };
 
   return (
-    <div className={`bubble message-custom bubble-${message.flow}  ${message?.conversationType === TIM.TYPES.CONV_GROUP ? 'group' : ''}`}>
+    <div className={`bubble message-custom bubble-${message.flow}  ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`}>
       {handleContext(context?.custom)}
       {children}
     </div>

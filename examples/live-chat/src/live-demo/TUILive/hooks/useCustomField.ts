@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import TIM, { ChatSDK, Conversation, Group } from 'tim-js-sdk';
+import TencentCloudChat, { ChatSDK, Conversation, Group } from '@tencentcloud/chat';
 import { useTUIKitContext } from '../../../../../../src/context';
 import { useTUILiveContext } from '../context/TUILiveContext';
 import { Icon, IconTypes } from '../../../../../../src/components/Icon';
@@ -33,11 +33,11 @@ export interface useLiveAtiveElementsParams extends useLiveAtiveBasicParams {
 export function useCustomField<T extends useLiveAtiveElementsParams>(
   props:PropsWithChildren<T>,
 ) {
-  const { tim } = useTUIKitContext('useCustomField');
+  const { chat } = useTUIKitContext('useCustomField');
   const { group } = useTUILiveContext('TUILiveHeader');
   const setGroupMemberCustomField = useCallback(() => {
-    tim.setGroupMemberCustomField({ groupID: (group as any).groupID, memberCustomField: [{ key: 'group_member_test', value: 'test' }] });
-  }, [tim]);
+    chat.setGroupMemberCustomField({ groupID: (group as any).groupID, memberCustomField: [{ key: 'group_member_test', value: 'test' }] });
+  }, [chat]);
   return (
     setGroupMemberCustomField
   );

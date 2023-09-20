@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Conversation, Group } from 'tim-js-sdk';
+import { Conversation, Group } from '@tencentcloud/chat';
 import { TUILiveTagParam, useTUILiveContext } from './context/TUILiveContext';
 
 import './styles/index.scss';

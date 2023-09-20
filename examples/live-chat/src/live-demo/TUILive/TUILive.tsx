@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useMemo } from 'react';
-import { Conversation, GroupMember, Profile } from 'tim-js-sdk';
+import { Conversation, GroupMember, Profile } from '@tencentcloud/chat';
 import { useTUIKitContext } from '@tencentcloud/chat-uikit-react';
 import {
   OwnerLabelListItem,
@@ -52,7 +52,7 @@ function UnMemoizedTUILive<T extends TUILiveProps>(
   } = props;
 
   const {
-    tim,
+    chat,
     conversation: contextConversation,
     myProfile: contextMyProfile,
     setActiveConversation,
@@ -70,7 +70,7 @@ function UnMemoizedTUILive<T extends TUILiveProps>(
     increaseGroupCounter,
     decreaseGroupCounter,
   } = useLiveState({
-    tim,
+    chat,
     conversation: propsConversation || contextConversation,
     groupID,
     setActiveConversation,

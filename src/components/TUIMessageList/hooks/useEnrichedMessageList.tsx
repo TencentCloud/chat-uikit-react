@@ -1,5 +1,5 @@
 import React from 'react';
-import { Message } from 'tim-js-sdk';
+import { Message } from '@tencentcloud/chat';
 
 interface EnrichedMessageListProps {
   messageList: Array<Message>;

@@ -1,59 +1,87 @@
-_English | [简体中文](readme.zh_cn.md)_
-# [chat-uikit-react](https://www.tencentcloud.com/document/product/1047/34279/)
->chat-uikit-react is a UI component library based on Tencent Cloud IM SDK. It provides universal UI components to offer features such as conversation, chat, relationship chain, group, and audio/video call features.
-With these UI components, you can quickly build your own business logic.
-When implementing UI features, components in chat-uikit-react will also call the corresponding APIs of the IM SDK to implement IM-related logic and data processing, allowing developers to focus on their own business needs or custom extensions.
+# chat-uikit-react
 
-## Demos
-We have built demos to illustrate the chatting feature.
+## About Tencent Cloud Chat
 
-|  | sample-chat | live-chat |
-| ------ | ------ | ------ |
-|  | ![img.png](https://web.sdk.qcloud.com/im/demo/TUIkit/react-static/images/home.png) | ![img.png](https://web.sdk.qcloud.com/im/demo/TUIkit/react-static/images/live-demo.png) |
-| url | [sample-chat](https://web.sdk.qcloud.com/im/demo/intl/index.html) | [live-chat](https://web.sdk.qcloud.com/im/demo/intl/index.html?scene=live) |
-| demo code | [sample-chat-code](https://github.com/TencentCloud/chat-uikit-react/tree/main/examples/sample-chat) | [live-chat-code](https://github.com/TencentCloud/chat-uikit-react/tree/main/examples/live-chat) |
+[Tencent Cloud Chat](https://www.tencentcloud.com/products/im) provides globally interconnected chat APIs, multi-platform SDKs, and UIKit components to help you quickly bring messaging capabilities such as one-to-one chat, group chat, chat rooms, and system notifications to your applications and websites.
 
- You can preview these [demos](https://web.sdk.qcloud.com/im/demo/intl/index.html) on our website and obtain their [open source code](https://github.com/TencentCloud/chat-uikit-react) in GitHub.
+## Free Demo
+
+![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/712468b756a111ee974d5254005f490f.png)
+![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/80785e9c56a111ee974d5254005f490f.png)
+
+👉🏻 [Free Demo](https://web.sdk.qcloud.com/im/demo/intl/index.html)
+
+## Global Compliance Certifications
+<table>
+<tr>
+<td> <img src="https://staticintl.cloudcachetci.com/cms/backend-cms/Vk2L735_1SOC.png" width=90 height=80 /> </td>
+<td> <img src="https://staticintl.cloudcachetci.com/cms/backend-cms/Mp5i133_2ISO%209001.png" width=88 height=90 /> </td>
+<td> <img src="https://staticintl.cloudcachetci.com/cms/backend-cms/AfnR546_4ISO%2027001.png" width=90 height=87 /> </td>
+<td> <img src="https://staticintl.cloudcachetci.com/cms/backend-cms/WQjf098_5ISO%2027017.png" width=90 height=87 /> </td>
+<td> <img src="https://staticintl.cloudcachetci.com/cms/backend-cms/aNQJ919_6ISO%2027018.png" width=90 height=86 /> </td>
+</tr>
+<tr>
+<td> <img src="https://staticintl.cloudcachetci.com/cms/backend-cms/Rj5T795_7CSASTAR.png" width=90 height=90 /> </td>
+<td> <img src="https://staticintl.cloudcachetci.com/cms/backend-cms/BXNX111_8NIST%20CSF.png" width=90 height=84 /> </td>
+<td> <img src="https://staticintl.cloudcachetci.com/cms/backend-cms/dHEg621_9ISO%2027701.png" width=90 height=86 /> </td>
+<td> <img src="https://staticintl.cloudcachetci.com/cms/backend-cms/BLQI655_10ISO%2029151.png" width=90 height=86 /> </td>
+<td> <img src="https://staticintl.cloudcachetci.com/cms/backend-cms/dHDE860_11BS10012.png" width=90 height=42 /> </td>
+</tr>
+</table>
+
+## Core Capabilities
+
+- 1 Billion+ Monthly active users
+- 550 Billion+ Daily peak messages
+- 100,000+ Customers worldwid
+- 99.99% Message success rate
 
 
-## Running Demo
+## Get Started
 
-### Step 1. Download the source code
+### Step 1. Create an app
+
+1. Log in to the [Chat console](https://console.tencentcloud.com/im).
+2. Click `Create Application`, enter your app name, and click `Confirm`.
+![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/f016163c56a111ee94c3525400d793d0.png)
+3. After creation, you can see the status, service version, SDKAppID, creation time, tag, and expiration time of the new app on the overview page of the console.
+![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/2adc015456a211ee974d5254005f490f.png)
+
+### Step 2. Obtain the SDKAppID and SECRETKEY
+1. Click the target app card to go to the basic configuration page of the app.
+2. In the Basic info area, click `Display key`, and then copy and save the key information, which is SECRETKEY.
+![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/696c6df756a211ee84f2525400494e51.png)
+
+### Step 3. Download the source code and install dependencies
 ```
-# Run the code in CLI
+# Please run the following code in the terminal.
 $ git clone https://github.com/TencentCloud/chat-uikit-react
-# Go to the project  
 $ cd chat-uikit-react
-# Install dependencies of the demo
 $ npm install && cd examples/sample-chat && npm install
 ```
-### Step 2. Configure demo
+### Step 4. Configure
 1. Open the `examples/sample-chat` project and locate the `GenerateTestUserSig.js` file in `./examples/sample-chat/src/debug/GenerateTestUserSig.js`.
-2. In the `GenerateTestUserSig.js` file, set `SDKAPPID` and `SECRETKEY`, whose values can be obtained in the [IM console](https://console.tencentcloud.com/im). Click the card of the target app to go to its configuration page.
-   ![](https://qcloudimg.tencent-cloud.cn/raw/8d469e975f1ca5a2f3dbc9c6fe8774f5.png)
-3. In the **Basic Information** area, click **Display key**, and copy and save the key information to the `GenerateTestUserSig` file.
->!
->- In this document, the method to obtain `UserSig` is to configure the secret key in the client code. In this method, the secret key is vulnerable to decompilation and reverse engineering. Once your secret key is leaked, attackers can steal your Tencent Cloud traffic. Therefore, **this method is only suitable for locally running a demo project and debugging.**
->- The best practice is to integrate the calculation code of `UserSig` into your server and provide an application-oriented API. When `UserSig` is needed, your application can send a request to your server for a dynamic `UserSig`. For more information, see [How do I calculate `UserSig` during production?](https://www.tencentcloud.com/document/product/1047/34385).
+2. Set the `SDKAppID` and `SECRETKEY` obtained at Step 2.
 
-### Step 3. Launch the project
+### Step 5. Run the demo
 ```
-# Launch the project
 $ cd examples/sample-chat
 $ npm run start
 ```
 
-### Step 4. Send your first message
-1. After the product is launched, click the **+** icon to create a conversation.
-2. Search for another user's userID in the input box.
-3. Click the user's profile photo to initiate a conversation.
-4. Enter a message in the input box and press **Enter** to send it.
-   ![](https://web.sdk.qcloud.com/im/demo/TUIkit/react-static/images/chat-English.gif)
+## Send your first message
+1. Run the demo in two seperate tab pages.
+2. In the search box of the demo in the first tab page, search for the login ID of the demo in the second tab page.
+![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/22dabb7156df11ee94c3525400d793d0.png)
+3. Click on the user avatar to initiate a conversation.
+![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/2ca3c0a256df11ee974d5254005f490f.png)
+4. Enter a message in the input box and press **Enter** to send it. Emoji/Image/Video/Document messages are supported.
+   ![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/059d7f4856e011eeabd75254005810a4.png)
 
-### Quick links
-- [Web demo](https://web.sdk.qcloud.com/im/demo/intl/index.html)
-- [Client APIs](https://www.tencentcloud.com/document/product/1047/33999)
-- [Free demo download](https://www.tencentcloud.com/document/product/1047/34279)
-- [FAQs](https://www.tencentcloud.com/document/product/1047/34455)
-- [Source code in GitHub](https://github.com/TencentCloud/chat-uikit-react)
-- [Generating UserSig](https://www.tencentcloud.com/document/product/1047/34385)
+## Contact Us
+Join a Tencent Cloud Chat developer group for Reliable technical support & Product details & Constant exchange of ideas.
+- Telegram group (EN): [join](https://t.me/+1doS9AUBmndhNGNl)
+- WhatsApp group (EN): [join](https://chat.whatsapp.com/Gfbxk7rQBqc8Rz4pzzP27A)
+- Telegram group (ZH): [join](https://t.me/tencent_imsdk)
+- WhatsApp group (ZH): [join](https://chat.whatsapp.com/IVa11ZkVmKTEwSWsAzSyik)
+

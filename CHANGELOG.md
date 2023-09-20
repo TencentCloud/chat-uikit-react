@@ -1,3 +1,13 @@
+## [1.1.0] (2023-09-20)
+
+#### feat
+* feat: Upgrading SDK to v3.
+
+#### fix
+* fix: the error of chat message key when opening for the first time.
+* fix: quoting one's own message.
+
+
 ## [1.0.3] (2023-05-25)
 
 #### fix

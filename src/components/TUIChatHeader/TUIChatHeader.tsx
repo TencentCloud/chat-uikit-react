@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Conversation } from 'tim-js-sdk';
+import { Conversation } from '@tencentcloud/chat';
 import { useTUIChatStateContext } from '../../context/TUIChatStateContext';
 import type { TUIChatHeaderDefaultProps } from './TUIChatHeaderDefault';
 import { TUIChatHeaderDefault } from './TUIChatHeaderDefault';

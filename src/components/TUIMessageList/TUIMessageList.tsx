@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useState, useEffect } from 'react';
-import { Message } from 'tim-js-sdk';
+import { Message } from '@tencentcloud/chat';
 import {
   useTUIChatStateContext,
   useTUIChatActionContext,
@@ -88,7 +88,7 @@ function TUIMessageListWithContext <T extends MessageListProps>(
       if (!element) {
         return;
       }
-      const { children } = element.children[1];
+      const { children } = element;
       children[children.length - 1].classList.add('high-lighted');
       element?.scrollIntoView({ block: 'center' });
       const timer = setTimeout(() => {

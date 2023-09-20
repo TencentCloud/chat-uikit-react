@@ -1,5 +1,5 @@
 import React from 'react';
-import { Conversation } from 'tim-js-sdk';
+import { Conversation } from '@tencentcloud/chat';
 import './styles/index.scss';
 
 export interface ConversationListContainerProps {

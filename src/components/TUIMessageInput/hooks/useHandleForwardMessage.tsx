@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import TIM, { Conversation, Message } from 'tim-js-sdk';
+import TencentCloudChat, { Conversation, Message } from '@tencentcloud/chat';
 import { MESSAGE_OPERATE } from '../../../constants';
 import {
   useTUIChatActionContext, useTUIChatStateContext, useTUIKitContext,
@@ -12,7 +12,7 @@ export function useHandleForwardMessage(msg?:Message) {
 
   const [conversationList, setConversationList] = useState([]);
   const { sendMessage, createForwardMessage } = useTUIChatActionContext('useHandleForwardMessage');
-  const { tim } = useTUIKitContext('TUIChat');
+  const { chat } = useTUIKitContext('TUIChat');
 
   const message = msg || operateData[MESSAGE_OPERATE.FORWARD];
 
@@ -26,12 +26,12 @@ export function useHandleForwardMessage(msg?:Message) {
 
   useEffect(() => {
     (async () => {
-      const res = await tim.getConversationList();
+      const res = await chat.getConversationList();
       setConversationList(res?.data?.conversationList.filter(
-        (item) => item.type !== TIM.TYPES.CONV_SYSTEM,
+        (item) => item.type !== TencentCloudChat.TYPES.CONV_SYSTEM,
       ));
     })();
-  }, [tim]);
+  }, [chat]);
 
   return {
     message,

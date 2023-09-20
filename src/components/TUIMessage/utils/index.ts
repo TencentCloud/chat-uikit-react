@@ -1,4 +1,4 @@
-import TIM, { Conversation, Group, Message } from 'tim-js-sdk';
+import TencentCloudChat, { Conversation, Group, Message } from '@tencentcloud/chat';
 import { decodeText } from './decodeText';
 import constant, { MESSAGE_STATUS } from '../../../constants';
 import { JSONStringToParse } from '../../untils';
@@ -12,12 +12,12 @@ function t(params:string) {
 export function handleAvatar(item: any) {
   let avatar = '';
   switch (item.type) {
-    case TIM.TYPES.CONV_C2C:
+    case TencentCloudChat.TYPES.CONV_C2C:
       avatar = isUrl(item?.userProfile?.avatar)
         ? item?.userProfile?.avatar
         : 'https://web.sdk.qcloud.com/component/TUIKit/assets/avatar_21.png';
       break;
-    case TIM.TYPES.CONV_GROUP:
+    case TencentCloudChat.TYPES.CONV_GROUP:
       avatar = isUrl(item?.groupProfile?.avatar)
         ? item?.groupProfile?.avatar
         : 'https://sdk-web-1252463788.cos.ap-hongkong.myqcloud.com/im/demo/TUIkit/web/img/constomer.svg';
@@ -35,10 +35,10 @@ export function handleAvatar(item: any) {
 export function handleName(item: Conversation) {
   let name = '';
   switch (item.type) {
-    case TIM.TYPES.CONV_C2C:
+    case TencentCloudChat.TYPES.CONV_C2C:
       name = item?.userProfile.nick || item?.userProfile?.userID || '';
       break;
-    case TIM.TYPES.CONV_GROUP:
+    case TencentCloudChat.TYPES.CONV_GROUP:
       name = item.groupProfile.name || item?.groupProfile?.groupID || '';
       break;
     default:
@@ -71,7 +71,7 @@ export function handleShowLastMessage(item: Conversation) {
   // Judge the number of unread messages and display them only
   // when the message is enabled without interruption.
   const showUnreadCount = conversation.unreadCount > 0
-    && conversation.messageRemindType === TIM.TYPES.MSG_REMIND_ACPT_NOT_NOTE
+    && conversation.messageRemindType === TencentCloudChat.TYPES.MSG_REMIND_ACPT_NOT_NOTE
     ? t(`[${conversation.unreadCount > 99 ? '99+' : conversation.unreadCount}条]`)
     : '';
   if (!lastMessage.lastTime) {
@@ -79,7 +79,7 @@ export function handleShowLastMessage(item: Conversation) {
   }
   // Determine the lastmessage sender of the group.
   // Namecard / Nick / userid is displayed by priority
-  if (conversation.type === TIM.TYPES.CONV_GROUP) {
+  if (conversation.type === TencentCloudChat.TYPES.CONV_GROUP) {
     if (lastMessage.fromAccount === conversation.groupProfile.selfInfo.userID) {
       showNick = t('TUIConversation.我');
     } else {
@@ -87,7 +87,7 @@ export function handleShowLastMessage(item: Conversation) {
     }
   }
   // Display content of lastmessage message body
-  if (lastMessage.type === TIM.TYPES.MSG_TEXT) {
+  if (lastMessage.type === TencentCloudChat.TYPES.MSG_TEXT) {
     lastMessagePayload = lastMessage.payload.text;
   } else {
     lastMessagePayload = lastMessage.messageForShow;
@@ -97,7 +97,7 @@ export function handleShowLastMessage(item: Conversation) {
     lastMessagePayload = t('TUIChat.撤回了一条消息');
   }
 
-  if (conversation.type === TIM.TYPES.CONV_GROUP && lastMessage.type === TIM.TYPES.MSG_GRP_TIP) {
+  if (conversation.type === TencentCloudChat.TYPES.CONV_GROUP && lastMessage.type === TencentCloudChat.TYPES.MSG_GRP_TIP) {
     return lastMessagePayload;
   }
   // Specific display content of message box
@@ -120,28 +120,28 @@ export function handleTipMessageShowContext(message: Message) {
     userName = userName.slice(0, -1);
   }
   switch (message.payload.operationType) {
-    case TIM.TYPES.GRP_TIP_MBR_JOIN:
+    case TencentCloudChat.TYPES.GRP_TIP_MBR_JOIN:
       options.text = `${userName} ${t('message.tip.Join in group')}`;
       break;
-    case TIM.TYPES.GRP_TIP_MBR_QUIT:
+    case TencentCloudChat.TYPES.GRP_TIP_MBR_QUIT:
       options.text = `${t('message.tip.member')}：${userName} ${t('message.tip.quit group')}`;
       break;
-    case TIM.TYPES.GRP_TIP_MBR_KICKED_OUT:
+    case TencentCloudChat.TYPES.GRP_TIP_MBR_KICKED_OUT:
       options.text = `${t('message.tip.member')}：${userName} ${t('message.tip.by')}${message.payload.operatorID}${t(
         'message.tip.kicked out of group',
       )}`;
       break;
-    case TIM.TYPES.GRP_TIP_MBR_SET_ADMIN:
+    case TencentCloudChat.TYPES.GRP_TIP_MBR_SET_ADMIN:
       options.text = `${t('message.tip.member')}：${userName} ${t('message.tip.become admin')}`;
       break;
-    case TIM.TYPES.GRP_TIP_MBR_CANCELED_ADMIN:
+    case TencentCloudChat.TYPES.GRP_TIP_MBR_CANCELED_ADMIN:
       options.text = `${t('message.tip.member')}：${userName} ${t('message.tip.by revoked administrator')}`;
       break;
-    case TIM.TYPES.GRP_TIP_GRP_PROFILE_UPDATED:
+    case TencentCloudChat.TYPES.GRP_TIP_GRP_PROFILE_UPDATED:
       // options.text =  `${userName} 修改群组资料`;
       options.text = handleTipGrpUpdated(message);
       break;
-    case TIM.TYPES.GRP_TIP_MBR_PROFILE_UPDATED:
+    case TencentCloudChat.TYPES.GRP_TIP_MBR_PROFILE_UPDATED:
       message.payload.memberList.map((member:any) => {
         if (member.muteTime > 0) {
           options.text = `${t('message.tip.member')}：${member.userID}${t('message.tip.muted')}`;

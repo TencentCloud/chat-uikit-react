@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Conversation } from 'tim-js-sdk';
+import { Conversation } from '@tencentcloud/chat';
 import { Input } from '../Input';
 import { Icon, IconTypes } from '../Icon';
 import { ConversationCreateSelectView, ConversationCreateSelectViewProps } from './ConversationCreateSelectView';
@@ -30,14 +30,14 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
     setPageState,
   } = props;
   const [searchValue, setSearchValue] = useState('');
-  const { tim, setActiveConversation } = useTUIKitContext();
+  const { chat, setActiveConversation } = useTUIKitContext();
   const [friendList, setFriendList] = useState({});
   const {
     getFriendListSortSearchResult,
-  } = useConversationCreate(tim, conversationList, (newFriendListResult) => {
+  } = useConversationCreate(chat, conversationList, (newFriendListResult) => {
     setFriendList(newFriendListResult);
   });
-  const { createConversation } = useConversation(tim);
+  const { createConversation } = useConversation(chat);
   const userCheckedList = useRef(new Map());
   const searchValueChange = async (e) => {
     const { value } = e.target;
