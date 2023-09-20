@@ -4,13 +4,6 @@
 
 [Tencent Cloud Chat](https://www.tencentcloud.com/products/im) provides globally interconnected chat APIs, multi-platform SDKs, and UIKit components to help you quickly bring messaging capabilities such as one-to-one chat, group chat, chat rooms, and system notifications to your applications and websites.
 
-## Free Demo
-
-![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/712468b756a111ee974d5254005f490f.png)
-![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/80785e9c56a111ee974d5254005f490f.png)
-
-👉🏻 [Free Demo](https://web.sdk.qcloud.com/im/demo/intl/index.html)
-
 ## Global Compliance Certifications
 <table>
 <tr>
@@ -35,6 +28,13 @@
 - 550 Billion+ Daily peak messages
 - 100,000+ Customers worldwid
 - 99.99% Message success rate
+
+## Low-Code UIKit and Free Demo
+
+![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/712468b756a111ee974d5254005f490f.png)
+![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/80785e9c56a111ee974d5254005f490f.png)
+
+👉🏻 [Free Demo](https://web.sdk.qcloud.com/im/demo/intl/index.html)
 
 
 ## Get Started
