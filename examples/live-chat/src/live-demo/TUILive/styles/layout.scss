@@ -227,3 +227,9 @@
     margin: auto 0;
   }
 }
+
+body {
+  #webpack-dev-server-client-overlay {
+    display: none !important;
+  }
+}
