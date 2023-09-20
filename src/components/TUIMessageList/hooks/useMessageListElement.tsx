@@ -1,7 +1,7 @@
 import React, {
   PropsWithChildren, useMemo,
 } from 'react';
-import { Message } from 'tim-js-sdk';
+import { Message } from '@tencentcloud/chat';
 import { UnknowPorps } from '../../../context';
 import { TUIMessageProps } from '../../TUIMessage/TUIMessage';
 import { getTimeStamp } from '../../untils';
@@ -22,21 +22,18 @@ function useMessageListElement <T extends MessageListElementProps>(
   } = props;
 
   return useMemo(() => enrichedMessageList?.map((item: Message, index:number) => {
-    const key = `${JSON.stringify(item)}${index}`;
+    const key = `${item.ID}-${index}`;
     const preMessageTImer = index > 0 ? enrichedMessageList[index - 1]?.time : -1;
     const currrentTimer = item?.time || 0;
-    const isShowIntervalsTImer = preMessageTImer !== -1
+    const isShowIntervalsTimer = preMessageTImer !== -1
       ? (currrentTimer - preMessageTImer) >= intervalsTimer : false;
     return (
-      <>
+      <li className="message-list-item" key={key}>
         {
-         isShowIntervalsTImer && <div className="message-list-time" key={`${currrentTimer + index}`}>{currrentTimer ? getTimeStamp(currrentTimer * 1000) : 0}</div>
-       }
-        <li className="message-list-item" key={key}>
-          <TUIMessage message={item} key={key} />
-        </li>
-
-      </>
+         isShowIntervalsTimer && <div className="message-list-time" key={`${currrentTimer + index}`}>{currrentTimer ? getTimeStamp(currrentTimer * 1000) : 0}</div>
+        }
+        <TUIMessage message={item} />
+      </li>
     );
   }), [enrichedMessageList]);
 }

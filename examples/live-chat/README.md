@@ -1,61 +1,44 @@
-_English | [简体中文](README.zh_cn.md)_
-# [chat-uikit-react](https://www.tencentcloud.com/document/product/1047/34279/)
->chat-uikit-react is a UI component library based on Tencent Cloud IM SDK. It provides universal UI components to offer features such as conversation, chat, relationship chain, group, and audio/video call features.
-With these UI components, you can quickly build your own business logic.
-When implementing UI features, components in chat-uikit-react will also call the corresponding APIs of the IM SDK to implement IM-related logic and data processing, allowing developers to focus on their own business needs or custom extensions.
+## Get Started
 
-<img align="right" src="https://qcloudimg.tencent-cloud.cn/raw/4562be8179a1534efb17d33428239c82.png?auto=format,enhance" width="50%" />
+### Step 1. Create an app
 
-### Quick Links
-- [Demo App](https://web.sdk.qcloud.com/im/demo/intl/index.html)
-- [Client API](https://www.tencentcloud.com/document/product/1047/33999)
-- [Free Demos](https://www.tencentcloud.com/document/product/1047/34279)
-- [FAQ](https://www.tencentcloud.com/document/product/1047/34455)
-- [GitHub Source](https://github.com/TencentCloud/chat-uikit-react)
-- [Generating UserSig](https://www.tencentcloud.com/document/product/1047/34385)
-  
-## live demo
-[live demo ](https://web.sdk.qcloud.com/im/demo/intl/index.html) based on [Chat UIKit React](https://www.tencentcloud.com/document/product/1047/34279/) Live solution. whose has the basic functions of a live broadcast group, such as: like, subscribe, follow, etc. and obtain their [open source code](https://github.com/TencentCloud/chat-uikit-react) in GitHub.
-![img.png](https://web.sdk.qcloud.com/im/demo/TUIkit/react-static/images/live-demo.png)
+1. Log in to the [Chat console](https://console.tencentcloud.com/im).
+2. Click `Create Application`, enter your app name, and click `Confirm`.
+![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/f016163c56a111ee94c3525400d793d0.png)
+3. After creation, you can see the status, service version, SDKAppID, creation time, tag, and expiration time of the new app on the overview page of the console.
+![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/2adc015456a211ee974d5254005f490f.png)
 
-## Running live demo
+### Step 2. Obtain the SDKAppID and SECRETKEY
+1. Click the target app card to go to the basic configuration page of the app.
+2. In the Basic info area, click `Display key`, and then copy and save the key information, which is SECRETKEY.
+![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/696c6df756a211ee84f2525400494e51.png)
 
-### Step 1. Download the source code
+### Step 3. Download the source code and install dependencies
 ```
-# Run the code in CLI
+# Please run the following code in the terminal.
 $ git clone https://github.com/TencentCloud/chat-uikit-react
-# Go to the project  
 $ cd chat-uikit-react
-# Install dependencies of the demo
 $ npm install && cd examples/live-chat && npm install
 ```
+### Step 4. Configure
+1. Open the `examples/live-chat` project and locate the `GenerateTestUserSig.js` file in `./examples/live-chat/src/debug/GenerateTestUserSig.js`.
+2. Set the `SDKAppID` and `SECRETKEY` obtained at Step 2.
 
-### Step 2. Configure demo
-1. Open the `examples/sample-chat` project and locate the `GenerateTestUserSig.js` file in `./examples/live-chat/src/debug/GenerateTestUserSig.js`.
-2. In the `GenerateTestUserSig.js` file, set `SDKAPPID` and `SECRETKEY`, whose values can be obtained in the [IM console](https://console.tencentcloud.com/im). Click the card of the target app to go to its configuration page.
-   ![](https://qcloudimg.tencent-cloud.cn/raw/8d469e975f1ca5a2f3dbc9c6fe8774f5.png)
-3. In the **Basic Information** area, click **Display key**, and copy and save the key information to the `GenerateTestUserSig` file.
->!
->- In this document, the method to obtain `UserSig` is to configure the secret key in the client code. In this method, the secret key is vulnerable to decompilation and reverse engineering. Once your secret key is leaked, attackers can steal your Tencent Cloud traffic. Therefore, **this method is only suitable for locally running a demo project and debugging.**
->- The best practice is to integrate the calculation code of `UserSig` into your server and provide an application-oriented API. When `UserSig` is needed, your application can send a request to your server for a dynamic `UserSig`. For more information, see [How do I calculate `UserSig` during production?](https://www.tencentcloud.com/document/product/1047/34385).
-1. in `live-chat/src/demo/SampleChat.ts`file, set `YOUER_USERID`、 `YOUER_AVCHATROOM_GROUPID` and `YOUER_AVCHATROOM_PLAYER_URL` 
-
-
-![img.png](https://web.sdk.qcloud.com/im/demo/TUIkit/react-static/images/live-demo-config.png)
-
-
-### Step 3. Launch the project
+### Step 5. Run the demo
 ```
-# Launch the project
 $ cd examples/live-chat
 $ npm run start
 ```
 
+## Send your first message
+1. Run the demo in two seperate tab pages.
+2. In each tab page, the logged-in userID will join a live room(also called Audio-Video Group in Tencent Cloud Chat) with the ID "live-room-1".
+3. Enter a message in the input box and press **Enter** to send it. Emoji/Image/Video/Document messages are supported.
 
-### Quick links
-- [Web demo](https://web.sdk.qcloud.com/im/demo/intl/index.html)
-- [Client APIs](https://www.tencentcloud.com/document/product/1047/33999)
-- [Free demo download](https://www.tencentcloud.com/document/product/1047/34279)
-- [FAQs](https://www.tencentcloud.com/document/product/1047/34455)
-- [Source code in GitHub](https://github.com/TencentCloud/chat-uikit-react)
-- [Generating UserSig](https://www.tencentcloud.com/document/product/1047/34385)
+
+## Contact Us
+Join a Tencent Cloud Chat developer group for Reliable technical support & Product details & Constant exchange of ideas.
+- Telegram group (EN): [join](https://t.me/+1doS9AUBmndhNGNl)
+- WhatsApp group (EN): [join](https://chat.whatsapp.com/Gfbxk7rQBqc8Rz4pzzP27A)
+- Telegram group (ZH): [join](https://t.me/tencent_imsdk)
+- WhatsApp group (ZH): [join](https://chat.whatsapp.com/IVa11ZkVmKTEwSWsAzSyik)

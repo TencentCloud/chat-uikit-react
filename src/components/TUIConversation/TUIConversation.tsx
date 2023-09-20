@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useMemo } from 'react';
-import { Conversation } from 'tim-js-sdk';
+import { Conversation } from '@tencentcloud/chat';
 import { TUIConversationProvider, TUIConversationContextValue } from '../../context/TUIConversationContext';
 import { TUIConversationList } from '../TUIConversationList';
 import { TUIProfile } from '../TUIProfile';

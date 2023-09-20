@@ -3,10 +3,10 @@ import {
   ChatSDK,
   Conversation,
   Profile,
-} from 'tim-js-sdk';
+} from '@tencentcloud/chat';
 
 export interface TUIKitContextValue {
-    tim: ChatSDK,
+    chat: ChatSDK,
     conversation?: Conversation,
     setActiveConversation: (conversation?: Conversation) => void,
     customClasses?: unknown,

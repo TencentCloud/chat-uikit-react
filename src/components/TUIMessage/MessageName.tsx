@@ -1,7 +1,7 @@
 import React, {
   PropsWithChildren,
 } from 'react';
-import TIM, { Message } from 'tim-js-sdk';
+import TencentCloudChat, { Message } from '@tencentcloud/chat';
 import { MESSAGE_FLOW } from '../../constants';
 import { messageShowType } from '../../context';
 
@@ -23,7 +23,7 @@ export function MessageName <T extends MessageNameProps>(
   } = props;
 
   const show = (showType === messageShowType.ALL || message?.flow === showType)
-  && message?.conversationType === TIM.TYPES.CONV_GROUP;
+  && message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP;
 
   if (!show || showType === messageShowType.NONE) {
     return null;

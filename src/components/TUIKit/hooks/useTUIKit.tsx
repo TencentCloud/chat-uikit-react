@@ -1,38 +1,38 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import TIM, {
+import TencentCloudChat, {
   ChatSDK,
   Conversation,
   Group,
   Profile,
-} from 'tim-js-sdk';
+} from '@tencentcloud/chat';
 
 export interface UseChatParams{
-  tim: ChatSDK,
+  chat: ChatSDK,
   activeConversation?: Conversation,
 }
-export const useTUIKit = ({ tim, activeConversation: paramsActiveConversation }:UseChatParams) => {
+export const useTUIKit = ({ chat, activeConversation: paramsActiveConversation }:UseChatParams) => {
   const [conversation, setConversation] = useState<Conversation>(paramsActiveConversation);
   const [myProfile, setMyProfile] = useState<Profile>();
   const [TUIManageShow, setTUIManageShow] = useState<boolean>(false);
   const [TUIProfileShow, setTUIProfileShow] = useState<boolean>(false);
   useEffect(() => {
     const getMyProfile = async () => {
-      const res = await tim?.getMyProfile();
+      const res = await chat?.getMyProfile();
       setMyProfile(res?.data);
     };
     getMyProfile();
-  }, [tim]);
+  }, [chat]);
   const setActiveConversation = useCallback(
     (activeConversation?: Conversation) => {
       if (activeConversation) {
-        tim?.setMessageRead({ conversationID: activeConversation.conversationID });
+        chat?.setMessageRead({ conversationID: activeConversation.conversationID });
       }
       if (conversation && (activeConversation.conversationID !== conversation.conversationID)) {
         setTUIManageShow(false);
       }
       setConversation(activeConversation);
     },
-    [tim],
+    [chat],
   );
 
   useEffect(() => {

@@ -3,7 +3,7 @@ import { TUIKitContextValue } from '../../../context/TUIKitContext';
 
 export const useCreateTUIKitContext = (value:TUIKitContextValue) => {
   const {
-    tim,
+    chat,
     conversation,
     customClasses,
     setActiveConversation,
@@ -16,7 +16,7 @@ export const useCreateTUIKitContext = (value:TUIKitContextValue) => {
 
   const TUIKitContext = useMemo(
     () => ({
-      tim,
+      chat,
       conversation,
       customClasses,
       setActiveConversation,
@@ -29,7 +29,7 @@ export const useCreateTUIKitContext = (value:TUIKitContextValue) => {
     [
       conversation,
       customClasses,
-      tim,
+      chat,
       TUIManageShow,
       TUIProfileShow,
       setTUIProfileShow,

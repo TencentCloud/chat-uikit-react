@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles/index.scss';
-import { Profile as TProfile } from 'tim-js-sdk';
+import { Profile as TProfile } from '@tencentcloud/chat';
 import { Avatar, defaultUserAvatar } from '../Avatar';
 import { Icon, IconTypes } from '../Icon';
 

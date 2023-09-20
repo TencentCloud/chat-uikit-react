@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import './styles/index.scss';
-import { Conversation } from 'tim-js-sdk';
+import { Conversation } from '@tencentcloud/chat';
 import { Icon, IconTypes } from '../Icon';
 import { ConversationCreateUserSelectList } from './ConversationCreateUserSelectList';
 import { ConversationCreatGroupDetail } from './ConversationCreatGroupDetail';
@@ -22,8 +22,8 @@ export function ConversationCreate<T extends ConversationCreateProps>(props:T) {
   const [isCreateGroup, setIsCreateGroup] = useState(false);
   const [pageState, setPageState] = useState<PageStateTypes>(PageStateTypes.USER_SELECT);
   const [selectList, setSelectList] = useState([]);
-  const { tim } = useTUIKitContext();
-  const { createConversation } = useConversation(tim);
+  const { chat } = useTUIKitContext();
+  const { createConversation } = useConversation(chat);
   const back = () => {
     if (isCreateGroup) {
       switch (pageState) {

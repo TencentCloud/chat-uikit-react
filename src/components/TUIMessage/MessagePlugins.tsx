@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useRef, useState } from 'react';
-import TIM from 'tim-js-sdk';
+import TencentCloudChat from '@tencentcloud/chat';
 import './styles/index.scss';
 
 import { Plugins, PluginsProps } from '../Plugins';
@@ -19,7 +19,7 @@ enum PluginsNameEnum {
 export type MessagePluginConfigProps = {
   [propsName in PluginsNameEnum]?: {
     isShow?: boolean;
-    relateMessageType?: TIM.TYPES[],
+    relateMessageType?: TencentCloudChat.TYPES[],
   };
 };
 
@@ -64,7 +64,7 @@ export function MessagePlugins <T extends MessagePluginsProps>(
     },
     copy: {
       isShow: true,
-      relateMessageType: [TIM.TYPES.MSG_TEXT],
+      relateMessageType: [TencentCloudChat.TYPES.MSG_TEXT],
       ...propsPluginConfig?.copy,
       ...contextPlugin?.config?.copy,
     },

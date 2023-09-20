@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import TIM from 'tim-js-sdk';
+import TencentCloudChat from '@tencentcloud/chat';
 import { strChineseFirstPy } from '../static/word';
 import { useProfile } from '../../../hooks';
 
 export const useConversationCreate = (
-  tim,
+  chat,
   conversationList,
   setFriendListResultHandler?:(
     newFriendListResult: object,
@@ -22,9 +22,9 @@ export const useConversationCreate = (
   };
   const queryFriendList = async () => {
     const frequentlyConversationProfile = conversationList.filter(
-      (item) => item.type === TIM.TYPES.CONV_C2C,
+      (item) => item.type === TencentCloudChat.TYPES.CONV_C2C,
     ).slice(0, 5).map((item) => item.userProfile);
-    const { code, data } = await tim.getFriendList();
+    const { code, data } = await chat.getFriendList();
     if (code === 0) {
       const sortResult = handleData(
         data.map((item) => item.profile),
@@ -69,7 +69,7 @@ export const useConversationCreate = (
     });
     return sortResult;
   };
-  const { getUserProfile } = useProfile(tim);
+  const { getUserProfile } = useProfile(chat);
   const getFriendListSortSearchResult = async (searchValue: string) => {
     if (!searchValue) return friendListSortResult;
     const { data: profileList } = await getUserProfile([searchValue]);
@@ -95,7 +95,7 @@ export const useConversationCreate = (
   };
   useEffect(() => {
     queryFriendList();
-  }, [tim]);
+  }, [chat]);
   return {
     getFirstLetter,
     queryFriendList,

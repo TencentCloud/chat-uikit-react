@@ -1,4 +1,4 @@
-import TIM, { Message } from 'tim-js-sdk';
+import TencentCloudChat, { Message } from '@tencentcloud/chat';
 import constant from '../../constants';
 import type { TUIChatStateContextValue } from '../../context';
 import { JSONStringToParse } from '../untils';
@@ -6,7 +6,7 @@ import { JSONStringToParse } from '../untils';
 export const handleMessage = (messageList:Array<Message>):Array<Message> => {
   let customPayloadData = null;
   return messageList.filter((item) => {
-    if (item.type === TIM.TYPES.MSG_CUSTOM) {
+    if (item.type === TencentCloudChat.TYPES.MSG_CUSTOM) {
       customPayloadData = JSONStringToParse(item?.payload?.data);
     }
     if (customPayloadData && customPayloadData?.businessID === constant.TYPE_TYPING) {
@@ -54,7 +54,7 @@ export const handleRemoveMessage = (
   return list;
 };
 
-export const handleUploadPenddingMessage = (
+export const handleUploadPendingMessage = (
   messageList: Array<Message>,
   message: Message,
 ) => {

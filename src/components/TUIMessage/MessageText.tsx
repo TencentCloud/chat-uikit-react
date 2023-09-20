@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import TIM, { Message } from 'tim-js-sdk';
+import TencentCloudChat, { Message } from '@tencentcloud/chat';
 import { UnknowPorps } from '../../context';
 
 export interface MessageContextProps {
@@ -18,7 +18,7 @@ function MessageTextWithContext <T extends MessageContextProps>(
   } = props;
 
   return (
-    <div className={`bubble message-text bubble-${message.flow} ${message?.conversationType === TIM.TYPES.CONV_GROUP ? 'group' : ''}`}>
+    <div className={`bubble message-text bubble-${message.flow} ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`}>
       <div className="message-text-content">
         {context.text.map((item, index) => {
           const key = message.ID + index;

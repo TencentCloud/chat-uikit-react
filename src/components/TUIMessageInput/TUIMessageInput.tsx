@@ -1,5 +1,5 @@
 import React, { MutableRefObject, PropsWithChildren } from 'react';
-import TIM from 'tim-js-sdk';
+import TencentCloudChat from '@tencentcloud/chat';
 import { TUIMessageInputContextProvider } from '../../context/TUIMessageInputContext';
 import { useMessageInputState, useCreateMessageInputContext } from './hooks';
 import './styles/index.scss';
@@ -53,7 +53,7 @@ function TUIMessageInputProvider<T extends TUIMessageInputProps>(props: PropsWit
   const messageInputState = useMessageInputState(props);
   const { textareaRef, conversation } = useTUIChatStateContext('TUIMessageInput');
 
-  const contextDisabled = conversation?.type === TIM.TYPES.CONV_SYSTEM;
+  const contextDisabled = conversation?.type === TencentCloudChat.TYPES.CONV_SYSTEM;
 
   const { TUIMessageInputConfig } = useTUIChatStateContext('TUIMessageInput');
 

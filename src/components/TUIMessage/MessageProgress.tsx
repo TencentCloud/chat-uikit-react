@@ -3,7 +3,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import TIM, { Message } from 'tim-js-sdk';
+import TencentCloudChat, { Message } from '@tencentcloud/chat';
 import { MESSAGE_STATUS } from '../../constants';
 import { useTUIChatStateContext, useTUIMessageContext } from '../../context';
 
@@ -31,21 +31,21 @@ function MessageProgressWithContext <T extends MessageProgressProps>(
   const [progressMessage, setProgressMessage] = useState<Message>();
   const [progress, setProgress] = useState<number>(0);
 
-  const { uploadPenddingMessageList } = useTUIChatStateContext('MessageProgressWithContext');
+  const { uploadPendingMessageList } = useTUIChatStateContext('MessageProgressWithContext');
   const { isShowProgress: contextIsShow = false, Progress: contextProgress } = useTUIMessageContext('MessageProgressWithContext');
 
   const Progress = propsProgress || contextProgress;
   const isShow = propsIsShow || contextIsShow;
 
   const handleLoading = () => !!((
-    message?.type === TIM.TYPES.MSG_IMAGE
-    || message?.type === TIM.TYPES.MSG_VIDEO
-    || message?.type === TIM.TYPES.MSG_FILE
+    message?.type === TencentCloudChat.TYPES.MSG_IMAGE
+    || message?.type === TencentCloudChat.TYPES.MSG_VIDEO
+    || message?.type === TencentCloudChat.TYPES.MSG_FILE
   ) && message?.status === MESSAGE_STATUS.UNSEND);
 
   useEffect(() => {
-    if (uploadPenddingMessageList && uploadPenddingMessageList.length > 0) {
-      uploadPenddingMessageList.map((item:MessageProgressItem) => {
+    if (uploadPendingMessageList && uploadPendingMessageList.length > 0) {
+      uploadPendingMessageList.map((item:MessageProgressItem) => {
         if (item?.ID === message?.ID) {
           setProgressMessage(item);
           setProgress(item?.progress);
@@ -53,7 +53,7 @@ function MessageProgressWithContext <T extends MessageProgressProps>(
         return item;
       });
     }
-  }, [uploadPenddingMessageList]);
+  }, [uploadPendingMessageList]);
 
   if (!isShow) {
     return null;

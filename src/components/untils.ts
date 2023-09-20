@@ -6,7 +6,7 @@ import {
   isToday,
   isYesterday,
 } from 'date-fns';
-import TIM from 'tim-js-sdk';
+import TencentCloudChat from '@tencentcloud/chat';
 import { defaultGroupAvatarWork, defaultUserAvatar } from './Avatar';
 
 // Determine if it is a JSON string
@@ -33,14 +33,14 @@ export function JSONStringToParse(str: string) {
   return JSON.parse(str);
 }
 
-export const handleDisplayAvatar = (avatar: string, type:string = TIM.TYPES.CONV_C2C) => {
+export const handleDisplayAvatar = (avatar: string, type:string = TencentCloudChat.TYPES.CONV_C2C) => {
   let displayImage = avatar;
   if (!avatar) {
     switch (type) {
-      case TIM.TYPES.CONV_C2C:
+      case TencentCloudChat.TYPES.CONV_C2C:
         displayImage = defaultUserAvatar;
         break;
-      case TIM.TYPES.CONV_GROUP:
+      case TencentCloudChat.TYPES.CONV_GROUP:
         displayImage = defaultGroupAvatarWork;
         break;
       default:

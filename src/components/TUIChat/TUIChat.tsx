@@ -1,7 +1,7 @@
 import React, {
   PropsWithChildren, useEffect, useMemo, useReducer, useRef, useState,
 } from 'react';
-import { ChatSDK, Conversation, Message } from 'tim-js-sdk';
+import { ChatSDK, Conversation, Message } from '@tencentcloud/chat';
 import { useTUIKitContext } from '../../context/TUIKitContext';
 import { TUIChatStateContextProvider } from '../../context/TUIChatStateContext';
 import { TUIChatActionProvider } from '../../context/TUIChatActionContext';
@@ -58,7 +58,7 @@ interface TUIChatProps {
 }
 
 interface TUIChatInnerProps extends TUIChatProps {
-  tim?: ChatSDK,
+  chat?: ChatSDK,
   key?: string;
 }
 
@@ -70,7 +70,7 @@ function UnMemoizedTUIChat <T extends TUIChatProps>(
     EmptyPlaceholder = <EmptyStateIndicator listType="chat" />,
   } = props;
 
-  const { conversation: contextConversation, tim } = useTUIKitContext('TUIChat');
+  const { conversation: contextConversation, chat } = useTUIKitContext('TUIChat');
 
   const conversation = propsConversation || contextConversation;
 
@@ -78,7 +78,7 @@ function UnMemoizedTUIChat <T extends TUIChatProps>(
 
   return (
     <TUIChatInner
-      tim={tim}
+      chat={chat}
       {...props}
       conversation={conversation}
       key={conversation.conversationID}
@@ -90,7 +90,7 @@ function TUIChatInner <T extends TUIChatInnerProps>(
   props: PropsWithChildren<T>,
 ):React.ReactElement {
   const {
-    tim,
+    chat,
     conversation,
     className,
     children,
@@ -118,7 +118,7 @@ function TUIChatInner <T extends TUIChatInnerProps>(
   const messageListRef = useRef(null);
   const textareaRef = useRef<HTMLTextAreaElement>();
   const chatStateContextValue = useCreateTUIChatStateContext({
-    tim,
+    chat,
     conversation,
     messageListRef,
     textareaRef,
@@ -141,16 +141,16 @@ function TUIChatInner <T extends TUIChatInnerProps>(
     createTextAtMessage,
     createLocationMessage,
     createMergerMessage,
-  } = useCreateMessage({ tim, conversation, cloudCustomData });
+  } = useCreateMessage({ chat, conversation, cloudCustomData });
 
   const {
     getMessageList,
     updateMessage,
-    editLocalmessage,
+    editLocalMessage,
     removeMessage,
-    updataUploadPenddingMessageList,
+    updateUploadPendingMessageList,
   } = useHandleMessageList({
-    tim, conversation, state, dispatch,
+    chat, conversation, state, dispatch,
   });
 
   const {
@@ -168,12 +168,12 @@ function TUIChatInner <T extends TUIChatInnerProps>(
       if (propsSendMessage) {
         await propsSendMessage(message, options);
       } else {
-        await tim.sendMessage(message, options);
+        await chat.sendMessage(message, options);
       }
-      editLocalmessage(message);
+      editLocalMessage(message);
     } catch (error) {
       Toast({ text: error, type: 'error' });
-      editLocalmessage(message);
+      editLocalMessage(message);
       throw new Error(error);
     }
   };
@@ -189,6 +189,9 @@ function TUIChatInner <T extends TUIChatInnerProps>(
     const historyMessageData = await getMessageList({
       nextReqMessageID: state.nextReqMessageID,
     });
+    if (!historyMessageData) {
+      return;
+    }
     dispatch({
       type: CONSTANT_DISPATCH_TYPE.SET_HISTORY_MESSAGELIST,
       value: historyMessageData.data.messageList,
@@ -208,6 +211,9 @@ function TUIChatInner <T extends TUIChatInnerProps>(
   useEffect(() => {
     (async () => {
       const res = await getMessageList();
+      if (!res) {
+        return;
+      }
       if (res.data.messageList.length > 0) {
         dispatch({
           type: CONSTANT_DISPATCH_TYPE.SET_MESSAGELIST,
@@ -245,14 +251,14 @@ function TUIChatInner <T extends TUIChatInnerProps>(
       createTextAtMessage,
       createLocationMessage,
       createMergerMessage,
-      editLocalmessage,
+      editLocalMessage,
       operateMessage,
       loadMore,
       revokeMessage,
       setAudioSource,
       setVideoSource,
       setHighlightedMessageId,
-      updataUploadPenddingMessageList,
+      updateUploadPendingMessageList,
     }),
     [
       sendMessage,
@@ -269,14 +275,14 @@ function TUIChatInner <T extends TUIChatInnerProps>(
       createTextAtMessage,
       createLocationMessage,
       createMergerMessage,
-      editLocalmessage,
+      editLocalMessage,
       operateMessage,
       loadMore,
       revokeMessage,
       setAudioSource,
       setVideoSource,
       setHighlightedMessageId,
-      updataUploadPenddingMessageList,
+      updateUploadPendingMessageList,
     ],
   );
 

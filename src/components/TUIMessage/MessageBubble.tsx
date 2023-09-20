@@ -3,7 +3,7 @@ import React, {
   ReactNode,
   useState,
 } from 'react';
-import TIM, { Message } from 'tim-js-sdk';
+import TencentCloudChat, { Message } from '@tencentcloud/chat';
 import { MESSAGE_STATUS } from '../../constants';
 import { useTUIChatActionContext } from '../../context';
 import { Icon, IconTypes } from '../Icon';
@@ -39,9 +39,9 @@ function MessageBubbleWithContext <T extends MessageBubbleProps>(
   const { setHighlightedMessageId } = useTUIChatActionContext('MessageBubbleWithContext');
 
   const handleLoading = () => !!((
-    message?.type === TIM.TYPES.MSG_IMAGE
-    || message?.type === TIM.TYPES.MSG_VIDEO
-    || message?.type === TIM.TYPES.MSG_FILE
+    message?.type === TencentCloudChat.TYPES.MSG_IMAGE
+    || message?.type === TencentCloudChat.TYPES.MSG_VIDEO
+    || message?.type === TencentCloudChat.TYPES.MSG_FILE
   ) && message?.status === MESSAGE_STATUS.UNSEND);
 
   const handleMouseEnter = () => {

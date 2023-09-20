@@ -16,14 +16,14 @@ export function TUIManage() {
   const {
     conversation: activeConversation,
     setActiveConversation,
-    tim,
+    chat,
     TUIManageShow,
     setTUIManageShow,
   } = useTUIKitContext('TUIManage');
   useConversationUpdate(null, () => {
     setForceUpdateCount((count) => count + 1);
   });
-  const { pinConversation, deleteConversation } = useConversation(tim);
+  const { pinConversation, deleteConversation } = useConversation(chat);
   const pinChatChange = (e) => {
     setIsPinned(e.target.checked);
     pinConversation({

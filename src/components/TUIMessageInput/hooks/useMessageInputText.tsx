@@ -28,7 +28,7 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
     sendUploadMessage,
   } = props;
 
-  const { tim } = useTUIKitContext('useMessageInputText');
+  const { chat } = useTUIKitContext('useMessageInputText');
   const { sendMessage, createTextMessage, operateMessage } = useTUIChatActionContext('TUIMessageInput');
 
   const { cloudCustomData } = useHandleQuoteMessage();
@@ -46,7 +46,7 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
         getNewText: (text:string) => event.target.value,
       });
     },
-    [tim],
+    [chat],
   );
 
   const handleSubmit = async (

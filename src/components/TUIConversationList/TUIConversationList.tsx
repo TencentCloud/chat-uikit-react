@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Conversation } from 'tim-js-sdk';
+import { Conversation } from '@tencentcloud/chat';
 import { useTUIKitContext } from '../../context';
 import useConversationList from './hooks/useConversationList';
 import './index.scss';
@@ -36,7 +36,7 @@ export function UnMemoTUIConversationList<T extends Props>(props: T):React.React
     filterConversation: propsFilterConversation,
   } = props;
   const {
-    tim, customClasses, conversation, setActiveConversation, setTUIProfileShow,
+    chat, customClasses, conversation, setActiveConversation, setTUIProfileShow,
   } = useTUIKitContext('TUIConversationList');
   const {
     filterConversation: contextFilterConversation,
@@ -57,7 +57,7 @@ export function UnMemoTUIConversationList<T extends Props>(props: T):React.React
   const {
     conversationList,
     setConversationList,
-  } = useConversationList(tim, activeConversationHandler, filterConversation);
+  } = useConversationList(chat, activeConversationHandler, filterConversation);
   useConversationUpdate(
     setConversationList,
     onConversationListUpdated,

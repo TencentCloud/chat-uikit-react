@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import TIM from 'tim-js-sdk';
+import TencentCloudChat from '@tencentcloud/chat';
 import type { TUIMessageProps } from './TUIMessage';
 
 import { MessageBubble } from './MessageBubble';
@@ -43,35 +43,34 @@ function TUIMessageDefaultWithContext <T extends TUIMessageProps>(
     <div
       className={
       `message-default
-      ${(message?.type === TIM.TYPES.MSG_GRP_TIP || message?.isRevoked) ? 'tip' : message?.flow}
+      ${(message?.type === TencentCloudChat.TYPES.MSG_GRP_TIP || message?.isRevoked) ? 'tip' : message?.flow}
       ${className}
       `
       }
     >
       {
-        message?.type === TIM.TYPES.MSG_GRP_TIP
+        message?.type === TencentCloudChat.TYPES.MSG_GRP_TIP
         && (<MessageTip message={message} />)
       }
       {
-        message?.type === TIM.TYPES.MSG_GRP_SYS_NOTICE
+        message?.type === TencentCloudChat.TYPES.MSG_GRP_SYS_NOTICE
         && (<MessageSystem message={message} />)
       }
       {
         message?.isRevoked
         && (<MessageRevoke message={message} />)
       }
-      {message?.type !== TIM.TYPES.MSG_GRP_TIP
-      && message?.type !== TIM.TYPES.MSG_GRP_SYS_NOTICE
+      {message?.type !== TencentCloudChat.TYPES.MSG_GRP_TIP
+      && message?.type !== TencentCloudChat.TYPES.MSG_GRP_SYS_NOTICE
       && !message?.isRevoked
       && (
       <div
         className={`${message?.flow}`}
         key={message?.ID}
-        data-message-id={message?.ID}
       >
         {prefix}
         <MessageAvatar message={message} CustomAvatar={customAvatar} showType={showAvatar} />
-        <main className="content">
+        <main data-message-id={message?.ID} className="content">
           <MessageName message={message} CustomName={customName} showType={showName} />
           <MessageBubble
             message={message}

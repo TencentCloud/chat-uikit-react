@@ -1,4 +1,4 @@
-import TIM, { Message } from 'tim-js-sdk';
+import TencentCloudChat, { Message } from '@tencentcloud/chat';
 import {
   handleAudioMessageShowContext,
   handleCustomMessageShowContext,
@@ -24,37 +24,37 @@ export const useMessageContextHandler = <T extends messageContextParams>(params:
   let context;
   if (message) {
     switch (message?.type) {
-      case TIM.TYPES.MSG_TEXT:
+      case TencentCloudChat.TYPES.MSG_TEXT:
         context = handleTextMessageShowContext(message);
         break;
-      case TIM.TYPES.MSG_FACE:
+      case TencentCloudChat.TYPES.MSG_FACE:
         context = handleFaceMessageShowContext(message);
         break;
-      case TIM.TYPES.MSG_IMAGE:
+      case TencentCloudChat.TYPES.MSG_IMAGE:
         context = handleImageMessageShowContext(message);
         break;
-      case TIM.TYPES.MSG_AUDIO:
+      case TencentCloudChat.TYPES.MSG_AUDIO:
         context = handleAudioMessageShowContext(message);
         break;
-      case TIM.TYPES.MSG_VIDEO:
+      case TencentCloudChat.TYPES.MSG_VIDEO:
         context = handleVideoMessageShowContext(message);
         break;
-      case TIM.TYPES.MSG_FILE:
+      case TencentCloudChat.TYPES.MSG_FILE:
         context = handleFileMessageShowContext(message);
         break;
-      case TIM.TYPES.MSG_CUSTOM:
+      case TencentCloudChat.TYPES.MSG_CUSTOM:
         context = handleCustomMessageShowContext(message);
         break;
-      case TIM.TYPES.MSG_MERGER:
+      case TencentCloudChat.TYPES.MSG_MERGER:
         context = handleMergerMessageShowContext(message);
         break;
-      case TIM.TYPES.MSG_LOCATION:
+      case TencentCloudChat.TYPES.MSG_LOCATION:
         context = handleLocationMessageShowContext(message);
         break;
-      case TIM.TYPES.MSG_GRP_TIP:
+      case TencentCloudChat.TYPES.MSG_GRP_TIP:
         context = handleTipMessageShowContext(message);
         break;
-      case TIM.TYPES.MSG_GRP_SYS_NOTICE:
+      case TencentCloudChat.TYPES.MSG_GRP_SYS_NOTICE:
         context = translateGroupSystemNotice(message);
         break;
 

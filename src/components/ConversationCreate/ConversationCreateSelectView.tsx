@@ -1,5 +1,5 @@
 import React from 'react';
-import { Profile } from 'tim-js-sdk';
+import { Profile } from '@tencentcloud/chat';
 import { Avatar, defaultUserAvatar } from '../Avatar';
 import './styles/conversationCreateSelectView.scss';
 import { Icon, IconTypes } from '../Icon';

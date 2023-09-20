@@ -2,7 +2,7 @@ import {
   format, isToday, isYesterday, formatDistance, isThisYear, isThisWeek,
 } from 'date-fns';
 import React from 'react';
-import TIM, { Conversation, Group, Profile } from 'tim-js-sdk';
+import TencentCloudChat, { Conversation, Group, Profile } from '@tencentcloud/chat';
 import { defaultGroupAvatarWork, defaultUserAvatar } from '../Avatar';
 import { formatEmojiString } from '../TUIMessage/utils/emojiMap';
 
@@ -17,10 +17,10 @@ export const getDisplayTitle = (
   const { type } = conversation;
   let title = '';
   switch (type) {
-    case TIM.TYPES.CONV_C2C:
+    case TencentCloudChat.TYPES.CONV_C2C:
       title = nick || userID;
       break;
-    case TIM.TYPES.CONV_GROUP:
+    case TencentCloudChat.TYPES.CONV_GROUP:
       title = name || groupID;
       break;
     default:
@@ -45,10 +45,10 @@ export const getDisplayImage = (conversation: Conversation) => {
   let displayImage = avatar;
   if (!avatar) {
     switch (type) {
-      case TIM.TYPES.CONV_C2C:
+      case TencentCloudChat.TYPES.CONV_C2C:
         displayImage = defaultUserAvatar;
         break;
-      case TIM.TYPES.CONV_GROUP:
+      case TencentCloudChat.TYPES.CONV_GROUP:
         displayImage = defaultGroupAvatarWork;
         break;
       default:
@@ -64,11 +64,11 @@ export const getDisplayMessage = (conversation:Conversation, myProfile:Profile) 
   } = lastMessage;
   let from = '';
   switch (type) {
-    case TIM.TYPES.CONV_GROUP:
+    case TencentCloudChat.TYPES.CONV_GROUP:
       from = lastMessage?.fromAccount === myProfile?.userID ? 'You' : `${nameCard || nick || fromAccount || ''}`;
       from = `${from ? `${from}:` : ''}`;
       break;
-    case TIM.TYPES.CONV_C2C:
+    case TencentCloudChat.TYPES.CONV_C2C:
       from = isRevoked ? 'you ' : '';
       break;
     default:
@@ -91,13 +91,13 @@ export const getMessageProfile = (conversation: Conversation):TProfile => {
   let result = {};
   const { type, groupProfile, userProfile } = conversation;
   switch (type) {
-    case TIM.TYPES.CONV_C2C:
+    case TencentCloudChat.TYPES.CONV_C2C:
       result = userProfile;
       break;
-    case TIM.TYPES.CONV_GROUP:
+    case TencentCloudChat.TYPES.CONV_GROUP:
       result = groupProfile;
       break;
-    case TIM.TYPES.CONV_SYSTEM:
+    case TencentCloudChat.TYPES.CONV_SYSTEM:
     default:
   }
   return result as TProfile;

@@ -1,11 +1,11 @@
 import React, { PropsWithChildren } from 'react';
-import TIM, { Message } from 'tim-js-sdk';
+import TencentCloudChat, { Message } from '@tencentcloud/chat';
 
 interface MessagePluginElementProps {
   handle?: (event?:React.SyntheticEvent<Element, Event>) => void,
   children: React.ReactNode,
   isShow?: boolean,
-  relateMessageType?: TIM.TYPES[],
+  relateMessageType?: TencentCloudChat.TYPES[],
   message?: Message
 }
 export const useMessagePluginElement = <

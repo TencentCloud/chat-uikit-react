@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import TIM, { Conversation } from 'tim-js-sdk';
+import TencentCloudChat, { Conversation } from '@tencentcloud/chat';
 import { useTUIKitContext } from '../../../context';
 
 export const useConversationUpdate = (
@@ -11,7 +11,7 @@ export const useConversationUpdate = (
   forceUpdate?: () => void,
   filterConversation?:(conversationList: Array<Conversation>) => Array<Conversation>,
 ) => {
-  const { tim } = useTUIKitContext('useConversationUpdate');
+  const { chat } = useTUIKitContext('useConversationUpdate');
   useEffect(() => {
     const onConversationListUpdated = (event:any) => {
       if (setConversationList) {
@@ -19,7 +19,7 @@ export const useConversationUpdate = (
           setConversationList(filterConversation(event.data));
         } else {
           setConversationList(event.data.filter(
-            (item) => item.type !== TIM.TYPES.CONV_SYSTEM,
+            (item) => item.type !== TencentCloudChat.TYPES.CONV_SYSTEM,
           ));
         }
       }
@@ -30,9 +30,9 @@ export const useConversationUpdate = (
         customHandler(setConversationList, event);
       }
     };
-    tim?.on(TIM.EVENT.CONVERSATION_LIST_UPDATED, onConversationListUpdated);
+    chat?.on(TencentCloudChat.EVENT.CONVERSATION_LIST_UPDATED, onConversationListUpdated);
     return () => {
-      tim?.off(TIM.EVENT.CONVERSATION_LIST_UPDATED, onConversationListUpdated);
+      chat?.off(TencentCloudChat.EVENT.CONVERSATION_LIST_UPDATED, onConversationListUpdated);
     };
-  }, [tim, customHandler]);
+  }, [chat, customHandler]);
 };

@@ -1,7 +1,7 @@
 import React, {
   PropsWithChildren, useEffect, useState,
 } from 'react';
-import { GroupMember } from 'tim-js-sdk';
+import { GroupMember } from '@tencentcloud/chat';
 import { TUILiveMemberListItemParams, useTUILiveContext } from './context/TUILiveContext';
 
 import './styles/index.scss';

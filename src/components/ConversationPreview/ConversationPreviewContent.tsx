@@ -41,8 +41,8 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
   const handleMouseLeave = () => {
     setIsHover(false);
   };
-  const { tim, conversation: activeConversation } = useTUIKitContext('ConversationPreviewContent');
-  const { pinConversation, deleteConversation } = useConversation(tim);
+  const { chat, conversation: activeConversation } = useTUIKitContext('ConversationPreviewContent');
+  const { pinConversation, deleteConversation } = useConversation(chat);
   const moreHandle = (type: string) => {
     const { conversationID, isPinned } = conversation;
     switch (type) {

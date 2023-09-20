@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
-import TIM, { ChatSDK, Conversation, Message } from 'tim-js-sdk';
+import TencentCloudChat, { ChatSDK, Conversation, Message } from '@tencentcloud/chat';
 
 export interface CreateMessageProps {
-  tim?: ChatSDK,
+  chat?: ChatSDK,
   conversation?: Conversation,
   to?: string,
-  type?: TIM.TYPES,
+  type?: TencentCloudChat.TYPES,
   cloudCustomData?: string,
 }
 export interface BasicCreateMessageProps {
   needReadReceipt?: boolean,
-  priority?: TIM.TYPES,
+  priority?: TencentCloudChat.TYPES,
   onProgress?: (num:number) => void,
   cloudCustomData?: string;
   receiverList?: Array<string>;
@@ -74,7 +74,7 @@ export interface CreateMergerMessageProps extends BasicCreateMessageProps{
 
 export function useCreateMessage<T extends CreateMessageProps>(props:T) {
   const {
-    tim,
+    chat,
     conversation,
     to = '',
     type: propType,
@@ -86,7 +86,7 @@ export function useCreateMessage<T extends CreateMessageProps>(props:T) {
   const type = propType || conversationType;
 
   const [basicConfig, setBasicConfig] = useState({
-    to: to || (type === TIM.TYPES.CONV_C2C ? userProfile?.userID : groupProfile?.groupID),
+    to: to || (type === TencentCloudChat.TYPES.CONV_C2C ? userProfile?.userID : groupProfile?.groupID),
     conversationType: type,
     cloudCustomData,
   });
@@ -96,36 +96,36 @@ export function useCreateMessage<T extends CreateMessageProps>(props:T) {
     setBasicConfig(basicConfig);
   }, [cloudCustomData]);
 
-  const createTextMessage = useCallback((params: CreateTextMessageProps) => tim.createTextMessage({
+  const createTextMessage = useCallback((params: CreateTextMessageProps) => chat.createTextMessage({
     ...basicConfig,
     ...params,
-  }), [tim]);
+  }), [chat]);
 
-  const createFaceMessage = useCallback((params: CreateFaceMessageProps) => tim.createFaceMessage({
+  const createFaceMessage = useCallback((params: CreateFaceMessageProps) => chat.createFaceMessage({
     ...basicConfig,
     ...params,
-  }), [tim]);
+  }), [chat]);
 
   const createImageMessage = useCallback((
     params: CreateUploadMessageProps,
-  ) => tim.createImageMessage({
+  ) => chat.createImageMessage({
     ...basicConfig,
     ...params,
-  }), [tim]);
+  }), [chat]);
 
   const createVideoMessage = useCallback((
     params: CreateUploadMessageProps,
-  ) => tim.createVideoMessage({
+  ) => chat.createVideoMessage({
     ...basicConfig,
     ...params,
-  }), [tim]);
+  }), [chat]);
 
   const createFileMessage = useCallback((
     params: CreateUploadMessageProps,
-  ) => tim.createFileMessage({
+  ) => chat.createFileMessage({
     ...basicConfig,
     ...params,
-  }), [tim]);
+  }), [chat]);
 
   const createForwardMessage = useCallback((
     params: CreateForwardMessageProps,
@@ -136,51 +136,51 @@ export function useCreateMessage<T extends CreateMessageProps>(props:T) {
       userProfile: forwardUserProfile,
       groupProfile: forwardGroupProfile,
     } = forwardConversation;
-    const forwardTo = forwardType === TIM.TYPES.CONV_C2C
+    const forwardTo = forwardType === TencentCloudChat.TYPES.CONV_C2C
       ? forwardUserProfile?.userID : forwardGroupProfile?.groupID;
-    return tim.createForwardMessage({
+    return chat.createForwardMessage({
       to: forwardTo,
       conversationType: forwardType,
       payload: message,
       ...other,
     });
-  }, [tim]);
+  }, [chat]);
 
   const createCustomMessage = useCallback((
     params: CreateCustomMessageProps,
     // ChatSDK < V2.26.0 createCustomMessage ts declaration error
-  ) => (tim as any).createCustomMessage({
+  ) => (chat as any).createCustomMessage({
     ...basicConfig,
     ...params,
-  }), [tim]);
+  }), [chat]);
 
   const createAudioMessage = useCallback((
     params: CreateUploadMessageProps,
-  ) => tim.createAudioMessage({
+  ) => chat.createAudioMessage({
     ...basicConfig,
     ...params,
-  }), [tim]);
+  }), [chat]);
 
   const createTextAtMessage = useCallback((
     params: CreateTextAtMessageProps,
-  ) => tim.createTextAtMessage({
+  ) => chat.createTextAtMessage({
     ...basicConfig,
     ...params,
-  }), [tim]);
+  }), [chat]);
 
   const createLocationMessage = useCallback((
     params: CreateLocationMessageProps,
-  ) => tim.createLocationMessage({
+  ) => chat.createLocationMessage({
     ...basicConfig,
     ...params,
-  }), [tim]);
+  }), [chat]);
 
   const createMergerMessage = useCallback((
     params: CreateMergerMessageProps,
-  ) => tim.createMergerMessage({
+  ) => chat.createMergerMessage({
     ...basicConfig,
     ...params,
-  }), [tim]);
+  }), [chat]);
 
   return {
     createTextMessage,

@@ -1,7 +1,7 @@
 import React, {
   PropsWithChildren, useCallback, useEffect, useState,
 } from 'react';
-import { Conversation, Message } from 'tim-js-sdk';
+import { Conversation, Message } from '@tencentcloud/chat';
 import { useTUIChatActionContext } from '../../context';
 import './styles/index.scss';
 import { Model } from '../Model';

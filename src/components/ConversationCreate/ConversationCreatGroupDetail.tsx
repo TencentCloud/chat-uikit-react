@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Conversation, Profile } from 'tim-js-sdk';
+import { Conversation, Profile } from '@tencentcloud/chat';
 import { Input } from '../Input';
 import './styles/ConversationCreatGroupDetail.scss';
 import { Icon, IconTypes } from '../Icon';

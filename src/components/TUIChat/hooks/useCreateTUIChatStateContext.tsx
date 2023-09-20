@@ -1,14 +1,14 @@
 import { useMemo } from 'react';
-import { ChatSDK } from 'tim-js-sdk';
+import { ChatSDK } from '@tencentcloud/chat';
 import { TUIChatStateContextValue } from '../../../context';
 
 interface CreateTUIChatStateContextProp extends TUIChatStateContextValue {
-  tim?: ChatSDK,
+  chat?: ChatSDK,
 }
 
 function useCreateTUIChatStateContext(props:CreateTUIChatStateContextProp) {
   const {
-    tim,
+    chat,
     conversation,
     messageList,
     messageListRef,
@@ -19,7 +19,7 @@ function useCreateTUIChatStateContext(props:CreateTUIChatStateContextProp) {
     ...state
   } = props;
   const TUIChatStateContext = useMemo(() => ({
-    tim,
+    chat,
     conversation,
     messageList,
     messageListRef,
@@ -29,7 +29,7 @@ function useCreateTUIChatStateContext(props:CreateTUIChatStateContextProp) {
     TUIMessageListConfig,
     ...state,
   }), [
-    tim,
+    chat,
     conversation,
     messageList,
     messageListRef,

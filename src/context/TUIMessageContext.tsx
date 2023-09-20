@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, ReactEventHandler, useContext } from 'react';
-import { Message } from 'tim-js-sdk';
+import { Message } from '@tencentcloud/chat';
 import { MessagePluginsProps } from '../components';
 
 export enum messageShowType {

@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, ReactEventHandler } from 'react';
-import { Message } from 'tim-js-sdk';
+import { Message } from '@tencentcloud/chat';
 
 import { UnknowPorps, useComponentContext, useTUIChatStateContext } from '../../context';
 
