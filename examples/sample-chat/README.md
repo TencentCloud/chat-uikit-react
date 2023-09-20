@@ -35,7 +35,7 @@ $ npm run start
 2. In the search box of the demo in the first tab page, search for the login ID of the demo in the second tab page.
 ![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/22dabb7156df11ee94c3525400d793d0.png)
 3. Click on the user avatar to initiate a conversation.
-![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/2ca3c0a256df11ee974d5254005f490f.png)
+![](https://web.sdk.qcloud.com/im/assets/4.png)
 4. Enter a message in the input box and press **Enter** to send it. Emoji/Image/Video/Document messages are supported.
    ![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/059d7f4856e011eeabd75254005810a4.png)
 
