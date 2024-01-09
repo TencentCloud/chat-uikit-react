@@ -22,3 +22,4 @@ export * from './Plugins';
 export * from './Switch';
 export * from './Toast';
 export * from './Popup';
+export * from './TUIContact';

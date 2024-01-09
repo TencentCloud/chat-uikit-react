@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Message } from '@tencentcloud/chat';
 import { MESSAGE_FLOW, MESSAGE_OPERATE } from '../../../constants';
 import { useTUIChatActionContext, useTUIKitContext } from '../../../context';
@@ -21,6 +22,7 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
     operateMessage,
     revokeMessage,
   } = useTUIChatActionContext('useDeleteHandler');
+  const { t } = useTranslation();
   const { chat } = useTUIKitContext('useDeleteHandler');
 
   const handleDelMessage = useCallback(async (event?) => {
@@ -39,7 +41,7 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
           error,
         });
       } else {
-        Toast({ text: 'Error deleting message', type: 'error' });
+        Toast({ text: t('TUIChat.Error deleting message'), type: 'error' });
         throw new Error(error);
       }
     }
@@ -65,7 +67,7 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
           error,
         });
       } else {
-        const text = message.flow === MESSAGE_FLOW.OUT ? 'The message recall exceeded the time limit (default 2 minutes)' : 'Error revoke Message';
+        const text = message.flow === MESSAGE_FLOW.OUT ? t('TUIChat.The message recall exceeded the time limit (default 2 minutes)') : t('TUIChat.Error revoke Message');
         Toast({ text, type: 'error' });
         throw new Error(error);
       }

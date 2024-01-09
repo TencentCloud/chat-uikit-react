@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Conversation, Profile } from '@tencentcloud/chat';
+import { useTranslation } from 'react-i18next';
+import TencentCloudChat, { Conversation, Profile } from '@tencentcloud/chat';
 import { Input } from '../Input';
 import './styles/ConversationCreatGroupDetail.scss';
 import { Icon, IconTypes } from '../Icon';
@@ -27,6 +28,7 @@ export function ConversationCreatGroupDetail(props: ConversationCreatGroupDetail
   const {
     profileList, pageState, setPageState, createConversation, setConversationCreated,
   } = props;
+  const { t } = useTranslation();
   const { setActiveConversation, myProfile } = useTUIKitContext();
   const temp = [...profileList];
   temp.unshift(myProfile);
@@ -94,7 +96,7 @@ export function ConversationCreatGroupDetail(props: ConversationCreatGroupDetail
             border="bottom"
             customClassName="input-group-name"
             clearable
-            prefix={<div className="input-group-title">Group Name</div>}
+            prefix={<div className="input-group-title">{t('TUIConversation.Group Name')}</div>}
           />
         </div>
         <div className="create-group-box create-group-id">
@@ -106,7 +108,7 @@ export function ConversationCreatGroupDetail(props: ConversationCreatGroupDetail
             onChange={(e) => {
               groupInfoChange(e, 'id');
             }}
-            prefix={<div className="input-group-title">Group ID</div>}
+            prefix={<div className="input-group-title">{t('TUIConversation.Group ID')}</div>}
           />
         </div>
         <div className="create-group-box create-group-type">
@@ -114,7 +116,7 @@ export function ConversationCreatGroupDetail(props: ConversationCreatGroupDetail
             disabled
             border="bottom"
             customClassName="input-group-text"
-            prefix={<div className="input-group-title">Group of type</div>}
+            prefix={<div className="input-group-title">{t('TUIConversation.Group Type')}</div>}
             suffix={(
               <Icon
                 onClick={showGroupTypeInfo}
@@ -123,17 +125,17 @@ export function ConversationCreatGroupDetail(props: ConversationCreatGroupDetail
                 height={12}
               />
             )}
-            value={groupType}
+            value={t(`TUIConversation.${groupType}`)}
             onChange={(e) => {
               groupInfoChange(e, 'type');
             }}
           />
         </div>
         <div className="create-group-illustrate">
-          {getDes()}
+          {t(`TUIConversation.${getDes()}`)}
         </div>
         <div className="create-group-portrait">
-          <div className="create-group-portrait-title">Participants</div>
+          <div className="create-group-portrait-title">{t('TUIConversation.Participants')}</div>
           <div className="create-group-portrait-info-container">
             {profileList.map(({ avatar, userID, nick }) => (
               <div className="create-group-portrait-info" key={userID}>
@@ -145,7 +147,7 @@ export function ConversationCreatGroupDetail(props: ConversationCreatGroupDetail
         </div>
       </div>
       <div className="tui-conversation-create-next-container">
-        <div role="presentation" className="tui-conversation-create-next" onClick={next}>Create</div>
+        <div role="presentation" className="tui-conversation-create-next" onClick={next}>{t('TUIConversation.Create')}</div>
       </div>
     </>
   ) : (

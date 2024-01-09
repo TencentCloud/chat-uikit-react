@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { MESSAGE_OPERATE } from '../../constants';
 import { useTUIChatStateContext } from '../../context';
 
@@ -17,6 +18,7 @@ export function TUIMessageInputDefault():React.ReactElement {
     setText,
     setCursorPos,
   } = useTUIMessageInputContext('TUIMessageInputDefault');
+  const { t } = useTranslation();
   const {
     operateData,
   } = useTUIChatStateContext('TUIMessageInputDefault');
@@ -60,7 +62,7 @@ export function TUIMessageInputDefault():React.ReactElement {
         !disabled
         && (
         <textarea
-          placeholder="send a message"
+          placeholder={t('TUIChat.Enter a message')}
           rows={1}
           value={text}
           ref={textareaRef}

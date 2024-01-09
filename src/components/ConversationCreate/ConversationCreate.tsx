@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import './styles/index.scss';
 import { Conversation } from '@tencentcloud/chat';
 import { Icon, IconTypes } from '../Icon';
@@ -19,11 +20,13 @@ export enum PageStateTypes {
 }
 export function ConversationCreate<T extends ConversationCreateProps>(props:T) {
   const { className = '', setConversationCreated, conversationList = [] } = props;
+  const { t } = useTranslation();
   const [isCreateGroup, setIsCreateGroup] = useState(false);
   const [pageState, setPageState] = useState<PageStateTypes>(PageStateTypes.USER_SELECT);
   const [selectList, setSelectList] = useState([]);
   const { chat } = useTUIKitContext();
   const { createConversation } = useConversation(chat);
+
   const back = () => {
     if (isCreateGroup) {
       switch (pageState) {
@@ -47,7 +50,7 @@ export function ConversationCreate<T extends ConversationCreateProps>(props:T) {
     <>
       <div className="tui-conversation-create-header">
         <Icon onClick={back} type={IconTypes.BACK} width={9} height={16} />
-        <div className="title">{ !isCreateGroup ? 'New Chat' : 'Add Participants'}</div>
+        <div className="title">{ t(!isCreateGroup ? 'TUIConversation.Start chat' : 'TUIConversation.Add Participants')}</div>
       </div>
       {pageState === PageStateTypes.USER_SELECT ? (
         <ConversationCreateUserSelectList

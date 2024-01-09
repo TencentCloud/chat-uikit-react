@@ -16,7 +16,8 @@ export interface InputProps
   value?: InputHTMLAttributes<HTMLInputElement>['value'],
   border?: '' | 'bottom',
   disabled?: boolean,
-  maxLength?: number
+  maxLength?: number,
+  onKeyDown?: (options?: object) => void
 }
 export interface InputRef {
   focus: (options?: object) => void;
@@ -35,6 +36,7 @@ export const Input = React.forwardRef<InputRef, InputProps>(
       onChange,
       onBlur,
       onFocus,
+      onKeyDown,
       value: propsValue = '',
       border = '',
       disabled = false,
@@ -42,7 +44,7 @@ export const Input = React.forwardRef<InputRef, InputProps>(
     } = props;
 
     const [focused, setFocused] = useState<boolean>(false);
-
+    const enterCodeList = ['Enter', 'NumpadEnter'];
     const [value, setValue] = useState(propsValue);
     const inputRef = useRef<HTMLInputElement>(null);
     const handleFocus = (e) => {
@@ -52,6 +54,12 @@ export const Input = React.forwardRef<InputRef, InputProps>(
     const handleBlur = (e) => {
       setFocused(false);
       onBlur?.(e);
+    };
+    const handleEnterKeyDown = (e) => {
+      if (enterCodeList.indexOf(e?.key) > -1 && onKeyDown) {
+        e?.preventDefault();
+        onKeyDown(e);
+      }
     };
     const clearInput = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
       setValue('');
@@ -97,6 +105,7 @@ export const Input = React.forwardRef<InputRef, InputProps>(
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleChange}
+            onKeyDown={handleEnterKeyDown}
           />
           {suffix}
           {(clearable && value)

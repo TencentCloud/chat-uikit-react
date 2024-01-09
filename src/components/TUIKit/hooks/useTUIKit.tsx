@@ -1,27 +1,61 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import TencentCloudChat, {
+import { useTranslation } from 'react-i18next';
+import {
   ChatSDK,
   Conversation,
-  Group,
   Profile,
+  Friend,
+  FriendApplication,
 } from '@tencentcloud/chat';
+
+interface blockData {
+  type: 'block',
+  data: Profile
+}
+
+interface friendData {
+  type: 'friend',
+  data: Friend
+}
+
+interface friendApplicationData {
+  type: 'friendApplication',
+  data: FriendApplication
+}
+
+interface addFriendData {
+  type: 'addFriend',
+  data: Profile
+}
+
+export type UseContactParams = blockData | friendData |
+friendApplicationData | addFriendData| undefined;
 
 export interface UseChatParams{
   chat: ChatSDK,
   activeConversation?: Conversation,
+  language?: string,
 }
-export const useTUIKit = ({ chat, activeConversation: paramsActiveConversation }:UseChatParams) => {
+
+export const useTUIKit = ({
+  chat, activeConversation: paramsActiveConversation,
+  language,
+}:UseChatParams) => {
+  const { i18n } = useTranslation();
   const [conversation, setConversation] = useState<Conversation>(paramsActiveConversation);
   const [myProfile, setMyProfile] = useState<Profile>();
   const [TUIManageShow, setTUIManageShow] = useState<boolean>(false);
   const [TUIProfileShow, setTUIProfileShow] = useState<boolean>(false);
+  const [contactData, setContactData] = useState<UseContactParams>();
+
   useEffect(() => {
+    i18n.changeLanguage(language);
     const getMyProfile = async () => {
       const res = await chat?.getMyProfile();
       setMyProfile(res?.data);
     };
     getMyProfile();
-  }, [chat]);
+  }, [chat, language]);
   const setActiveConversation = useCallback(
     (activeConversation?: Conversation) => {
       if (activeConversation) {
@@ -34,17 +68,22 @@ export const useTUIKit = ({ chat, activeConversation: paramsActiveConversation }
     },
     [chat],
   );
+  const setActiveContact = (actionContactData: UseContactParams) => {
+    setContactData(actionContactData);
+  };
 
   useEffect(() => {
     setConversation(paramsActiveConversation);
   }, [paramsActiveConversation]);
   return {
     conversation,
+    contactData,
     setActiveConversation,
     myProfile,
     TUIManageShow,
     setTUIManageShow,
     TUIProfileShow,
     setTUIProfileShow,
+    setActiveContact,
   };
 };

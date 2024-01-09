@@ -1,4 +1,5 @@
 import React, { PropsWithChildren, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-date-picker';
 import TencentCloudChat, { Profile } from '@tencentcloud/chat';
 
@@ -14,6 +15,11 @@ const gender = {
   [TencentCloudChat.TYPES.GENDER_UNKNOWN]: 'unknow',
   [TencentCloudChat.TYPES.GENDER_MALE]: 'male',
   [TencentCloudChat.TYPES.GENDER_FEMALE]: 'female',
+};
+const allowType = {
+  [TencentCloudChat.TYPES.ALLOW_TYPE_ALLOW_ANY]: 'allowAny',
+  [TencentCloudChat.TYPES.ALLOW_TYPE_NEED_CONFIRM]: 'needConfirm',
+  [TencentCloudChat.TYPES.ALLOW_TYPE_DENY_ANY]: 'denyAny',
 };
 
 const avatarList = [
@@ -36,6 +42,21 @@ const genderList = [
   },
 ];
 
+const allowTypeList = [
+  {
+    label: 'AllowAny',
+    value: TencentCloudChat.TYPES.ALLOW_TYPE_ALLOW_ANY,
+  },
+  {
+    label: 'NeedConfirm',
+    value: TencentCloudChat.TYPES.ALLOW_TYPE_NEED_CONFIRM,
+  },
+  {
+    label: 'DenyAny',
+    value: TencentCloudChat.TYPES.ALLOW_TYPE_DENY_ANY,
+  },
+];
+
 export interface TUIProfileDefaultProps {
   userInfo?: Profile,
   update?:(option:ProfileParams) => void,
@@ -51,6 +72,7 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
     update,
   } = props;
 
+  const { t } = useTranslation();
   const { setTUIProfileShow } = useTUIKitContext('TUIProfileDefault');
 
   const [isEditName, setIsEditName] = useState('');
@@ -83,10 +105,13 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
     },
     {
       name: 'Gender',
-      value: gender[userInfo?.gender]?.replace(
+      value: t(gender[userInfo?.gender]?.replace(
         gender[userInfo?.gender][0],
         gender[userInfo?.gender][0]?.toLocaleUpperCase(),
-      ),
+      ) ? `TUIProfile.${gender[userInfo?.gender]?.replace(
+          gender[userInfo?.gender][0],
+          gender[userInfo?.gender][0]?.toLocaleUpperCase(),
+        )}` : ''),
       type: 'select',
       children: (
         <ul className="select-list">
@@ -101,7 +126,35 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
               key={key}
               onClick={() => { editGender(item); }}
             >
-              {item.label}
+              {t(`TUIProfile.${item.label}`)}
+            </li>
+          );
+        })
+      }
+        </ul>
+      ),
+    },
+    {
+      name: 'AllowType',
+      value: t(`TUIProfile.${allowType[userInfo?.allowType]?.replace(
+        allowType[userInfo?.allowType][0],
+        allowType[userInfo?.allowType][0]?.toLocaleUpperCase(),
+      )}`),
+      type: 'select',
+      children: (
+        <ul className="select-list">
+          {
+        allowTypeList?.map((item, index) => {
+          const key = `${item.value}${index}`;
+          return (
+            <li
+              className="select-list-item"
+              role="menuitem"
+              tabIndex={index}
+              key={key}
+              onClick={() => { editAllowType(item); }}
+            >
+              {t(`TUIProfile.${item.label}`)}
             </li>
           );
         })
@@ -111,7 +164,7 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
     },
     {
       name: 'Birthday',
-      value: userInfo?.birthday,
+      value: `${userInfo?.birthday}`,
       type: 'select',
       children: (
         <DatePicker
@@ -165,6 +218,11 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
     confirm({ gender: data.value });
   };
 
+  // edit allowType
+  const editAllowType = (data) => {
+    confirm({ allowType: data.value });
+  };
+
   // edit birthday
   const editBirthday = (value:Date) => {
     confirm({
@@ -181,7 +239,7 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
           type={IconTypes.BACK}
           onClick={() => { setTUIProfileShow(false); }}
         />
-        <h1>Personal information</h1>
+        <h1>{t('TUIProfile.Personal information')}</h1>
       </header>
       <main className="tui-profile-main">
         <div className="tui-profile-avatar">
@@ -213,7 +271,7 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
             const key = `${item.name}`;
             return (
               <li className="tui-profile-list-item" key={key}>
-                <h4>{item.name}</h4>
+                <h4>{t(`TUIProfile.${item.name}`)}</h4>
                 <DivWithEdit
                   className="tui-profile-div-with-edit"
                   classEditName="tui-profile-edit"

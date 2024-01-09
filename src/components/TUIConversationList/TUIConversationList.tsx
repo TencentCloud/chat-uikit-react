@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Conversation } from '@tencentcloud/chat';
 import { useTUIKitContext } from '../../context';
 import useConversationList from './hooks/useConversationList';
@@ -8,7 +9,6 @@ import {
   ConversationListContainer,
   ConversationListContainerProps,
 } from '../ConversationPreview/ConversationListContainer';
-import { Profile } from '../Profile';
 import { ConversationSearchInput, ConversationSearchResult } from '../ConversationSearch';
 import { ConversationCreate } from '../ConversationCreate';
 import { Icon, IconTypes } from '../Icon';
@@ -35,6 +35,7 @@ export function UnMemoTUIConversationList<T extends Props>(props: T):React.React
     onConversationListUpdated,
     filterConversation: propsFilterConversation,
   } = props;
+  const { t } = useTranslation();
   const {
     chat, customClasses, conversation, setActiveConversation, setTUIProfileShow,
   } = useTUIKitContext('TUIConversationList');
@@ -85,7 +86,6 @@ export function UnMemoTUIConversationList<T extends Props>(props: T):React.React
     setSearchValue('');
     setConversationCreated(true);
   };
-  const { myProfile } = useTUIKitContext();
   const conversationListRef = useRef(null);
   return (
     <div className={`tui-conversation ${customClasses || ''}`} ref={conversationListRef}>
@@ -99,7 +99,6 @@ export function UnMemoTUIConversationList<T extends Props>(props: T):React.React
           )
           : (
             <>
-              <Profile profile={myProfile} handleAvatar={() => { setTUIProfileShow(true); }} />
               <div className="tui-conversation-header">
                 <ConversationSearchInput
                   value={searchValue}
@@ -121,7 +120,7 @@ export function UnMemoTUIConversationList<T extends Props>(props: T):React.React
                   ? (
                     <div className="no-result">
                       <Icon className="no-result-icon" type={IconTypes.EFFORT} width={42} height={42} />
-                      <div className="no-result-message">No conversation</div>
+                      <div className="no-result-message">{t('TUIConversation.No conversation')}</div>
                     </div>
                   )
                   : searchValue

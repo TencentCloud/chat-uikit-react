@@ -1,13 +1,13 @@
 {
   "name": "sample-chat",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@tencentcloud/chat": "file:../../node_modules/@tencentcloud/chat",
-    "@tencentcloud/chat-uikit-react": "^1.1.0",
+    "@tencentcloud/chat-uikit-react": "latest",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.11.59",
     "@types/react": "file:../../node_modules/@types/react",

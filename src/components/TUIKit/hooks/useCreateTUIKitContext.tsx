@@ -4,7 +4,9 @@ import { TUIKitContextValue } from '../../../context/TUIKitContext';
 export const useCreateTUIKitContext = (value:TUIKitContextValue) => {
   const {
     chat,
+    language,
     conversation,
+    contactData,
     customClasses,
     setActiveConversation,
     myProfile,
@@ -12,12 +14,15 @@ export const useCreateTUIKitContext = (value:TUIKitContextValue) => {
     setTUIManageShow,
     TUIProfileShow,
     setTUIProfileShow,
+    setActiveContact,
   } = value;
 
   const TUIKitContext = useMemo(
     () => ({
       chat,
+      language,
       conversation,
+      contactData,
       customClasses,
       setActiveConversation,
       myProfile,
@@ -25,9 +30,12 @@ export const useCreateTUIKitContext = (value:TUIKitContextValue) => {
       setTUIManageShow,
       TUIProfileShow,
       setTUIProfileShow,
+      setActiveContact,
     }),
     [
+      language,
       conversation,
+      contactData,
       customClasses,
       chat,
       TUIManageShow,

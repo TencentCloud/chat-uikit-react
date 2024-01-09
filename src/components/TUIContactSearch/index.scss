@@ -1,0 +1,24 @@
+.tui-contact-search {
+  width: 100%;
+  position: relative;
+  text-align: initial;
+  align-items: center;
+  justify-content: space-between;
+  .tui-contact-search-input {
+    margin: 0 10px;
+  }
+  .tui-contact-search-text {
+    color: #147AFF;
+    font-size: 14px;
+  }
+  .tui-contact-search-item {
+    position: absolute;
+    margin: 10px 20px;
+    display: flex;
+    align-items: center;
+    .search-item-name {
+     padding-left: 10px;
+    }
+  }
+}
+
