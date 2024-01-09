@@ -14,6 +14,7 @@ export interface PluginsProps {
   MoreIcon?: any,
   className?: string,
   customClass?: string,
+  style?: any,
   root?: any,
   handleVisible?: (isVisible:any) => void,
   showMore?: boolean,
@@ -28,6 +29,7 @@ function PluginsWithContext<T extends PluginsProps>(
     showNumber,
     MoreIcon,
     className = '',
+    style,
     customClass = '',
     root,
     handleVisible,
@@ -40,12 +42,33 @@ function PluginsWithContext<T extends PluginsProps>(
   }));
 
   const { showPicker, elements } = usePluginsElement({ plugins, showNumber });
+  const pluginRef = useRef(null);
 
   const [show, setShow] = useState(false);
 
   const handleShow = (e) => {
     e.stopPropagation();
     setShow(!show);
+    if (!show) {
+      pluginRef.current.offsetParent.removeEventListener('scroll', handleShow);
+    }
+  };
+
+  const pluginHandleVisible = (data) => {
+    if (handleVisible) {
+      const {
+        width, height,
+      } = pluginRef.current.children[1].getBoundingClientRect();
+      const { x = 0, y = 0 } = pluginRef.current.getBoundingClientRect();
+      pluginRef.current.offsetParent.addEventListener('scroll', handleShow);
+      handleVisible({
+        ...data,
+        width,
+        height,
+        x,
+        y,
+      });
+    }
   };
 
   return (
@@ -61,7 +84,7 @@ function PluginsWithContext<T extends PluginsProps>(
         })}
         {
         elements?.length > 0 && (
-          <div className="plugin-popup">
+          <div className="plugin-popup" ref={pluginRef}>
             <div role="menuitem" tabIndex={0} className="more" onClick={handleShow}>
               {
                 !MoreIcon && <Icon width={20} height={20} type={IconTypes.ADD} />
@@ -72,10 +95,11 @@ function PluginsWithContext<T extends PluginsProps>(
             </div>
             <Popup
               className={`plugin-popup-box ${customClass}`}
+              style={style}
               show={show}
               close={handleShow}
               root={root}
-              handleVisible={handleVisible}
+              handleVisible={pluginHandleVisible}
             >
               <ul>
                 {elements.map((Item, index:number) => {

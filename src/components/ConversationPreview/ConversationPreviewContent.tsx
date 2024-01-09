@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ConversationPreviewUIComponentProps } from './ConversationPreview';
 import { Avatar as DefaultAvatar } from '../Avatar/index';
 import './styles/index.scss';
@@ -22,6 +23,7 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
     setActiveConversation,
   } = props;
 
+  const { t } = useTranslation();
   const conversationPreviewButton = useRef<HTMLButtonElement | null>(null);
   const activeClass = active ? 'conversation-preview-content--active' : '';
   const unreadClass = unread && unread >= 1 ? 'conversation-preview-content--unread' : '';
@@ -101,7 +103,7 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
                       moreHandle('pin');
                     }}
                   >
-                    {!conversation.isPinned ? 'Pin' : 'Cancel Pin'}
+                    {t(!conversation.isPinned ? 'TUIConversation.Pin' : 'TUIConversation.Unpin')}
                   </div>,
                   <div
                     className="more-handle-item"
@@ -112,7 +114,7 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
                     }}
                     role="presentation"
                   >
-                    Delete
+                    {t('TUIConversation.Delete')}
                   </div>,
                 ]}
                 showNumber={0}

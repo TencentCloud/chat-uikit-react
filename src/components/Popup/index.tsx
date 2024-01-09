@@ -4,6 +4,7 @@ import './styles/index.scss';
 
 interface PopupProps {
   className?: string,
+  style?: any,
   show?: boolean,
   close?: (e) => void,
   root?: any,
@@ -18,6 +19,7 @@ T extends PopupProps
     close,
     children,
     className,
+    style,
     root,
     handleVisible,
   } = props;
@@ -42,11 +44,27 @@ T extends PopupProps
 
   useLayoutEffect(() => {
     const io = new IntersectionObserver(([change]) => {
-      const { boundingClientRect, rootBounds, intersectionRatio } = change;
+      const {
+        boundingClientRect: changeBoundingClientRec,
+        rootBounds: changeRootBounds,
+        intersectionRatio,
+      } = change;
+      const popupBoundingClientRect = popup.current.getBoundingClientRect() || {};
+      const rootRootBounds = root?.getBoundingClientRect() || {};
+      const boundingClientRect = {
+        ...changeBoundingClientRec,
+        ...popupBoundingClientRect,
+      };
+      const rootBounds = {
+        ...changeRootBounds,
+        ...rootRootBounds,
+      };
       if (handleVisible && intersectionRatio < 1) {
         handleVisible({
           left: (boundingClientRect.left - boundingClientRect.width) < rootBounds.left,
           top: (boundingClientRect.bottom + boundingClientRect.height) < rootBounds.bottom,
+          width: boundingClientRect.width,
+          height: boundingClientRect.height,
         });
       }
       setIsSetPos(true);
@@ -69,7 +87,7 @@ T extends PopupProps
   };
 
   return show && (
-    <div role="button" tabIndex={0} className={`popup ${className} ${isSetPos && 'popup-show'}`} ref={popup}>
+    <div role="button" tabIndex={0} style={style} className={`popup ${className} ${isSetPos && 'popup-show'}`} ref={popup}>
       {children}
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { Message } from '@tencentcloud/chat';
-import { useTUIMessageContext } from '../../context';
+import { useTUIMessageContext, useTUIKitContext } from '../../context';
 import { getTimeStamp } from '../untils';
 
 export interface MessageContextProps {
@@ -13,12 +13,12 @@ function MessageStatustWithContext <T extends MessageContextProps>(
   const {
     message,
   } = props;
-
+  const { language } = useTUIKitContext('TUIChat');
   const {
     isShowTime,
   } = useTUIMessageContext('MessageStatustWithContext');
 
-  const timeElement = (typeof isShowTime === 'undefined' || isShowTime) && <div className="time">{message?.time ? getTimeStamp(message.time * 1000) : 0}</div>;
+  const timeElement = (typeof isShowTime === 'undefined' || isShowTime) && <div className="time">{message?.time ? getTimeStamp(message.time * 1000, language) : 0}</div>;
 
   return (
     <div className="message-status">

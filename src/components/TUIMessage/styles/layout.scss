@@ -356,17 +356,10 @@
     transform: scale(1.5);
   }
   .plugin-popup-box{
-    top: 100%;
     bottom: auto;
-    // left: -80px;
+    top: 100%;
   }
-  &-top {
-    top: auto !important;
-    bottom: 100% !important;
-  }
-  &-left {
-    left: -140px !important;
-  }
+
   &-box {
     padding: 6px 0;
   }

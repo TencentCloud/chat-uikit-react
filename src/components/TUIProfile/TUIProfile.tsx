@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+import { Profile } from '../Profile';
 
 import './styles/index.scss';
 import { useMyProfile } from './hooks';
@@ -20,16 +21,26 @@ function UnMemoizedTUIProfile<T extends TUIProfileProps>(
 
   const { myProfile, updateMyProfile } = useMyProfile();
 
-  const { TUIProfileShow } = useTUIKitContext('TUIProfile');
+  const { setTUIProfileShow, TUIProfileShow } = useTUIKitContext('TUIProfile');
 
   const TUIProfileUIComponent = PropTUIProfile || TUIProfileDefault;
 
-  return TUIProfileShow && (
-    <TUIProfileUIComponent
-      className={className}
-      userInfo={myProfile}
-      update={updateMyProfile}
-    />
+  return (
+    <>
+      <Profile
+        profile={myProfile}
+        handleAvatar={() => {
+          setTUIProfileShow(true);
+        }}
+      />
+      {TUIProfileShow && (
+        <TUIProfileUIComponent
+          className={className}
+          userInfo={myProfile}
+          update={updateMyProfile}
+        />
+      )}
+    </>
   );
 }
 

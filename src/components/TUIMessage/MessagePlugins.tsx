@@ -1,4 +1,5 @@
 import React, { PropsWithChildren, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import TencentCloudChat from '@tencentcloud/chat';
 import './styles/index.scss';
 
@@ -37,7 +38,9 @@ export function MessagePlugins <T extends MessagePluginsProps>(
     config: propsPluginConfig,
   } = props;
 
+  const { t } = useTranslation();
   const [className, setClassName] = useState('');
+  const [popStyle, setPopStyle] = useState({});
   const pluginsRef = useRef(null);
 
   const { message, plugin: contextPlugin } = useTUIMessageContext('MessagePlugins');
@@ -86,13 +89,19 @@ export function MessagePlugins <T extends MessagePluginsProps>(
   };
 
   const handleVisible = (data) => {
-    setClassName(`${!data.top && 'message-plugin-top'} ${!data.left && 'message-plugin-left'}`);
+    if (data.x && data.y) {
+      setPopStyle({
+        position: 'fixed',
+        left: `${!data.left ? (data.x - data.width) : data.x}px`,
+        top: `${!data.top ? (data.y - data.height) : data.y}px`,
+      });
+    }
   };
 
   const RevokeElement = useMessagePluginElement({
     children: (
       <div className="message-plugin-item">
-        <span>Recall</span>
+        <span>{t('TUIChat.Recall')}</span>
         <Icon width={20} height={20} type={IconTypes.REVOCATION} />
       </div>
     ),
@@ -109,7 +118,7 @@ export function MessagePlugins <T extends MessagePluginsProps>(
   const DeleteElement = useMessagePluginElement({
     children: (
       <div className="message-plugin-item">
-        <span className="del">Delete</span>
+        <span className="del">{t('TUIChat.Delete')}</span>
         <Icon width={20} height={20} type={IconTypes.DEL} />
       </div>
     ),
@@ -125,7 +134,7 @@ export function MessagePlugins <T extends MessagePluginsProps>(
   const ReplyElement = useMessagePluginElement({
     children: (
       <div className="message-plugin-item">
-        <span>Quote</span>
+        <span>{t('TUIChat.Reference')}</span>
         <Icon width={20} height={20} type={IconTypes.QUOTE} />
       </div>
     ),
@@ -141,7 +150,7 @@ export function MessagePlugins <T extends MessagePluginsProps>(
   const CopyElement = useMessagePluginElement({
     children: (
       <div className="message-plugin-item">
-        <span>Copy</span>
+        <span>{t('TUIChat.Copy')}</span>
         <Icon width={20} height={20} type={IconTypes.COPY} />
       </div>
     ),
@@ -157,7 +166,7 @@ export function MessagePlugins <T extends MessagePluginsProps>(
   const ResendElement = useMessagePluginElement({
     children: (
       <div className="message-plugin-item">
-        <span>Resend</span>
+        <span>{t('TUIChat.Resend')}</span>
         <Icon width={20} height={20} type={IconTypes.REPLY} />
       </div>
     ),
@@ -173,7 +182,7 @@ export function MessagePlugins <T extends MessagePluginsProps>(
   const ForWardElement = useMessagePluginElement({
     children: (
       <div className="message-plugin-item">
-        <span>Forward</span>
+        <span>{t('TUIChat.Forward')}</span>
         <Icon width={20} height={20} type={IconTypes.FORWARD} />
       </div>
     ),
@@ -205,6 +214,7 @@ export function MessagePlugins <T extends MessagePluginsProps>(
   <Plugins
     className="message-plugin"
     customClass={className}
+    style={popStyle}
     ref={pluginsRef}
     plugins={plugins}
     showNumber={showNumber}

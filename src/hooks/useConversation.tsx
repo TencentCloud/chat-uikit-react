@@ -55,14 +55,14 @@ export const useConversation = (chat) => {
       groupCustomField,
       isSupportTopic,
     });
-    const { groupID: createdGroupId } = res.data.group;
+    const { groupID: createdGroupID } = res.data.group;
     if (type === TencentCloudChat.TYPES.GRP_AVCHATROOM) {
       await chat.joinGroup({
-        groupID: createdGroupId,
+        groupID: createdGroupID,
         type: TencentCloudChat.TYPES.GRP_AVCHATROOM,
       });
     }
-    const { data } = await chat.getConversationProfile(`GROUP${createdGroupId}`);
+    const { data } = await chat.getConversationProfile(`GROUP${createdGroupID}`);
     return data.conversation;
   };
   const pinConversation = (options: {
