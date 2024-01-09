@@ -1,6 +1,7 @@
 import React, {
   PropsWithChildren, useCallback, useEffect, useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Conversation, Message } from '@tencentcloud/chat';
 import { useTUIChatActionContext } from '../../context';
 import './styles/index.scss';
@@ -28,6 +29,7 @@ export function TUIForward <T extends TUIForwardToProps>(
   const {
     handleForward: propsHandleForward,
   } = props;
+  const { t } = useTranslation();
   const [selectList, setSelectList] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [searchValue, setSearchValue] = useState('');
@@ -42,8 +44,8 @@ export function TUIForward <T extends TUIForwardToProps>(
     });
   }, [operateMessage]);
 
-  const FrequentlyList = conversationList.slice(0, 2);
-  const RecentList = conversationList.slice(2);
+  //const FrequentlyList = conversationList.slice(0, 2);
+  const RecentList = conversationList;
 
   const handleInputChange = (e) => {
     setSearchValue(e.target?.value);
@@ -104,7 +106,7 @@ export function TUIForward <T extends TUIForwardToProps>(
             height={16}
             onClick={handleClose}
           />
-          <h2 className="tui-forward-title">Forward To</h2>
+          <h2 className="tui-forward-title">{t('TUIChat.Forward to')}</h2>
         </header>
         <div className="tui-forward-search">
           <Input
@@ -120,7 +122,7 @@ export function TUIForward <T extends TUIForwardToProps>(
           {
             searchValue && (
             <ul className="tui-forward-list">
-              <h3 className="tui-forward-list-title">Search Result</h3>
+              <h3 className="tui-forward-list-title">{t('TUIChat.Search Result')}</h3>
               {
                 searchResult.length > 0 && searchResult.map((item) => (
                   <li key={item.conversationID} className="tui-forward-list-item">
@@ -138,34 +140,13 @@ export function TUIForward <T extends TUIForwardToProps>(
               }
               {
               searchResult.length === 0
-              && <p className="no-result">No Result</p>
+              && <p className="no-result">{t('TUIChat.No Result')}</p>
               }
             </ul>
             )
           }
-          { !searchValue && FrequentlyList.length > 0 && (
-            <ul className="tui-forward-list">
-              <h3 className="tui-forward-list-title">Frequently Contacted</h3>
-              {
-                FrequentlyList.map((item) => (
-                  <li key={item.conversationID} className="tui-forward-list-item">
-                    <label htmlFor={`${item.conversationID}`} className="info">
-                      <Avatar image={getDisplayImage(item)} size={40} />
-                      <div className="info-nick">{getDisplayTitle(item)}</div>
-                    </label>
-                    <Checkbox
-                      onChange={handleCheckboxChange}
-                      id={`${item.conversationID}`}
-                      value={item}
-                    />
-                  </li>
-                ))
-              }
-            </ul>
-          )}
           { !searchValue && RecentList.length > 0 && (
           <ul className="tui-forward-list">
-            <h3 className="tui-forward-list-title">Recent Chats</h3>
             {
                 RecentList.map((item) => (
                   <li key={item.conversationID} className="tui-forward-list-item">
@@ -186,7 +167,7 @@ export function TUIForward <T extends TUIForwardToProps>(
         </main>
         <footer className="tui-forward-footer">
           <div className="tui-forward-footer-name">{selectList.length > 0 && handleDisplayForwardName(selectList)}</div>
-          <button type="button" className="button" onClick={() => { handleForward(selectList); }} disabled={selectList.length === 0}>Forward</button>
+          <button type="button" className="button" onClick={() => { handleForward(selectList); }} disabled={selectList.length === 0}>{t('TUIChat.Forward')}</button>
         </footer>
       </div>
     </Model>

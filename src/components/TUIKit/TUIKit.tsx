@@ -7,9 +7,11 @@ import './styles/index.scss';
 import { TUIConversation } from '../TUIConversation';
 import { TUIChat } from '../TUIChat';
 import { TUIManage } from '../TUIManage';
+import '../../locales/index';
 
 export interface ChatProps {
   chat?: ChatSDK | null,
+  language?: string,
   customClasses?: unknown,
   activeConversation?: Conversation,
 }
@@ -19,21 +21,25 @@ export function TUIKit<
   props:PropsWithChildren<T>,
 ):React.ReactElement {
   const {
-    children, chat, customClasses, activeConversation,
+    children, chat, customClasses, activeConversation, language,
   } = props;
   (window as any).tencent_cloud_im_csig_react_uikit_23F_xa = true;
   const {
     conversation,
+    contactData,
     setActiveConversation,
     myProfile,
     TUIManageShow,
     setTUIManageShow,
     TUIProfileShow,
     setTUIProfileShow,
-  } = useTUIKit({ chat, activeConversation });
+    setActiveContact,
+  } = useTUIKit({ chat, activeConversation, language });
   const chatContextValue = useCreateTUIKitContext({
     chat,
+    language,
     conversation,
+    contactData,
     setActiveConversation,
     customClasses,
     myProfile,
@@ -41,6 +47,7 @@ export function TUIKit<
     setTUIManageShow,
     TUIProfileShow,
     setTUIProfileShow,
+    setActiveContact,
   });
 
   return (

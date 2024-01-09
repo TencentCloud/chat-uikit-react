@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Conversation } from '@tencentcloud/chat';
 import { Input } from '../Input';
 import { Icon, IconTypes } from '../Icon';
@@ -29,6 +30,7 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
     setConversationCreated,
     setPageState,
   } = props;
+  const { t } = useTranslation();
   const [searchValue, setSearchValue] = useState('');
   const { chat, setActiveConversation } = useTUIKitContext();
   const [friendList, setFriendList] = useState({});
@@ -81,7 +83,7 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
   };
   const next = () => {
     if (selectList && selectList.length === 0) {
-      Toast({ text: 'Participant cannot be empty.', type: 'error' });
+      Toast({ text: t('TUIConversation.Participant cannot be empty'), type: 'error' });
       return;
     }
     setPageState(PageStateTypes.CREATE_DETAIL);
@@ -90,7 +92,7 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
     <>
       <Input
         className="tui-conversation-create-search-input"
-        placeholder="Search"
+        placeholder={t('TUIConversation.Search')}
         clearable
         value={searchValue}
         onChange={searchValueChange}
@@ -102,7 +104,7 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
       {!isCreateGroup && (
         <div role="presentation" className="tui-user" onClick={createGroup}>
           <Icon type={IconTypes.ADD} />
-          <div className="tui-user-name active">New Group</div>
+          <div className="tui-user-name active">{t('TUIConversation.New group chat')}</div>
         </div>
       )}
       <div className={`tui-conversation-create ${className}`}>
@@ -150,7 +152,7 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
       </div>
       {isCreateGroup && (
         <div className="tui-conversation-create-next-container">
-          <div role="presentation" className="tui-conversation-create-next" onClick={next}>Next</div>
+          <div role="presentation" className="tui-conversation-create-next" onClick={next}>{t('TUIConversation.Next')}</div>
         </div>
       )}
     </>

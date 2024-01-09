@@ -6,6 +6,7 @@ import {
   isToday,
   isYesterday,
 } from 'date-fns';
+import { enGB, zhCN } from 'date-fns/locale';
 import TencentCloudChat from '@tencentcloud/chat';
 import { defaultGroupAvatarWork, defaultUserAvatar } from './Avatar';
 
@@ -50,21 +51,40 @@ export const handleDisplayAvatar = (avatar: string, type:string = TencentCloudCh
   return displayImage;
 };
 
-export const getTimeStamp = (time: number) => {
+export const getTimeStamp = (time: number, language?: string) => {
+  const locales = { enGB, zhCN };
+  let lng = '';
+  if (language === 'zh') {
+    lng = 'zhCN';
+  }
+  if (language === 'en') {
+    lng = 'enGB';
+  }
+
   if (!time) {
     return '';
   }
   if (!isThisYear(time)) {
-    return format(time, 'yyyy MMM dd');
+    return format(time, 'yyyy MMM dd', {
+      locale: locales[lng],
+    });
   }
   if (isToday(time)) {
-    return format(time, 'p');
+    return format(time, 'p', {
+      locale: locales[lng],
+    });
   }
   if (isYesterday(time)) {
-    return formatDistance(time, new Date());
+    return formatDistance(time, new Date(), {
+      locale: locales[lng],
+    });
   }
   if (isThisWeek(time)) {
-    return format(time, 'eeee');
+    return format(time, 'eeee', {
+      locale: locales[lng],
+    });
   }
-  return format(time, 'MMM dd');
+  return format(time, 'MMM dd', {
+    locale: locales[lng],
+  });
 };

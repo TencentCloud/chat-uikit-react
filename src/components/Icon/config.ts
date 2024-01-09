@@ -41,6 +41,7 @@ import IconUnunionUrl from './images/ununion.png';
 import IconVectorUrl from './images/vector.png';
 import IconUnvectorUrl from './images/unvector.png';
 import IconVoiceUrl from './images/voice.png';
+import IconAddFriendUrl from './images/add-friend.svg';
 
 import { IconTypes } from './type';
 
@@ -225,5 +226,9 @@ export const ICON_CONFIG:IconConfig = {
   [IconTypes.VOICE]: {
     url: IconVoiceUrl,
     className: 'tui-kit-icon-voice',
+  },
+  [IconTypes.ADDFRIEND]: {
+    url: IconAddFriendUrl,
+    className: 'tui-kit-icon-add-friend',
   },
 };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import './styles/index.scss';
 import { Icon, IconTypes } from '../Icon';
 import { Avatar, defaultGroupAvatarWork, defaultUserAvatar } from '../Avatar';
@@ -9,6 +10,7 @@ import { useConversationUpdate } from '../TUIConversationList/hooks/useConversat
 import { useConversation } from '../../hooks';
 
 export function TUIManage() {
+  const { t } = useTranslation();
   const [conversation, setConversation] = useState(null);
   const [profile, setProfile] = useState(null);
   const [isPinned, setIsPinned] = useState(false);
@@ -48,7 +50,7 @@ export function TUIManage() {
   <div className="tui-manage">
     <div className="tui-manage-title">
       <Icon type={IconTypes.CANCEL} width={16} height={16} onClick={close} />
-      <span>Conversation Information</span>
+      <span>{t('TUIConversation.Conversation Information')}</span>
     </div>
     <div className="tui-manage-container">
       <div className="tui-manage-info">
@@ -70,14 +72,14 @@ export function TUIManage() {
       </div>
       <div className="tui-manage-handle">
         <div className="manage-handle-box">
-          <div className="manage-handle-title">Pin</div>
+          <div className="manage-handle-title">{t('TUIConversation.Pin')}</div>
           <Switch
             onChange={pinChatChange}
             checked={isPinned}
           />
         </div>
         <div className="manage-handle-box" role="presentation" onClick={handleDelete}>
-          <div className="manage-handle-title red">Delete</div>
+          <div className="manage-handle-title red">{t('TUIConversation.Delete')}</div>
         </div>
       </div>
     </div>

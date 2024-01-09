@@ -1,4 +1,5 @@
 import React, { PropsWithChildren, useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Message } from '@tencentcloud/chat';
 import {
   useTUIChatStateContext,
@@ -31,6 +32,7 @@ function TUIMessageListWithContext <T extends MessageListProps>(
     className: propsClassName,
   } = props;
 
+  const { t } = useTranslation();
   const [ulElement, setUlElement] = useState<HTMLUListElement | null>(null);
   const [firstRender, setFirstRender] = useState<boolean>(false);
 
@@ -102,7 +104,7 @@ function TUIMessageListWithContext <T extends MessageListProps>(
   return (
     <div className={`message-list ${propsClassName} ${!firstRender ? 'hide' : ''}`} ref={messageListRef}>
       {noMore}
-      {noMore && <p className="no-more">No More</p>}
+      {noMore && <p className="no-more">{t('TUIChat.No More')}</p>}
       <InfiniteScroll
         className="message-list-infinite-scroll"
         hasMore

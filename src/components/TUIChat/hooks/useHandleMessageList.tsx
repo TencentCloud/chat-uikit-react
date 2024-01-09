@@ -33,16 +33,11 @@ export function useHandleMessageList<T extends CreateMessageProps>(props:T) {
 
   const getMessageList = useCallback(async (params?: GetMessageListProps) => {
     const data = params || {};
-    let groupType = '';
+    let groupType;
     if (groupProfile) {
-      try {
-        const res = await chat.searchGroupByID(groupProfile.groupID);
-        groupType = res?.data?.group?.type;
-      } catch (error) {
-        groupType = '';
-      }
+      groupType = groupProfile.type;
     }
-    if (isC2CConversation || (groupType && groupType !== TencentCloudChat.TYPES.GRP_AVCHATROOM)) {
+    if (isC2CConversation || (groupType !== TencentCloudChat.TYPES.GRP_AVCHATROOM)) {
       return chat.getMessageList({
         ...basicConfig,
         ...data,

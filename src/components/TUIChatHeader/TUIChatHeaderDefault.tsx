@@ -42,7 +42,7 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderBasicProps>(
     }
     switch (conversation?.type) {
       case TencentCloudChat.TYPES.CONV_C2C:
-        handleC2C(conversation.userProfile);
+        handleC2C(conversation.userProfile, conversation?.remark);
         break;
       case TencentCloudChat.TYPES.CONV_GROUP:
         handleGroup(conversation.groupProfile);
@@ -56,9 +56,9 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderBasicProps>(
     }
   }, [conversation]);
 
-  const handleC2C = (userProfile: Profile) => {
+  const handleC2C = (userProfile: Profile, remark?: string) => {
     if (!title) {
-      setTitle(userProfile?.nick || userProfile?.userID);
+      setTitle(remark || userProfile?.nick || userProfile?.userID);
     }
     if (!propAvatar) {
       setAvatar(<Avatar size={32} image={handleDisplayAvatar(userProfile.avatar)} />);

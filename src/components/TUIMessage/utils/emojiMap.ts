@@ -460,7 +460,7 @@ export const bigEmojiList:Array<IBigEmojiListItem> = [
  * @param { number } type 0:Convert to Chinese expression key 1: Convert to English expression key
  * @returns { string } the converted text
  */
-export function formatEmojiString(data: string, type = 0) {
+export function formatEmojiString(data: string, type = 0, language?: string) {
   let text = data;
   const replace = {
     key: type === 0 ? 1 : 0,
@@ -468,7 +468,11 @@ export function formatEmojiString(data: string, type = 0) {
   };
   Object.entries(emojiEnKey).map((item) => {
     if (text.includes(item[replace.key])) {
-      text = transText(text, item[replace.key], item[replace.value]);
+      if (language && language === 'zh') {
+        text = item[replace.key];
+      } else {
+        text = transText(text, item[replace.key], item[replace.value]);
+      }
     }
     return item;
   });

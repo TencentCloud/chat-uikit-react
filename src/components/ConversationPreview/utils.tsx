@@ -1,10 +1,9 @@
-import {
-  format, isToday, isYesterday, formatDistance, isThisYear, isThisWeek,
-} from 'date-fns';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import TencentCloudChat, { Conversation, Group, Profile } from '@tencentcloud/chat';
 import { defaultGroupAvatarWork, defaultUserAvatar } from '../Avatar';
 import { formatEmojiString } from '../TUIMessage/utils/emojiMap';
+import { getTimeStamp } from '../untils';
 
 export const getDisplayTitle = (
   conversation: Conversation,
@@ -14,11 +13,11 @@ export const getDisplayTitle = (
   const {
     name, nick, groupID, userID,
   } = getMessageProfile(conversation);
-  const { type } = conversation;
+  const { type, remark } = conversation;
   let title = '';
   switch (type) {
     case TencentCloudChat.TYPES.CONV_C2C:
-      title = nick || userID;
+      title = remark || nick || userID;
       break;
     case TencentCloudChat.TYPES.CONV_GROUP:
       title = name || groupID;
@@ -57,7 +56,11 @@ export const getDisplayImage = (conversation: Conversation) => {
   }
   return displayImage;
 };
-export const getDisplayMessage = (conversation:Conversation, myProfile:Profile) => {
+export const getDisplayMessage = (
+  conversation:Conversation,
+  myProfile:Profile,
+  language?:string,
+) => {
   const { lastMessage, type } = conversation;
   const {
     fromAccount, nick, nameCard, isRevoked,
@@ -81,7 +84,7 @@ export const getDisplayMessage = (conversation:Conversation, myProfile:Profile) 
     }}
     >
       <span>{from}</span>
-      <span>{lastMessage.isRevoked ? 'recalled a message' : formatEmojiString(lastMessage.messageForShow, 1)}</span>
+      <span>{lastMessage.isRevoked ? 'recalled a message' : formatEmojiString(lastMessage.messageForShow, 1, language)}</span>
     </div>
   );
 };
@@ -102,25 +105,7 @@ export const getMessageProfile = (conversation: Conversation):TProfile => {
   }
   return result as TProfile;
 };
-export const getDisplayTime = (conversation: Conversation) => {
+export const getDisplayTime = (conversation: Conversation, language?: string) => {
   const { lastMessage } = conversation;
-  return getTimeStamp(lastMessage.lastTime * 1000);
-};
-export const getTimeStamp = (time: number) => {
-  if (!time) {
-    return '';
-  }
-  if (!isThisYear(time)) {
-    return format(time, 'yyyy MMM dd');
-  }
-  if (isToday(time)) {
-    return format(time, 'p');
-  }
-  if (isYesterday(time)) {
-    return formatDistance(time, new Date());
-  }
-  if (isThisWeek(time)) {
-    return format(time, 'eeee');
-  }
-  return format(time, 'MMM dd');
+  return getTimeStamp(lastMessage.lastTime * 1000, language);
 };

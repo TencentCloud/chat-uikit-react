@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import './styles/index.scss';
 
 import { EmojiPicker } from './EmojiPicker';
@@ -14,6 +15,7 @@ export function InputPluginsDefalut():React.ReactElement {
     sendUploadMessage,
     pluginConfig: propsPluginConfig,
   } = useTUIMessageInputContext('TUIMessageInputDefault');
+  const { t } = useTranslation();
 
   const { TUIMessageInputConfig } = useTUIChatStateContext('TUIMessageInput');
 
@@ -64,7 +66,7 @@ export function InputPluginsDefalut():React.ReactElement {
     children: (
       <div className="input-plugin-item">
         <Icon width={20} height={20} type={IconTypes.IMAGE} />
-        <span>Image</span>
+        <span>{t('TUIChat.Image')}</span>
       </div>
     ),
     type: 'image',
@@ -79,7 +81,7 @@ export function InputPluginsDefalut():React.ReactElement {
     children: (
       <div className="input-plugin-item">
         <Icon width={20} height={20} type={IconTypes.VIDEO} />
-        <span>Video</span>
+        <span>{t('TUIChat.Video')}</span>
       </div>
     ),
     type: 'video',
@@ -94,7 +96,7 @@ export function InputPluginsDefalut():React.ReactElement {
     children: (
       <div className="input-plugin-item">
         <Icon width={20} height={20} type={IconTypes.DOCUMENT} />
-        <span>Document</span>
+        <span>{t('TUIChat.File')}</span>
       </div>
     ),
     type: 'file',

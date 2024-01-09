@@ -38,7 +38,6 @@ export const useConversationCreate = (
   };
   const handleData = (profileList, frequentlyConversationProfile = []) => {
     const sortResult = {
-      'Frequently Contacted': frequentlyConversationProfile,
       '#': [],
     };
     for (let i = 65; i <= 90; i += 1) {
