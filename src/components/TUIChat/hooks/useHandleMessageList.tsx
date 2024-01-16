@@ -9,6 +9,7 @@ export interface CreateMessageProps {
   conversation?: Conversation,
   state?: TUIChatStateContextValue,
   dispatch?: Dispatch<ChatStateReducerAction>,
+  filterMessage: any
 }
 
 export interface GetMessageListProps{
@@ -22,6 +23,7 @@ export function useHandleMessageList<T extends CreateMessageProps>(props:T) {
     conversation,
     state,
     dispatch,
+    filterMessage,
   } = props;
 
   const { conversationID, groupProfile, type } = conversation;
@@ -47,11 +49,12 @@ export function useHandleMessageList<T extends CreateMessageProps>(props:T) {
   }, [chat]);
 
   const updateMessage = useCallback((messageList: Array<Message>) => {
+    const newMessageList = messageList.filter((item) => (
+      item?.conversationID === conversationID
+    ));
     dispatch({
       type: CONSTANT_DISPATCH_TYPE.SET_UPDATE_MESSAGE,
-      value: messageList.filter((item) => (
-        item?.conversationID === conversationID
-      )),
+      value: filterMessage ? filterMessage(newMessageList) : newMessageList,
     });
   }, [dispatch]);
 

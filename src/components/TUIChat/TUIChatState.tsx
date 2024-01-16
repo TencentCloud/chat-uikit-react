@@ -73,6 +73,10 @@ export type ChatStateReducerAction =
       type: CONSTANT_DISPATCH_TYPE.UPDATE_UPLOAD_PENDING_MESSAGE_LIST,
       value?: Message,
     }
+  | {
+      type: CONSTANT_DISPATCH_TYPE.SET_FIRST_SEND_MESSAGE;
+      value?: Message;
+    };
 export type ChatStateReducer = Reducer<TUIChatStateContextValue, ChatStateReducerAction>;
 
 export const chatReducer = (
@@ -135,7 +139,8 @@ export const chatReducer = (
           ...handleUploadPendingMessage(state.uploadPendingMessageList, action.value),
         ],
       };
-    default: return state;
+    case CONSTANT_DISPATCH_TYPE.SET_FIRST_SEND_MESSAGE:
+      return { ...state, firstSendMessage: action.value };
   }
 };
 
@@ -153,4 +158,5 @@ export const initialState:TUIChatStateContextValue = {
   audioSource: null,
   vidoeSource: null,
   uploadPendingMessageList: [],
+  firstSendMessage: null,
 };

@@ -88,7 +88,7 @@ function MessageBubbleWithContext <T extends MessageBubbleProps>(
         {
           Plugins && (
           <div className="message-plugin">
-            {PluginsShow && <Plugins />}
+            {PluginsShow && <Plugins message={message} />}
           </div>
           )
         }

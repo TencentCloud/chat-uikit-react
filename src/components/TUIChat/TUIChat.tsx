@@ -32,6 +32,7 @@ import { MessageListProps, TUIMessageList } from '../TUIMessageList';
 import { TUIMessageInput as TUIMessageInputElement, TUIMessageInputBasicProps } from '../TUIMessageInput';
 import { EmptyStateIndicator } from '../EmptyStateIndicator';
 import { Toast } from '../Toast';
+import { JSONStringToParse } from '../untils';
 
 interface TUIChatProps {
   className?: string,
@@ -44,12 +45,16 @@ interface TUIChatProps {
   InputPlugins?: React.ComponentType<UnknowPorps>,
   InputQuote?: React.ComponentType<UnknowPorps>,
   MessagePlugins?: React.ComponentType<UnknowPorps>,
+  MessageCustomPlugins?: React.ComponentType<UnknowPorps>,
+  MessageTextPlugins?: React.ComponentType<UnknowPorps>,
   onMessageRecevied?: (
     updateMessage: (event?: Array<Message>) => void,
     event: any,
   ) => void,
   sendMessage?: (message:Message, options?:any) => Promise<Message>,
   revokeMessage?: (message:Message) => Promise<Message>,
+  selectedConversation?: (conversation:Conversation) => Promise<Conversation>,
+  filterMessage?: (messageList: Array<Message>) => void,
   messageConfig?: TUIMessageProps,
   cloudCustomData?: string,
   TUIMessageInputConfig?: TUIMessageInputBasicProps,
@@ -100,10 +105,14 @@ function TUIChatInner <T extends TUIChatInnerProps>(
     InputPlugins,
     MessagePlugins,
     MessageContext,
+    MessageCustomPlugins,
+    MessageTextPlugins,
     InputQuote,
     onMessageRecevied,
     sendMessage: propsSendMessage,
     revokeMessage,
+    selectedConversation,
+    filterMessage,
     messageConfig,
     cloudCustomData,
     TUIMessageInputConfig,
@@ -150,7 +159,7 @@ function TUIChatInner <T extends TUIChatInnerProps>(
     removeMessage,
     updateUploadPendingMessageList,
   } = useHandleMessageList({
-    chat, conversation, state, dispatch,
+    chat, conversation, state, dispatch, filterMessage,
   });
 
   const {
@@ -163,6 +172,15 @@ function TUIChatInner <T extends TUIChatInnerProps>(
   });
 
   const sendMessage = async (message: Message, options?:any) => {
+    if (
+      !(message.type === 'TIMCustomElem' && JSONStringToParse(message.payload.data)?.src === 7)
+      && !state.firstSendMessage
+    ) {
+      dispatch({
+        type: CONSTANT_DISPATCH_TYPE.SET_FIRST_SEND_MESSAGE,
+        value: message,
+      });
+    }
     updateMessage([message]);
     try {
       if (propsSendMessage) {
@@ -174,7 +192,6 @@ function TUIChatInner <T extends TUIChatInnerProps>(
     } catch (error) {
       Toast({ text: error, type: 'error' });
       editLocalMessage(message);
-      throw new Error(error);
     }
   };
 
@@ -232,6 +249,11 @@ function TUIChatInner <T extends TUIChatInnerProps>(
         type: CONSTANT_DISPATCH_TYPE.SET_NEXT_REQ_MESSAGE_ID,
         value: res.data.nextReqMessageID,
       });
+      dispatch({
+        type: CONSTANT_DISPATCH_TYPE.SET_FIRST_SEND_MESSAGE,
+        value: null,
+      });
+      selectedConversation && selectedConversation(conversation);
     })();
   }, [conversation]);
 
@@ -292,6 +314,8 @@ function TUIChatInner <T extends TUIChatInnerProps>(
       MessageContext,
       InputPlugins,
       MessagePlugins,
+      MessageCustomPlugins,
+      MessageTextPlugins,
       TUIChatHeader,
       TUIMessageInput,
       InputQuote,

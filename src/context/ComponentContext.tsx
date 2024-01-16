@@ -15,6 +15,8 @@ export interface ComponentContextValue {
   MessageContext?: React.ComponentType<MessageContextProps>,
   InputPlugins?: React.ComponentType<UnknowPorps>,
   MessagePlugins?: React.ComponentType<UnknowPorps>,
+  MessageCustomPlugins?: React.ComponentType<UnknowPorps>,
+  MessageTextPlugins?: React.ComponentType<UnknowPorps>,
   InputQuote?: React.ComponentType<UnknowPorps>,
 }
 
