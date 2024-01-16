@@ -16,7 +16,7 @@ import {
 } from '@tencentcloud/chat-uikit-react';
 import TencentCloudChat, { ChatSDK } from '@tencentcloud/chat';
 import TIMUploadPlugin from 'tim-upload-plugin';
-
+import TIMProfanityFilterPlugin from 'tim-profanity-filter-plugin';
 import '@tencentcloud/chat-uikit-react/dist/cjs/index.css';
 import './style.scss';
 import chats from './assets/image/chats.svg';
@@ -39,7 +39,8 @@ const init = async ():Promise<ChatSDK> => {
     const userID = `test-${Math.ceil(Math.random() * 10000)}`;
     console.warn('your userID ->', userID);
     const chat = TencentCloudChat.create({ SDKAppID: genTestUserSig(userID).SDKAppID });
-    chat?.registerPlugin({ 'tim-upload-plugin': TIMUploadPlugin });
+    chat.registerPlugin({ 'tim-upload-plugin': TIMUploadPlugin });
+    chat.registerPlugin({ 'tim-profanity-filter-plugin': TIMProfanityFilterPlugin });
     const onReady = () => { resolve(chat); };
     chat.on(TencentCloudChat.EVENT.SDK_READY, onReady);
     chat.login({
