@@ -3,7 +3,7 @@ import SampleChat from './demo/SampleChat';
 
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <SampleChat></SampleChat>
     </div>
   );

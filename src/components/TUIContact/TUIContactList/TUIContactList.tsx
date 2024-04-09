@@ -130,7 +130,7 @@ function UnMemoizedTUIContactList<T>(): React.ReactElement {
           tabIndex={0}
           onClick={() => setShowFriends(!iShowFriends)}
         >
-          <div className="tui-contacts-list-title">{t('TUIContact.Friend')}</div>
+          <div className="tui-contacts-list-title">{t('TUIContact.Friends')}</div>
           <div className="tui-contacts-list-icon">
             <img src={iShowFriends ? downArrow : rightArrow} alt="" />
           </div>

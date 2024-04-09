@@ -17,7 +17,6 @@ export interface TUIKitContextValue {
     TUIManageShow?: boolean,
     setTUIManageShow?: React.Dispatch<React.SetStateAction<boolean>>,
     TUIProfileShow?: boolean,
-    // 激活 contact 列表数据，右侧显示数据，无参数时，右侧数据默认为空
     setActiveContact: (UseContactParams?: UseContactParams) => void,
     setTUIProfileShow?: React.Dispatch<React.SetStateAction<boolean>>,
 }

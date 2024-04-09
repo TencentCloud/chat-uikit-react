@@ -7,7 +7,7 @@ const TUIContact = {
   'Accept': 'Accept',
   'Refuse': 'Refuse',
   'Handled': 'Handled',
-  'Friend': 'Friend',
+  'Friends': 'Friends',
   'Send Message': 'Send Message',
   'Signature': 'Signature',
   'New Contacts': 'New Contacts',

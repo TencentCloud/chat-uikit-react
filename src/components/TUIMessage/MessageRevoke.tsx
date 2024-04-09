@@ -26,9 +26,9 @@ function MessageRevokeWithContext <T extends MessageContextProps>(
         message?.flow === MESSAGE_FLOW.IN && <span>{message?.nick || message?.from}</span>
       }
       {
-        message?.flow !== MESSAGE_FLOW.IN && <span>{t('TUIChat.You')}</span>
+        message?.flow !== MESSAGE_FLOW.IN && <span style={{ marginRight: '5px' }}>{t('TUIChat.You')}</span>
       }
-      <span>{t('TUIChat.recalled a message')}</span>
+      <span style={{ marginRight: '5px' }}>{t('TUIChat.recalled a message')}</span>
       {
         message?.flow === MESSAGE_FLOW.OUT
         && message?.type === TencentCloudChat.TYPES.MSG_TEXT

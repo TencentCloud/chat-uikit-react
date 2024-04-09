@@ -3,6 +3,7 @@
   display: flex;
   max-width: 100%;
   box-sizing: border-box;
+  height: 30px;
   &-popup{
     flex: 1;
     display: flex;
@@ -57,7 +58,7 @@
       padding: 10px 0;
       &-list {
         &-item {
-          padding: 5px 10px;
+          padding: 7px 10px;
           &:hover {
             background: #f2f7ff;
           }

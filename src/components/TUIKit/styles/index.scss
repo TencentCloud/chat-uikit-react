@@ -7,3 +7,106 @@
   background-color: #FFFFFF;
   text-align: initial;
 }
+.sample-chat {
+  position:relative;
+  margin: 0 auto;
+  width: calc(100% - 20rem);
+  min-width: 850px;
+  height: 86%;
+  box-sizing: border-box;
+  border-radius: 12px;
+  overflow: hidden;
+  &-profile {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+  }
+  &-left-container {
+    max-width: 360px;
+    min-width: 360px;
+    display: flex;
+    flex-direction: column;
+  }
+  &-tab {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 12px;
+  }
+  &-tab-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  &-tab-text {
+    font-size: 15px;
+    line-height: 25px;
+    text-align: center;
+  }
+  &-tab-active {
+    color: #147AFF;
+  }
+}
+.tuikit-container {
+  display: flex;
+  height: 100%;
+  position: relative;
+  text-align: initial;
+  box-shadow: 0 11px 20px 0 rgba(0,0,0,.3);
+}
+.tui-chat-default {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position-x: -17px;
+  background-position-y: 173px;
+  padding: 100px 40px 0;
+  header {
+    display: flex;
+    align-items: center;
+    font-size: 1.75rem;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: #000;
+    letter-spacing: 0;
+    img {
+      width: 32px;
+      margin: 0 10px;
+    }
+  }
+  .content {
+    max-width: 393px;
+    font-size: 16px;
+    line-height: 24px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: #666;
+    letter-spacing: 0;
+    padding: 36px 0 20px;
+  }
+  .link {
+    font-size: 14px;
+    line-height: 20px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: #666;
+    letter-spacing: 0;
+    a {
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: #006eff;
+      letter-spacing: 0;
+      text-decoration: none;
+      padding: 0 5px;
+    }
+  }
+}
+
+
+body {
+  #webpack-dev-server-client-overlay {
+    display: none !important;
+  }
+}

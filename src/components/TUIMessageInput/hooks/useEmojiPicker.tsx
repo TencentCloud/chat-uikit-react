@@ -4,7 +4,7 @@ import {
   useCallback,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTUIChatActionContext } from '../../../context';
+import { TUIChatService } from '@tencentcloud/chat-uikit-engine';
 import { emojiEnKey } from '../../TUIMessage/utils/emojiMap';
 import type { IbaseStateProps } from './useMessageInputState';
 
@@ -25,7 +25,6 @@ export function useEmojiPicker<T extends useEmojiPickerProps>(props:PropsWithChi
   } = props;
 
   const { i18n } = useTranslation();
-  const { sendMessage, createFaceMessage } = useTUIChatActionContext('useEmojiPicker');
 
   const onSelectEmoji = (emoji:EmojiData) => {
     if (i18n.language === 'zh') {
@@ -36,10 +35,7 @@ export function useEmojiPicker<T extends useEmojiPickerProps>(props:PropsWithChi
   };
 
   const sendFaceMessage = useCallback((emoji:EmojiData) => {
-    const message = createFaceMessage({
-      payload: emoji,
-    });
-    sendMessage(message);
+    TUIChatService.sendFaceMessage({ payload: emoji });
   }, []);
 
   return {

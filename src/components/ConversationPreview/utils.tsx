@@ -65,6 +65,10 @@ export const getDisplayMessage = (
   const {
     fromAccount, nick, nameCard, isRevoked,
   } = lastMessage;
+  let { messageForShow } = lastMessage;
+  if (lastMessage.type === TencentCloudChat.TYPES.MSG_CUSTOM && lastMessage.payload?.description) {
+    messageForShow = lastMessage.payload.description;
+  }
   let from = '';
   switch (type) {
     case TencentCloudChat.TYPES.CONV_GROUP:
@@ -84,7 +88,7 @@ export const getDisplayMessage = (
     }}
     >
       <span>{from}</span>
-      <span>{lastMessage.isRevoked ? 'recalled a message' : formatEmojiString(lastMessage.messageForShow, 1, language)}</span>
+      <span>{lastMessage.isRevoked ? 'recalled a message' : formatEmojiString(messageForShow, 1)}</span>
     </div>
   );
 };

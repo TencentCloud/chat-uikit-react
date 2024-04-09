@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Conversation } from '@tencentcloud/chat';
 import { useTUIKitContext } from '../../context';
+import { isH5 } from '../../utils/env';
 import useConversationList from './hooks/useConversationList';
 import './index.scss';
 import { ConversationPreview, ConversationPreviewUIComponentProps } from '../ConversationPreview';
@@ -17,6 +18,7 @@ import { useConversationUpdate } from './hooks/useConversationUpdate';
 import { useTUIConversationContext } from '../../context/TUIConversationContext';
 
 interface Props {
+  componentVisibleOptions?: any,
   filters?: object,
   sort?: object,
   options?: object,
@@ -34,31 +36,41 @@ export function UnMemoTUIConversationList<T extends Props>(props: T):React.React
     Container = ConversationListContainer,
     onConversationListUpdated,
     filterConversation: propsFilterConversation,
+    componentVisibleOptions = {
+      isProfileShow: true,
+      isSearchInputShow: true,
+      isContainerShow: true,
+    },
   } = props;
   const { t } = useTranslation();
   const {
-    chat, customClasses, conversation, setActiveConversation, setTUIProfileShow,
+    chat,
+    customClasses,
+    conversation,
+    setActiveConversation,
+    setTUIProfileShow,
   } = useTUIKitContext('TUIConversationList');
-  const {
-    filterConversation: contextFilterConversation,
-  } = useTUIConversationContext('TUIConversationList');
+  const { filterConversation: contextFilterConversation } = useTUIConversationContext('TUIConversationList');
   const filterConversation = propsFilterConversation || contextFilterConversation;
   const [conversationUpdateCount, setConversationUpdateCount] = useState(0);
   const forceUpdate = () => setConversationUpdateCount((count) => count + 1);
 
   const activeConversationHandler = (
     conversationList: Array<Conversation>,
-    setConversationList: React.Dispatch<React.SetStateAction<Array<Conversation>>>,
+    setConversationList: React.Dispatch<
+      React.SetStateAction<Array<Conversation>>
+    >,
   ) => {
     if (!conversationList.length) {
       return;
     }
     setActiveConversation(conversation);
   };
-  const {
-    conversationList,
-    setConversationList,
-  } = useConversationList(chat, activeConversationHandler, filterConversation);
+  const { conversationList, setConversationList } = useConversationList(
+    chat,
+    activeConversationHandler,
+    filterConversation,
+  );
   useConversationUpdate(
     setConversationList,
     onConversationListUpdated,
@@ -68,13 +80,16 @@ export function UnMemoTUIConversationList<T extends Props>(props: T):React.React
   const [searchValue, setSearchValue] = useState('');
   const [searchResult, setSearchResult] = useState(conversationList);
   const [conversationCreated, setConversationCreated] = useState(false);
+  const [activeConversationID, setActiveConversationID] = useState('');
 
   const handleSearchValueChange = (e) => {
     setSearchValue(e.target?.value);
     if (e.target?.value) {
       const result = conversationList.filter(
         // eslint-disable-next-line max-len
-        (item) => (getDisplayTitle(item) as string).toLocaleLowerCase().includes(e.target?.value.toLocaleLowerCase()),
+        (item) => (getDisplayTitle(item) as string)
+          .toLocaleLowerCase()
+          .includes(e.target?.value.toLocaleLowerCase()),
       );
       setSearchResult(result);
     } else {
@@ -88,65 +103,76 @@ export function UnMemoTUIConversationList<T extends Props>(props: T):React.React
   };
   const conversationListRef = useRef(null);
   return (
-    <div className={`tui-conversation ${customClasses || ''}`} ref={conversationListRef}>
-      {
-        conversationCreated
-          ? (
-            <ConversationCreate
-              conversationList={conversationList}
-              setConversationCreated={setConversationCreated}
-            />
-          )
-          : (
-            <>
-              <div className="tui-conversation-header">
-                <ConversationSearchInput
-                  value={searchValue}
-                  clearable
-                  onChange={handleSearchValueChange}
+    <div
+      className={`tui-conversation ${isH5 ? 'tui-conversation-h5' : ''} ${customClasses || ''} `}
+      ref={conversationListRef}
+    >
+      {conversationCreated ? (
+        <ConversationCreate
+          conversationList={conversationList}
+          setConversationCreated={setConversationCreated}
+        />
+      ) : (
+        <>
+          {componentVisibleOptions.isSearchInputShow && (
+            <div className="tui-conversation-header">
+              <ConversationSearchInput
+                value={searchValue}
+                clearable
+                onChange={handleSearchValueChange}
+              />
+              <div className="tui-conversation-create-icon">
+                <Icon
+                  onClick={handleConversationCreate}
+                  type={IconTypes.CREATE}
+                  height={24}
+                  width={24}
                 />
-                <div className="tui-conversation-create-icon">
-                  <Icon
-                    onClick={handleConversationCreate}
-                    type={IconTypes.CREATE}
-                    height={24}
-                    width={24}
-                  />
-                </div>
               </div>
-              <Container setConversationList={setConversationList}>
-                {/* eslint-disable-next-line no-nested-ternary */}
-                {conversationList.length === 0
-                  ? (
-                    <div className="no-result">
-                      <Icon className="no-result-icon" type={IconTypes.EFFORT} width={42} height={42} />
-                      <div className="no-result-message">{t('TUIConversation.No conversation')}</div>
-                    </div>
-                  )
-                  : searchValue
-                    ? (
-                      <ConversationSearchResult
-                        Preview={Preview}
-                        searchValue={searchValue}
-                        result={searchResult}
-                      />
-                    )
-                    : conversationList.map((item) => {
-                      const previewProps = {
-                        activeConversation: conversation,
-                        conversation: item,
-                        setActiveConversation,
-                        Preview,
-                        conversationUpdateCount,
-                      };
-                      return (
-                        <ConversationPreview key={item.conversationID} {...previewProps} />
-                      );
-                    })}
-              </Container>
-            </>
-          )
-      }
+            </div>
+          )}
+          {componentVisibleOptions.isContainerShow && (
+            <Container setConversationList={setConversationList}>
+              {/* eslint-disable-next-line no-nested-ternary */}
+              {conversationList.length === 0 ? (
+                <div className="no-result">
+                  <Icon
+                    className="no-result-icon"
+                    type={IconTypes.EFFORT}
+                    width={42}
+                    height={42}
+                  />
+                  <div className="no-result-message">No conversation</div>
+                </div>
+              ) : searchValue ? (
+                <ConversationSearchResult
+                  Preview={Preview}
+                  searchValue={searchValue}
+                  result={searchResult}
+                />
+              ) : (
+                conversationList.map((item) => {
+                  const previewProps = {
+                    activeConversation: conversation,
+                    conversation: item,
+                    setActiveConversation,
+                    Preview,
+                    conversationUpdateCount,
+                    activeConversationID,
+                    setActiveConversationID,
+                  };
+                  return (
+                    <ConversationPreview
+                      key={item.conversationID}
+                      {...previewProps}
+                    />
+                  );
+                })
+              )}
+            </Container>
+          )}
+        </>
+      )}
     </div>
   );
 }

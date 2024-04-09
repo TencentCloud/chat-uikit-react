@@ -1,6 +1,6 @@
 {
   "name": "@tencentcloud/chat-uikit-react",
-  "version": "1.2.2",
+  "version": "2.1.0",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "license": "MIT",
@@ -61,17 +61,18 @@
   "dependencies": {
     "date-fns": "^2.29.3",
     "react-date-picker": "^9.0.0",
-    "react-dom": "^18.2.0",
-    "tim-upload-plugin": "^1.0.5"
+    "react-dom": "^18.2.0"
   },
   "peerDependencies": {
     "@tencentcloud/chat": "^3.2.0",
-    "i18next": "^23.7.11",
-    "react-i18next": "^13.5.0",
+    "@tencentcloud/chat-uikit-engine": "latest",
+    "@tencentcloud/tui-core": "latest",
+    "@tencentcloud/universal-api": "latest",
     "date-fns": "^2.29.3",
+    "i18next": "^23.7.11",
     "react": "^18.2.0",
     "react-date-picker": "^9.0.0",
-    "tim-upload-plugin": "^1.0.5",
+    "react-i18next": "^13.5.0",
     "tslib": "^2.4.1"
   }
 }

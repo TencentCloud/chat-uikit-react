@@ -20,5 +20,12 @@ export const enUS = {
   'Get Started': 'Get Started',
   'Developer Group': 'Developer Group',
   'Join': 'Join',
-  'Details': 'Details'
+  'Details': 'Details',
+  'Follow': 'Follow',
+  'Subscribe': 'Subscribe',
+  'Give a like': 'Give a like',
+  'Give a reward': 'Give a reward',
+  'See the participants': 'See the participants',
+  'Ask a question': 'Ask a question',
+  'Feedback to a reply': 'Feedback to a reply'
 }

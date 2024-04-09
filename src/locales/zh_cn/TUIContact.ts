@@ -7,7 +7,7 @@ const TUIContact = {
   'Accept': '接受',
   'Refuse': '拒绝',
   'Handled': '已处理',
-  'Friend': '我的好友',
+  'Friends': '我的好友',
   'Send Message': '发送消息',
   'Signature': '个性签名',
   'Successful application, waiting for the administrator to agree to join the group application': '等待管理员同意',
