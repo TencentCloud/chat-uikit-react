@@ -9,7 +9,7 @@ import IconFileUrl from './images/file.png';
 import IconAddUrl from './images/add.png';
 import IconImageUrl from './images/image.png';
 import IconVideoUrl from './images/video.png';
-import IconDocumentUrl from './images/document.png';
+import IconDocumentUrl from './images/files.png';
 import IconStarUrl from './images/star.png';
 import IconCopyUrl from './images/copy.png';
 import IconDelUrl from './images/del.png';

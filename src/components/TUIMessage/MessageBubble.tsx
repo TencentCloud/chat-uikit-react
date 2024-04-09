@@ -1,11 +1,12 @@
 import React, {
   PropsWithChildren,
   ReactNode,
+  useEffect,
   useState,
 } from 'react';
 import TencentCloudChat, { Message } from '@tencentcloud/chat';
 import { MESSAGE_STATUS } from '../../constants';
-import { useTUIChatActionContext } from '../../context';
+import { useTUIChatActionContext, useTUIChatStateContext } from '../../context';
 import { Icon, IconTypes } from '../Icon';
 import { useMessageReply } from './hooks/useMessageReply';
 import { MessageProgress } from './MessageProgress';
@@ -36,7 +37,8 @@ function MessageBubbleWithContext <T extends MessageBubbleProps>(
     sender,
   } = useMessageReply({ message });
 
-  const { setHighlightedMessageId } = useTUIChatActionContext('MessageBubbleWithContext');
+  const { setHighlightedMessageId, setActiveMessageID } = useTUIChatActionContext('MessageBubbleWithContext');
+  const { activeMessageID } = useTUIChatStateContext('MessageBubbleWithContext');
 
   const handleLoading = () => !!((
     message?.type === TencentCloudChat.TYPES.MSG_IMAGE
@@ -45,11 +47,23 @@ function MessageBubbleWithContext <T extends MessageBubbleProps>(
   ) && message?.status === MESSAGE_STATUS.UNSEND);
 
   const handleMouseEnter = () => {
+    setActiveMessageID(message.ID);
     setPluginsShow(true);
   };
   const handleMouseLeave = () => {
+    setActiveMessageID(message.ID);
     setPluginsShow(false);
   };
+
+  const activeMessage = () => {
+    setActiveMessageID(message.ID);
+  };
+
+  useEffect(() => {
+    if (activeMessageID !== message.ID) {
+      setPluginsShow(false);
+    }
+  }, [activeMessageID]);
 
   const handleReplyMessage = () => {
     setHighlightedMessageId(replyMessage?.ID);
@@ -59,8 +73,11 @@ function MessageBubbleWithContext <T extends MessageBubbleProps>(
     <div className="meesage-bubble">
       <div
         className={`meesage-bubble-context ${message?.flow}`}
+        role="button"
+        tabIndex={0}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onClick={activeMessage}
       >
         <div
           className={
@@ -88,7 +105,7 @@ function MessageBubbleWithContext <T extends MessageBubbleProps>(
         {
           Plugins && (
           <div className="message-plugin">
-            {PluginsShow && <Plugins />}
+            {PluginsShow && <Plugins message={message} />}
           </div>
           )
         }

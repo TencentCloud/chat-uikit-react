@@ -1,14 +1,9 @@
 .App {
-  width: 100vw;
-  height: 100vh;
-  box-sizing: border-box;
-  background-size: 100% 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  height: 100%;
   .sample-demo {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     box-sizing: border-box;
     background-size: 100% 100%;
     display: flex;
@@ -21,12 +16,10 @@
     min-width: 400px;
     overflow: auto;
     background: #f9fafb;
-    box-shadow: 0 11px 20px 0 rgba(0,0,0,.3);
-    border-radius: 12px;
   }
   .chat-main {
     flex: 1 1 auto;
-    padding: 60px;
+    height: 100%;
     overflow: hidden;
   }
 }
@@ -50,6 +43,7 @@
     line-height: 20px;
     display: flex;
     align-items: center;
+    z-index: 1;
     .language-icon {
       margin-right: 10px;
     }
@@ -80,108 +74,5 @@
       bottom: 0;
       border-radius: 10px;
     }
-  }
-}
-.sample-chat {
-  position:relative;
-  margin: 0 auto;
-  width: calc(100% - 20rem);
-  min-width: 850px;
-  height: 86%;
-  box-sizing: border-box;
-  border-radius: 12px;
-  overflow: hidden;
-  &-profile {
-    position: absolute;
-    top: 0;
-    z-index: 1;
-  }
-  &-left-container {
-    max-width: 360px;
-    min-width: 360px;
-    display: flex;
-    flex-direction: column;
-  }
-  &-tab {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin: 12px;
-  }
-  &-tab-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center
-  }
-  &-tab-text {
-    font-size: 15px;
-    line-height: 25px;
-    text-align: center;
-  }
-  &-tab-active {
-    color: #147AFF;
-  }
-}
-.tuikit-container {
-  display: flex;
-  height: 100%;
-  position: relative;
-  text-align: initial;
-  box-shadow: 0 11px 20px 0 rgba(0,0,0,.3);
-}
-.tui-chat-default {
-  width: 100%;
-  height: 100%;
-  background: url('./assets/image/login-background.png') no-repeat;
-  background-size: cover;
-  background-position-x: -17px;
-  background-position-y: 173px;
-  padding: 100px 40px 0;
-  header {
-    display: flex;
-    align-items: center;
-    font-size: 1.75rem;
-    font-family: PingFangSC-Medium;
-    font-weight: 500;
-    color: #000;
-    letter-spacing: 0;
-    img {
-      width: 32px;
-      margin: 0 10px;
-    }
-  }
-  .content {
-    max-width: 393px;
-    font-size: 16px;
-    line-height: 24px;
-    font-family: PingFangSC-Regular;
-    font-weight: 400;
-    color: #666;
-    letter-spacing: 0;
-    padding: 36px 0 20px;
-  }
-  .link {
-    font-size: 14px;
-    line-height: 20px;
-    font-family: PingFangSC-Regular;
-    font-weight: 400;
-    color: #666;
-    letter-spacing: 0;
-    a {
-      font-family: PingFangSC-Regular;
-      font-weight: 400;
-      color: #006eff;
-      letter-spacing: 0;
-      text-decoration: none;
-      padding: 0 5px;
-    }
-  }
-}
-
-
-body {
-  #webpack-dev-server-client-overlay {
-    display: none !important;
   }
 }

@@ -1,5 +1,6 @@
 import React, { PropsWithChildren, useState } from 'react';
 import TencentCloudChat from '@tencentcloud/chat';
+import { isH5 } from '../../utils/env';
 import { Model } from '../Model';
 import type { MessageContextProps } from './MessageText';
 
@@ -19,7 +20,7 @@ function MessageImageWithContext <T extends MessageContextProps>(
   return (
     <div className="message-image">
       <div role="button" tabIndex={0} onClick={() => { setShow(true); }}>
-        <img className={`img bubble-${message.flow} ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`} src={context.url} alt="" />
+        <img className={`img ${isH5 ? 'img-h5' : ''} bubble-${message.flow} ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`} src={context.url} alt="" />
       </div>
       {children}
       {

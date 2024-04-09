@@ -8,6 +8,7 @@ import {
 } from 'date-fns';
 import { enGB, zhCN } from 'date-fns/locale';
 import TencentCloudChat from '@tencentcloud/chat';
+import { TUIStore, StoreName } from '@tencentcloud/chat-uikit-engine';
 import { defaultGroupAvatarWork, defaultUserAvatar } from './Avatar';
 
 // Determine if it is a JSON string
@@ -88,3 +89,11 @@ export const getTimeStamp = (time: number, language?: string) => {
     locale: locales[lng],
   });
 };
+
+export function enableSampleTaskStatus(taskKey: string) {
+  const tasks = TUIStore.getData(StoreName.APP, 'tasks');
+  if (taskKey in tasks && !tasks[taskKey]) {
+    tasks[taskKey] = true;
+    TUIStore.update(StoreName.APP, 'tasks', tasks);
+  }
+}

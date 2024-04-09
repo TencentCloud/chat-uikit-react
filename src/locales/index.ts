@@ -14,7 +14,7 @@ const resources = {
 
 i18next.use(initReactI18next).init({
   resources,
-  lng: 'zh',
+  lng: 'en',
   interpolation: {
     escapeValue: false,
   },

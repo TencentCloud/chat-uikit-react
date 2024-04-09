@@ -1,7 +1,9 @@
 import React, { PropsWithChildren } from 'react';
 import TencentCloudChat from '@tencentcloud/chat';
+import { useTranslation } from 'react-i18next';
 import { JSONStringToParse } from '../untils';
 import type { MessageContextProps } from './MessageText';
+import { useComponentContext } from '../../context';
 
 function MessageCustomWithContext <T extends MessageContextProps>(
   props: PropsWithChildren<T>,
@@ -11,7 +13,8 @@ function MessageCustomWithContext <T extends MessageContextProps>(
     message,
     children,
   } = props;
-
+  const { t } = useTranslation();
+  const { MessageCustomPlugins } = useComponentContext('MessageCustom');
   const handleContext = (data) => {
     if (data.data === 'Hyperlink') {
       const extension = JSONStringToParse(data?.extension);
@@ -32,7 +35,13 @@ function MessageCustomWithContext <T extends MessageContextProps>(
     if (data.data === 'group_create') {
       return `${message?.nick || message?.from} Create a group`;
     }
-    return data.extension;
+    const botMessage = JSONStringToParse(data.data);
+    if (botMessage?.chatbotPlugin === 1 && botMessage?.src === 15 && (botMessage?.subtype === 'welcome_msg' || botMessage?.subtype === 'clarify_msg')) {
+      return (
+        <MessageCustomPlugins data={JSONStringToParse(data.data).content} />
+      );
+    }
+    return `[${t('TUIChat.Custom message')}]`;
   };
 
   return (

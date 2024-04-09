@@ -80,8 +80,13 @@ export const useConversationCreate = (
         ({ nick, userID }) => {
           const tempNick = nick.toLocaleLowerCase();
           const tempSearchValue = searchValue.toLocaleLowerCase();
-          const includes = tempNick
-            ? tempNick.includes(tempSearchValue) : userID.includes(tempSearchValue);
+          const userIDValue = userID.toLocaleLowerCase();
+          let includes;
+          if (process.env?.REACT_APP_ONLINE === 'TencentCloudDemo') {
+            includes = tempNick ? tempNick.includes(tempSearchValue) : userIDValue.includes(tempSearchValue);
+          } else {
+            includes = userIDValue === tempSearchValue;
+          }
           isIncludes = isIncludes || includes;
           return includes;
         },

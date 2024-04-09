@@ -3,11 +3,15 @@ import React, {
   ChangeEventHandler,
   MutableRefObject,
 } from 'react';
+import {
+  TUIChatService,
+} from '@tencentcloud/chat-uikit-engine';
 import { CONSTANT_DISPATCH_TYPE, MESSAGE_OPERATE, MESSAGE_TYPE_NAME } from '../../../constants';
 import {
   useTUIChatActionContext,
   useTUIKitContext,
 } from '../../../context';
+import { enableSampleTaskStatus } from '../../untils';
 import { formatEmojiString } from '../../TUIMessage/utils/emojiMap';
 import { useHandleQuoteMessage } from './useHandleQuoteMessage';
 import type { IbaseStateProps, ICursorPos } from './useMessageInputState';
@@ -29,7 +33,7 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
   } = props;
 
   const { chat } = useTUIKitContext('useMessageInputText');
-  const { sendMessage, createTextMessage, operateMessage } = useTUIChatActionContext('TUIMessageInput');
+  const { operateMessage, setFirstSendMessage } = useTUIChatActionContext('TUIMessageInput');
 
   const { cloudCustomData } = useHandleQuoteMessage();
 
@@ -64,8 +68,11 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
     if (cloudCustomData.messageReply) {
       options.cloudCustomData = JSON.stringify(cloudCustomData);
     }
-    const message = createTextMessage(options);
-    await sendMessage(message);
+    TUIChatService.sendTextMessage(options).then((res: any) => {
+      const { message } = res.data;
+      setFirstSendMessage(message);
+    });
+    enableSampleTaskStatus('sendMessage');
     dispatch({
       getNewText: (text:string) => '',
       type: CONSTANT_DISPATCH_TYPE.SET_TEXT,

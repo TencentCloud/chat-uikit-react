@@ -20,5 +20,12 @@ export const zhCN = {
   'Get Started': '开始',
   'Developer Group': '开发者群',
   'Join': '加入',
-  'Details': '详情'
+  'Details': '详情',
+  'Follow': '关注',
+  'Subscribe': '订阅',
+  'Give a like': '喜欢',
+  'Give a reward': '打赏',
+  'See the participants': '查看参与者',
+  'Ask a question': '问一次问题',
+  'Feedback to a reply': '反馈一次回复'
 };

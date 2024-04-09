@@ -91,11 +91,11 @@ ul li {
 // emoji picker styles
 .emoji-picker {
   .face-list {
-    min-width: 265px;
+    height: 120px;
+    width: 242px;
     padding: 10px 5px;
     display: flex;
     flex-wrap: wrap;
-    max-height: 120px;
     overflow-y: auto;
     &-item {
       padding: 5px;
@@ -190,6 +190,7 @@ ul li {
   flex-direction: column;
   overflow: hidden;
   width: 300px;
+  max-height: 90%;
   &-header {
     display: flex;
     align-items: center;
@@ -239,9 +240,12 @@ ul li {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      width: 100%;
       .info {
         display: flex;
         align-items: center;
+        flex-shrink: 0;
+        width: 100%;
         &-nick {
           padding: 0 13px;
           font-family: PingFangSC-Medium;
@@ -254,6 +258,7 @@ ul li {
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
+          width: 80%;
         }
       }
     }

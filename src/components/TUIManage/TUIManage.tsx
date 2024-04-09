@@ -5,6 +5,7 @@ import { Icon, IconTypes } from '../Icon';
 import { Avatar, defaultGroupAvatarWork, defaultUserAvatar } from '../Avatar';
 import { Switch } from '../Switch';
 import { useTUIKitContext } from '../../context';
+import { isH5, isPC } from '../../utils/env';
 import { getMessageProfile } from '../ConversationPreview/utils';
 import { useConversationUpdate } from '../TUIConversationList/hooks/useConversationUpdate';
 import { useConversation } from '../../hooks';
@@ -46,43 +47,66 @@ export function TUIManage() {
     setIsPinned(activeConversation ? activeConversation.isPinned : false);
   }, [activeConversation, forceUpdateCount]);
 
-  return TUIManageShow && activeConversation && (
-  <div className="tui-manage">
-    <div className="tui-manage-title">
-      <Icon type={IconTypes.CANCEL} width={16} height={16} onClick={close} />
-      <span>{t('TUIConversation.Conversation Information')}</span>
-    </div>
-    <div className="tui-manage-container">
-      <div className="tui-manage-info">
-        <div className="info-avatar">
-          <Avatar
-            size={64}
-            image={
-              profile?.avatar || (profile?.groupID ? defaultGroupAvatarWork : defaultUserAvatar)
-            }
-          />
+  return (
+    TUIManageShow
+    && activeConversation && (
+      <div className={`tui-manage ${isH5 ? 'tui-h5-manage' : ''}`}>
+        <div className="tui-manage-title">
+          {isPC && (
+            <Icon
+              onClick={close}
+              type={IconTypes.CANCEL}
+              width={9}
+              height={16}
+            />
+          )}
+          {isH5 && (
+            <Icon onClick={close} type={IconTypes.BACK} width={9} height={16} />
+          )}
+          <span style={{ marginLeft: '10px' }}>
+            {t('TUIConversation.Conversation Information')}
+          </span>
         </div>
-        <div className="info-name">
-          {profile?.nick || profile?.name}
-        </div>
-        <div className="info-id">
-          ID:
-          {profile?.userID || profile?.groupID}
+        <div className="tui-manage-container">
+          <div className="tui-manage-info">
+            <div className="info-avatar">
+              <Avatar
+                size={64}
+                image={
+                  profile?.avatar
+                  || (profile?.groupID
+                    ? defaultGroupAvatarWork
+                    : defaultUserAvatar)
+                }
+              />
+            </div>
+            <div className="info-name">{profile?.nick || profile?.name}</div>
+            <div className="info-id">
+              ID:
+              {profile?.userID || profile?.groupID}
+            </div>
+          </div>
+          <div className="tui-manage-handle">
+            <div className="manage-handle-box">
+              <div className="manage-handle-title">
+                {t('TUIConversation.Pin')}
+              </div>
+              <Switch onChange={pinChatChange} checked={isPinned} />
+            </div>
+            {isPC && (
+              <div
+                className="manage-handle-box"
+                role="presentation"
+                onClick={handleDelete}
+              >
+                <div className="manage-handle-title red">
+                  {t('TUIConversation.Delete')}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-      <div className="tui-manage-handle">
-        <div className="manage-handle-box">
-          <div className="manage-handle-title">{t('TUIConversation.Pin')}</div>
-          <Switch
-            onChange={pinChatChange}
-            checked={isPinned}
-          />
-        </div>
-        <div className="manage-handle-box" role="presentation" onClick={handleDelete}>
-          <div className="manage-handle-title red">{t('TUIConversation.Delete')}</div>
-        </div>
-      </div>
-    </div>
-  </div>
+    )
   );
 }

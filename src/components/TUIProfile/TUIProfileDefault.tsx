@@ -1,8 +1,8 @@
-import React, { PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-date-picker';
 import TencentCloudChat, { Profile } from '@tencentcloud/chat';
-
+import { isH5 } from '../../utils/env';
 import { useTUIKitContext } from '../../context';
 
 import { Avatar } from '../Avatar';
@@ -59,13 +59,13 @@ const allowTypeList = [
 
 export interface TUIProfileDefaultProps {
   userInfo?: Profile,
-  update?:(option:ProfileParams) => void,
+  update?: (option: ProfileParams) => void,
   className?: string,
 }
 
-function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
+function TUIProfileDefaultWithContext<T extends TUIProfileDefaultProps>(
   props: PropsWithChildren<T>,
-):React.ReactElement {
+): React.ReactElement {
   const {
     userInfo,
     className,
@@ -77,8 +77,20 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
 
   const [isEditName, setIsEditName] = useState('');
 
-  // show birthday famate
-  const showBirthdayFormat = (value: string) => {
+  // birthday format to show
+  const birthdayFormatToShow = (dateNumber: number) => {
+    const dateStr = String(dateNumber);
+    if (dateStr.length === 8) {
+      const year = dateStr.substring(0, 4);
+      const month = dateStr.substring(4, 6);
+      const day = dateStr.substring(6, 8);
+      return `${year}/${month}/${day}`;
+    }
+    return `${dateNumber}`;
+  };
+
+  // transform birthday string value to Date object
+  const transformBirthdayStringToDate = (value: string) => {
     if (value?.length === 8) {
       const y = Number(value.slice(0, 4));
       const m = Number(value.slice(4, 6));
@@ -88,15 +100,15 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
     return new Date();
   };
 
-  // edit birthday famate transform
-  const editBirthdayFamate = (date:Date) => {
+  // edit birthday format transform
+  const editBirthdayFormat = (date: Date) => {
     const day = date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`;
     const month = date.getMonth() > 8 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
     const year = date.getFullYear();
     return `${year}${month}${day}`;
   };
 
-  const editListMap = [
+  let editListMap = [
     {
       name: 'Signature',
       value: userInfo?.selfSignature,
@@ -116,21 +128,21 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
       children: (
         <ul className="select-list">
           {
-        genderList?.map((item, index) => {
-          const key = `${item.value}${index}`;
-          return (
-            <li
-              className="select-list-item"
-              role="menuitem"
-              tabIndex={index}
-              key={key}
-              onClick={() => { editGender(item); }}
-            >
-              {t(`TUIProfile.${item.label}`)}
-            </li>
-          );
-        })
-      }
+            genderList?.map((item, index) => {
+              const key = `${item.value}${index}`;
+              return (
+                <li
+                  className="select-list-item"
+                  role="menuitem"
+                  tabIndex={index}
+                  key={key}
+                  onClick={() => { editGender(item); }}
+                >
+                  {t(`TUIProfile.${item.label}`)}
+                </li>
+              );
+            })
+          }
         </ul>
       ),
     },
@@ -144,27 +156,27 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
       children: (
         <ul className="select-list">
           {
-        allowTypeList?.map((item, index) => {
-          const key = `${item.value}${index}`;
-          return (
-            <li
-              className="select-list-item"
-              role="menuitem"
-              tabIndex={index}
-              key={key}
-              onClick={() => { editAllowType(item); }}
-            >
-              {t(`TUIProfile.${item.label}`)}
-            </li>
-          );
-        })
-      }
+            allowTypeList?.map((item, index) => {
+              const key = `${item.value}${index}`;
+              return (
+                <li
+                  className="select-list-item"
+                  role="menuitem"
+                  tabIndex={index}
+                  key={key}
+                  onClick={() => { editAllowType(item); }}
+                >
+                  {t(`TUIProfile.${item.label}`)}
+                </li>
+              );
+            })
+          }
         </ul>
       ),
     },
     {
       name: 'Birthday',
-      value: `${userInfo?.birthday}`,
+      value: userInfo?.birthday ? birthdayFormatToShow(userInfo.birthday) : '',
       type: 'select',
       children: (
         <DatePicker
@@ -172,13 +184,15 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
           calendarClassName="tui-profile-birthday-calendar"
           isOpen
           format="y-MM-dd"
-          onChange={(value:Date) => { editBirthday(value); }}
-          value={showBirthdayFormat(`${userInfo?.birthday}`)}
+          onChange={(value: Date) => { editBirthday(value); }}
+          value={transformBirthdayStringToDate(`${userInfo?.birthday}`)}
         />
       ),
     },
   ];
-
+  if (isH5) {
+    editListMap = editListMap.filter((item) => item.name !== 'Birthday');
+  }
   const handleSetEditName = (name:string) => {
     setIsEditName(name);
   };
@@ -189,12 +203,12 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
   };
 
   // edit avatar
-  const editAvatar = (url:string) => {
+  const editAvatar = (url: string) => {
     confirm({ avatar: url });
   };
 
   // edit nick / selfSignature
-  const editText = (data?:any) => {
+  const editText = (data?: any) => {
     let key = '';
     switch (data?.name) {
       case 'nick':
@@ -224,9 +238,9 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
   };
 
   // edit birthday
-  const editBirthday = (value:Date) => {
+  const editBirthday = (value: Date) => {
     confirm({
-      birthday: Number(editBirthdayFamate(value)),
+      birthday: Number(editBirthdayFormat(value)),
     });
   };
 
@@ -276,7 +290,7 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
                   className="tui-profile-div-with-edit"
                   classEditName="tui-profile-edit"
                   name={item.name}
-                  value={item?.value}
+                  value={item.value}
                   type={item.type}
                   toggle={handleSetEditName}
                   isEdit={isEditName === item.name}
@@ -296,10 +310,10 @@ function TUIProfileDefaultWithContext <T extends TUIProfileDefaultProps>(
 }
 
 const MemoizedTUIProfileDefault = React.memo(TUIProfileDefaultWithContext) as
-typeof TUIProfileDefaultWithContext;
+  typeof TUIProfileDefaultWithContext;
 
 export function TUIProfileDefault(props: TUIProfileDefaultProps)
-:React.ReactElement {
+  : React.ReactElement {
   const options = { ...props };
   return <MemoizedTUIProfileDefault {...options} />;
 }

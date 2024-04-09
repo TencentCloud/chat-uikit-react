@@ -6,7 +6,6 @@ import {
   useTUIChatActionContext,
   useComponentContext,
 } from '../../context';
-import useEnrichedMessageList from './hooks/useEnrichedMessageList';
 import useMessageListElement from './hooks/useMessageListElement';
 
 import { InfiniteScroll, InfiniteScrollProps } from '../InfiniteScrollPaginator';
@@ -25,7 +24,6 @@ function TUIMessageListWithContext <T extends MessageListProps>(
   props: PropsWithChildren<T>,
 ):React.ReactElement {
   const {
-    messageList: propsMessageList,
     highlightedMessageId: propsHighlightedMessageId,
     loadMore: propsLoadMore,
     intervalsTimer: propsIntervalsTimer,
@@ -35,7 +33,6 @@ function TUIMessageListWithContext <T extends MessageListProps>(
   const { t } = useTranslation();
   const [ulElement, setUlElement] = useState<HTMLUListElement | null>(null);
   const [firstRender, setFirstRender] = useState<boolean>(false);
-
   const {
     messageList: contextMessageList,
     highlightedMessageId: contextHighlightedMessageId,
@@ -51,32 +48,31 @@ function TUIMessageListWithContext <T extends MessageListProps>(
   const highlightedMessageId = propsHighlightedMessageId
   || TUIMessageListConfig?.highlightedMessageId
   || contextHighlightedMessageId;
-  const intervalsTimer = (propsIntervalsTimer || TUIMessageListConfig?.intervalsTimer || 30) * 60;
 
-  const { messageList: enrichedMessageList } = useEnrichedMessageList({
-    messageList: propsMessageList || TUIMessageListConfig?.messageList || contextMessageList,
-  });
+  const intervalsTimer = (propsIntervalsTimer || TUIMessageListConfig?.intervalsTimer || 30) * 60;
 
   const loadMore = propsLoadMore || TUIMessageListConfig?.loadMore || contextLoadMore;
 
   const elements = useMessageListElement({
-    enrichedMessageList,
+    enrichedMessageList: contextMessageList,
     TUIMessage,
     intervalsTimer,
   });
-
   useEffect(() => {
+    // messageList 滑动到底部
     (async () => {
       const parentElement = ulElement?.parentElement?.parentElement;
-      if (!isCompleted && parentElement?.clientHeight >= ulElement?.clientHeight) {
+      if (
+        !isCompleted
+        && parentElement?.clientHeight >= ulElement?.clientHeight
+      ) {
         await loadMore();
       }
-
-      if (ulElement?.children && (!firstRender || !isSameLastMessageID)) {
+      if (ulElement?.children) {
         const HTMLCollection = ulElement?.children || [];
         const element = HTMLCollection[HTMLCollection.length - 1];
         const timer = setTimeout(() => {
-          element?.scrollIntoView({ block: 'end' });
+          element?.scrollIntoView();
           setFirstRender(true);
           clearTimeout(timer);
         }, 100);

@@ -3,6 +3,7 @@
   align-items: center;
   position: relative;
   cursor: pointer;
+  flex-shrink: 0;
   &.circle .avatar-image {
     border-radius: 50%;
   }

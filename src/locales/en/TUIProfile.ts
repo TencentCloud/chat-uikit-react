@@ -5,10 +5,11 @@ const TUIProfile = {
   'Gender': 'Gender',
   'Male': 'Male',
   'Female': 'Female',
-  'AllowType': 'AllowType',
-  'NeedConfirm': 'NeedConfirm',
-  'AllowAny': 'AllowAny',
-  'DenyAny': 'DenyAny',
+  'AllowType': 'Friend Request',
+  'NeedConfirm': 'Anyone upon Request',
+  'AllowAny': 'Allow any user to add you as friend',
+  'DenyAny': 'Decline friend request from any user',
   'Birthday': 'Birthday',
+  'Unknow': 'Not set',
 };
 export default TUIProfile;

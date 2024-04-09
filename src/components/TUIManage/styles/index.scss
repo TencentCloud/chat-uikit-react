@@ -13,7 +13,7 @@
     align-items: center;
     padding: 24px 20px;
     span {
-      margin-left: 10px;
+      margin-right: 10px;
       font-weight: 700;
       font-size: 14px;
       font-family: PingFangSC-Medium;
@@ -68,4 +68,18 @@
       }
     }
   }
+}
+
+.tui-manage.tui-h5-manage {
+  border-left: 1px solid #f9fafb;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  z-index: 1;
+  background: #fff;
 }

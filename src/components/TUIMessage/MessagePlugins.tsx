@@ -90,10 +90,12 @@ export function MessagePlugins <T extends MessagePluginsProps>(
 
   const handleVisible = (data) => {
     if (data.x && data.y) {
+      const isTop = data.y < data.height ? true : data.top;
+      const isLeft = data.x < data.width ? true : data.left;
       setPopStyle({
         position: 'fixed',
-        left: `${!data.left ? (data.x - data.width) : data.x}px`,
-        top: `${!data.top ? (data.y - data.height) : data.y}px`,
+        left: `${isLeft ? data.x : (data.x - data.width)}px`,
+        top: `${isTop ? data.y : (data.y - data.height)}px`,
       });
     }
   };

@@ -10,7 +10,7 @@ const TUIChat = {
   'recalled a message': 'recalled a message',
   'Re-edit': 'Re-edit',
   'Resend': 'Resend',
-  'You': 'You',
+  'You': 'You ',
   'Recent Chats': 'Recent Chats',
   'Frequently Contacted': 'Frequently Contacted',
   'No Result': 'No Result',
@@ -23,5 +23,6 @@ const TUIChat = {
   'Error deleting message': 'Error deleting message',
   'The message recall exceeded the time limit (default 2 minutes)': 'The message recall exceeded the time limit (default 2 minutes)',
   'Error revoke Message': 'Error revoke Message',
+  'Custom message': 'Custom message',
 };
 export default TUIChat;
