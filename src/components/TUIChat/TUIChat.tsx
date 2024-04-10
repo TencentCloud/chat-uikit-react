@@ -2,6 +2,13 @@ import React, {
   PropsWithChildren, useEffect, useMemo, useReducer, useRef, useState,
 } from 'react';
 import { ChatSDK, Conversation, Message } from '@tencentcloud/chat';
+import TUIChatEngine, {
+  TUIChatService,
+  IMessageModel,
+  TUIStore,
+  StoreName,
+} from '@tencentcloud/chat-uikit-engine';
+import { JSONStringToParse } from '../untils';
 import { useTUIKitContext } from '../../context/TUIKitContext';
 import { TUIChatStateContextProvider } from '../../context/TUIChatStateContext';
 import { TUIChatActionProvider } from '../../context/TUIChatActionContext';
@@ -20,10 +27,8 @@ import type { MessageContextProps } from '../TUIMessage/MessageContext';
 
 import './styles/index.scss';
 import { CONSTANT_DISPATCH_TYPE } from '../../constants';
-import { useMessageReceviedListener } from './hooks/useMessageReceviedListener';
 import { chatReducer, ChatStateReducer, initialState } from './TUIChatState';
 
-import { useCreateMessage } from './hooks/useCreateMessage';
 import { useHandleMessageList } from './hooks/useHandleMessageList';
 import { useHandleMessage } from './hooks/useHandleMessage';
 
@@ -31,7 +36,6 @@ import { TUIChatHeader as TUIChatHeaderElement } from '../TUIChatHeader';
 import { MessageListProps, TUIMessageList } from '../TUIMessageList';
 import { TUIMessageInput as TUIMessageInputElement, TUIMessageInputBasicProps } from '../TUIMessageInput';
 import { EmptyStateIndicator } from '../EmptyStateIndicator';
-import { Toast } from '../Toast';
 
 interface TUIChatProps {
   className?: string,
@@ -44,12 +48,16 @@ interface TUIChatProps {
   InputPlugins?: React.ComponentType<UnknowPorps>,
   InputQuote?: React.ComponentType<UnknowPorps>,
   MessagePlugins?: React.ComponentType<UnknowPorps>,
+  MessageCustomPlugins?: React.ComponentType<UnknowPorps>,
+  MessageTextPlugins?: React.ComponentType<UnknowPorps>,
   onMessageRecevied?: (
     updateMessage: (event?: Array<Message>) => void,
     event: any,
   ) => void,
   sendMessage?: (message:Message, options?:any) => Promise<Message>,
   revokeMessage?: (message:Message) => Promise<Message>,
+  selectedConversation?: (conversation:Conversation) => Promise<Conversation>,
+  filterMessage?: (messageList: Array<IMessageModel>) => Array<IMessageModel>,
   messageConfig?: TUIMessageProps,
   cloudCustomData?: string,
   TUIMessageInputConfig?: TUIMessageInputBasicProps,
@@ -100,20 +108,24 @@ function TUIChatInner <T extends TUIChatInnerProps>(
     InputPlugins,
     MessagePlugins,
     MessageContext,
+    MessageCustomPlugins,
+    MessageTextPlugins,
     InputQuote,
     onMessageRecevied,
     sendMessage: propsSendMessage,
     revokeMessage,
+    selectedConversation,
+    filterMessage,
     messageConfig,
     cloudCustomData,
     TUIMessageInputConfig,
     TUIMessageListConfig,
   } = props;
 
-  const [state, dispatch] = useReducer<ChatStateReducer>(
-    chatReducer,
-    { ...initialState, conversation },
-  );
+  const [state, dispatch] = useReducer<ChatStateReducer>(chatReducer, {
+    ...initialState,
+    conversation,
+  });
 
   const messageListRef = useRef(null);
   const textareaRef = useRef<HTMLTextAreaElement>();
@@ -130,27 +142,14 @@ function TUIChatInner <T extends TUIChatInnerProps>(
   });
 
   const {
-    createTextMessage,
-    createFaceMessage,
-    createImageMessage,
-    createVideoMessage,
-    createFileMessage,
-    createForwardMessage,
-    createCustomMessage,
-    createAudioMessage,
-    createTextAtMessage,
-    createLocationMessage,
-    createMergerMessage,
-  } = useCreateMessage({ chat, conversation, cloudCustomData });
-
-  const {
-    getMessageList,
-    updateMessage,
     editLocalMessage,
-    removeMessage,
     updateUploadPendingMessageList,
   } = useHandleMessageList({
-    chat, conversation, state, dispatch,
+    chat,
+    conversation,
+    state,
+    dispatch,
+    filterMessage,
   });
 
   const {
@@ -158,99 +157,62 @@ function TUIChatInner <T extends TUIChatInnerProps>(
     setAudioSource,
     setVideoSource,
     setHighlightedMessageId,
+    setActiveMessageID,
   } = useHandleMessage({
-    state, dispatch,
+    state,
+    dispatch,
   });
 
-  const sendMessage = async (message: Message, options?:any) => {
-    updateMessage([message]);
-    try {
-      if (propsSendMessage) {
-        await propsSendMessage(message, options);
-      } else {
-        await chat.sendMessage(message, options);
-      }
-      editLocalMessage(message);
-    } catch (error) {
-      Toast({ text: error, type: 'error' });
-      editLocalMessage(message);
-      throw new Error(error);
-    }
+  // 消息 messageList
+  useEffect(() => {
+    TUIStore.watch(StoreName.CHAT, {
+      messageList: onMessageListUpdated,
+      isCompleted: isCompletedUpdated,
+    });
+    return () => {
+      TUIStore.unwatch(StoreName.CHAT, {
+        messageList: onMessageListUpdated,
+        isCompleted: isCompletedUpdated,
+      });
+    };
+  }, []);
+
+  const onMessageListUpdated = (list: IMessageModel[]) => {
+    const messageList = list.filter((message) => !message.isDeleted);
+    dispatch({
+      type: CONSTANT_DISPATCH_TYPE.SET_MESSAGELIST,
+      value: filterMessage ? filterMessage(messageList) : messageList,
+    });
   };
 
-  const loadMore = async () => {
-    if (state.isCompleted) {
+  const isCompletedUpdated = (flag: boolean) => {
+    if (flag) {
       dispatch({
         type: CONSTANT_DISPATCH_TYPE.SET_NO_MORE,
-        value: true,
+        value: flag,
       });
-      return;
     }
-    const historyMessageData = await getMessageList({
-      nextReqMessageID: state.nextReqMessageID,
-    });
-    if (!historyMessageData) {
-      return;
-    }
-    dispatch({
-      type: CONSTANT_DISPATCH_TYPE.SET_HISTORY_MESSAGELIST,
-      value: historyMessageData.data.messageList,
-    });
-    dispatch({
-      type: CONSTANT_DISPATCH_TYPE.SET_IS_COMPLETE,
-      value: historyMessageData.data.isCompleted,
-    });
-    dispatch({
-      type: CONSTANT_DISPATCH_TYPE.SET_NEXT_REQ_MESSAGE_ID,
-      value: historyMessageData.data.nextReqMessageID,
-    });
   };
 
-  useMessageReceviedListener(updateMessage, onMessageRecevied);
+  // 加载历史消息 | Load historical messages
+  const loadMore = async () => {
+    TUIChatService.getMessageList();
+  };
 
-  useEffect(() => {
-    (async () => {
-      const res = await getMessageList();
-      if (!res) {
-        return;
-      }
-      if (res.data.messageList.length > 0) {
-        dispatch({
-          type: CONSTANT_DISPATCH_TYPE.SET_MESSAGELIST,
-          value: res.data.messageList,
-        });
-      }
+  const setFirstSendMessage = async (message: any) => {
+    if (
+      !(message.type === 'TIMCustomElem' && JSONStringToParse(message.payload.data)?.src === 7)
+      && !state.firstSendMessage
+    ) {
       dispatch({
-        type: CONSTANT_DISPATCH_TYPE.SET_MESSAGELIST,
-        value: res.data.messageList,
+        type: CONSTANT_DISPATCH_TYPE.SET_FIRST_SEND_MESSAGE,
+        value: message,
       });
-      dispatch({
-        type: CONSTANT_DISPATCH_TYPE.SET_IS_COMPLETE,
-        value: res.data.isCompleted,
-      });
-      dispatch({
-        type: CONSTANT_DISPATCH_TYPE.SET_NEXT_REQ_MESSAGE_ID,
-        value: res.data.nextReqMessageID,
-      });
-    })();
-  }, [conversation]);
+    }
+  };
 
   const chatActionContextValue: TUIChatActionContextValue = useMemo(
     () => ({
-      sendMessage,
-      removeMessage,
-      updateMessage,
-      createTextMessage,
-      createFaceMessage,
-      createImageMessage,
-      createVideoMessage,
-      createFileMessage,
-      createForwardMessage,
-      createCustomMessage,
-      createAudioMessage,
-      createTextAtMessage,
-      createLocationMessage,
-      createMergerMessage,
       editLocalMessage,
       operateMessage,
       loadMore,
@@ -258,23 +220,11 @@ function TUIChatInner <T extends TUIChatInnerProps>(
       setAudioSource,
       setVideoSource,
       setHighlightedMessageId,
+      setActiveMessageID,
       updateUploadPendingMessageList,
+      setFirstSendMessage,
     }),
     [
-      sendMessage,
-      removeMessage,
-      updateMessage,
-      createTextMessage,
-      createFaceMessage,
-      createImageMessage,
-      createVideoMessage,
-      createFileMessage,
-      createForwardMessage,
-      createCustomMessage,
-      createAudioMessage,
-      createTextAtMessage,
-      createLocationMessage,
-      createMergerMessage,
       editLocalMessage,
       operateMessage,
       loadMore,
@@ -282,7 +232,9 @@ function TUIChatInner <T extends TUIChatInnerProps>(
       setAudioSource,
       setVideoSource,
       setHighlightedMessageId,
+      setActiveMessageID,
       updateUploadPendingMessageList,
+      setFirstSendMessage,
     ],
   );
 
@@ -292,6 +244,8 @@ function TUIChatInner <T extends TUIChatInnerProps>(
       MessageContext,
       InputPlugins,
       MessagePlugins,
+      MessageCustomPlugins,
+      MessageTextPlugins,
       TUIChatHeader,
       TUIMessageInput,
       InputQuote,
@@ -305,11 +259,11 @@ function TUIChatInner <T extends TUIChatInnerProps>(
         <TUIChatActionProvider value={chatActionContextValue}>
           <ComponentProvider value={componentContextValue}>
             {children || (
-            <>
-              <TUIChatHeaderElement />
-              <TUIMessageList />
-              <TUIMessageInputElement />
-            </>
+              <>
+                <TUIChatHeaderElement />
+                <TUIMessageList />
+                <TUIMessageInputElement />
+              </>
             )}
           </ComponentProvider>
         </TUIChatActionProvider>

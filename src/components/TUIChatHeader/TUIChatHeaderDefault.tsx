@@ -1,8 +1,9 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import TencentCloudChat, { Conversation, Group, Profile } from '@tencentcloud/chat';
+import { TUIConversationService } from '@tencentcloud/chat-uikit-engine';
 import { Avatar } from '../Avatar';
 import { handleDisplayAvatar } from '../untils';
-
+import { isH5 } from '../../utils/env';
 import './styles/index.scss';
 import { Icon, IconTypes } from '../Icon';
 import { useTUIKitContext } from '../../context';
@@ -76,6 +77,10 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderBasicProps>(
       />);
     }
   };
+
+  const back = () => {
+    TUIConversationService.switchConversation('');
+  };
   const { setTUIManageShow } = useTUIKitContext();
   const openTUIManage = () => {
     setTUIManageShow(true);
@@ -86,6 +91,7 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderBasicProps>(
       className={`tui-chat-header ${isLive ? 'tui-chat-live-header' : ''}`}
       key={conversation?.conversationID}
     >
+      {isH5 && (<div style={{ paddingRight: '10px' }}><Icon onClick={back} type={IconTypes.BACK} width={9} height={16} /></div>)}
       <div
         className={`tui-chat-header-left ${conversation?.type === TencentCloudChat.TYPES.CONV_SYSTEM ? 'system' : ''}`}
       >

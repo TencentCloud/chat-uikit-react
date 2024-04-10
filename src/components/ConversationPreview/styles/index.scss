@@ -29,6 +29,8 @@ $font-color: #7A7A7A;
       line-height: 17px;
       font-family: PingFangSC-Medium;
       padding: 1px 0;
+      width: 100%;
+      color: #000;
     }
 
     .message {
@@ -69,8 +71,8 @@ $font-color: #7A7A7A;
 
     .more--hover {
       display: flex;
-      justify-content: right;
-
+      justify-content: flex-end;
+      flex: 1 1;
       .icon-more {
         transform: scale(1.5);
         &:hover {

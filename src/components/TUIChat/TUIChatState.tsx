@@ -1,13 +1,11 @@
 import type { Reducer } from 'react';
 import { Conversation, Message } from '@tencentcloud/chat';
+import { IMessageModel } from '@tencentcloud/chat-uikit-engine';
 import { CONSTANT_DISPATCH_TYPE } from '../../constants';
 import type { TUIChatStateContextValue } from '../../context';
 import { OperateMessageParams } from './hooks/useHandleMessage';
 import {
-  handleMessage,
-  handleMessageList,
   handleEditMessage,
-  handleRemoveMessage,
   handleUploadPendingMessage,
 } from './unitls';
 
@@ -18,30 +16,13 @@ export type ChatStateReducerAction =
     }
   | {
       type: CONSTANT_DISPATCH_TYPE.SET_MESSAGELIST,
-      value?: Array<Message>,
-    }
-  | {
-      type: CONSTANT_DISPATCH_TYPE.SET_UPDATE_MESSAGE,
-      value?: Array<Message>,
-      index?: number
+      value?: Array<IMessageModel>,
     }
   | {
     type: CONSTANT_DISPATCH_TYPE.SET_EDIT_MESSAGE,
     value?: Message,
     index?: number,
   }
-  | {
-    type: CONSTANT_DISPATCH_TYPE.SET_REMOVE_MESSAGE,
-    value?: Message
-  }
-  | {
-      type: CONSTANT_DISPATCH_TYPE.SET_HISTORY_MESSAGELIST,
-      value?: Array<Message>,
-    }
-  | {
-      type: CONSTANT_DISPATCH_TYPE.SET_NEXT_REQ_MESSAGE_ID,
-      value?: string,
-    }
   | {
       type: CONSTANT_DISPATCH_TYPE.SET_IS_COMPLETE,
       value?: boolean,
@@ -73,6 +54,14 @@ export type ChatStateReducerAction =
       type: CONSTANT_DISPATCH_TYPE.UPDATE_UPLOAD_PENDING_MESSAGE_LIST,
       value?: Message,
     }
+  | {
+      type: CONSTANT_DISPATCH_TYPE.SET_FIRST_SEND_MESSAGE;
+      value?: Message;
+    }
+  | {
+      type: CONSTANT_DISPATCH_TYPE.SET_ACTIVE_MESSAGE_ID,
+      value?: string,
+   };
 export type ChatStateReducer = Reducer<TUIChatStateContextValue, ChatStateReducerAction>;
 
 export const chatReducer = (
@@ -82,38 +71,17 @@ export const chatReducer = (
   switch (action?.type) {
     case CONSTANT_DISPATCH_TYPE.SET_CONVERSATION_PRPFILE:
       return { ...state, conversation: action.value };
+    // messageList 设置
     case CONSTANT_DISPATCH_TYPE.SET_MESSAGELIST:
       return {
         ...state,
-        ...handleMessageList(
-          [...state.messageList.concat(
-            handleMessage(action.value).filter((item) => !state.messageList.includes(item)),
-          )],
-          state,
-        ),
-      };
-    case CONSTANT_DISPATCH_TYPE.SET_UPDATE_MESSAGE:
-      return {
-        ...state,
-        ...handleMessageList([...state.messageList, ...handleMessage(action.value)], state),
+        messageList: action.value,
       };
     case CONSTANT_DISPATCH_TYPE.SET_EDIT_MESSAGE:
       return {
         ...state,
         messageList: [...handleEditMessage(state.messageList, action.value)],
       };
-    case CONSTANT_DISPATCH_TYPE.SET_REMOVE_MESSAGE:
-      return {
-        ...state,
-        messageList: [...handleRemoveMessage(state.messageList, action.value)],
-      };
-    case CONSTANT_DISPATCH_TYPE.SET_HISTORY_MESSAGELIST:
-      return {
-        ...state,
-        ...handleMessageList([...handleMessage(action.value), ...state.messageList], state),
-      };
-    case CONSTANT_DISPATCH_TYPE.SET_NEXT_REQ_MESSAGE_ID:
-      return { ...state, nextReqMessageID: action.value };
     case CONSTANT_DISPATCH_TYPE.SET_IS_COMPLETE:
       return { ...state, isCompleted: action.value };
     case CONSTANT_DISPATCH_TYPE.RESET:
@@ -135,7 +103,10 @@ export const chatReducer = (
           ...handleUploadPendingMessage(state.uploadPendingMessageList, action.value),
         ],
       };
-    default: return state;
+    case CONSTANT_DISPATCH_TYPE.SET_FIRST_SEND_MESSAGE:
+      return { ...state, firstSendMessage: action.value };
+    case CONSTANT_DISPATCH_TYPE.SET_ACTIVE_MESSAGE_ID:
+      return { ...state, activeMessageID: action.value };
   }
 };
 
@@ -153,4 +124,6 @@ export const initialState:TUIChatStateContextValue = {
   audioSource: null,
   vidoeSource: null,
   uploadPendingMessageList: [],
+  firstSendMessage: null,
+  activeMessageID: '',
 };

@@ -127,7 +127,7 @@ export function handleTipMessageShowContext(message: Message) {
       options.text = `${t('message.tip.member')}：${userName} ${t('message.tip.quit group')}`;
       break;
     case TencentCloudChat.TYPES.GRP_TIP_MBR_KICKED_OUT:
-      options.text = `${t('message.tip.member')}：${userName} ${t('message.tip.by')}${message.payload.operatorID}${t(
+      options.text = `${t('message.tip.member')}：${userName} ${t('message.tip.by')} ${message.payload.operatorID} ${t(
         'message.tip.kicked out of group',
       )}`;
       break;

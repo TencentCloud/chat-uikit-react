@@ -2,7 +2,11 @@ import {
   PropsWithChildren,
   useCallback,
 } from 'react';
+import {
+  TUIChatService,
+} from '@tencentcloud/chat-uikit-engine';
 import { MESSAGE_TYPE_NAME } from '../../../constants';
+import { enableSampleTaskStatus } from '../../untils';
 import { useTUIChatActionContext } from '../../../context';
 import type { IbaseStateProps } from './useMessageInputState';
 
@@ -12,29 +16,21 @@ export interface filesData {
 
 export function useUploadPicker<T extends IbaseStateProps>(props:PropsWithChildren<T>) {
   const {
-    sendMessage,
-    createImageMessage,
-    createVideoMessage,
-    createFileMessage,
     updateUploadPendingMessageList,
   } = useTUIChatActionContext('useUploadPicker');
 
   const creatUploadMessage = {
-    [MESSAGE_TYPE_NAME.IMAGE]: createImageMessage,
-    [MESSAGE_TYPE_NAME.VIDEO]: createVideoMessage,
-    [MESSAGE_TYPE_NAME.FILE]: createFileMessage,
+    [MESSAGE_TYPE_NAME.IMAGE]: TUIChatService.sendImageMessage,
+    [MESSAGE_TYPE_NAME.VIDEO]: TUIChatService.sendVideoMessage,
+    [MESSAGE_TYPE_NAME.FILE]: TUIChatService.sendFileMessage,
   };
 
   const sendUploadMessage = useCallback((file: filesData, type:MESSAGE_TYPE_NAME) => {
-    const message = creatUploadMessage[type]({
+    creatUploadMessage[type]({
       payload: file,
-      onProgress(num:number) {
-        message.progress = num;
-        updateUploadPendingMessageList(message);
-      },
     });
-    sendMessage(message);
-  }, [sendMessage]);
+    enableSampleTaskStatus('sendMessage');
+  }, []);
 
   return {
     sendUploadMessage,

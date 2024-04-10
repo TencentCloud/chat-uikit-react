@@ -34,7 +34,7 @@ export function MessageName <T extends MessageNameProps>(
   }
 
   return (
-    <label htmlFor="content" className="name">
+    <label htmlFor="content" className="text-ellipsis name">
       {message?.nick || message?.from}
     </label>
   );

@@ -30,6 +30,8 @@ export interface ConversationPreviewProps {
   setActiveConversation?: TUIKitContextValue['setActiveConversation'],
   searchValue?: string,
   conversationUpdateCount?: number
+  activeConversationID?: string,
+  setActiveConversationID?: (conversationID: string) => void,
 }
 export function ConversationPreview<T extends ConversationPreviewProps>(
   props: T,

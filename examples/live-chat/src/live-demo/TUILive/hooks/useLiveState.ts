@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import TencentCloudChat, { ChatSDK, Conversation, Group } from '@tencentcloud/chat';
+import {
+  TUIConversationService,
+} from '@tencentcloud/chat-uikit-engine';
 import { GroupCounterUpdatedOption } from '../';
 
 export interface UseLiveStateParams {
@@ -147,12 +150,17 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
         return;
       }
       if (conversation) {
+        TUIConversationService.switchConversation(conversation.conversationID);
         setActiveConversation && setActiveConversation(conversation);
         setLiveConversation(conversation);
       } else {
-        const res = await chat?.getConversationProfile(getGroupConversationID(groupID));
-        setActiveConversation && setActiveConversation(res?.data?.conversation);
-        setLiveConversation(res?.data?.conversation);
+        const timer = setTimeout(async() => {
+          const res = await chat?.getConversationProfile(getGroupConversationID(groupID));
+          TUIConversationService.switchConversation(res?.data?.conversation.conversationID);
+          setActiveConversation && setActiveConversation(res?.data?.conversation);
+          setLiveConversation(res?.data?.conversation);
+          clearTimeout(timer);
+        }, 1200);
       }
     })();
     return () => {

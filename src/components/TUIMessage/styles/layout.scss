@@ -23,6 +23,7 @@
     .name {
       display: inline-block;
       padding-bottom: 3px;
+      max-width: 60%;
     }
   }
 }
@@ -57,7 +58,7 @@
 .bubble {
   padding: 8px 16px;
   &-in {
-    border-radius: 16px 16px 16px 0;
+    border-radius: 0px 16px 16px 16px;
     &.group {
       border-radius: 0px 16px 16px 16px;
     }
@@ -104,8 +105,9 @@
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
-    line-height: 17px;
+    line-height: 24px;
     &-p {
+      white-space: pre-wrap;
       display: inline;
       vertical-align: middle;
     }
@@ -136,9 +138,13 @@
   img {
     max-width: 300px;
   }
+  .img-h5 {
+    max-width: 200px;
+    max-height: 200px;
+  }
   .big-image {
-    max-width: 95%;
-    max-height: 95%;
+    max-width: 90%;
+    max-height: 90%;
   }
 }
 
@@ -146,6 +152,8 @@
   max-width: 300px;
   .snap-video {
     position: relative;
+    height: 100%;
+    border-radius: 10px;
     &::before {
       position: absolute;
       z-index: 1;
@@ -163,14 +171,18 @@
   }
   video {
     width: 100%;
+    height: 100%;
     border-radius: 10px;
   }
   .play-video {
     max-width: 95%;
-    max-height: 95%;
+    max-height: 65%;
   }
 }
-
+.message-video.message-video-h5 {
+  max-width: 200px;
+  max-height: 200px;
+}
 .message-file {
   display: flex;
   flex-direction: column;
@@ -317,6 +329,13 @@
     max-width: 300px;
     border-radius: 10px;
   }
+  .img-h5, .video-h5{
+    min-width: 60px;
+    min-height: 60px;
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 10px;
+  }
   &::before {
     position: absolute;
     content: "";
@@ -358,6 +377,7 @@
   .plugin-popup-box{
     bottom: auto;
     top: 100%;
+    overflow: hidden;
   }
 
   &-box {
@@ -449,17 +469,20 @@
 @keyframes highLightedAnimation {
   0% {
     opacity: 1;
+    color: #ff9c19;
   }
   25% {
     opacity: 0.3;
   }
   50% {
+    color: #ff9c19;
     opacity: 1;
   }
   75% {
     opacity: 0.3;
   }
   100% {
+    color: #ff9c19;
     opacity: 1;
   }
 }
@@ -477,4 +500,8 @@
     border-radius: 2px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
   }
+}
+
+.website {
+  color: #147aff !important;
 }

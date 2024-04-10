@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Friend } from '@tencentcloud/chat';
+import { TUIConversationService } from '@tencentcloud/chat-uikit-engine';
 import { useTUIKitContext } from '../../../context';
 import { BasicInfo } from './basicInfo';
 import { Switch } from '../../Switch';
@@ -60,7 +61,9 @@ export function UnMemoizedFriendInfo<T extends Props>(
     setActiveContact();
   };
   const openC2CConversation = async () => {
-    const conversation = await createConversation(`C2C${userID}`);
+    const conversationID = `C2C${userID}`;
+    const conversation = await createConversation(conversationID);
+    TUIConversationService.switchConversation(conversationID);
     setActiveConversation(conversation);
     openChat();
   };

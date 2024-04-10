@@ -1,0 +1,34 @@
+.App {
+  height: 100%;
+}
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.sample-chat-h5 {
+  position:relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  &-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    .sample-profile {
+      position: absolute;
+      top: 0;
+      z-index: 1;
+      width:100%;
+      max-width: 100%;
+      min-width: 100%;
+    }
+    .tui-kit-input-box.tui-kit-input-box--focus {
+      outline: none;
+    }
+  }
+  .tui-message-input .tui-kit-input-box--focus {
+    outline: none;
+  }
+}

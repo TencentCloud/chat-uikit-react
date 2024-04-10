@@ -19,7 +19,6 @@ const baseConfig = {
       preserveModulesRoot: './src',
       dir: './dist/esm/',
       format: 'esm',
-      // sourcemap: true,
     },
     {
       preserveModules: true,

@@ -48,10 +48,18 @@ export function useHandleMessage<T extends CreateMessageProps>(props:T) {
     });
   }, [dispatch]);
 
+  const setActiveMessageID = useCallback((messageID: string) => {
+    dispatch({
+      type: CONSTANT_DISPATCH_TYPE.SET_ACTIVE_MESSAGE_ID,
+      value: messageID,
+    });
+  }, [dispatch]);
+
   return {
     operateMessage,
     setAudioSource,
     setVideoSource,
     setHighlightedMessageId,
+    setActiveMessageID,
   };
 }

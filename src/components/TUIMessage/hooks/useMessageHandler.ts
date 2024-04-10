@@ -1,7 +1,9 @@
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Message } from '@tencentcloud/chat';
-import { MESSAGE_FLOW, MESSAGE_OPERATE } from '../../../constants';
+import { TUIStore } from '@tencentcloud/chat-uikit-engine';
+import { CONSTANT_DISPATCH_TYPE, MESSAGE_FLOW, MESSAGE_OPERATE } from '../../../constants';
+import { enableSampleTaskStatus } from '../../untils';
 import { useTUIChatActionContext, useTUIKitContext } from '../../../context';
 import { Toast } from '../../Toast';
 
@@ -17,7 +19,6 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
   } = props;
 
   const {
-    removeMessage,
     editLocalMessage,
     operateMessage,
     revokeMessage,
@@ -27,40 +28,19 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
 
   const handleDelMessage = useCallback(async (event?) => {
     event.preventDefault();
-    if (!message?.ID || !chat || !removeMessage) {
-      return;
-    }
-
-    try {
-      await chat.deleteMessage([message]);
-      removeMessage(message);
-    } catch (error) {
-      if (handleError) {
-        handleError({
-          functionName: 'deleteMessage',
-          error,
-        });
-      } else {
-        Toast({ text: t('TUIChat.Error deleting message'), type: 'error' });
-        throw new Error(error);
-      }
-    }
+    if (!message) return;
+    const messageModel = TUIStore.getMessageModel(message?.ID);
+    messageModel.deleteMessage();
   }, [message]);
 
   const handleRevokeMessage = useCallback(async (event?) => {
     event.preventDefault();
-    if (!message?.ID || !chat || !editLocalMessage) {
-      return;
-    }
-
-    try {
-      if (revokeMessage) {
-        await revokeMessage(message);
-      } else {
-        await chat.revokeMessage(message);
-      }
+    if (!message) return;
+    const messageModel = TUIStore.getMessageModel(message?.ID);
+    messageModel.revokeMessage().then(() => {
       editLocalMessage(message);
-    } catch (error) {
+      enableSampleTaskStatus('revokeMessage');
+    }).catch((error: any) => {
       if (handleError) {
         handleError({
           functionName: 'revokeMessage',
@@ -71,7 +51,7 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
         Toast({ text, type: 'error' });
         throw new Error(error);
       }
-    }
+    });
   }, [message]);
 
   const handleReplyMessage = useCallback((event?) => {
@@ -110,7 +90,7 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
     try {
       const res = await chat.resendMessage(message);
       editLocalMessage(res?.data?.message);
-    } catch (error) {
+    } catch (error: any) {
       if (handleError) {
         handleError({
           functionName: 'resendMessage',

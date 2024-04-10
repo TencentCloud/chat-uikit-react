@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import TencentCloudChat, { Conversation, Profile } from '@tencentcloud/chat';
+import { Conversation, Profile } from '@tencentcloud/chat';
+import { TUIConversationService } from '@tencentcloud/chat-uikit-engine';
 import { Input } from '../Input';
 import './styles/ConversationCreatGroupDetail.scss';
 import { Icon, IconTypes } from '../Icon';
@@ -81,6 +82,8 @@ export function ConversationCreatGroupDetail(props: ConversationCreatGroupDetail
       name: groupName, type: GroupType[groupType], groupID, avatar, memberList,
     });
     setActiveConversation(conversation);
+    // 切换会话
+    TUIConversationService.switchConversation(conversation?.conversationID);
     setConversationCreated(false);
   };
   return pageState !== PageStateTypes.GROUP_TYPE ? (
@@ -111,9 +114,9 @@ export function ConversationCreatGroupDetail(props: ConversationCreatGroupDetail
             prefix={<div className="input-group-title">{t('TUIConversation.Group ID')}</div>}
           />
         </div>
-        <div className="create-group-box create-group-type">
+        <div className="create-group-box create-group-type" onClick={showGroupTypeInfo}>
           <Input
-            disabled
+            readOnly
             border="bottom"
             customClassName="input-group-text"
             prefix={<div className="input-group-title">{t('TUIConversation.Group Type')}</div>}

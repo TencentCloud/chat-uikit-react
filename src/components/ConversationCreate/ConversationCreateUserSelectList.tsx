@@ -1,6 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Conversation } from '@tencentcloud/chat';
+import {
+  TUIConversationService,
+} from '@tencentcloud/chat-uikit-engine';
 import { Input } from '../Input';
 import { Icon, IconTypes } from '../Icon';
 import { ConversationCreateSelectView, ConversationCreateSelectViewProps } from './ConversationCreateSelectView';
@@ -80,6 +83,7 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
     const conversation = await createConversation(`C2C${userID}`);
     setConversationCreated(false);
     setActiveConversation(conversation);
+    TUIConversationService.switchConversation(conversation?.conversationID);
   };
   const next = () => {
     if (selectList && selectList.length === 0) {
@@ -127,7 +131,7 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
                         }}
                       >
                         <Avatar size={30} image={avatar || defaultUserAvatar} />
-                        <div className="tui-user-name">{nick || `${userID}` }</div>
+                        <div className="tui-user-name text-ellipsis">{nick || `${userID}` }</div>
                         {isCreateGroup && (
                           <input
                             onChange={(e) => {

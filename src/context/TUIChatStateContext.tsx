@@ -25,6 +25,8 @@ export interface TUIChatStateContextValue {
   vidoeSource?: HTMLVideoElement,
   TUIMessageListConfig?: MessageListProps,
   uploadPendingMessageList?: Array<Message>,
+  firstSendMessage?: Message;
+  activeMessageID?: string,
 }
 
 export const TUIChatStateContext = React.createContext<TUIChatStateContextValue>(null);

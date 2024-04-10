@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MESSAGE_OPERATE } from '../../constants';
 import { useTUIChatStateContext } from '../../context';
-
+import { isPC } from '../../utils/env';
 import { useTUIMessageInputContext } from '../../context/TUIMessageInputContext';
 import { formatEmojiString } from '../TUIMessage/utils/emojiMap';
 
@@ -34,7 +34,7 @@ export function TUIMessageInputDefault():React.ReactElement {
   useEffect(() => {
     if (focus && textareaRef.current) {
       textareaRef.current.autofocus = true;
-      textareaRef?.current?.focus();
+      isPC && textareaRef?.current?.focus();
       textareaRef?.current?.addEventListener('paste', handlePasete);
     }
     return () => {

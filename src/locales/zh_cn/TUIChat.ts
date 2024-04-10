@@ -22,6 +22,7 @@ const TUIChat = {
   'Error deleting message': '消息删除失败',
   'The message recall exceeded the time limit (default 2 minutes)': '消息已超过 2 分钟',
   'Error revoke Message': '消息撤回失败',
+  'Custom message': '自定义消息',
 };
 
 export default TUIChat;

@@ -1,8 +1,14 @@
+## [2.1.0] (2024-4-09)
+
+#### feat
+* feat: Support logic layer engine
+* feat: Support H5.
+
 ## [1.2.2] (2024-1-09)
 
 #### feat
-* feat: Support for contact.
-* feat: Support multilingual switching between Chinese and English.
+* feat: Support for contact (PC).
+* feat: Support language switching between Chinese and English.
 
 ## [1.1.0] (2023-09-20)
 

@@ -1,6 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { TUIConversationService } from '@tencentcloud/chat-uikit-engine';
+import { isPC } from '../../utils/env';
 import { ConversationPreviewUIComponentProps } from './ConversationPreview';
+
 import { Avatar as DefaultAvatar } from '../Avatar/index';
 import './styles/index.scss';
 import { Icon, IconTypes } from '../Icon';
@@ -20,16 +23,23 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
     displayTime,
     unread,
     active,
+    activeConversationID,
+    setActiveConversationID,
     setActiveConversation,
   } = props;
 
   const { t } = useTranslation();
   const conversationPreviewButton = useRef<HTMLButtonElement | null>(null);
+  const { chat, conversation: activeConversation } = useTUIKitContext('ConversationPreviewContent');
+  const { pinConversation, deleteConversation } = useConversation(chat);
   const activeClass = active ? 'conversation-preview-content--active' : '';
   const unreadClass = unread && unread >= 1 ? 'conversation-preview-content--unread' : '';
   const pinClass = conversation.isPinned ? 'conversation-preview-content--pin' : '';
   const [isHover, setIsHover] = useState(false);
+  const pluginsRef = useRef(null);
+
   const onSelectConversation = () => {
+    TUIConversationService.switchConversation(conversation?.conversationID);
     if (setActiveConversation) {
       setActiveConversation(conversation);
     }
@@ -43,10 +53,46 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
   const handleMouseLeave = () => {
     setIsHover(false);
   };
-  const { chat, conversation: activeConversation } = useTUIKitContext('ConversationPreviewContent');
-  const { pinConversation, deleteConversation } = useConversation(chat);
-  const moreHandle = (type: string) => {
+  useEffect(() => {
+    if (activeConversationID !== conversation.conversationID) {
+      setIsHover(false);
+    }
+  }, [activeConversationID]);
+  // h5 long press
+  let timer: any;
+  const handleH5LongPress = (type: string) => {
+    if (isPC) return;
+    const { conversationID } = conversation;
+    setActiveConversationID(conversationID);
+    function longPressHandler() {
+      clearTimeout(timer);
+      setIsHover(true);
+    }
+    function touchStartHandler() {
+      timer = setTimeout(longPressHandler, 500);
+    }
+    function touchEndHandler() {
+      clearTimeout(timer);
+    }
+    switch (type) {
+      case 'touchstart':
+        touchStartHandler();
+        break;
+      case 'touchend':
+        touchEndHandler();
+        setTimeout(() => {
+          // setIsHover(false);
+        }, 200);
+        break;
+      default:
+    }
+  };
+
+  const moreHandle = (e: any, type: string) => {
     const { conversationID, isPinned } = conversation;
+    e.stopPropagation();
+    setIsHover(false);
+    pluginsRef.current.closeMore();
     switch (type) {
       case 'pin':
         pinConversation({ conversationID, isPinned: !isPinned });
@@ -60,6 +106,7 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
       default:
     }
   };
+
   return (
     <button
       type="button"
@@ -69,13 +116,15 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
       onClick={onSelectConversation}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onTouchStart={() => handleH5LongPress('touchstart')}
+      onTouchEnd={() => handleH5LongPress('touchend')}
       ref={conversationPreviewButton}
     >
       <div className="avatar">
         <Avatar image={displayImage} name={displayTitle} size={40} />
       </div>
       <div className="content">
-        <div className="title">
+        <div className="title text-ellipsis">
           {displayTitle}
         </div>
         <div className="message">
@@ -94,13 +143,13 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
             <div className={`${isHover ? 'more--hover' : 'more'}`}>
               <Plugins
                 customClass="more-handle-box"
+                ref={pluginsRef}
                 plugins={[
                   <div
                     role="presentation"
                     className="more-handle-item"
                     onClick={(e) => {
-                      e.stopPropagation();
-                      moreHandle('pin');
+                      moreHandle(e, 'pin');
                     }}
                   >
                     {t(!conversation.isPinned ? 'TUIConversation.Pin' : 'TUIConversation.Unpin')}
@@ -109,8 +158,7 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
                     className="more-handle-item"
                     style={{ color: '#FF584C' }}
                     onClick={(e) => {
-                      e.stopPropagation();
-                      moreHandle('delete');
+                      moreHandle(e, 'delete');
                     }}
                     role="presentation"
                   >
