@@ -17,8 +17,8 @@
 ```
 # Please run the following code in the terminal.
 $ git clone https://github.com/TencentCloud/chat-uikit-react
-$ cd chat-uikit-react
-$ npm install && cd examples/sample-chat && npm install
+$ cd chat-uikit-react/examples/sample-chat
+$ npm install
 ```
 ### Step 4. Configure
 1. Open the `examples/sample-chat` project and locate the `GenerateTestUserSig.js` file in `./examples/sample-chat/src/debug/GenerateTestUserSig.js`.
@@ -26,7 +26,6 @@ $ npm install && cd examples/sample-chat && npm install
 
 ### Step 5. Run the demo
 ```
-$ cd examples/sample-chat
 $ npm run start
 ```
 
