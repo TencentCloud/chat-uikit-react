@@ -32,7 +32,7 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderBasicProps>(
     isLive,
     opateIcon,
   } = props;
-
+  const { setActiveContact } = useTUIKitContext('TUIContact');
   const [title, setTitle] = useState(propTitle);
   const [avatar, setAvatar] = useState<React.ReactElement | string>('');
 
@@ -80,6 +80,7 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderBasicProps>(
 
   const back = () => {
     TUIConversationService.switchConversation('');
+    setActiveContact();
   };
   const { setTUIManageShow } = useTUIKitContext();
   const openTUIManage = () => {

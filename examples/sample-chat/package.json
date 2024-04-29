@@ -1,6 +1,6 @@
 {
   "name": "sample-chat",
-  "version": "2.1.0",
+  "version": "2.1.2",
   "private": true,
   "dependencies": {
     "@tencentcloud/chat-uikit-react": "latest",

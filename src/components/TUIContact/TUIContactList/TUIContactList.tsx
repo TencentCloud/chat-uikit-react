@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import TencentCloudChat from '@tencentcloud/chat';
+import { isH5 } from '../../../utils/env';
 import { useTUIKitContext, useTUIContactContext } from '../../../context';
 import useContactInfo from '../TUIContactInfo/hooks/useContactInfo';
 
@@ -31,7 +32,7 @@ function UnMemoizedTUIContactList<T>(): React.ReactElement {
   };
   return (
     isShowContactList && (
-      <div className="tui-contacts-list">
+      <div className={`tui-contacts-list ${isH5 ? 'tui-contacts-list-h5' : ''} `}>
         <div
           className="tui-contacts-title"
           role="button"

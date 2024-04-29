@@ -1,5 +1,4 @@
 import IconMoreUrl from './images/more.png';
-import IconCreateUrl from './images/create.png';
 import IconClearUrl from './images/clear.png';
 import IconSearchUrl from './images/search.png';
 import IconBackUrl from './images/back.png';
@@ -41,7 +40,7 @@ import IconUnunionUrl from './images/ununion.png';
 import IconVectorUrl from './images/vector.png';
 import IconUnvectorUrl from './images/unvector.png';
 import IconVoiceUrl from './images/voice.png';
-import IconAddFriendUrl from './images/add-friend.svg';
+import IconAddCircleUrl from './images/add-friend.svg';
 
 import { IconTypes } from './type';
 
@@ -60,7 +59,7 @@ export const ICON_CONFIG:IconConfig = {
     className: 'tui-kit-icon-more',
   },
   [IconTypes.CREATE]: {
-    url: IconCreateUrl,
+    url: IconAddCircleUrl,
     className: 'tui-kit-icon-create',
   },
   [IconTypes.CLEAR]: {
@@ -228,7 +227,7 @@ export const ICON_CONFIG:IconConfig = {
     className: 'tui-kit-icon-voice',
   },
   [IconTypes.ADDFRIEND]: {
-    url: IconAddFriendUrl,
+    url: IconAddCircleUrl,
     className: 'tui-kit-icon-add-friend',
   },
 };

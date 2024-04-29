@@ -3,7 +3,7 @@ import { ChatSDK, Conversation } from '@tencentcloud/chat';
 import { TUIStore, StoreName } from '@tencentcloud/chat-uikit-engine';
 import { useTranslation } from 'react-i18next';
 import { isH5, isPC } from '../../utils/env';
-import { useTUIKit } from './hooks/useTUIKit';
+import { useTUIKit, UseContactParams } from './hooks/useTUIKit';
 import { useCreateTUIKitContext } from './hooks/useCreateTUIKitContext';
 import { TUIKitProvider } from '../../context/TUIKitContext';
 import './styles/index.scss';
@@ -14,6 +14,7 @@ import { TUIManage } from '../TUIManage';
 import { TUIProfile } from '../TUIProfile';
 import { TUIContact } from '../TUIContact';
 import { TUIContactInfo } from '../TUIContact/TUIContactInfo/TUIContactInfo';
+import { TUIKIT_TABBAR } from '../../constants';
 import '../../locales/index';
 import chats from '../Icon/images/chats.svg';
 import chatsSelected from '../Icon/images/chats-selected.svg';
@@ -33,23 +34,27 @@ interface RenderPCProps {
   setModuleValue: (value: string) => void
 }
 interface RenderH5Props {
-  currentConversationID: string
+  moduleValue: string,
+  currentConversationID: string,
+  tabbarRender: any,
+  contactData: UseContactParams,
+  setModuleValue: (value: string) => void
 }
 
 const tabbarList = [
   {
     id: 1,
-    name: 'chats',
+    name: TUIKIT_TABBAR.CHATS,
     icon: chats,
     selectedIcon: chatsSelected,
-    value: 'chats',
+    value: TUIKIT_TABBAR.CHATS,
   },
   {
     id: 2,
-    name: 'contacts',
+    name: TUIKIT_TABBAR.CONTACTS,
     icon: contacts,
     selectedIcon: contactsSelected,
-    value: 'contacts',
+    value: TUIKIT_TABBAR.CONTACTS,
   },
 ];
 const TUIMessageInputConfig = {
@@ -63,20 +68,20 @@ function RenderForPC({ moduleValue, tabbarRender, setModuleValue } : RenderPCPro
       <div className="sample-chat-left-container">
         <TUIProfile className="sample-chat-profile" />
         {tabbarRender}
-        {moduleValue === 'chats' && <TUIConversation />}
-        {moduleValue === 'contacts' && <TUIContact />}
+        {moduleValue === TUIKIT_TABBAR.CHATS && <TUIConversation />}
+        {moduleValue === TUIKIT_TABBAR.CONTACTS && <TUIContact />}
       </div>
-      {moduleValue === 'chats' && (
+      {moduleValue === TUIKIT_TABBAR.CHATS && (
       <>
         <TUIChat />
         <TUIManage />
       </>
       )}
-      {moduleValue === 'contacts' && (
+      {moduleValue === TUIKIT_TABBAR.CONTACTS && (
       <TUIContact>
         <TUIContactInfo
           showChat={() => {
-            setModuleValue('chats');
+            setModuleValue(TUIKIT_TABBAR.CHATS);
           }}
         />
       </TUIContact>
@@ -85,20 +90,33 @@ function RenderForPC({ moduleValue, tabbarRender, setModuleValue } : RenderPCPro
   );
 }
 
-function RenderForH5({ currentConversationID }: RenderH5Props) {
+function RenderForH5({
+  moduleValue, contactData, tabbarRender, currentConversationID, setModuleValue,
+}: RenderH5Props) {
   return (
     <>
-      {!currentConversationID && (
+      {!currentConversationID && !contactData && (
       <div className="sample-chat-h5-container">
         <TUIProfile className="sample-profile" />
-        <TUIConversation />
+        {tabbarRender}
+        {moduleValue === TUIKIT_TABBAR.CHATS && <TUIConversation />}
+        {moduleValue === TUIKIT_TABBAR.CONTACTS && <TUIContact />}
       </div>
       )}
-      {currentConversationID && (
+      {moduleValue === TUIKIT_TABBAR.CHATS && currentConversationID && (
       <>
         <TUIChat TUIMessageInputConfig={TUIMessageInputConfig} />
         <TUIManage />
       </>
+      )}
+      { moduleValue === TUIKIT_TABBAR.CONTACTS && contactData && (
+        <TUIContact>
+          <TUIContactInfo
+            showChat={() => {
+              setModuleValue(TUIKIT_TABBAR.CHATS);
+            }}
+          />
+        </TUIContact>
       )}
     </>
   );
@@ -183,7 +201,7 @@ export function TUIKit<
     <TUIKitProvider value={chatContextValue}>
       <div className="tui-kit">
         {children || (isPC && <RenderForPC moduleValue={moduleValue} tabbarRender={tabbarRender} setModuleValue={setModuleValue} />)
-        || (isH5 && <RenderForH5 currentConversationID={currentConversationID} />)}
+        || (isH5 && <RenderForH5 contactData={contactData} moduleValue={moduleValue} tabbarRender={tabbarRender} currentConversationID={currentConversationID} setModuleValue={setModuleValue} />)}
       </div>
     </TUIKitProvider>
   );
