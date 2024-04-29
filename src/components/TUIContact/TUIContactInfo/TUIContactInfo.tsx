@@ -2,6 +2,7 @@ import React, {
   PropsWithChildren,
 } from 'react';
 import { useTUIKitContext } from '../../../context';
+import { isH5 } from '../../../utils/env';
 import { FriendInfo } from './friendInfo';
 import { BlockInfo } from './blockInfo';
 import { AddFriendInfo } from './addFriendInfo';
@@ -21,7 +22,7 @@ export function UnMemoizedTUIContactInfo<T extends TUIContactInfoProps>(
     return (<> </>);
   }
   return (
-    <div className="tui-contact-info">
+    <div className={`tui-contact-info ${isH5 ? 'tui-contact-info-h5' : ''} `}>
       {contactData?.type === 'addFriend' && (<AddFriendInfo profile={contactData?.data} />)}
       {contactData?.type === 'friend' && (<FriendInfo openChat={showChat} friend={contactData?.data} />)}
       {contactData?.type === 'block' && (<BlockInfo profile={contactData?.data} />)}

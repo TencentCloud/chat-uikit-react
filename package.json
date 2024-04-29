@@ -1,6 +1,6 @@
 {
   "name": "@tencentcloud/chat-uikit-react",
-  "version": "2.1.0",
+  "version": "2.1.2",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "license": "MIT",
@@ -64,7 +64,7 @@
     "react-dom": "^18.2.0"
   },
   "peerDependencies": {
-    "@tencentcloud/chat": "^3.2.0",
+    "@tencentcloud/chat": "latest",
     "@tencentcloud/chat-uikit-engine": "latest",
     "@tencentcloud/tui-core": "latest",
     "@tencentcloud/universal-api": "latest",

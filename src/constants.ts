@@ -87,4 +87,9 @@ export enum MESSAGE_OPERATE {
   FORWARD = 'forward',
 }
 
+export enum TUIKIT_TABBAR {
+  CHATS = 'chats',
+  CONTACTS = 'contacts',
+}
+
 export default constant;

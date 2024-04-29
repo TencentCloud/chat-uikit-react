@@ -4,6 +4,7 @@ import {
   TUIContactContextProvider,
   TUIContactContextValue,
 } from '../../context/TUIContactContext';
+import { isH5 } from '../../utils/env';
 import { useTUIKitContext } from '../../context';
 import useTUIContact from './hooks/useTUIContact';
 import { TUIContactList } from './TUIContactList/TUIContactList';
@@ -55,7 +56,7 @@ export function UnMemoizedTUIContact<T>(
   return (
     <TUIContactContextProvider value={TUIContactValue}>
       {children || (
-        <div className="tui-contacts">
+        <div className={`tui-contacts ${isH5 ? 'tui-contacts-h5' : ''} `}>
             {!isShowAddFriend && (
               <>
                 <div className="tui-contacts-header">
