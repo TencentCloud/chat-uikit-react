@@ -84,7 +84,7 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderBasicProps>(
   };
   const { setTUIManageShow } = useTUIKitContext();
   const openTUIManage = () => {
-    setTUIManageShow(true);
+    setTUIManageShow && setTUIManageShow(true);
   };
 
   return (

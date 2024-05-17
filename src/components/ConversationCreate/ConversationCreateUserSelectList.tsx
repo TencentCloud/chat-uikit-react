@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Conversation } from '@tencentcloud/chat';
+import { Conversation, Profile } from '@tencentcloud/chat';
 import {
   TUIConversationService,
 } from '@tencentcloud/chat-uikit-engine';
@@ -36,7 +36,7 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
   const { t } = useTranslation();
   const [searchValue, setSearchValue] = useState('');
   const { chat, setActiveConversation } = useTUIKitContext();
-  const [friendList, setFriendList] = useState({});
+  const [friendList, setFriendList] = useState<any>({});
   const {
     getFriendListSortSearchResult,
   } = useConversationCreate(chat, conversationList, (newFriendListResult) => {
@@ -44,7 +44,7 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
   });
   const { createConversation } = useConversation(chat);
   const userCheckedList = useRef(new Map());
-  const searchValueChange = async (e) => {
+  const searchValueChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setSearchValue(value);
     setFriendList(await getFriendListSortSearchResult(value));
@@ -54,21 +54,22 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
     userCheckedList.current.clear();
     setSelectList([]);
   };
-  const getUserChecked = (userID, dom) => {
+  const getUserChecked = (userID:string, dom: HTMLElement) => {
     if (!dom) return;
     if (!userCheckedList.current.has(userID)) {
       userCheckedList.current.set(userID, []);
     }
     const list = userCheckedList.current.get(userID);
-    if (list.length !== 0 && list.some((item) => item.id === dom.id)) {
+    if (list.length !== 0 && list.some((item: any) => item.id === dom.id)) {
       return;
     }
     list.push(dom);
   };
-  const userSelectListChange = (e, profile, domList = []) => {
+  const userSelectListChange = (e: any, profile: Profile, domList = []) => {
     const { userID } = profile;
     const { checked } = e.target;
-    // eslint-disable-next-line no-param-reassign
+    // eslint-disable-next-line
+    // @ts-ignore
     domList.forEach((dom) => { dom.checked = checked; });
     if (checked) {
       selectList.push({ profile, domList });
@@ -77,7 +78,7 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
     }
     setSelectList([...selectList]);
   };
-  const createC2CConversation = async (profile) => {
+  const createC2CConversation = async (profile: Profile) => {
     if (isCreateGroup) return;
     const { userID } = profile;
     const conversation = await createConversation(`C2C${userID}`);
@@ -118,7 +119,7 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
               (key) => friendList[key].length !== 0 && (
                 <div className="tui-group-box" key={key}>
                   <div className="title">{key}</div>
-                  {friendList[key].map((profile, index) => {
+                  {friendList[key].map((profile: Profile, index: number) => {
                     const { userID, nick, avatar } = profile;
                     return (
                       <label
@@ -138,7 +139,7 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
                               userSelectListChange(e, profile, userCheckedList.current.get(userID));
                             }}
                             type="checkbox"
-                            ref={(dom) => {
+                            ref={(dom: any) => {
                               getUserChecked(userID, dom);
                             }}
                             id={`userChecked-${key}-${userID}`}

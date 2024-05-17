@@ -4,6 +4,7 @@ import TencentCloudChat from '@tencentcloud/chat';
 import './styles/index.scss';
 
 import { Plugins, PluginsProps } from '../Plugins';
+import { IPluginsRef } from '../ConversationPreview';
 import { Icon, IconTypes } from '../Icon';
 import { useTUIChatStateContext, useTUIMessageContext } from '../../context';
 import { useMessagePluginElement, useMessageHandler } from './hooks';
@@ -41,7 +42,7 @@ export function MessagePlugins <T extends MessagePluginsProps>(
   const { t } = useTranslation();
   const [className, setClassName] = useState('');
   const [popStyle, setPopStyle] = useState({});
-  const pluginsRef = useRef(null);
+  const pluginsRef = useRef<IPluginsRef>();
 
   const { message, plugin: contextPlugin } = useTUIMessageContext('MessagePlugins');
   const { messageListRef } = useTUIChatStateContext('MessageBubbleWithContext');
@@ -88,7 +89,7 @@ export function MessagePlugins <T extends MessagePluginsProps>(
     },
   };
 
-  const handleVisible = (data) => {
+  const handleVisible = (data: any) => {
     if (data.x && data.y) {
       const isTop = data.y < data.height ? true : data.top;
       const isLeft = data.x < data.width ? true : data.left;
@@ -108,7 +109,7 @@ export function MessagePlugins <T extends MessagePluginsProps>(
       </div>
     ),
     handle: (e) => {
-      pluginsRef.current.closeMore();
+      pluginsRef?.current?.closeMore && pluginsRef.current.closeMore();
       handleRevokeMessage(e);
     },
     message,
@@ -125,7 +126,7 @@ export function MessagePlugins <T extends MessagePluginsProps>(
       </div>
     ),
     handle: (e) => {
-      pluginsRef.current.closeMore();
+      pluginsRef?.current?.closeMore && pluginsRef.current.closeMore();
       handleDelMessage(e);
     },
     message,
@@ -141,7 +142,7 @@ export function MessagePlugins <T extends MessagePluginsProps>(
       </div>
     ),
     handle: (e) => {
-      pluginsRef.current.closeMore();
+      pluginsRef?.current?.closeMore && pluginsRef.current.closeMore();
       handleReplyMessage(e);
     },
     message,
@@ -157,7 +158,7 @@ export function MessagePlugins <T extends MessagePluginsProps>(
       </div>
     ),
     handle: (e) => {
-      pluginsRef.current.closeMore();
+      pluginsRef?.current?.closeMore && pluginsRef.current.closeMore();
       handleCopyMessage(e);
     },
     message,
@@ -173,8 +174,8 @@ export function MessagePlugins <T extends MessagePluginsProps>(
       </div>
     ),
     handle: (e) => {
-      pluginsRef.current.closeMore();
-      handleResendMessage(e);
+      pluginsRef?.current?.closeMore && pluginsRef.current.closeMore();
+      handleResendMessage();
     },
     message,
     isShow: pluginConfig.resend.isShow && message?.status !== MESSAGE_STATUS.SUCCESS,
@@ -189,7 +190,7 @@ export function MessagePlugins <T extends MessagePluginsProps>(
       </div>
     ),
     handle: (e) => {
-      pluginsRef.current.closeMore();
+      pluginsRef?.current?.closeMore && pluginsRef.current.closeMore();
       handleForWardMessage(e);
     },
     message,
@@ -211,7 +212,8 @@ export function MessagePlugins <T extends MessagePluginsProps>(
   const MoreIcon = propsMoreIcon || contextPlugin?.MoreIcon || <Icon className="icon-more" width={16} height={16} type={IconTypes.MORE} />;
 
   const showNumber = propsShowNumber || contextPlugin?.showNumber || 0;
-
+  // eslint-disable-next-line
+  // @ts-ignore
   return message?.status !== MESSAGE_STATUS.UNSEND && (
   <Plugins
     className="message-plugin"

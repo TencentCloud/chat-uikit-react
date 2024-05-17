@@ -6,7 +6,7 @@ interface PopupProps {
   className?: string,
   style?: any,
   show?: boolean,
-  close?: (e) => void,
+  close: (e: any) => void,
   root?: any,
   handleVisible?: (isVisible:any) => void,
 }
@@ -49,7 +49,7 @@ T extends PopupProps
         rootBounds: changeRootBounds,
         intersectionRatio,
       } = change;
-      const popupBoundingClientRect = popup.current.getBoundingClientRect() || {};
+      const popupBoundingClientRect = popup.current?.getBoundingClientRect() || {};
       const rootRootBounds = root?.getBoundingClientRect() || {};
       const boundingClientRect = {
         ...changeBoundingClientRec,
@@ -73,7 +73,7 @@ T extends PopupProps
       threshold: [1],
     });
 
-    if (popup && show) {
+    if (popup?.current && show) {
       io.observe(popup?.current);
     }
     return () => {
@@ -82,13 +82,17 @@ T extends PopupProps
     };
   }, [popup, show]);
 
-  const stopImmediatePropagation = (e) => {
+  const stopImmediatePropagation = (e: Event) => {
     e.stopPropagation();
   };
 
-  return show && (
-    <div role="button" tabIndex={0} style={style} className={`popup ${className} ${isSetPos && 'popup-show'}`} ref={popup}>
-      {children}
-    </div>
-  );
+  return (
+    <>{show && (
+      // eslint-disable-next-line 
+      // @ts-ignore
+      <div role="button" tabIndex={0} style={style} className={`popup ${className} ${isSetPos && 'popup-show'}`} ref={popup}>
+        {children}
+      </div>)}
+    </>
+  )
 }

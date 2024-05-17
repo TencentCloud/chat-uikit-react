@@ -27,14 +27,14 @@ export function useHandleMessageList<T extends CreateMessageProps>(props:T) {
   } = props;
 
   const editLocalMessage = useCallback((message: Message) => {
-    dispatch({
+    dispatch && dispatch({
       type: CONSTANT_DISPATCH_TYPE.SET_EDIT_MESSAGE,
       value: message,
     });
   }, [dispatch]);
 
   const updateUploadPendingMessageList = useCallback((message: Message) => {
-    dispatch({
+    dispatch && dispatch({
       type: CONSTANT_DISPATCH_TYPE.UPDATE_UPLOAD_PENDING_MESSAGE_LIST,
       value: message,
     });

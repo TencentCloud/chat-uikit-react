@@ -16,19 +16,19 @@ export function UnMemoizedTUIContactSearch<T>(): React.ReactElement {
   const [searchedValue, setSearchedValue] = useState('');
   const [searchResult, setSearchResult] = useState([]);
 
-  const searchValueChange = (e) => {
+  const searchValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target?.value === '') {
-      setShowContactList(true);
+      setShowContactList && setShowContactList(true);
       setShowSearchResult(false);
       setSearchResult([]);
       return;
     }
     setShowSearchResult(true);
     setSearchedValue(e.target?.value);
-    setShowContactList(false);
+    setShowContactList && setShowContactList(false);
   };
 
-  const searchValueBlur = (e) => {
+  const searchValueBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchedValue(e.target?.value);
   };
 
@@ -47,15 +47,14 @@ export function UnMemoizedTUIContactSearch<T>(): React.ReactElement {
   const setContactProfile = async (profile: any) => {
     const isFriend = await checkFriend(profile);
     if (isFriend) {
-      const friendProfile = friendList.find((item) => item.userID === searchedValue);
-      setActiveContact({ type: 'friend', data: friendProfile });
+      const friendProfile = friendList?.find((item) => item.userID === searchedValue);
+      friendProfile && setActiveContact({ type: 'friend', data: friendProfile });
       return;
     }
     if (isBlock(profile.userID)) {
       setActiveContact({ type: 'block', data: profile });
       return;
     }
-    // set 数据
     setActiveContact({ type: 'addFriend', data: profile });
   };
   return (

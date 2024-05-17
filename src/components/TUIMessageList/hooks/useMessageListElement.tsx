@@ -26,13 +26,16 @@ function useMessageListElement <T extends MessageListElementProps>(
     const key = `${item.ID}-${index}`;
     const preMessageTImer = index > 0 ? enrichedMessageList[index - 1]?.time : -1;
     const currrentTimer = item?.time || 0;
-    const isShowIntervalsTimer = preMessageTImer !== -1
+    const isShowIntervalsTimer = intervalsTimer && preMessageTImer !== -1
       ? (currrentTimer - preMessageTImer) >= intervalsTimer : false;
     return (
       <li className="message-list-item" key={key}>
         {
-         isShowIntervalsTimer && <div className="message-list-time" key={`${currrentTimer + index}`}>{currrentTimer ? getTimeStamp(currrentTimer * 1000, language) : 0}</div>
+         isShowIntervalsTimer && <div className="message-list-time" key={`${currrentTimer + index}`}>
+          {currrentTimer ? getTimeStamp(currrentTimer * 1000, language) : 0}</div>
         }
+        {/* // eslint-disable-next-line
+        // @ts-ignore */}
         <TUIMessage message={item} />
       </li>
     );

@@ -16,13 +16,13 @@ export function useUploadElement<
     onChange,
   } = props;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files.length > 0) {
+    if (e.target.files && e.target.files.length > 0) {
       const { files } = e.target;
       const options = {
         type: files[0].type,
       };
       const file = new File(files as any, files[0].name, options);
-      onChange(file);
+      onChange && onChange(file);
     }
     e.target.value = '';
   };

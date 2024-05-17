@@ -53,7 +53,7 @@ export const handleDisplayAvatar = (avatar: string, type:string = TencentCloudCh
 };
 
 export const getTimeStamp = (time: number, language?: string) => {
-  const locales = { enGB, zhCN };
+  const locales: any = { enGB, zhCN };
   let lng = '';
   if (language === 'zh') {
     lng = 'zhCN';

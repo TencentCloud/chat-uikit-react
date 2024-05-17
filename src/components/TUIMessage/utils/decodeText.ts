@@ -1,15 +1,14 @@
 import { emojiMap, emojiUrl } from './emojiMap';
-/** 传入messageBody（群系统消息SystemMessage，群提示消息GroupTip除外）
+/** Pass in messageBody (group system message SystemMessage, except group prompt message GroupTip）
  * payload = {
  *  msgType: 'TIMTextElem',
  *  msgContent: {
- *    text: 'AAA[龇牙]AAA[龇牙]AAA[龇牙AAA]'
+ *    text: 'AAA[smile]AAA[smile]AAA[smile]'
  *  }
  *}
  * */
 export function decodeText(payload:any) {
   const renderDom = [];
-  // 文本消息
   let temp = payload.text;
   let left = -1;
   let right = -1;
