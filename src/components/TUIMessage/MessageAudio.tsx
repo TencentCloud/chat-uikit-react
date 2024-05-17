@@ -24,7 +24,7 @@ function MessageAudioWithContext <T extends MessageContextProps>(
     if (audioSource && audioSource !== audioRef?.current) {
       audioSource.pause();
       audioSource.currentTime = 0;
-      setAudioSource(null);
+      setAudioSource && setAudioSource(null);
     }
     if (audioRef?.current) {
       if (!audioRef.current.paused) {
@@ -33,7 +33,7 @@ function MessageAudioWithContext <T extends MessageContextProps>(
       } else {
         audioRef.current.play();
         setPlayClassName(true);
-        setAudioSource(audioRef.current);
+        setAudioSource && setAudioSource(audioRef.current);
       }
     }
   }, [audioRef, audioSource]);
@@ -42,8 +42,10 @@ function MessageAudioWithContext <T extends MessageContextProps>(
     setPlayClassName(false);
   };
   const endFunction = () => {
-    setAudioSource(null);
-    audioRef.current.currentTime = 0;
+    setAudioSource && setAudioSource(null);
+    if(audioRef.current) {
+      audioRef.current.currentTime = 0
+    }
     pauseFunction();
   };
 
@@ -52,7 +54,7 @@ function MessageAudioWithContext <T extends MessageContextProps>(
       audioRef.current.addEventListener('pause', pauseFunction);
       audioRef.current.addEventListener('ended', endFunction);
       audioRef.current.addEventListener('canplay', () => {
-        setCurrentTime(parseInt(`${audioRef.current.duration}`, 10));
+        setCurrentTime(parseInt(`${audioRef.current?.duration}`, 10));
       });
     }
     return () => {
@@ -65,7 +67,7 @@ function MessageAudioWithContext <T extends MessageContextProps>(
 
   return (
     <div className="message-audio">
-      <div className={`message-audio-content message-audio-${message.flow}`}>
+      <div className={`message-audio-content message-audio-${message?.flow}`}>
         <Icon className={`${message?.flow} ${playClassName ? 'playing' : ''}`} type={IconTypes.VOICE} width={16} height={16} onClick={play} />
         <span>{`${currentTime}s`}</span>
       </div>

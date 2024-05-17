@@ -16,8 +16,8 @@ export interface IinitState {
 }
 
 export interface ICursorPos {
-  start?: number,
-  end?: number,
+  start?: number | null,
+  end?: number | null,
 }
 
 export type MessageInputReducerAction =
@@ -38,7 +38,7 @@ const initState:IinitState = {
   },
 };
 
-const reducer = (state:IinitState, action) => {
+const reducer = (state:IinitState, action: any) => {
   switch (action.type) {
     case CONSTANT_DISPATCH_TYPE.SET_TEXT:
       return { ...state, text: action?.getNewText(state.text) };

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TUIConversationService } from '@tencentcloud/chat-uikit-engine';
@@ -11,6 +12,9 @@ import { Plugins } from '../Plugins';
 import { useConversation } from '../../hooks';
 import { useTUIKitContext } from '../../context';
 
+export interface IPluginsRef {
+  closeMore?: () => void,
+}
 export function unMemoConversationPreviewContent<T extends ConversationPreviewUIComponentProps>(
   props: T,
 ):React.ReactElement {
@@ -36,7 +40,7 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
   const unreadClass = unread && unread >= 1 ? 'conversation-preview-content--unread' : '';
   const pinClass = conversation.isPinned ? 'conversation-preview-content--pin' : '';
   const [isHover, setIsHover] = useState(false);
-  const pluginsRef = useRef(null);
+  const pluginsRef = useRef<IPluginsRef>(null);
 
   const onSelectConversation = () => {
     TUIConversationService.switchConversation(conversation?.conversationID);
@@ -63,7 +67,7 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
   const handleH5LongPress = (type: string) => {
     if (isPC) return;
     const { conversationID } = conversation;
-    setActiveConversationID(conversationID);
+    setActiveConversationID && setActiveConversationID(conversationID);
     function longPressHandler() {
       clearTimeout(timer);
       setIsHover(true);
@@ -92,15 +96,15 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
     const { conversationID, isPinned } = conversation;
     e.stopPropagation();
     setIsHover(false);
-    pluginsRef.current.closeMore();
+    pluginsRef?.current?.closeMore && pluginsRef.current.closeMore();
     switch (type) {
       case 'pin':
         pinConversation({ conversationID, isPinned: !isPinned });
         break;
       case 'delete':
         deleteConversation(conversationID);
-        if (conversation === activeConversation) {
-          setActiveConversation(null);
+        if (setActiveConversation && conversation === activeConversation) {
+          setActiveConversation(undefined);
         }
         break;
       default:

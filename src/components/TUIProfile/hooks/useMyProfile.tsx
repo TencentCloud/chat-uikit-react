@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import TencentCloudChat from '@tencentcloud/chat';
+import TencentCloudChat, { Profile } from '@tencentcloud/chat';
 import { useTUIKitContext } from '../../../context';
 
 export interface ProfileParams {
@@ -19,7 +19,7 @@ export interface ProfileParams {
 }
 
 export function useMyProfile() {
-  const [myProfile, setMyPofile] = useState(null);
+  const [myProfile, setMyPofile] = useState<Profile>();
   const { chat, myProfile: contextProfile } = useTUIKitContext('useMyProfile');
 
   const getMyProfile = useCallback(async () => {
@@ -31,9 +31,9 @@ export function useMyProfile() {
     }
   }, [chat]);
 
-  const updateMyProfile = useCallback(async (options) => {
+  const updateMyProfile = useCallback(async (options: any) => {
     const res = await chat?.updateMyProfile(options);
-    const userInfo = { ...myProfile };
+    const userInfo: any = { ...myProfile };
     const keys = Object.keys(res.data);
     keys.map((name) => {
       userInfo[name] = res.data[name];
@@ -43,8 +43,8 @@ export function useMyProfile() {
     return res;
   }, [chat]);
 
-  const onProfileUpdated = (event) => {
-    console.log('onProfileUpdated', event.data); // 包含 Profile 对象的数组
+  const onProfileUpdated = (event: any) => {
+    console.log('onProfileUpdated', event.data);
   };
 
   useEffect(() => {

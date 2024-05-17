@@ -22,7 +22,7 @@ import contacts from '../Icon/images/contacts.svg';
 import contactsSelected from '../Icon/images/contacts-selected.svg';
 
 export interface ChatProps {
-  chat?: ChatSDK | null,
+  chat?: any,
   language?: string,
   customClasses?: unknown,
   activeConversation?: Conversation,

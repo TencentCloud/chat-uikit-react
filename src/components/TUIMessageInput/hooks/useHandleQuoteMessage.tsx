@@ -3,7 +3,7 @@ import TencentCloudChat, { Message } from '@tencentcloud/chat';
 import { MESSAGE_OPERATE } from '../../../constants';
 import { useTUIChatStateContext } from '../../../context';
 
-const quoteConfigType = {
+const quoteConfigType: any = {
   [TencentCloudChat.TYPES.MSG_TEXT]: 1,
   [TencentCloudChat.TYPES.MSG_CUSTOM]: 2,
   [TencentCloudChat.TYPES.MSG_IMAGE]: 3,
@@ -13,7 +13,7 @@ const quoteConfigType = {
   [TencentCloudChat.TYPES.MSG_FACE]: 8,
 };
 
-const quoteConfigForShow = {
+const quoteConfigForShow: any = {
   [TencentCloudChat.TYPES.MSG_CUSTOM]: '[custom]',
   [TencentCloudChat.TYPES.MSG_IMAGE]: '[image]',
   [TencentCloudChat.TYPES.MSG_AUDIO]: '[audio]',
@@ -27,7 +27,7 @@ export function useHandleQuoteMessage(msg?:Message) {
     operateData,
   } = useTUIChatStateContext('TUIMessageInputDefault');
 
-  const [cloudCustomData, setCloudCustomData] = useState({ messageReply: null });
+  const [cloudCustomData, setCloudCustomData] = useState<any>({ messageReply: null });
 
   const handleQuoteMessage = (message: Message) => {
     const messageType = quoteConfigType[message?.type];
@@ -46,7 +46,7 @@ export function useHandleQuoteMessage(msg?:Message) {
 
   useEffect(
     () => {
-      const message = msg || operateData[MESSAGE_OPERATE.QUOTE];
+      const message = msg || (operateData &&operateData[MESSAGE_OPERATE.QUOTE]);
       setCloudCustomData(
         {
           messageReply: message ? handleQuoteMessage(message) : null,
@@ -59,6 +59,6 @@ export function useHandleQuoteMessage(msg?:Message) {
   return {
     cloudCustomData,
     handleQuoteMessage,
-    message: msg || operateData[MESSAGE_OPERATE.QUOTE],
+    message: msg || (operateData &&operateData[MESSAGE_OPERATE.QUOTE]),
   };
 }

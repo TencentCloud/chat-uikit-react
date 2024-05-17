@@ -34,7 +34,7 @@ export interface TUIMessageInputContextValue {
   pluginConfig?: PluginConfigProps,
 }
 
-export const TUIMessageInputContext = React.createContext<TUIMessageInputContextValue>(undefined);
+export const TUIMessageInputContext = React.createContext<TUIMessageInputContextValue>({});
 export function TUIMessageInputContextProvider({ children, value }:PropsWithChildren<{
     value: TUIMessageInputContextValue
 }>):React.ReactElement {

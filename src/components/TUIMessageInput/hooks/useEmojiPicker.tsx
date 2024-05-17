@@ -28,9 +28,9 @@ export function useEmojiPicker<T extends useEmojiPickerProps>(props:PropsWithChi
 
   const onSelectEmoji = (emoji:EmojiData) => {
     if (i18n.language === 'zh') {
-      insertText(emoji.data);
+      insertText && insertText(emoji.data);
     } else {
-      insertText(emojiEnKey[emoji.data]);
+      insertText && insertText(emojiEnKey[emoji.data]);
     }
   };
 

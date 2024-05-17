@@ -14,9 +14,9 @@ export interface ConversationCreateSelectViewProps{
 }
 export function ConversationCreateSelectView(props:ConversationCreateSelectViewProps) {
   const { selectList, setSelectList } = props;
-  const close = (domList, index) => {
+  const close = (domList:Array<HTMLInputElement>, index: number) => {
     // eslint-disable-next-line no-param-reassign
-    domList.forEach((dom) => { dom.checked = false; });
+    domList.forEach((dom: HTMLInputElement) => { dom.checked = false; });
     selectList.splice(index, 1);
     setSelectList([...selectList]);
   };

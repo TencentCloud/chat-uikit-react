@@ -69,7 +69,7 @@ function TUIMessageDefaultWithContext <T extends TUIMessageProps>(
         key={message?.ID}
       >
         {prefix}
-        <MessageAvatar message={message} CustomAvatar={customAvatar} showType={showAvatar} />
+        {message && <MessageAvatar message={message} CustomAvatar={customAvatar} showType={showAvatar} />}
         <main data-message-id={message?.ID} className="content">
           <MessageName message={message} CustomName={customName} showType={showName} />
           <MessageBubble
@@ -77,6 +77,8 @@ function TUIMessageDefaultWithContext <T extends TUIMessageProps>(
             Context={MessageContextUIComponent}
             Plugins={MessagePlugins}
           >
+            {/* // eslint-disable-next-line
+             // @ts-ignore */}
             <MessageContextUIComponent message={message} />
           </MessageBubble>
         </main>

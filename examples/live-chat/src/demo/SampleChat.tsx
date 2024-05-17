@@ -1,26 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import '@tencentcloud/chat-uikit-react/dist/cjs/index.css';
-import TencentCloudChat, { ChatSDK } from '@tencentcloud/chat';
-import TIMUploadPlugin from 'tim-upload-plugin';
-
+import { TUILogin } from "@tencentcloud/tui-core";
 
 import { genTestUserSig } from '../debug/GenerateTestUserSig'
 import LiveDemo from '../live-demo';
-
-const init = async ():Promise<ChatSDK> => {
-  return new Promise((resolve, reject) => {
-    const userID = `test-${Math.ceil(Math.random() * 10000)}`;
-    console.warn('your userID ->', userID);
-    const chat = TencentCloudChat.create({ SDKAppID: genTestUserSig(userID).SDKAppID });
-    chat?.registerPlugin({ 'tim-upload-plugin': TIMUploadPlugin });
-    const onReady = () => { resolve(chat); };
-    chat.on(TencentCloudChat.EVENT.SDK_READY, onReady);
-    chat.login({
-      userID,
-      userSig: genTestUserSig(userID).userSig,
-    });
-  });
-}
+import { ChatSDK } from '@tencentcloud/chat';
 
 export default function SampleChat() {
   const [chat, setChat] = useState<ChatSDK>();
@@ -28,11 +12,21 @@ export default function SampleChat() {
   const groupID = 'live-room-1';
   // Please replace it with your own live streaming URL
   const playUrl = 'https://web.sdk.qcloud.com/im/demo/intl/live-demo-video.mp4';
+
+  const init = () => {
+    const userID = `test-${Math.ceil(Math.random() * 10000)}`;
+    const loginInfo = {
+      SDKAppID: genTestUserSig(userID).SDKAppID,
+      userID,
+      userSig: genTestUserSig(userID).userSig,
+    };
+    TUILogin.login(loginInfo).then(() => {
+      const { chat } = TUILogin.getContext();
+      setChat(chat);
+    });
+  }
   useEffect(() => {
-    (async ()=>{
-      const chat = await init()
-      setChat(chat)
-    })()
+    init();
   }, [])
 
   return (

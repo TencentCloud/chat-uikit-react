@@ -35,7 +35,6 @@ function useTUIContact() {
       setFriendList(data);
     }
   };
-  // todo: 获取 100个
   const getBlocklist = async () => {
     const { data: _blocklist } = await chat.getBlacklist();
     if (_blocklist.length === 0) {
@@ -51,15 +50,15 @@ function useTUIContact() {
     });
     setBlocklistProfile(data);
   };
-  const onFriendApplicationListUpdated = (event) => {
+  const onFriendApplicationListUpdated = (event: any) => {
     setFriendApplicationList(event?.data?.friendApplicationList);
   };
-  const onBlocklistUpdated = (event) => {
+  const onBlocklistUpdated = (event: any) => {
     setBlockList(event.data);
     getBlocklistProfile(event.data);
   };
 
-  const onFriendListUpdated = (event) => {
+  const onFriendListUpdated = (event: any) => {
     setFriendList(event.data);
   };
 

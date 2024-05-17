@@ -13,18 +13,18 @@ function MessageFileWithContext <T extends MessageContextProps>(
   } = props;
   return (
     <a
-      href={context.url}
-      download={context.name}
+      href={context?.url}
+      download={context?.name}
       target="_parent"
-      className={`bubble message-file bubble-${message.flow} ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`}
+      className={`bubble message-file bubble-${message?.flow} ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`}
       rel="noreferrer"
     >
       <main className="message-file-main">
         <Icon className="icon" width={15} height={20} type={IconTypes.FILE} />
-        <label htmlFor="message-file">{ context.name }</label>
+        <label htmlFor="message-file">{ context?.name }</label>
       </main>
       <div className="message-file-footer">
-        <span className="message-file-size">{ context.size }</span>
+        <span className="message-file-size">{ context?.size }</span>
         {children}
       </div>
     </a>

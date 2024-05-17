@@ -50,7 +50,8 @@ export default [
       typescript(),
       terser(),
     ],
-    external: ['react', 'date-fns', 'tslib', 'react-date-picker', 'i18next', 'react-i18next'],
+    external: ['react', 'date-fns', 'tslib', 'react-date-picker', 'i18next', 'react-i18next', '@tencentcloud/tui-core',
+     '@tencentcloud/chat', '@tencentcloud/chat-uikit-engine', '@tencentcloud/universal-api'],
   },
   {
     ...baseConfig,

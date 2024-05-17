@@ -23,7 +23,7 @@ function useConversationList(
         resConversationList = filterConversation(res.data.conversationList);
       } else {
         resConversationList = res.data.conversationList.filter(
-          (item) => item.type !== TencentCloudChat.TYPES.CONV_SYSTEM,
+          (item: any) => item.type !== TencentCloudChat.TYPES.CONV_SYSTEM,
         );
       }
       const newConversationList = queryType === 'reload'

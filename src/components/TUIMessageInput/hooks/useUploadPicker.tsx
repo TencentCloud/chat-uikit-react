@@ -19,7 +19,7 @@ export function useUploadPicker<T extends IbaseStateProps>(props:PropsWithChildr
     updateUploadPendingMessageList,
   } = useTUIChatActionContext('useUploadPicker');
 
-  const creatUploadMessage = {
+  const creatUploadMessage: any = {
     [MESSAGE_TYPE_NAME.IMAGE]: TUIChatService.sendImageMessage,
     [MESSAGE_TYPE_NAME.VIDEO]: TUIChatService.sendVideoMessage,
     [MESSAGE_TYPE_NAME.FILE]: TUIChatService.sendFileMessage,

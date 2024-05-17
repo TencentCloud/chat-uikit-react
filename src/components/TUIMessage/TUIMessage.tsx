@@ -92,7 +92,7 @@ function TUIMessageWithContext <T extends TUIMessageProps>(
 
   const filter = propsFilter || messageConfig?.filter;
   const message = propsMessage || messageConfig?.message;
-  if (filter) {
+  if (filter && message) {
     filter(message);
   }
 

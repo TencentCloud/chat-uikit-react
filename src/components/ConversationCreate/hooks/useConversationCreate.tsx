@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import TencentCloudChat from '@tencentcloud/chat';
+import TencentCloudChat, { Conversation, Friend, Profile } from '@tencentcloud/chat';
 import { strChineseFirstPy } from '../static/word';
 import { useProfile } from '../../../hooks';
 
 export const useConversationCreate = (
-  chat,
-  conversationList,
+  chat: any,
+  conversationList: Array<Conversation>,
   setFriendListResultHandler?:(
     newFriendListResult: object,
     setFriendListResult: React.Dispatch<React.SetStateAction<{string:Array<object>}>>
   ) => void,
 ) => {
-  const [friendListSortResult, setFriendListSortResult] = useState({});
+  const [friendListSortResult, setFriendListSortResult] = useState<any>();
   const getFirstLetter = (str: string) => {
     const temp = str.trim();
     const uni = temp.charCodeAt(0);
@@ -22,12 +22,12 @@ export const useConversationCreate = (
   };
   const queryFriendList = async () => {
     const frequentlyConversationProfile = conversationList.filter(
-      (item) => item.type === TencentCloudChat.TYPES.CONV_C2C,
-    ).slice(0, 5).map((item) => item.userProfile);
+      (item: Conversation) => item?.type === TencentCloudChat.TYPES.CONV_C2C,
+    ).slice(0, 5).map((item: Conversation) => item?.userProfile);
     const { code, data } = await chat.getFriendList();
     if (code === 0) {
       const sortResult = handleData(
-        data.map((item) => item.profile),
+        data.map((item: Friend) => item.profile),
         frequentlyConversationProfile,
       );
       setFriendListSortResult(sortResult);
@@ -36,8 +36,8 @@ export const useConversationCreate = (
       }
     }
   };
-  const handleData = (profileList, frequentlyConversationProfile = []) => {
-    const sortResult = {
+  const handleData = (profileList: Array<Profile>, frequentlyConversationProfile?: any) => {
+    const sortResult: any = {
       '#': [],
     };
     for (let i = 65; i <= 90; i += 1) {
@@ -55,7 +55,7 @@ export const useConversationCreate = (
       }
     });
     Object.keys(sortResult).forEach((key) => {
-      sortResult[key].sort((a, b) => {
+      sortResult[key].sort((a: any, b: any) => {
         const { nick: aNick, userID: aUserID } = a;
         const { nick: bNick, userID: bUserID } = b;
         if (aNick || aUserID < bNick || bUserID) {
@@ -73,12 +73,14 @@ export const useConversationCreate = (
     if (!searchValue) return friendListSortResult;
     const { data: profileList } = await getUserProfile([searchValue]);
 
-    const result = {};
+    const result: any = {};
     let isIncludes = false;
     Object.keys(friendListSortResult).forEach((key) => {
       result[key] = friendListSortResult[key].filter(
+        // eslint-disable-next-line
+        // @ts-ignore
         ({ nick, userID }) => {
-          const tempNick = nick.toLocaleLowerCase();
+          const tempNick = nick?.toLocaleLowerCase();
           const tempSearchValue = searchValue.toLocaleLowerCase();
           const userIDValue = userID.toLocaleLowerCase();
           let includes;
