@@ -21,35 +21,35 @@ export function useHandleMessage<T extends CreateMessageProps>(props:T) {
   } = props;
 
   const operateMessage = useCallback((data: OperateMessageParams) => {
-    dispatch({
+    dispatch && dispatch({
       type: CONSTANT_DISPATCH_TYPE.OPERATE_MESSAGE,
       value: data,
     });
   }, [dispatch]);
 
   const setAudioSource = useCallback((data: HTMLAudioElement | null) => {
-    dispatch({
+    dispatch && dispatch({
       type: CONSTANT_DISPATCH_TYPE.SET_AUDIO_SOURCE,
       value: data,
     });
   }, [dispatch]);
 
   const setVideoSource = useCallback((data: HTMLVideoElement | null) => {
-    dispatch({
+    dispatch && dispatch({
       type: CONSTANT_DISPATCH_TYPE.SET_VIDEO_SOURCE,
       value: data,
     });
   }, [dispatch]);
 
   const setHighlightedMessageId = useCallback((highlightedMessageId: string) => {
-    dispatch({
+    dispatch && dispatch({
       type: CONSTANT_DISPATCH_TYPE.SET_HIGH_LIGHTED_MESSAGE_ID,
       value: highlightedMessageId,
     });
   }, [dispatch]);
 
   const setActiveMessageID = useCallback((messageID: string) => {
-    dispatch({
+    dispatch && dispatch({
       type: CONSTANT_DISPATCH_TYPE.SET_ACTIVE_MESSAGE_ID,
       value: messageID,
     });

@@ -52,7 +52,6 @@ export function UnMemoizedFriendInfo<T extends Props>(
   const addToBlocklistHandler = async () => {
     await addToBlocklist(userID);
     setIsAddToBlocklist(true);
-    // 清空右侧 container 内容
     setActiveContact();
   };
 
@@ -65,7 +64,7 @@ export function UnMemoizedFriendInfo<T extends Props>(
     const conversation = await createConversation(conversationID);
     TUIConversationService.switchConversation(conversationID);
     setActiveConversation(conversation);
-    openChat();
+    openChat && openChat();
   };
 
   return (

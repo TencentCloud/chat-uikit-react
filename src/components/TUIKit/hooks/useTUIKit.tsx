@@ -42,7 +42,7 @@ export const useTUIKit = ({
   language,
 }:UseChatParams) => {
   const { i18n } = useTranslation();
-  const [conversation, setConversation] = useState<Conversation>(paramsActiveConversation);
+  const [conversation, setConversation] = useState<Conversation | undefined>(paramsActiveConversation);
   const [myProfile, setMyProfile] = useState<Profile>();
   const [TUIManageShow, setTUIManageShow] = useState<boolean>(false);
   const [TUIProfileShow, setTUIProfileShow] = useState<boolean>(false);
@@ -61,10 +61,10 @@ export const useTUIKit = ({
       if (activeConversation) {
         chat?.setMessageRead({ conversationID: activeConversation.conversationID });
       }
-      if (conversation && (activeConversation.conversationID !== conversation.conversationID)) {
+      if (conversation && (activeConversation?.conversationID !== conversation.conversationID)) {
         setTUIManageShow(false);
       }
-      setConversation(activeConversation);
+      activeConversation && setConversation(activeConversation);
     },
     [chat],
   );
@@ -73,7 +73,7 @@ export const useTUIKit = ({
   };
 
   useEffect(() => {
-    setConversation(paramsActiveConversation);
+    paramsActiveConversation && setConversation(paramsActiveConversation);
   }, [paramsActiveConversation]);
   return {
     conversation,

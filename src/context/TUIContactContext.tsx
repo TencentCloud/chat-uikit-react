@@ -11,7 +11,7 @@ export interface TUIContactContextValue {
   isShowContactList?: boolean,
   setShowContactList?: React.Dispatch<React.SetStateAction<boolean>>
 }
-export const TUIContactContext = React.createContext<TUIContactContextValue>(null);
+export const TUIContactContext = React.createContext<TUIContactContextValue>({});
 export function TUIContactContextProvider({ children, value }:PropsWithChildren<{
     value: TUIContactContextValue
 }>):React.ReactElement {

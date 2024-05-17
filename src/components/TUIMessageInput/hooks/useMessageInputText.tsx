@@ -16,6 +16,7 @@ import { formatEmojiString } from '../../TUIMessage/utils/emojiMap';
 import { useHandleQuoteMessage } from './useHandleQuoteMessage';
 import type { IbaseStateProps, ICursorPos } from './useMessageInputState';
 import { filesData } from './useUploadPicker';
+import { de } from 'date-fns/locale';
 
 interface useMessageInputTextProps extends IbaseStateProps {
   focus?: boolean,
@@ -70,21 +71,23 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
     }
     TUIChatService.sendTextMessage(options).then((res: any) => {
       const { message } = res.data;
-      setFirstSendMessage(message);
+      setFirstSendMessage && setFirstSendMessage(message);
     });
     enableSampleTaskStatus('sendMessage');
     dispatch({
       getNewText: (text:string) => '',
       type: CONSTANT_DISPATCH_TYPE.SET_TEXT,
     });
-    operateMessage({
+    operateMessage && operateMessage({
+      // eslint-disable-next-line
+      // @ts-ignore
       [MESSAGE_OPERATE.QUOTE]: null,
     });
   };
 
   const handleKeyDown = useCallback(
     (event?:React.KeyboardEvent<EventTarget>) => {
-      if (!event?.ctrlKey && enterCodeList.indexOf(event?.code) > -1 && event.keyCode === 13) {
+      if (!event?.ctrlKey && event?.code && enterCodeList.indexOf(event?.code) > -1 && event.keyCode === 13) {
         event?.preventDefault();
         handleSubmit(event);
       }
@@ -105,11 +108,11 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
         return;
       }
       const { types, items } = e.clipboardData;
-      types.find((type, index) => {
+      types.find((type: string, index: number) => {
         const item = items[index];
         switch (type) {
           case 'text/plain':
-            item.getAsString((str) => {
+            item.getAsString((str: string) => {
               dispatch({
                 type: CONSTANT_DISPATCH_TYPE.SET_TEXT,
                 getNewText: (text:string) => `${text}${str}`,
@@ -119,7 +122,7 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
           case 'Files': {
             const file = item.getAsFile();
             if (item && item.kind === 'file' && item.type.match(/^image\//i)) {
-              sendUploadMessage({ file }, MESSAGE_TYPE_NAME.IMAGE);
+              sendUploadMessage && sendUploadMessage({ file }, MESSAGE_TYPE_NAME.IMAGE);
             }
             return true;
           }
@@ -135,13 +138,13 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
     (textToInsert: string) => {
       dispatch({
         type: CONSTANT_DISPATCH_TYPE.SET_TEXT,
-        getNewText: (text:string) => `${text.slice(0, state.cursorPos.start)}${textToInsert}${text.slice(state.cursorPos.start)}`,
+        getNewText: (text:string) => `${text.slice(0, state?.cursorPos?.start || 0)}${textToInsert}${text.slice(state?.cursorPos?.start || 0)}`,
       });
       dispatch({
         type: CONSTANT_DISPATCH_TYPE.SET_CURSOR_POS,
         value: {
-          start: state.cursorPos.start + textToInsert.length,
-          end: state.cursorPos.end + textToInsert.length,
+          start: state?.cursorPos?.start && state.cursorPos.start + textToInsert.length,
+          end: state?.cursorPos?.end && state.cursorPos.end + textToInsert.length,
         },
       });
       textareaRef?.current?.focus();

@@ -4,12 +4,12 @@ import './styles/index.scss';
 
 import { EmojiPicker } from './EmojiPicker';
 import { Plugins } from '../Plugins';
+import { IPluginsRef } from '../ConversationPreview';
 import { useUploadElement } from './hooks/useUploadElement';
 import { MESSAGE_TYPE_NAME } from '../../constants';
 import { useTUIMessageInputContext } from '../../context/TUIMessageInputContext';
 import { Icon, IconTypes } from '../Icon';
 import { useTUIChatStateContext } from '../../context';
-
 export function InputPluginsDefalut():React.ReactElement {
   const {
     sendUploadMessage,
@@ -60,7 +60,7 @@ export function InputPluginsDefalut():React.ReactElement {
     true,
   );
 
-  const pluginsRef = useRef(null);
+  const pluginsRef = useRef<IPluginsRef>();
 
   const ImagePicker = isImagePicker && useUploadElement({
     children: (
@@ -72,8 +72,8 @@ export function InputPluginsDefalut():React.ReactElement {
     type: 'image',
     accept: 'image/*',
     onChange: (file:HTMLInputElement | File) => {
-      pluginsRef.current.closeMore();
-      sendUploadMessage({ file }, MESSAGE_TYPE_NAME.IMAGE);
+      pluginsRef?.current?.closeMore && pluginsRef.current.closeMore();
+      sendUploadMessage && sendUploadMessage({ file }, MESSAGE_TYPE_NAME.IMAGE);
     },
   });
 
@@ -87,8 +87,8 @@ export function InputPluginsDefalut():React.ReactElement {
     type: 'video',
     accept: 'video/*',
     onChange: (file:HTMLInputElement | File) => {
-      pluginsRef.current.closeMore();
-      sendUploadMessage({ file }, MESSAGE_TYPE_NAME.VIDEO);
+      pluginsRef?.current?.closeMore && pluginsRef.current.closeMore();
+      sendUploadMessage && sendUploadMessage({ file }, MESSAGE_TYPE_NAME.VIDEO);
     },
   });
 
@@ -102,8 +102,8 @@ export function InputPluginsDefalut():React.ReactElement {
     type: 'file',
     accept: 'file/*',
     onChange: (file:HTMLInputElement | File) => {
-      pluginsRef.current.closeMore();
-      sendUploadMessage({ file }, MESSAGE_TYPE_NAME.FILE);
+      pluginsRef?.current?.closeMore && pluginsRef.current.closeMore();
+      sendUploadMessage && sendUploadMessage({ file }, MESSAGE_TYPE_NAME.FILE);
     },
   });
   const plugins = [

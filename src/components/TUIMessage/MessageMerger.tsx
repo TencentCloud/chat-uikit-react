@@ -12,12 +12,12 @@ function MessageMergerWithContext <T extends MessageContextProps>(
   } = props;
 
   return (
-    <div className={`bubble message-merger bubble-${message.flow} ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`}>
-      <h3>{context.title}</h3>
+    <div className={`bubble message-merger bubble-${message?.flow} ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`}>
+      <h3>{context?.title}</h3>
       <ul className="message-merger-list">
         {
           context?.abstractList.length > 0
-          && context.abstractList.map((item:string, index:number) => {
+          && context?.abstractList.map((item:string, index:number) => {
             const key = item + index;
             return (<li className="message-merger-item" key={key}>{item}</li>);
           })

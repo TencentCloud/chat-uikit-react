@@ -10,7 +10,7 @@ import { handleDisplayAvatar } from '../untils';
 export interface MessageAvatarProps {
   CustomAvatar?: React.ReactElement,
   className?: string,
-  message?: Message,
+  message: Message,
   showType?: messageShowType,
 }
 
@@ -27,7 +27,7 @@ export function MessageAvatar <T extends MessageAvatarProps>(
   const show = showType === messageShowType.ALL || message?.flow === showType;
 
   if (!show || showType === messageShowType.NONE) {
-    return null;
+    return <></>;
   }
 
   if (CustomAvatar) {

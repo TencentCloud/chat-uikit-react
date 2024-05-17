@@ -15,7 +15,7 @@ export interface CreateGroupConversationParams {
   groupCustomField?: Array<object>;
   isSupportTopic?: boolean;
 }
-export const useConversation = (chat) => {
+export const useConversation = (chat: any) => {
   const {
     createConversation: contextCreateConversation,
     deleteConversation: contextDeleteConversation,

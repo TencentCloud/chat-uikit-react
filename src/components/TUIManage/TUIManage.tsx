@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Conversation} from '@tencentcloud/chat';
 import './styles/index.scss';
 import { Icon, IconTypes } from '../Icon';
 import { Avatar, defaultGroupAvatarWork, defaultUserAvatar } from '../Avatar';
@@ -10,11 +11,13 @@ import { getMessageProfile } from '../ConversationPreview/utils';
 import { useConversationUpdate } from '../TUIConversationList/hooks/useConversationUpdate';
 import { useConversation } from '../../hooks';
 
-export function TUIManage() {
+
+function UnMemoizedTUIManage<T>(
+):React.ReactElement {
   const { t } = useTranslation();
-  const [conversation, setConversation] = useState(null);
-  const [profile, setProfile] = useState(null);
-  const [isPinned, setIsPinned] = useState(false);
+  const [conversation, setConversation] = useState<Conversation>();
+  const [profile, setProfile] = useState<any>();
+  const [isPinned, setIsPinned] = useState<boolean>(false);
   const [forceUpdateCount, setForceUpdateCount] = useState(0);
   const {
     conversation: activeConversation,
@@ -23,30 +26,31 @@ export function TUIManage() {
     TUIManageShow,
     setTUIManageShow,
   } = useTUIKitContext('TUIManage');
-  useConversationUpdate(null, () => {
+  useConversationUpdate(undefined, () => {
     setForceUpdateCount((count) => count + 1);
   });
   const { pinConversation, deleteConversation } = useConversation(chat);
-  const pinChatChange = (e) => {
+  const pinChatChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsPinned(e.target.checked);
-    pinConversation({
+    conversation?.conversationID && pinConversation({
       conversationID: conversation.conversationID,
       isPinned: e.target.checked,
     });
   };
   const handleDelete = () => {
-    deleteConversation(conversation.conversationID);
-    setActiveConversation(null);
+    conversation?.conversationID && deleteConversation(conversation.conversationID);
+    setActiveConversation(undefined);
   };
   const close = () => {
-    setTUIManageShow(false);
+    setTUIManageShow && setTUIManageShow(false);
   };
   useEffect(() => {
     setConversation(activeConversation);
-    setProfile(getMessageProfile(activeConversation));
+    activeConversation && setProfile(getMessageProfile(activeConversation));
     setIsPinned(activeConversation ? activeConversation.isPinned : false);
   }, [activeConversation, forceUpdateCount]);
-
+  // eslint-disable-next-line
+  // @ts-ignore
   return (
     TUIManageShow
     && activeConversation && (
@@ -91,7 +95,7 @@ export function TUIManage() {
               <div className="manage-handle-title">
                 {t('TUIConversation.Pin')}
               </div>
-              <Switch onChange={pinChatChange} checked={isPinned} />
+              <Switch onChange={(e: any)=> {pinChatChange(e)}} checked={isPinned} />
             </div>
             {isPC && (
               <div
@@ -110,3 +114,6 @@ export function TUIManage() {
     )
   );
 }
+
+export const TUIManage = React.memo(UnMemoizedTUIManage) as unknown as
+typeof UnMemoizedTUIManage;

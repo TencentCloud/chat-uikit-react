@@ -38,8 +38,11 @@ export function TUIForward <T extends TUIForwardToProps>(
 
   const { message, sendForwardMessage, conversationList = [] } = useHandleForwardMessage();
 
-  const handleClose = useCallback((e) => {
-    operateMessage({
+  const handleClose = useCallback(() => {
+    
+    operateMessage && operateMessage({
+      // eslint-disable-next-line
+      // @ts-ignore
       [MESSAGE_OPERATE.FORWARD]: null,
     });
   }, [operateMessage]);
@@ -47,7 +50,7 @@ export function TUIForward <T extends TUIForwardToProps>(
   //const FrequentlyList = conversationList.slice(0, 2);
   const RecentList = conversationList;
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target?.value);
     if (e.target?.value) {
       const result = conversationList.filter((item) => {
@@ -61,20 +64,22 @@ export function TUIForward <T extends TUIForwardToProps>(
     }
   };
 
-  const handleCheckboxChange = (e) => {
+  const handleCheckboxChange = (e: any) => {
     if (e.checked) {
+      // eslint-disable-next-line
+      // @ts-ignore
       setSelectList([...selectList, e.value]);
     } else {
       setSelectList(selectList.filter((item) => item !== e.value));
     }
   };
 
-  const handleDisplayForwardName = (value) => {
-    const listName = value?.map((item) => getDisplayTitle(item));
+  const handleDisplayForwardName = (value: any) => {
+    const listName = value?.map((item: any) => getDisplayTitle(item));
     return listName.toString();
   };
 
-  const handleForward = (e) => {
+  const handleForward = () => {
     if (propsHandleForward) {
       propsHandleForward({
         list: selectList,
@@ -83,10 +88,10 @@ export function TUIForward <T extends TUIForwardToProps>(
     } else {
       sendForwardMessage(selectList);
     }
-    handleClose(e);
+    handleClose();
   };
 
-  const stopPropagation = (e) => {
+  const stopPropagation = (e: any) => {
     e.stopPropagation();
   };
 
@@ -95,10 +100,11 @@ export function TUIForward <T extends TUIForwardToProps>(
     setSearchResult([]);
     setSearchValue('');
   }, [message]);
-
+  // eslint-disable-next-line
+  // @ts-ignore
   return message && conversationList.length > 0 && (
     <Model onClick={handleClose}>
-      <div role="button" tabIndex={0} className="tui-forward" onClick={stopPropagation}>
+      <div role="button" tabIndex={0} className="tui-forward" onClick={(e) => {stopPropagation(e)}}>
         <header className="tui-forward-header">
           <Icon
             type={IconTypes.CANCEL}
@@ -124,14 +130,14 @@ export function TUIForward <T extends TUIForwardToProps>(
             <ul className="tui-forward-list">
               <h3 className="tui-forward-list-title">{t('TUIChat.Search Result')}</h3>
               {
-                searchResult.length > 0 && searchResult.map((item) => (
+                searchResult.length > 0 && searchResult.map((item: any) => (
                   <li key={item.conversationID} className="tui-forward-list-item">
                     <label htmlFor={`${item.conversationID}`} className="info">
                       <Avatar image={getDisplayImage(item)} size={40} />
                       <div className="info-nick">{getDisplayTitle(item)}</div>
                     </label>
                     <Checkbox
-                      onChange={handleCheckboxChange}
+                      onChange={(e) => {handleCheckboxChange(e)}}
                       id={`${item.conversationID}`}
                       value={item}
                     />
@@ -148,7 +154,7 @@ export function TUIForward <T extends TUIForwardToProps>(
           { !searchValue && RecentList.length > 0 && (
           <ul className="tui-forward-list">
             {
-                RecentList.map((item) => (
+                RecentList.map((item: any) => (
                   <li key={item.conversationID} className="tui-forward-list-item">
                     <label htmlFor={`${item.conversationID}`} className="info">
                       <Avatar image={getDisplayImage(item)} size={40} />
@@ -167,7 +173,8 @@ export function TUIForward <T extends TUIForwardToProps>(
         </main>
         <footer className="tui-forward-footer">
           <div className="tui-forward-footer-name">{selectList.length > 0 && handleDisplayForwardName(selectList)}</div>
-          <button type="button" className="button" onClick={() => { handleForward(selectList); }} disabled={selectList.length === 0}>{t('TUIChat.Forward')}</button>
+          <button type="button" className="button" onClick={handleForward} 
+          disabled={selectList.length === 0}>{t('TUIChat.Forward')}</button>
         </footer>
       </div>
     </Model>

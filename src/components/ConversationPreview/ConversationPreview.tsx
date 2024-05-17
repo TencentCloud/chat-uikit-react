@@ -50,14 +50,14 @@ export function ConversationPreview<T extends ConversationPreviewProps>(
   } = useTUIKitContext('ConversationPreview');
   const [displayImage, setDisplayImage] = useState(getDisplayImage(conversation));
   const [displayTitle, setDisplayTitle] = useState(getDisplayTitle(conversation, searchValue));
-  const [displayMessage, setDisplayMessage] = useState(getDisplayMessage(conversation, myProfile, language));
+  const [displayMessage, setDisplayMessage] = useState(myProfile && getDisplayMessage(conversation, myProfile, language));
   const [displayTime, setDisplayTime] = useState(getDisplayTime(conversation, language));
   const [unread, setUnread] = useState(conversation.unreadCount);
   const isActive = activeConversation?.conversationID === conversation?.conversationID;
-  if (!Preview) return null;
+  if (!Preview) return <></>;
   useEffect(() => {
     setDisplayTitle(getDisplayTitle(conversation, searchValue));
-    setDisplayMessage(getDisplayMessage(conversation, myProfile, language));
+    myProfile && setDisplayMessage(getDisplayMessage(conversation, myProfile, language));
     setDisplayImage(getDisplayImage(conversation));
     setDisplayTime(getDisplayTime(conversation, language));
     setUnread(conversation.unreadCount);

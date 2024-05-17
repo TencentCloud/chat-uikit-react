@@ -22,7 +22,7 @@ export function EmojiPicker():React.ReactElement {
     sendFaceMessage,
   } = useTUIMessageInputContext('TUIMessageInputDefault');
 
-  const handleSelectEmoji = (e) => {
+  const handleSelectEmoji = (e: any) => {
     const emoji: EmojiData = {
       index,
       data: e.target.dataset.data,
@@ -31,14 +31,14 @@ export function EmojiPicker():React.ReactElement {
       return;
     }
     if (index === 0) {
-      onSelectEmoji(emoji);
+      onSelectEmoji && onSelectEmoji(emoji);
     } else {
-      sendFaceMessage(emoji);
+      sendFaceMessage && sendFaceMessage(emoji);
       handleShow();
     }
   };
 
-  const handleVisible = (data) => {
+  const handleVisible = (data: any) => {
     setClassName(`${!data.top && 'emoji-plugin-top'} ${!data.left && 'emoji-plugin-right'}`);
   };
 

@@ -21,15 +21,15 @@ export interface TUIChatStateContextValue {
   messageConfig?: TUIMessageProps,
   cloudCustomData?: string,
   TUIMessageInputConfig?: TUIMessageInputBasicProps,
-  audioSource?: HTMLAudioElement,
-  vidoeSource?: HTMLVideoElement,
+  audioSource?: HTMLAudioElement | null,
+  vidoeSource?: HTMLVideoElement | null,
   TUIMessageListConfig?: MessageListProps,
   uploadPendingMessageList?: Array<Message>,
-  firstSendMessage?: Message;
+  firstSendMessage?: Message | null;
   activeMessageID?: string,
 }
 
-export const TUIChatStateContext = React.createContext<TUIChatStateContextValue>(null);
+export const TUIChatStateContext = React.createContext<TUIChatStateContextValue | null>(null);
 export function TUIChatStateContextProvider({ children, value }:PropsWithChildren<{
     value: TUIChatStateContextValue
 }>):React.ReactElement {

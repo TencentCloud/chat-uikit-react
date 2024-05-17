@@ -11,8 +11,8 @@ function MessageFaceWithContext <T extends MessageContextProps>(
   } = props;
 
   return (
-    <div className={`bubble message-face bubble-${message.flow}`}>
-      <img className="img" src={context.url} alt="" />
+    <div className={`bubble message-face bubble-${message?.flow}`}>
+      <img className="img" src={context?.url} alt="" />
       {children}
     </div>
   );
