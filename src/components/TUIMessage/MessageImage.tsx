@@ -15,12 +15,14 @@ function MessageImageWithContext <T extends MessageContextProps>(
 
   const [show, setShow] = useState(false);
 
-  const bigImageInfo = message?.payload?.imageInfoArray?.filter((item) => item.type === 0);
+  const bigImageInfo = message?.payload?.imageInfoArray?.filter((item: any) => item.type === 0);
 
   return (
     <div className="message-image">
       <div role="button" tabIndex={0} onClick={() => { setShow(true); }}>
-        <img className={`img ${isH5 ? 'img-h5' : ''} bubble-${message.flow} ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`} src={context.url} alt="" />
+        <img className={`img ${isH5 ? 'img-h5' : ''} bubble-${message?.flow} 
+        ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`} 
+        src={context?.url} alt="" />
       </div>
       {children}
       {

@@ -19,7 +19,7 @@ export const useConversationUpdate = (
           setConversationList(filterConversation(event.data));
         } else {
           setConversationList(event.data.filter(
-            (item) => item.type !== TencentCloudChat.TYPES.CONV_SYSTEM,
+            (item: any) => item.type !== TencentCloudChat.TYPES.CONV_SYSTEM,
           ));
         }
       }
@@ -27,7 +27,7 @@ export const useConversationUpdate = (
         forceUpdate();
       }
       if (customHandler && typeof customHandler === 'function') {
-        customHandler(setConversationList, event);
+        setConversationList && customHandler(setConversationList, event);
       }
     };
     chat?.on(TencentCloudChat.EVENT.CONVERSATION_LIST_UPDATED, onConversationListUpdated);

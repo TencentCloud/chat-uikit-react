@@ -82,7 +82,7 @@ export function UnMemoTUIConversationList<T extends Props>(props: T):React.React
   const [conversationCreated, setConversationCreated] = useState(false);
   const [activeConversationID, setActiveConversationID] = useState('');
 
-  const handleSearchValueChange = (e) => {
+  const handleSearchValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target?.value);
     if (e.target?.value) {
       const result = conversationList.filter(

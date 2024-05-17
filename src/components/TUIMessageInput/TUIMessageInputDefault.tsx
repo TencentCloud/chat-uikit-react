@@ -25,31 +25,35 @@ export function TUIMessageInputDefault():React.ReactElement {
 
   // operateData
   useEffect(() => {
-    if (operateData[MESSAGE_OPERATE.REVOKE]) {
-      setText(formatEmojiString(operateData[MESSAGE_OPERATE.REVOKE].payload.text, 1));
+    if (operateData && operateData[MESSAGE_OPERATE.REVOKE]) {
+      setText && setText(formatEmojiString(operateData[MESSAGE_OPERATE.REVOKE].payload.text, 1));
     }
   }, [operateData]);
 
   // Focus
   useEffect(() => {
-    if (focus && textareaRef.current) {
+    if (focus && textareaRef && textareaRef.current) {
       textareaRef.current.autofocus = true;
       isPC && textareaRef?.current?.focus();
+      // eslint-disable-next-line
+      // @ts-ignore
       textareaRef?.current?.addEventListener('paste', handlePasete);
     }
     return () => {
+      // eslint-disable-next-line
+      // @ts-ignore
       textareaRef?.current?.removeEventListener('paste', handlePasete);
     };
-  }, [focus]);
+  }, [focus, textareaRef]);
 
   const [focused, setFocused] = useState<boolean>(false);
 
-  const handleFocus = (e) => {
+  const handleFocus = () => {
     setFocused(true);
   };
-  const handleBlur = (e) => {
-    setCursorPos({
-      start: e.target.selectionStart,
+  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCursorPos && setCursorPos({
+      start: e?.target?.selectionStart,
       end: e.target.selectionEnd,
     });
     setFocused(false);
@@ -65,11 +69,13 @@ export function TUIMessageInputDefault():React.ReactElement {
           placeholder={t('TUIChat.Enter a message')}
           rows={1}
           value={text}
+          // eslint-disable-next-line
+          // @ts-ignore
           ref={textareaRef}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           onFocus={handleFocus}
-          onBlur={handleBlur}
+          onBlur={(e:any) => {handleBlur(e)}}
         />
         )
       }

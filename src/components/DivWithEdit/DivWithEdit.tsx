@@ -22,7 +22,7 @@ interface DivWithEditProps {
   type?: string,
   isEdit?: boolean,
   toggle?: (name:string) => void,
-  close?: () => void,
+  close: () => void,
 }
 
 export function DivWithEdit<T extends DivWithEditProps>(props:PropsWithChildren<T>) {
@@ -40,15 +40,16 @@ export function DivWithEdit<T extends DivWithEditProps>(props:PropsWithChildren<
   } = props;
 
   const [value, setValue] = useState(propsValue);
-
+  // eslint-disable-next-line
+  // @ts-ignore
   const WithEditElements = elements[type] || WithText;
 
   useLayoutEffect(() => {
     setValue(propsValue);
   }, [propsValue]);
 
-  const handleConfirm = (data) => {
-    confirm({
+  const handleConfirm = (data: any) => {
+    confirm && confirm({
       name,
       value: data,
     });
@@ -66,7 +67,7 @@ export function DivWithEdit<T extends DivWithEditProps>(props:PropsWithChildren<
         <div className="show">
           <p>{value || '-'}</p>
           <div className="icon">
-            <Icon className="icon-edit" width={12} height={12} type={IconTypes.EDIT} onClick={() => { toggle(name); }} />
+            <Icon className="icon-edit" width={12} height={12} type={IconTypes.EDIT} onClick={() => { toggle && name && toggle(name); }} />
           </div>
         </div>
         )

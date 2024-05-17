@@ -48,7 +48,7 @@ function MessageProgressWithContext <T extends MessageProgressProps>(
       uploadPendingMessageList.map((item:MessageProgressItem) => {
         if (item?.ID === message?.ID) {
           setProgressMessage(item);
-          setProgress(item?.progress);
+          item?.progress && setProgress(item.progress);
         }
         return item;
       });
@@ -56,13 +56,14 @@ function MessageProgressWithContext <T extends MessageProgressProps>(
   }, [uploadPendingMessageList]);
 
   if (!isShow) {
-    return null;
+    return <></>;
   }
 
-  if (Progress) {
+  if (Progress && progressMessage) {
     return <Progress message={progressMessage} />;
   }
-
+  // eslint-disable-next-line
+  // @ts-ignore
   return handleLoading() && (
     <div className="progress-box">
       <span

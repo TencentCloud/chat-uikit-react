@@ -31,10 +31,12 @@ export function WithText<T extends WithEditProps>(props:PropsWithChildren<T>) {
   };
 
   const handleConfirm = () => {
-    confirm(value);
+    confirm && confirm(value);
   };
   return (
     <div className={`edit ${className}`}>
+      {/* // eslint-disable-next-line 
+      // @ts-ignore */}
       <input ref={inputRef} type="text" value={value} onChange={handleChange} />
       <Icon className="icon" width={15} height={10.5} type={IconTypes.CONFIRM} onClick={handleConfirm} />
     </div>

@@ -26,7 +26,7 @@ export function MessageName <T extends MessageNameProps>(
   && message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP;
 
   if (!show || showType === messageShowType.NONE) {
-    return null;
+    return <></>;
   }
 
   if (CustomName) {

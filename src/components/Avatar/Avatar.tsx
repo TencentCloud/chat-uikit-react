@@ -46,7 +46,7 @@ export function Avatar<T extends AvatarProps>(props:T):React.ReactElement {
     if (isEdit && update) {
       window.addEventListener('mouseup', toggle, false);
       avatarRef?.current?.addEventListener('mouseup', stopImmediatePropagation);
-      setAvatarListWidth(avatarListRef?.current?.clientWidth);
+      avatarListRef?.current?.clientWidth && setAvatarListWidth(avatarListRef.current.clientWidth);
     } else {
       window.removeEventListener('mouseup', toggle, false);
       avatarRef?.current?.removeEventListener('mouseup', stopImmediatePropagation);
@@ -57,7 +57,7 @@ export function Avatar<T extends AvatarProps>(props:T):React.ReactElement {
     };
   }, [isEdit]);
 
-  const stopImmediatePropagation = (e) => {
+  const stopImmediatePropagation = (e: Event) => {
     e.stopPropagation();
   };
 
@@ -67,7 +67,7 @@ export function Avatar<T extends AvatarProps>(props:T):React.ReactElement {
 
   const handleUpdate = (value:string) => {
     toggle();
-    update(value);
+    update && update(value);
   };
 
   return (
@@ -79,6 +79,8 @@ export function Avatar<T extends AvatarProps>(props:T):React.ReactElement {
         objectFit: 'cover',
         width: `${size}px`,
       }}
+      // eslint-disable-next-line
+      // @ts-ignore
       ref={avatarRef}
       role="button"
       tabIndex={0}
@@ -116,6 +118,8 @@ export function Avatar<T extends AvatarProps>(props:T):React.ReactElement {
         update && isEdit && (
           <ul
             className="tui-kit-avatar-list"
+            // eslint-disable-next-line 
+            // @ts-ignore
             ref={avatarListRef}
             style={{
               left: `-${(avatarListWidth - size) / 2}px`,

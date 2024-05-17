@@ -15,11 +15,11 @@ function MessageCustomWithContext <T extends MessageContextProps>(
   } = props;
   const { t } = useTranslation();
   const { MessageCustomPlugins } = useComponentContext('MessageCustom');
-  const handleContext = (data) => {
+  const handleContext = (data: any) => {
     if (data.data === 'Hyperlink') {
       const extension = JSONStringToParse(data?.extension);
       if (extension?.item) {
-        return extension?.item.map((item) => <a target="_blank" key={item.value} href={item.value} rel="noreferrer">{item.value}</a>);
+        return extension?.item.map((item: any) => <a target="_blank" key={item.value} href={item.value} rel="noreferrer">{item.value}</a>);
       }
       if (extension?.hyperlinks_text) {
         const hyperlinks = extension.hyperlinks_text;
@@ -38,6 +38,8 @@ function MessageCustomWithContext <T extends MessageContextProps>(
     const botMessage = JSONStringToParse(data.data);
     if (botMessage?.chatbotPlugin === 1 && botMessage?.src === 15 && (botMessage?.subtype === 'welcome_msg' || botMessage?.subtype === 'clarify_msg')) {
       return (
+        // eslint-disable-next-line
+        // @ts-ignore
         <MessageCustomPlugins data={JSONStringToParse(data.data).content} />
       );
     }
@@ -45,7 +47,7 @@ function MessageCustomWithContext <T extends MessageContextProps>(
   };
 
   return (
-    <div className={`bubble message-custom bubble-${message.flow}  ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`}>
+    <div className={`bubble message-custom bubble-${message?.flow}  ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`}>
       {handleContext(context?.custom)}
       {children}
     </div>

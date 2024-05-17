@@ -71,14 +71,14 @@ export const chatReducer = (
   switch (action?.type) {
     case CONSTANT_DISPATCH_TYPE.SET_CONVERSATION_PRPFILE:
       return { ...state, conversation: action.value };
-    // messageList 设置
+    // messageList set
     case CONSTANT_DISPATCH_TYPE.SET_MESSAGELIST:
       return {
         ...state,
         messageList: action.value,
       };
     case CONSTANT_DISPATCH_TYPE.SET_EDIT_MESSAGE:
-      return {
+      return state.messageList &&  action.value && {
         ...state,
         messageList: [...handleEditMessage(state.messageList, action.value)],
       };
@@ -97,7 +97,7 @@ export const chatReducer = (
     case CONSTANT_DISPATCH_TYPE.SET_VIDEO_SOURCE:
       return { ...state, vidoeSource: action.value };
     case CONSTANT_DISPATCH_TYPE.UPDATE_UPLOAD_PENDING_MESSAGE_LIST:
-      return {
+      return state?.uploadPendingMessageList && action.value && {
         ...state,
         uploadPendingMessageList: [
           ...handleUploadPendingMessage(state.uploadPendingMessageList, action.value),

@@ -32,14 +32,14 @@ export function ConversationCreatGroupDetail(props: ConversationCreatGroupDetail
   const { t } = useTranslation();
   const { setActiveConversation, myProfile } = useTUIKitContext();
   const temp = [...profileList];
-  temp.unshift(myProfile);
+  myProfile && temp.unshift(myProfile);
   const name = temp.map((item) => item.nick || item.userID).toString();
   const [groupName, setGroupName] = useState(
     name.length >= 15 ? `${name.slice(0, 12)}...` : name,
   );
   const [groupID, setGroupID] = useState('');
-  const [groupType, setGroupType] = useState('Work');
-  const groupInfoChange = (e, type) => {
+  const [groupType, setGroupType] = useState<string>('Work');
+  const groupInfoChange = (e: any, type: string) => {
     const { value } = e.target;
     switch (type) {
       case 'name':
@@ -57,7 +57,7 @@ export function ConversationCreatGroupDetail(props: ConversationCreatGroupDetail
   const showGroupTypeInfo = () => {
     setPageState(PageStateTypes.GROUP_TYPE);
   };
-  const getDefaultAvatar = (type) => {
+  const getDefaultAvatar = (type: string) => {
     switch (type) {
       case 'Work':
         return defaultGroupAvatarWork;
@@ -71,7 +71,9 @@ export function ConversationCreatGroupDetail(props: ConversationCreatGroupDetail
         return '';
     }
   };
-  const getDes = () => typeInfoList.find((item) => item.type === groupType).des;
+  // eslint-disable-next-line
+  // @ts-ignore
+  const getDes = () => typeInfoList?.find((item: any) => item.type === groupType).des;
 
   const next = async () => {
     const memberList = profileList.map((item) => ({
@@ -79,10 +81,15 @@ export function ConversationCreatGroupDetail(props: ConversationCreatGroupDetail
     }));
     const avatar = getDefaultAvatar(groupType);
     const conversation = await createConversation({
-      name: groupName, type: GroupType[groupType], groupID, avatar, memberList,
+      name: groupName,
+      // eslint-disable-next-line
+      // @ts-ignore
+      type: GroupType[groupType], 
+      groupID,
+      avatar, 
+      memberList,
     });
     setActiveConversation(conversation);
-    // 切换会话
     TUIConversationService.switchConversation(conversation?.conversationID);
     setConversationCreated(false);
   };

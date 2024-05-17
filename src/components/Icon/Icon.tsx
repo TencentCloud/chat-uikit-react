@@ -28,13 +28,13 @@ export function Icon(props: React.PropsWithChildren<IconProps>) {
   };
   return (
     <div
-      className={`tui-kit-icon ${changeTypeToIconClassName(type)} ${className}`}
+      className={`tui-kit-icon ${type && changeTypeToIconClassName(type)} ${className}`}
       role="button"
       tabIndex={0}
       style={iconStyle}
       onClick={onClick}
     >
-      {children || changeTypeToIconComponent(type)}
+      {children || (type && changeTypeToIconComponent(type))}
     </div>
   );
 }

@@ -11,9 +11,9 @@ function MessageLocationWithContext <T extends MessageContextProps>(
   } = props;
 
   return (
-    <a className="bubble message-location" href={context.href} target="_blank" title="点击查看详情" rel="noreferrer">
-      <span>{context.description}</span>
-      <img src={context.url} alt="" />
+    <a className="bubble message-location" href={context?.href} target="_blank" title="点击查看详情" rel="noreferrer">
+      <span>{context?.description}</span>
+      <img src={context?.url} alt="" />
       {children}
     </a>
   );

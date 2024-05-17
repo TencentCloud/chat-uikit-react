@@ -15,7 +15,7 @@ function MessageRevokeWithContext <T extends MessageContextProps>(
   const { operateMessage } = useTUIChatActionContext('MessageRevokeWithContext');
 
   const handleRevoke = useCallback(() => {
-    operateMessage({
+    operateMessage && message && operateMessage({
       [MESSAGE_OPERATE.REVOKE]: message,
     });
   }, [operateMessage]);

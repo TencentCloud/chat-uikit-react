@@ -35,7 +35,7 @@ export interface TUIMessageContextValue {
   Progress?: React.ComponentType<{message: Message}>,
 }
 
-export const TUIMessageContext = React.createContext<TUIMessageContextValue>(undefined);
+export const TUIMessageContext = React.createContext<TUIMessageContextValue>({});
 export function TUIMessageContextProvider({ children, value }:PropsWithChildren<{
     value: TUIMessageContextValue
 }>):React.ReactElement {

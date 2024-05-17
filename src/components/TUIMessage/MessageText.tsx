@@ -18,7 +18,7 @@ function MessageTextWithContext <T extends MessageContextProps>(
   } = props;
   const { MessageTextPlugins } = useComponentContext('MessageText');
   const { firstSendMessage } = useTUIChatStateContext('MessageText');
-  if (MessageTextPlugins && message.flow === 'in' && (firstSendMessage?.time <= message?.time)) {
+  if (MessageTextPlugins && message?.flow === 'in' && (firstSendMessage && firstSendMessage?.time <= message?.time)) {
     return (
       <div className={`bubble message-text bubble-${message.flow} ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`}>
         <MessageTextPlugins data={message} />
@@ -34,10 +34,10 @@ function MessageTextWithContext <T extends MessageContextProps>(
     return text.replace(urlRegex, (website) => `<a class='website' href='${website}' target='_blank'>${website}</a>`);
   };
   return (
-    <div className={`bubble message-text bubble-${message.flow} ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`}>
+    <div className={`bubble message-text bubble-${message?.flow} ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`}>
       <div className="message-text-content">
-        {context.text.map((item, index) => {
-          const key = message.ID + index;
+        {context?.text.map((item: any, index: number) => {
+          const key = message && message?.ID + index;
           if (item.name === 'text') {
             return (
               <p

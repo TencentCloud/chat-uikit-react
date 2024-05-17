@@ -8,8 +8,8 @@ import '@tencentcloud/chat-uikit-react/dist/cjs/index.css';
 import './style.scss';
 import languageIcon from './assets/image/language.svg';
 import { sampleResources } from '../locales/index';
-import { genTestUserSig } from '../debug/GenerateTestUserSig'
-
+import { genTestUserSig } from '../debug/GenerateTestUserSig';
+import { ChatSDK } from '@tencentcloud/chat';
 if (i18next.language === 'zh') {
   i18next.addResources(i18next.language, 'translation', sampleResources?.zh);
 } else {
@@ -17,7 +17,7 @@ if (i18next.language === 'zh') {
 }
 
 export default function SampleChat() {
-  const [chat, setChat] = useState<any>();
+  const [chat, setChat] = useState<ChatSDK>();
   const [currentLng, setCurrentLng] = useState({
     label: 'English',
     value: 'en'
@@ -42,7 +42,6 @@ export default function SampleChat() {
       userID,
       userSig: genTestUserSig(userID).userSig,
       useUploadPlugin: true,
-      useProfanityFilterPlugin: true,
     };
     TUILogin.login(loginInfo).then((res: any) => {
       const { chat } = TUILogin.getContext();
@@ -50,10 +49,7 @@ export default function SampleChat() {
     });
   }
   useEffect(() => {
-    (async ()=>{
-      const chat = await init()
-      setChat(chat)
-    })()
+    init();
   }, [])
 
   const changeLanguage = (lng: any) => {

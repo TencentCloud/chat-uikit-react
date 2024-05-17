@@ -30,6 +30,8 @@ function UnMemoizedTUIContactList<T>(): React.ReactElement {
     acceptFriendApplication(userID);
     setActiveContact();
   };
+  // eslint-disable-next-line
+  // @ts-ignore
   return (
     isShowContactList && (
       <div className={`tui-contacts-list ${isH5 ? 'tui-contacts-list-h5' : ''} `}>
@@ -45,7 +47,7 @@ function UnMemoizedTUIContactList<T>(): React.ReactElement {
           </div>
         </div>
         {iShowFriendApplication
-          && friendApplicationList.map((item, index) => {
+          && friendApplicationList?.map((item, index) => {
             const {
               userID, avatar, nick, wording, type,
             } = item;
@@ -106,7 +108,7 @@ function UnMemoizedTUIContactList<T>(): React.ReactElement {
           </div>
         </div>
         {isShowBlocklist
-          && blocklistProfile.map((item, index) => {
+          && blocklistProfile?.map((item, index) => {
             const { userID, avatar, nick } = item;
             return (
               <div
@@ -137,7 +139,7 @@ function UnMemoizedTUIContactList<T>(): React.ReactElement {
           </div>
         </div>
         {iShowFriends
-          && friendList.map((item, index) => {
+          && friendList?.map((item, index) => {
             const { userID, avatar, nick } = item.profile;
             return (
               <div

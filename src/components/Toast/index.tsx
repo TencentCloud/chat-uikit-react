@@ -24,9 +24,9 @@ T extends ToastProps
   const root = document.body;
 
   const elements = document.createElement('div');
-
-  elements.innerText = text;
-
+  if(text) {
+    elements.innerText = text ;
+  }
   elements.className = `toast ${className} ${type}`;
 
   root.appendChild(elements);

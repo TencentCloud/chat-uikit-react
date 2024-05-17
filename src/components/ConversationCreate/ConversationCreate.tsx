@@ -58,6 +58,8 @@ export function ConversationCreate<T extends ConversationCreateProps>(props:T) {
           setIsCreateGroup={setIsCreateGroup}
           className={className}
           selectList={selectList}
+          // eslint-disable-next-line
+          // @ts-ignore
           setSelectList={setSelectList}
           conversationList={conversationList}
           setConversationCreated={setConversationCreated}
@@ -67,7 +69,9 @@ export function ConversationCreate<T extends ConversationCreateProps>(props:T) {
         <ConversationCreatGroupDetail
           pageState={pageState}
           setPageState={setPageState}
-          profileList={selectList.map((item) => item.profile)}
+          profileList={selectList.map((item: any) => item?.profile)}
+          // eslint-disable-next-line
+          // @ts-ignore
           createConversation={createConversation}
           setConversationCreated={setConversationCreated}
         />
