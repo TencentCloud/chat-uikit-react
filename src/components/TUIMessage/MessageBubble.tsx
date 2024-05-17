@@ -47,26 +47,28 @@ function MessageBubbleWithContext <T extends MessageBubbleProps>(
   ) && message?.status === MESSAGE_STATUS.UNSEND);
 
   const handleMouseEnter = () => {
-    setActiveMessageID(message.ID);
+    setActiveMessageID && message && setActiveMessageID(message?.ID);
     setPluginsShow(true);
   };
   const handleMouseLeave = () => {
-    setActiveMessageID(message.ID);
+    setActiveMessageID && message && setActiveMessageID(message.ID);
     setPluginsShow(false);
   };
 
   const activeMessage = () => {
-    setActiveMessageID(message.ID);
+    setActiveMessageID && message && setActiveMessageID(message.ID);
   };
 
   useEffect(() => {
-    if (activeMessageID !== message.ID) {
+    if (activeMessageID !== message?.ID) {
       setPluginsShow(false);
     }
   }, [activeMessageID]);
 
   const handleReplyMessage = () => {
-    setHighlightedMessageId(replyMessage?.ID);
+    // eslint-disable-next-line
+    // @ts-ignore
+    setHighlightedMessageId  && setHighlightedMessageId(replyMessage?.ID);
   };
 
   return (

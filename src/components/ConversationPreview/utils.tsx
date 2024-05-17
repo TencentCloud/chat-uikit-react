@@ -27,12 +27,13 @@ export const getDisplayTitle = (
   }
   const handleTitle = (str:string) => {
     const tempStr = str.toLocaleLowerCase();
-    const pos = tempStr.indexOf(searchValue.toLocaleLowerCase());
+    const pos = searchValue && tempStr.indexOf(searchValue.toLocaleLowerCase());
+    if (pos === '') return <></>
     return (
       <div>
         <span>{str.slice(0, pos)}</span>
-        <span style={{ color: highlightColor }}>{str.slice(pos, pos + searchValue.length)}</span>
-        <span>{str.slice(pos + searchValue.length)}</span>
+        <span style={{ color: highlightColor }}>{pos && str.slice(pos, pos + searchValue.length)}</span>
+        <span>{pos && str.slice(pos + searchValue.length)}</span>
       </div>
     );
   };
@@ -94,6 +95,8 @@ export const getDisplayMessage = (
 };
 interface TProfile extends Profile, Group {}
 export const getMessageProfile = (conversation: Conversation):TProfile => {
+  // eslint-disable-next-line
+  // @ts-ignore
   if (!conversation) return null;
   let result = {};
   const { type, groupProfile, userProfile } = conversation;

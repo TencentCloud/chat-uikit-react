@@ -8,11 +8,11 @@ import { useTUIChatActionContext, useTUIKitContext } from '../../../context';
 import { Toast } from '../../Toast';
 
 interface MessageHandlerProps {
-  handleError?: (error) => void,
+  handleError?: (error: any) => void,
   message?: Message,
 }
 
-export const useMessageHandler = (props?: MessageHandlerProps) => {
+export const useMessageHandler = (props: MessageHandlerProps) => {
   const {
     message,
     handleError,
@@ -26,19 +26,19 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
   const { t } = useTranslation();
   const { chat } = useTUIKitContext('useDeleteHandler');
 
-  const handleDelMessage = useCallback(async (event?) => {
+  const handleDelMessage = useCallback(async (event?: any) => {
     event.preventDefault();
     if (!message) return;
     const messageModel = TUIStore.getMessageModel(message?.ID);
     messageModel.deleteMessage();
   }, [message]);
 
-  const handleRevokeMessage = useCallback(async (event?) => {
+  const handleRevokeMessage = useCallback(async (event?: any) => {
     event.preventDefault();
     if (!message) return;
     const messageModel = TUIStore.getMessageModel(message?.ID);
     messageModel.revokeMessage().then(() => {
-      editLocalMessage(message);
+      editLocalMessage && editLocalMessage(message);
       enableSampleTaskStatus('revokeMessage');
     }).catch((error: any) => {
       if (handleError) {
@@ -54,7 +54,7 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
     });
   }, [message]);
 
-  const handleReplyMessage = useCallback((event?) => {
+  const handleReplyMessage = useCallback((event?:any) => {
     event.preventDefault();
     if (!message?.ID || !chat || !operateMessage) {
       return;
@@ -64,11 +64,11 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
     });
   }, [message]);
 
-  const handleCopyMessage = useCallback((event?) => {
+  const handleCopyMessage = useCallback((event?:any) => {
     event.preventDefault();
     if (navigator.clipboard) {
       // clipboard api
-      navigator.clipboard.writeText(message.payload.text);
+      navigator.clipboard.writeText(message?.payload.text);
     } else {
       const textarea = document.createElement('textarea');
       document.body.appendChild(textarea);
@@ -76,7 +76,7 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
       textarea.style.position = 'fixed';
       textarea.style.clip = 'rect(0 0 0 0)';
       textarea.style.top = '10px';
-      textarea.value = message.payload.text;
+      textarea.value = message?.payload.text;
       // select
       textarea.select();
       // copy
@@ -86,10 +86,10 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
     }
   }, [message]);
 
-  const handleResendMessage = useCallback(async (event?) => {
+  const handleResendMessage = useCallback(async () => {
     try {
-      const res = await chat.resendMessage(message);
-      editLocalMessage(res?.data?.message);
+      const res = message && await chat.resendMessage(message);
+      editLocalMessage && editLocalMessage(res?.data?.message);
     } catch (error: any) {
       if (handleError) {
         handleError({
@@ -103,7 +103,7 @@ export const useMessageHandler = (props?: MessageHandlerProps) => {
     }
   }, [message]);
 
-  const handleForWardMessage = useCallback(async (event?) => {
+  const handleForWardMessage = useCallback(async (event?:any) => {
     event.preventDefault();
     if (!message?.ID || !chat || !operateMessage) {
       return;

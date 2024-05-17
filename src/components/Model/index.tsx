@@ -4,7 +4,7 @@ import './styles/index.scss';
 
 interface PopupProps {
   className?: string,
-  onClick?: (e?) => void,
+  onClick?: (e: Event) => void,
 }
 
 export function Model<
@@ -17,7 +17,7 @@ T extends PopupProps
   } = props;
 
   return (
-    <div role="button" tabIndex={0} className={`model ${className}`} onClick={onClick}>
+    <div role="button" tabIndex={0} className={`model ${className}`} onClick={(e: any) => onClick && onClick(e)}>
       {children}
     </div>
   );

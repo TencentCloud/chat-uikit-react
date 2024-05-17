@@ -23,12 +23,14 @@ export function InputQuoteDefalut <T extends InputQuoteProps>(
   const { cloudCustomData, message } = useHandleQuoteMessage(propsMessage);
 
   const handleClose = useCallback(() => {
-    operateMessage({
+    operateMessage && operateMessage({
+      // eslint-disable-next-line
+      // @ts-ignore
       [MESSAGE_OPERATE.QUOTE]: null,
     });
   }, [operateMessage]);
 
-  const context = cloudCustomData?.messageReply;
+  const context: any = cloudCustomData?.messageReply;
 
   return context && (
     <div className="input-quote">

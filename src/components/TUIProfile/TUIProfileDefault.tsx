@@ -11,12 +11,12 @@ import { Icon, IconTypes } from '../Icon';
 import { handleDisplayAvatar } from '../untils';
 import { ProfileParams } from './hooks';
 
-const gender = {
+const gender: any = {
   [TencentCloudChat.TYPES.GENDER_UNKNOWN]: 'unknow',
   [TencentCloudChat.TYPES.GENDER_MALE]: 'male',
   [TencentCloudChat.TYPES.GENDER_FEMALE]: 'female',
 };
-const allowType = {
+const allowType: any = {
   [TencentCloudChat.TYPES.ALLOW_TYPE_ALLOW_ANY]: 'allowAny',
   [TencentCloudChat.TYPES.ALLOW_TYPE_NEED_CONFIRM]: 'needConfirm',
   [TencentCloudChat.TYPES.ALLOW_TYPE_DENY_ANY]: 'denyAny',
@@ -108,7 +108,7 @@ function TUIProfileDefaultWithContext<T extends TUIProfileDefaultProps>(
     return `${year}${month}${day}`;
   };
 
-  let editListMap = [
+  let editListMap: any = [
     {
       name: 'Signature',
       value: userInfo?.selfSignature,
@@ -117,7 +117,7 @@ function TUIProfileDefaultWithContext<T extends TUIProfileDefaultProps>(
     },
     {
       name: 'Gender',
-      value: t(gender[userInfo?.gender]?.replace(
+      value: t( userInfo?.gender && gender[userInfo?.gender]?.replace(
         gender[userInfo?.gender][0],
         gender[userInfo?.gender][0]?.toLocaleUpperCase(),
       ) ? `TUIProfile.${gender[userInfo?.gender]?.replace(
@@ -148,9 +148,9 @@ function TUIProfileDefaultWithContext<T extends TUIProfileDefaultProps>(
     },
     {
       name: 'AllowType',
-      value: t(`TUIProfile.${allowType[userInfo?.allowType]?.replace(
-        allowType[userInfo?.allowType][0],
-        allowType[userInfo?.allowType][0]?.toLocaleUpperCase(),
+      value: t(`TUIProfile.${allowType[userInfo?.allowType || '']?.replace(
+        userInfo && allowType[userInfo?.allowType][0],
+        userInfo && allowType[userInfo?.allowType][0]?.toLocaleUpperCase(),
       )}`),
       type: 'select',
       children: (
@@ -191,14 +191,14 @@ function TUIProfileDefaultWithContext<T extends TUIProfileDefaultProps>(
     },
   ];
   if (isH5) {
-    editListMap = editListMap.filter((item) => item.name !== 'Birthday');
+    editListMap = editListMap.filter((item: any) => item.name !== 'Birthday');
   }
   const handleSetEditName = (name:string) => {
     setIsEditName(name);
   };
 
-  const confirm = (options) => {
-    update(options);
+  const confirm = (options: any) => {
+    update && update(options);
     setIsEditName('');
   };
 
@@ -228,12 +228,12 @@ function TUIProfileDefaultWithContext<T extends TUIProfileDefaultProps>(
   };
 
   // edit gender
-  const editGender = (data) => {
+  const editGender = (data: any) => {
     confirm({ gender: data.value });
   };
 
   // edit allowType
-  const editAllowType = (data) => {
+  const editAllowType = (data: any) => {
     confirm({ allowType: data.value });
   };
 
@@ -251,14 +251,14 @@ function TUIProfileDefaultWithContext<T extends TUIProfileDefaultProps>(
           width={9}
           height={16}
           type={IconTypes.BACK}
-          onClick={() => { setTUIProfileShow(false); }}
+          onClick={() => { setTUIProfileShow && setTUIProfileShow(false); }}
         />
         <h1>{t('TUIProfile.Personal information')}</h1>
       </header>
       <main className="tui-profile-main">
         <div className="tui-profile-avatar">
           <Avatar
-            image={handleDisplayAvatar(userInfo?.avatar)}
+            image={userInfo && handleDisplayAvatar(userInfo?.avatar)}
             size={94}
             update={editAvatar}
             list={avatarList}
@@ -281,7 +281,7 @@ function TUIProfileDefaultWithContext<T extends TUIProfileDefaultProps>(
       </main>
       <ul className="tui-profile-list">
         {
-          editListMap.map((item) => {
+          editListMap.map((item: any) => {
             const key = `${item.name}`;
             return (
               <li className="tui-profile-list-item" key={key}>

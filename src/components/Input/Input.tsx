@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, {
   useRef, useState, useImperativeHandle, InputHTMLAttributes,
 } from 'react';
@@ -25,10 +26,10 @@ export interface InputRef {
   input: HTMLInputElement | null;
 }
 export const Input = React.forwardRef<InputRef, InputProps>(
-  (props:InputProps, ref):React.ReactElement => {
+  (props: InputProps, ref): React.ReactElement => {
     const {
-      className = '',
-      customClassName = '',
+      className = "",
+      customClassName = "",
       placeholder,
       clearable = false,
       prefix,
@@ -37,25 +38,25 @@ export const Input = React.forwardRef<InputRef, InputProps>(
       onBlur,
       onFocus,
       onKeyDown,
-      value: propsValue = '',
-      border = '',
+      value: propsValue = "",
+      border = "",
       disabled = false,
       maxLength = undefined,
     } = props;
 
     const [focused, setFocused] = useState<boolean>(false);
-    const enterCodeList = ['Enter', 'NumpadEnter'];
+    const enterCodeList = ["Enter", "NumpadEnter"];
     const [value, setValue] = useState(propsValue);
     const inputRef = useRef<HTMLInputElement>(null);
-    const handleFocus = (e) => {
+    const handleFocus = (e: any) => {
       setFocused(true);
       onFocus?.(e);
     };
-    const handleBlur = (e) => {
+    const handleBlur = (e: any) => {
       setFocused(false);
       onBlur?.(e);
     };
-    const handleEnterKeyDown = (e) => {
+    const handleEnterKeyDown = (e: any) => {
       if (enterCodeList.indexOf(e?.key) > -1 && onKeyDown) {
         e?.preventDefault();
         onKeyDown(e);
@@ -64,7 +65,9 @@ export const Input = React.forwardRef<InputRef, InputProps>(
     const clearInput = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
       setValue('');
       focus();
-      const currentTarget = inputRef.current.cloneNode(true) as HTMLInputElement;
+      const currentTarget = inputRef?.current?.cloneNode(
+        true
+      ) as HTMLInputElement;
       const event = Object.create(e, {
         target: { value: currentTarget },
         currentTarget: { value: currentTarget },
@@ -109,9 +112,9 @@ export const Input = React.forwardRef<InputRef, InputProps>(
           />
           {suffix}
           {(clearable && value)
-          && <Icon type={IconTypes.CLEAR} height={13} width={13} onClick={clearInput} />}
+          && <Icon type={IconTypes.CLEAR} height={13} width={13} onClick={(e: any) => {clearInput(e)}} />}
         </div>
       </div>
     );
-  },
+  }
 );

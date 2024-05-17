@@ -27,10 +27,12 @@ function UnMemoizedTUIProfile<T extends TUIProfileProps>(
 
   return (
     <>
+    {/* //eslint-disable-next-line 
+    @ts-ignore */}
       <Profile
         profile={myProfile}
         handleAvatar={() => {
-          setTUIProfileShow(true);
+          setTUIProfileShow && setTUIProfileShow(true);
         }}
       />
       {TUIProfileShow && (

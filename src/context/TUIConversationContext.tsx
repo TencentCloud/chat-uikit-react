@@ -8,9 +8,9 @@ export interface TUIConversationContextValue {
   filterConversation?:(conversationList: Array<Conversation>) => Array<Conversation>,
 }
 
-export const TUIConversationContext = React.createContext<TUIConversationContextValue>(undefined);
+export const TUIConversationContext = React.createContext<TUIConversationContextValue>({});
 export function TUIConversationProvider({ children, value }:React.PropsWithChildren<{
-  value?: TUIConversationContextValue
+  value: TUIConversationContextValue
 }>) {
   return (
     <TUIConversationContext.Provider value={value}>

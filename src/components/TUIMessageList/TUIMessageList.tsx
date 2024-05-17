@@ -53,20 +53,19 @@ function TUIMessageListWithContext <T extends MessageListProps>(
 
   const loadMore = propsLoadMore || TUIMessageListConfig?.loadMore || contextLoadMore;
 
-  const elements = useMessageListElement({
+  const elements = contextMessageList && useMessageListElement({
     enrichedMessageList: contextMessageList,
     TUIMessage,
     intervalsTimer,
   });
   useEffect(() => {
-    // messageList 滑动到底部
     (async () => {
       const parentElement = ulElement?.parentElement?.parentElement;
       if (
         !isCompleted
-        && parentElement?.clientHeight >= ulElement?.clientHeight
+        && parentElement && parentElement?.clientHeight >= ulElement?.clientHeight
       ) {
-        await loadMore();
+        loadMore && await loadMore();
       }
       if (ulElement?.children) {
         const HTMLCollection = ulElement?.children || [];
@@ -92,7 +91,7 @@ function TUIMessageListWithContext <T extends MessageListProps>(
       const timer = setTimeout(() => {
         children[children.length - 1].classList.remove('high-lighted');
         clearTimeout(timer);
-        setHighlightedMessageId('');
+        setHighlightedMessageId && setHighlightedMessageId('');
       }, 1000);
     }
   }, [highlightedMessageId]);
@@ -109,7 +108,7 @@ function TUIMessageListWithContext <T extends MessageListProps>(
       >
         <ul ref={setUlElement}>
           {
-              elements?.length > 0 ? elements : <EmptyStateIndicator listType="message" />
+              elements?.length && elements.length > 0 ? elements : <EmptyStateIndicator listType="message" />
             }
         </ul>
       </InfiniteScroll>

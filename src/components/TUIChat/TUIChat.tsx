@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, {
   PropsWithChildren, useEffect, useMemo, useReducer, useRef, useState,
 } from 'react';
@@ -122,14 +123,14 @@ function TUIChatInner <T extends TUIChatInnerProps>(
     TUIMessageListConfig,
   } = props;
 
-  const [state, dispatch] = useReducer<ChatStateReducer>(chatReducer, {
+  const [state, dispatch] = useReducer<any>(chatReducer, {
     ...initialState,
     conversation,
   });
 
   const messageListRef = useRef(null);
   const textareaRef = useRef<HTMLTextAreaElement>();
-  const chatStateContextValue = useCreateTUIChatStateContext({
+  const chatStateContextValue = state && useCreateTUIChatStateContext({
     chat,
     conversation,
     messageListRef,
@@ -147,6 +148,8 @@ function TUIChatInner <T extends TUIChatInnerProps>(
   } = useHandleMessageList({
     chat,
     conversation,
+    // eslint-disable-next-line
+    // @ts-ignore
     state,
     dispatch,
     filterMessage,
@@ -159,11 +162,12 @@ function TUIChatInner <T extends TUIChatInnerProps>(
     setHighlightedMessageId,
     setActiveMessageID,
   } = useHandleMessage({
+    // eslint-disable-next-line 
+    // @ts-ignore
     state,
     dispatch,
   });
 
-  // 消息 messageList
   useEffect(() => {
     TUIStore.watch(StoreName.CHAT, {
       messageList: onMessageListUpdated,
@@ -179,6 +183,8 @@ function TUIChatInner <T extends TUIChatInnerProps>(
 
   const onMessageListUpdated = (list: IMessageModel[]) => {
     const messageList = list.filter((message) => !message.isDeleted);
+    // eslint-disable-next-line
+      // @ts-ignore
     dispatch({
       type: CONSTANT_DISPATCH_TYPE.SET_MESSAGELIST,
       value: filterMessage ? filterMessage(messageList) : messageList,
@@ -187,6 +193,8 @@ function TUIChatInner <T extends TUIChatInnerProps>(
 
   const isCompletedUpdated = (flag: boolean) => {
     if (flag) {
+      // eslint-disable-next-line
+      // @ts-ignore
       dispatch({
         type: CONSTANT_DISPATCH_TYPE.SET_NO_MORE,
         value: flag,
@@ -194,7 +202,7 @@ function TUIChatInner <T extends TUIChatInnerProps>(
     }
   };
 
-  // 加载历史消息 | Load historical messages
+  // Load historical messages
   const loadMore = async () => {
     TUIChatService.getMessageList();
   };
@@ -202,15 +210,20 @@ function TUIChatInner <T extends TUIChatInnerProps>(
   const setFirstSendMessage = async (message: any) => {
     if (
       !(message.type === 'TIMCustomElem' && JSONStringToParse(message.payload.data)?.src === 7)
+      // eslint-disable-next-line
+      // @ts-ignore
       && !state.firstSendMessage
     ) {
+      // eslint-disable-next-line
+      // @ts-ignore
       dispatch({
         type: CONSTANT_DISPATCH_TYPE.SET_FIRST_SEND_MESSAGE,
         value: message,
       });
     }
   };
-
+      // eslint-disable-next-line
+      // @ts-ignore
   const chatActionContextValue: TUIChatActionContextValue = useMemo(
     () => ({
       editLocalMessage,
@@ -255,6 +268,8 @@ function TUIChatInner <T extends TUIChatInnerProps>(
 
   return (
     <div className={`chat ${className}`}>
+            {/* // eslint-disable-next-line
+      // @ts-ignore */}
       <TUIChatStateContextProvider value={chatStateContextValue}>
         <TUIChatActionProvider value={chatActionContextValue}>
           <ComponentProvider value={componentContextValue}>

@@ -5,7 +5,7 @@ import {
 } from '@tencentcloud/chat-uikit-engine';
 import { MESSAGE_OPERATE } from '../../../constants';
 import {
-  useTUIChatActionContext, useTUIChatStateContext, useTUIKitContext,
+  useTUIChatStateContext, useTUIKitContext,
 } from '../../../context';
 
 export function useHandleForwardMessage(msg?:Message) {
@@ -16,11 +16,11 @@ export function useHandleForwardMessage(msg?:Message) {
   const [conversationList, setConversationList] = useState([]);
   const { chat } = useTUIKitContext('TUIChat');
 
-  const message = msg || operateData[MESSAGE_OPERATE.FORWARD];
+  const message = msg || (operateData && operateData[MESSAGE_OPERATE.FORWARD]);
 
   const sendForwardMessage = (list:Array<Conversation>) => {
     list.map((item:Conversation) => {
-      TUIChatService.sendForwardMessage([item], [message]);
+      message &&  TUIChatService.sendForwardMessage([item], [message]);
       return item;
     });
   };
@@ -29,7 +29,7 @@ export function useHandleForwardMessage(msg?:Message) {
     (async () => {
       const res = await chat.getConversationList();
       setConversationList(res?.data?.conversationList.filter(
-        (item) => item.type !== TencentCloudChat.TYPES.CONV_SYSTEM,
+        (item: any) => item.type !== TencentCloudChat.TYPES.CONV_SYSTEM,
       ));
     })();
   }, [chat]);

@@ -138,7 +138,6 @@ export function handleTipMessageShowContext(message: Message) {
       options.text = `${t('message.tip.member')}：${userName} ${t('message.tip.by revoked administrator')}`;
       break;
     case TencentCloudChat.TYPES.GRP_TIP_GRP_PROFILE_UPDATED:
-      // options.text =  `${userName} 修改群组资料`;
       options.text = handleTipGrpUpdated(message);
       break;
     case TencentCloudChat.TYPES.GRP_TIP_MBR_PROFILE_UPDATED:
@@ -448,7 +447,7 @@ export function formatTime(secondTime:number) {
   if (time >= 3600) {
     hour = parseInt(`${time / 3600}`, 10) < 10 ? `0${parseInt(`${time / 3600}`, 10)}` : parseInt(`${time / 3600}`, 10);
     minite = parseInt(`${(time % 60) / 60}`, 10) < 10 ? `0${parseInt(`${(time % 60) / 60}`, 10)}` : parseInt(`${(time % 60) / 60}`, 10);
-    seconds = time % 3600 < 10 ? `0${time % 3600}` : time % 3600;
+    seconds  = time % 3600 < 10 ? parseInt(`0${time % 3600}`) : time % 3600;
     if (seconds > 60) {
       minite = parseInt(`${seconds / 60}`, 10) < 10 ? `0${parseInt(`${seconds / 60}`, 10)}` : parseInt(`${seconds / 60}`, 10);
       seconds = seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60;

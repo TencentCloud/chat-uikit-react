@@ -15,7 +15,7 @@ import { useMessageContextHandler } from './hooks';
 import { MessageStatus } from './MessageStatus';
 import { useTUIMessageContext } from '../../context';
 
-const components = {
+const components: any = {
   [TencentCloudChat.TYPES.MSG_TEXT]: MessageText,
   [TencentCloudChat.TYPES.MSG_FACE]: MessageFace,
   [TencentCloudChat.TYPES.MSG_IMAGE]: MessageImage,
@@ -51,7 +51,7 @@ function MessageContextWithContext <T extends MessageContextProps>(
     LocationElement,
   } = useTUIMessageContext('MessageCustom');
 
-  const CustemComponents = {
+  const CustemComponents: any = {
     [TencentCloudChat.TYPES.MSG_TEXT]: TextElement,
     [TencentCloudChat.TYPES.MSG_FACE]: FaceElement,
     [TencentCloudChat.TYPES.MSG_IMAGE]: ImageElement,
@@ -63,7 +63,7 @@ function MessageContextWithContext <T extends MessageContextProps>(
     [TencentCloudChat.TYPES.MSG_LOCATION]: LocationElement,
   };
 
-  const Elements = CustemComponents[message?.type] || components[message?.type];
+  const Elements = message?.type && (CustemComponents[message.type] || components[message.type]);
   return Elements
   && (
   <Elements context={context} message={message}>

@@ -29,7 +29,7 @@ T extends SelectProps
 
   const [checked, setChecked] = useState(propsChecked);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked);
     if (onChange) {
       onChange({

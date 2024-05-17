@@ -41,7 +41,7 @@ export function UnMemoizedAddFriendInfo<T extends Props>(
     setIsEditRemark('');
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setWording(e.target.value);
   };
   return (
@@ -51,7 +51,7 @@ export function UnMemoizedAddFriendInfo<T extends Props>(
         <div className="tui-contact-info-content">
           <div className="content-item-wording">
             <p className="content-item-label">{t('TUIContact.Enter the verification info')}</p>
-            <textarea className="content-item-wording-text" value={wording} onChange={handleChange} />
+            <textarea className="content-item-wording-text" value={wording} onChange={(e: any) => {handleChange(e)}} />
           </div>
           <div className="content-item">
             <p className="content-item-label">{t('TUIContact.remark')}</p>
