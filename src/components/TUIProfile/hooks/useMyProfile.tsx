@@ -1,7 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
-import TencentCloudChat, { Profile } from '@tencentcloud/chat';
-import { useTUIKitContext } from '../../../context';
-
+import { useEffect, useState } from 'react';
+import { Profile } from '@tencentcloud/chat';
+import {
+  TUIUserService,
+  TUIStore,
+  StoreName,
+  UpdateMyProfileParams,
+} from "@tencentcloud/chat-uikit-engine";
 export interface ProfileParams {
   nick?: string,
   avatar?: string,
@@ -19,43 +23,21 @@ export interface ProfileParams {
 }
 
 export function useMyProfile() {
-  const [myProfile, setMyPofile] = useState<Profile>();
-  const { chat, myProfile: contextProfile } = useTUIKitContext('useMyProfile');
+  const [myProfile, setMyProfile] = useState<Profile>();
 
-  const getMyProfile = useCallback(async () => {
-    if (contextProfile) {
-      setMyPofile(contextProfile);
-    } else {
-      const res = await chat?.getMyProfile();
-      setMyPofile(res?.data);
-    }
-  }, [chat]);
-
-  const updateMyProfile = useCallback(async (options: any) => {
-    const res = await chat?.updateMyProfile(options);
+  const updateMyProfile = (options: UpdateMyProfileParams) => {
+    TUIUserService.updateMyProfile(options);
     const userInfo: any = { ...myProfile };
-    const keys = Object.keys(res.data);
-    keys.map((name) => {
-      userInfo[name] = res.data[name];
-      return name;
-    });
-    setMyPofile(userInfo);
-    return res;
-  }, [chat]);
-
-  const onProfileUpdated = (event: any) => {
-    console.log('onProfileUpdated', event.data);
+    setMyProfile(userInfo);
   };
 
   useEffect(() => {
-    (async () => {
-      await getMyProfile();
-    })();
-    chat?.on(TencentCloudChat.EVENT.PROFILE_UPDATED, onProfileUpdated);
-    return () => {
-      chat?.off(TencentCloudChat.EVENT.PROFILE_UPDATED, onProfileUpdated);
-    };
-  }, [chat]);
+    TUIStore.watch(StoreName.USER, {
+      userProfile: (userProfileData: any) => {
+        setMyProfile(userProfileData);
+      },
+    });
+  }, []);
 
   return {
     myProfile,

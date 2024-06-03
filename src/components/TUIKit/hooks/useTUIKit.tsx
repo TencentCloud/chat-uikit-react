@@ -1,4 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import {
+  TUIStore,
+  StoreName,
+} from '@tencentcloud/chat-uikit-engine';
 import { useTranslation } from 'react-i18next';
 import {
   ChatSDK,
@@ -50,12 +54,12 @@ export const useTUIKit = ({
 
   useEffect(() => {
     i18n.changeLanguage(language);
-    const getMyProfile = async () => {
-      const res = await chat?.getMyProfile();
-      setMyProfile(res?.data);
-    };
-    getMyProfile();
-  }, [chat, language]);
+    TUIStore.watch(StoreName.USER, {
+      userProfile: (userProfileData: any) => {
+        setMyProfile(userProfileData);
+      },
+    });
+  }, [language]);
   const setActiveConversation = useCallback(
     (activeConversation?: Conversation) => {
       if (activeConversation) {

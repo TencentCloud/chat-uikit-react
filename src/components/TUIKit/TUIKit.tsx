@@ -1,6 +1,7 @@
 import React, { PropsWithChildren, useState, useEffect } from 'react';
 import { ChatSDK, Conversation } from '@tencentcloud/chat';
-import { TUIStore, StoreName } from '@tencentcloud/chat-uikit-engine';
+import { TUIStore, StoreName, IConversationModel } from '@tencentcloud/chat-uikit-engine';
+import { TUILogin } from '@tencentcloud/tui-core';
 import { useTranslation } from 'react-i18next';
 import { isH5, isPC } from '../../utils/env';
 import { useTUIKit, UseContactParams } from './hooks/useTUIKit';
@@ -126,13 +127,16 @@ export function TUIKit<
   >(
   props:PropsWithChildren<T>,
 ):React.ReactElement {
-  const [currentConversationID, setCurrentConversationID] = useState<string>('');
   const [moduleValue, setModuleValue] = useState('chats');
   const { t } = useTranslation();
-
   const {
-    children, chat, customClasses, activeConversation, language = 'en',
+    children,
+    chat = TUILogin.getContext().chat,
+    customClasses,
+    activeConversation,
+    language = 'en',
   } = props;
+
   (window as any).tencent_cloud_im_csig_react_uikit_23F_xa = true;
   const {
     conversation,
@@ -161,20 +165,20 @@ export function TUIKit<
   });
   useEffect(() => {
     TUIStore.watch(StoreName.CONV, {
-      currentConversationID: onCurrentConversationID,
+      currentConversation: onCurrentConversation,
     });
     return () => {
       TUIStore.unwatch(StoreName.CONV, {
-        currentConversationID: onCurrentConversationID,
+        currentConversation: onCurrentConversation,
       });
     };
   }, []);
 
-  const onCurrentConversationID = (id: string) => {
-    setCurrentConversationID(id);
-  };
   const switchTabbar = (value: string) => {
     setModuleValue(value);
+  };
+  const onCurrentConversation = (conversationModel: IConversationModel) => {
+    setActiveConversation(conversationModel?.getConversation());
   };
 
   const tabbarRender = (
@@ -200,8 +204,23 @@ export function TUIKit<
   return (
     <TUIKitProvider value={chatContextValue}>
       <div className="tui-kit">
-        {children || (isPC && <RenderForPC moduleValue={moduleValue} tabbarRender={tabbarRender} setModuleValue={setModuleValue} />)
-        || (isH5 && <RenderForH5 contactData={contactData} moduleValue={moduleValue} tabbarRender={tabbarRender} currentConversationID={currentConversationID} setModuleValue={setModuleValue} />)}
+        {children ||
+          (isPC && (
+            <RenderForPC
+              moduleValue={moduleValue}
+              tabbarRender={tabbarRender}
+              setModuleValue={setModuleValue}
+            />
+          )) ||
+          (isH5 && (
+            <RenderForH5
+              contactData={contactData}
+              moduleValue={moduleValue}
+              tabbarRender={tabbarRender}
+              currentConversationID={conversation?.conversationID || ''}
+              setModuleValue={setModuleValue}
+            />
+          ))}
       </div>
     </TUIKitProvider>
   );
