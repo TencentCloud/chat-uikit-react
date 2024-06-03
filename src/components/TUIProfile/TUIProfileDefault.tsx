@@ -2,6 +2,7 @@ import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-date-picker';
 import TencentCloudChat, { Profile } from '@tencentcloud/chat';
+import { UpdateMyProfileParams } from "@tencentcloud/chat-uikit-engine";
 import { isH5 } from '../../utils/env';
 import { useTUIKitContext } from '../../context';
 
@@ -9,7 +10,6 @@ import { Avatar } from '../Avatar';
 import { DivWithEdit } from '../DivWithEdit';
 import { Icon, IconTypes } from '../Icon';
 import { handleDisplayAvatar } from '../untils';
-import { ProfileParams } from './hooks';
 
 const gender: any = {
   [TencentCloudChat.TYPES.GENDER_UNKNOWN]: 'unknow',
@@ -59,7 +59,7 @@ const allowTypeList = [
 
 export interface TUIProfileDefaultProps {
   userInfo?: Profile,
-  update?: (option: ProfileParams) => void,
+  update?: (option: UpdateMyProfileParams) => void,
   className?: string,
 }
 

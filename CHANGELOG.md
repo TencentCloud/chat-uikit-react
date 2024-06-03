@@ -1,3 +1,8 @@
+## [2.1.4] (2024-6-03)
+
+#### feat
+* feat: Support integration chat only
+
 ## [2.1.3] (2024-5-17)
 
 #### feat

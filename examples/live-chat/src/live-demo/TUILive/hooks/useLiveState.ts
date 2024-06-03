@@ -40,7 +40,7 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
   }
 
   const getGroupProfile = useCallback(async () => {
-    if (groupID && !group) {
+    if (groupID && !group && chat?.isReady()) {
       searchGroupByID(groupID, async ()=> {
         const res = await chat?.getGroupProfile({ groupID });
         setGroup(res?.data?.group);
@@ -55,7 +55,7 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
         await getOwnerProfile(res?.data?.group);
       })
     }
-  }, [chat, groupID]);
+  }, [chat?.isReady(), groupID]);
 
   const getOwnerProfile = async (params:Group) => {
     if (params?.ownerID) {
@@ -80,7 +80,7 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
         setMemberCount(Count)
       }
     }
-  }, [chat]);
+  }, [chat?.isReady()]);
 
   const getGroupCounters = useCallback(async () => {
     if (groupID) {
@@ -90,7 +90,7 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
       const imResponse = await chat?.getGroupCounters(options);
       setGroupCounters(JSON.parse(JSON.stringify(imResponse.data.counters)));
     }
-  }, [chat, groupID]);
+  }, [chat?.isReady(), groupID]);
 
   const increaseGroupCounter = useCallback(async (data:GroupCounterUpdatedOption) => {
     if (groupID) {
@@ -101,7 +101,7 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
       const imResponse = await chat?.increaseGroupCounter(options);
       handleGroupCounters(imResponse.data.counters);
     }
-  }, [chat, groupID, groupCounters]);
+  }, [chat?.isReady(), groupID, groupCounters]);
 
   const decreaseGroupCounter = useCallback(async (data:GroupCounterUpdatedOption) => {
     if (groupID) {
@@ -112,7 +112,7 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
       const imResponse = await chat?.decreaseGroupCounter(options);
       handleGroupCounters(imResponse.data.counters);
     }
-  }, [chat, groupID, groupCounters]);
+  }, [chat?.isReady(), groupID, groupCounters]);
 
   const onGroupAttributesUpdated = (event: { data: any; }) => {
     console.log('onGroupAttributesUpdated', event?.data);
@@ -163,13 +163,7 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
         }, 1200);
       }
     })();
-    return () => {
-      if (liveConversation) {
-        setLiveConversation(null);
-        chat?.quitGroup(groupID);
-      }
-    };
-  }, [chat, conversation, liveConversation]);
+  }, [chat?.isReady(), conversation, liveConversation]);
 
   useEffect(() => {
     let timer: string | number | NodeJS.Timeout | null | undefined = null;
@@ -194,7 +188,7 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
       setMemberList(undefined);
       setMemberCount(0);
     };
-  }, [chat, groupID]);
+  }, [chat?.isReady(), groupID]);
 
   useEffect(() => {
     (async () => {
@@ -203,7 +197,7 @@ export function useLiveState<T extends UseLiveStateParams>(props:T) {
         await getGroupCounters();
       }
     })();
-  }, [chat, liveConversation, group]);
+  }, [chat?.isReady(), liveConversation, group]); 
 
   return {
     group,

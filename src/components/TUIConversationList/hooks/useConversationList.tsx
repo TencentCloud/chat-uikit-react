@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import TencentCloudChat, { ChatSDK, Conversation } from '@tencentcloud/chat';
-
+import {
+  TUIStore,
+  StoreName,
+} from '@tencentcloud/chat-uikit-engine';
 function useConversationList(
   chat: ChatSDK,
   activeConversationHandler?:(
@@ -10,33 +13,25 @@ function useConversationList(
   filterConversation?:(conversationList: Array<Conversation>) => Array<Conversation>,
 ) {
   const [conversationList, setConversationList] = useState<Array<Conversation>>([]);
-  const queryConversation = async (queryType?: string) => {
-    if (queryType === 'reload') {
-      setConversationList([]);
+  const onConversationListUpdated = (list: any) => {
+    let resConversationList = [];
+    if (filterConversation) {
+      resConversationList = filterConversation(list);
+    } else {
+      resConversationList = list.filter(
+        (item: any) => item.type !== TencentCloudChat.TYPES.CONV_SYSTEM,
+      );
     }
-    const offset = queryType === 'reload' ? 0 : conversationList.length;
-
-    const res = await chat?.getConversationList();
-    if (res?.code === 0) {
-      let resConversationList = [];
-      if (filterConversation) {
-        resConversationList = filterConversation(res.data.conversationList);
-      } else {
-        resConversationList = res.data.conversationList.filter(
-          (item: any) => item.type !== TencentCloudChat.TYPES.CONV_SYSTEM,
-        );
-      }
-      const newConversationList = queryType === 'reload'
-        ? resConversationList
-        : [...conversationList, resConversationList];
-      setConversationList(newConversationList);
-      if (!offset && activeConversationHandler) {
-        activeConversationHandler(newConversationList, setConversationList);
-      }
+    setConversationList(resConversationList);
+    if (activeConversationHandler) {
+      activeConversationHandler(resConversationList, setConversationList);
     }
   };
+
   useEffect(() => {
-    queryConversation('reload');
+    TUIStore.watch(StoreName.CONV, {
+      conversationList: onConversationListUpdated,
+    }); 
   }, [chat]);
   return {
     conversationList,
