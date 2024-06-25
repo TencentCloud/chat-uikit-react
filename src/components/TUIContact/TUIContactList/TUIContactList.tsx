@@ -4,12 +4,19 @@ import TencentCloudChat from '@tencentcloud/chat';
 import { isH5 } from '../../../utils/env';
 import { useTUIKitContext, useTUIContactContext } from '../../../context';
 import useContactInfo from '../TUIContactInfo/hooks/useContactInfo';
-
+import useTUIContact from '../hooks/useTUIContact';
 import { Avatar, defaultUserAvatar } from '../../Avatar';
 import rightArrow from '../../Icon/images/right-arrow.svg';
 import downArrow from '../../Icon/images/down-arrow.png';
-
 import './index.scss';
+
+interface RenderContactListProps {
+  type: 'group' | 'block' | 'friend' ,
+  isShow: boolean,
+  title: string,
+  list: Array<any> | undefined,
+  setShow: (value: boolean) => void
+}
 
 function UnMemoizedTUIContactList<T>(): React.ReactElement {
   const { setActiveContact } = useTUIKitContext();
@@ -20,16 +27,56 @@ function UnMemoizedTUIContactList<T>(): React.ReactElement {
   const {
     acceptFriendApplication,
   } = useContactInfo();
-
+  const { groupList } = useTUIContact();
   const [iShowFriendApplication, setShowFriendApplication] = useState(false);
   const [iShowFriends, setShowFriends] = useState(false);
   const [isShowBlocklist, setShowBlocklist] = useState(false);
+  const [isShowGrouplist, setShowGrouplist] = useState(false);
 
   const acceptFriendApplicationHandle = (e: any, userID: string) => {
     e.stopPropagation();
     acceptFriendApplication(userID);
     setActiveContact();
   };
+
+const RenderContactList = ({ type, isShow, setShow, list, title } : RenderContactListProps) => {
+  return (
+    <>
+      <div
+        className="tui-contacts-title"
+        role="button"
+        tabIndex={0}
+        onClick={() => setShow(!isShow)}
+      >
+        <div className="tui-contacts-list-title">{title}</div>
+        <div className="tui-contacts-list-icon">
+          <img src={isShow ? downArrow : rightArrow} alt="" />
+        </div>
+      </div>
+      {isShow
+        && list?.map((item: any) => {
+          const { userID, groupID, avatar, name, nick } = item.profile || item;
+          const showName = item.remark || nick || userID || name || groupID;
+          return (
+            <div
+              role="button"
+              tabIndex={0}
+              className="tui-contacts-list-item"
+              key={userID || groupID}
+              onClick={() => {
+                setActiveContact({ type, data: item });
+              }}
+            >
+              <Avatar size={30} image={avatar || defaultUserAvatar} />
+              <div className="tui-contacts-list-item-container">
+                <p className="tui-contacts-list-item-name">{ showName }</p>
+              </div>
+            </div>
+          );
+        })}
+    </>
+  );
+}
   // eslint-disable-next-line
   // @ts-ignore
   return (
@@ -96,68 +143,27 @@ function UnMemoizedTUIContactList<T>(): React.ReactElement {
               </div>
             );
           })}
-        <div
-          className="tui-contacts-title"
-          role="button"
-          tabIndex={0}
-          onClick={() => setShowBlocklist(!isShowBlocklist)}
-        >
-          <div className="tui-contacts-list-title">{t('TUIContact.Blocked List')}</div>
-          <div className="tui-contacts-list-icon">
-            <img src={isShowBlocklist ? downArrow : rightArrow} alt="" />
-          </div>
-        </div>
-        {isShowBlocklist
-          && blocklistProfile?.map((item, index) => {
-            const { userID, avatar, nick } = item;
-            return (
-              <div
-                role="button"
-                tabIndex={0}
-                className="tui-contacts-list-item"
-                key={userID}
-                onClick={() => {
-                  setActiveContact({ type: 'block', data: item });
-                }}
-              >
-                <Avatar size={30} image={avatar || defaultUserAvatar} />
-                <div className="tui-contacts-list-item-container">
-                  <p className="tui-contacts-list-item-name">{ nick || userID}</p>
-                </div>
-              </div>
-            );
-          })}
-        <div
-          className="tui-contacts-title"
-          role="button"
-          tabIndex={0}
-          onClick={() => setShowFriends(!iShowFriends)}
-        >
-          <div className="tui-contacts-list-title">{t('TUIContact.Friends')}</div>
-          <div className="tui-contacts-list-icon">
-            <img src={iShowFriends ? downArrow : rightArrow} alt="" />
-          </div>
-        </div>
-        {iShowFriends
-          && friendList?.map((item, index) => {
-            const { userID, avatar, nick } = item.profile;
-            return (
-              <div
-                className="tui-contacts-list-item"
-                key={userID}
-                role="button"
-                tabIndex={0}
-                onClick={() => {
-                  setActiveContact({ type: 'friend', data: item });
-                }}
-              >
-                <Avatar size={30} image={avatar || defaultUserAvatar} />
-                <div className="tui-contacts-list-item-container">
-                  <p className="tui-contacts-list-item-name">{item.remark || nick || userID}</p>
-                </div>
-              </div>
-            );
-          })}
+        <RenderContactList 
+          type={'block'}
+          title={t('TUIContact.Blocked List')}
+          isShow={isShowBlocklist}
+          setShow={setShowBlocklist}
+          list={blocklistProfile}
+        />
+        <RenderContactList 
+          type={'group'}
+          title={t('TUIContact.Group List')}
+          setShow={setShowGrouplist}
+          isShow={isShowGrouplist}
+          list={groupList}
+        />
+        <RenderContactList 
+          type={'friend'}
+          title={t('TUIContact.Friends')}
+          setShow={setShowFriends}
+          isShow={iShowFriends}
+          list={friendList}
+        />
       </div>
     )
   );

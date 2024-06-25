@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import TencentCloudChat from '@tencentcloud/chat';
+import {
+  TUIStore,
+  StoreName,
+  IGroupModel,
+} from '@tencentcloud/chat-uikit-engine';
 import { useTUIKitContext } from '../../../context';
 
 function useTUIContact() {
@@ -8,14 +13,22 @@ function useTUIContact() {
   const [blockList, setBlockList] = useState([]);
   const [friendApplicationList, setFriendApplicationList] = useState([]);
   const [blocklistProfile, setBlocklistProfile] = useState([]);
+  const [groupList, setGroupList] = useState<IGroupModel[]>();
+
   const [isShowContactList, setShowContactList] = useState(true);
 
   useEffect(() => {
+    TUIStore.watch(StoreName.GRP, {
+      groupList: onGroupListUpdated,
+    });
     getFriendList();
     getBlocklist();
     getFriendApplicationList();
   }, [chat]);
 
+  const onGroupListUpdated = (list: IGroupModel[]) => {
+    setGroupList(list);
+  };
   useEffect(() => {
     chat?.on(TencentCloudChat.EVENT.BLACKLIST_UPDATED, onBlocklistUpdated);
     chat?.on(TencentCloudChat.EVENT.FRIEND_LIST_UPDATED, onFriendListUpdated);
@@ -64,6 +77,7 @@ function useTUIContact() {
 
   return {
     friendList,
+    groupList,
     blocklistProfile,
     friendApplicationList,
     blockList,

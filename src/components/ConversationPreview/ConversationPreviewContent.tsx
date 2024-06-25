@@ -103,7 +103,7 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
         break;
       case 'delete':
         deleteConversation(conversationID);
-        if (setActiveConversation && conversation === activeConversation) {
+        if (setActiveConversation && conversationID === activeConversation?.conversationID) {
           setActiveConversation(undefined);
         }
         break;

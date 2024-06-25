@@ -12,6 +12,7 @@ const TUIContact = {
   'Signature': 'Signature',
   'New Contacts': 'New Contacts',
   'Blocked List': 'Blocked List',
+  'Group List': 'Group List',
   'No Result': 'No Result',
   'ID': 'ID',
   'User': 'User',
