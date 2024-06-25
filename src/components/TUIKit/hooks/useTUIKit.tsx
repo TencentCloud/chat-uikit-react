@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import {
   TUIStore,
   StoreName,
+  IGroupModel
 } from '@tencentcloud/chat-uikit-engine';
 import { useTranslation } from 'react-i18next';
 import {
@@ -32,8 +33,13 @@ interface addFriendData {
   data: Profile
 }
 
+interface GroupData {
+  type: 'group',
+  data: IGroupModel
+}
+
 export type UseContactParams = blockData | friendData |
-friendApplicationData | addFriendData| undefined;
+friendApplicationData | addFriendData| GroupData | undefined;
 
 export interface UseChatParams{
   chat: ChatSDK,
@@ -68,11 +74,11 @@ export const useTUIKit = ({
       if (conversation && (activeConversation?.conversationID !== conversation.conversationID)) {
         setTUIManageShow(false);
       }
-      activeConversation && setConversation(activeConversation);
+      setConversation(activeConversation);
     },
     [chat],
   );
-  const setActiveContact = (actionContactData: UseContactParams) => {
+  const setActiveContact = (actionContactData?: UseContactParams) => {
     setContactData(actionContactData);
   };
 

@@ -13,6 +13,7 @@ const TUIContact = {
   'Successful application, waiting for the administrator to agree to join the group application': '等待管理员同意',
   'New Contacts': '新的联系人',
   'Blocked List': '黑名单',
+  'Group List': '我的群聊',
   'No Result': '无搜索结果',
   'ID': 'ID',
   'User': '联系人',

@@ -1,3 +1,10 @@
+## [2.2.2] (2024-6-25)
+
+#### feat
+* feat: Support groupList
+#### fix
+* fix: H5 chat back is invalid
+
 ## [2.1.4] (2024-6-03)
 
 #### feat

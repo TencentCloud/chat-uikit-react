@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useState, useEffect } from 'react';
 import { ChatSDK, Conversation } from '@tencentcloud/chat';
-import { TUIStore, StoreName, IConversationModel } from '@tencentcloud/chat-uikit-engine';
+import { TUIStore, StoreName, IConversationModel, TUIConversationService } from '@tencentcloud/chat-uikit-engine';
 import { TUILogin } from '@tencentcloud/tui-core';
 import { useTranslation } from 'react-i18next';
 import { isH5, isPC } from '../../utils/env';
@@ -81,7 +81,7 @@ function RenderForPC({ moduleValue, tabbarRender, setModuleValue } : RenderPCPro
       {moduleValue === TUIKIT_TABBAR.CONTACTS && (
       <TUIContact>
         <TUIContactInfo
-          showChat={() => {
+          showChats={() => {
             setModuleValue(TUIKIT_TABBAR.CHATS);
           }}
         />
@@ -113,7 +113,7 @@ function RenderForH5({
       { moduleValue === TUIKIT_TABBAR.CONTACTS && contactData && (
         <TUIContact>
           <TUIContactInfo
-            showChat={() => {
+            showChats={() => {
               setModuleValue(TUIKIT_TABBAR.CHATS);
             }}
           />
@@ -176,6 +176,7 @@ export function TUIKit<
 
   const switchTabbar = (value: string) => {
     setModuleValue(value);
+    TUIConversationService.switchConversation('');
   };
   const onCurrentConversation = (conversationModel: IConversationModel) => {
     setActiveConversation(conversationModel?.getConversation());
