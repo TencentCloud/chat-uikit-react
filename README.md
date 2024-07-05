@@ -39,6 +39,8 @@
 
 ## Get Started
 
+> In respect for the copyright of emoji designs, the Chat Demo/TUIKit project does not include large emoji element cutouts. Please replace them with your own designed or copyrighted emoji packs before the official commercial launch. The default QQ emojis are copyrighted by Tencent and do not support authorization. We ask for your understanding and to be aware of this.
+
 ### Step 1. Create an app
 
 1. Log in to the [Chat console](https://console.tencentcloud.com/im).
@@ -56,8 +58,10 @@
 ```
 # Please run the following code in the terminal.
 $ git clone https://github.com/TencentCloud/chat-uikit-react
-$ cd chat-uikit-react
-$ npm install && cd examples/sample-chat && npm install
+# Go to the project  
+$ cd chat-uikit-react/examples/sample-chat
+# Install dependencies of the demo and build chat-uikit-react
+$ npm install
 ```
 ### Step 4. Configure
 1. Open the `examples/sample-chat` project and locate the `GenerateTestUserSig.js` file in `./examples/sample-chat/src/debug/GenerateTestUserSig.js`.
@@ -65,7 +69,6 @@ $ npm install && cd examples/sample-chat && npm install
 
 ### Step 5. Run the demo
 ```
-$ cd examples/sample-chat
 $ npm run start
 ```
 

@@ -4,6 +4,8 @@ import TUIContact from './TUIContact';
 import TUIProfile from './TUIProfile';
 
 export const message = {
+  'chats': 'Messages',
+  'contacts': 'Contacts',
   TUIChat,
   TUIConversation,
   TUIContact,
