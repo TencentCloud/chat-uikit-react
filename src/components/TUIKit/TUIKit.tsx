@@ -95,7 +95,7 @@ function RenderForH5({
   moduleValue, contactData, tabbarRender, currentConversationID, setModuleValue,
 }: RenderH5Props) {
   return (
-    <>
+    <div className='sample-chat-h5'>
       {!currentConversationID && !contactData && (
       <div className="sample-chat-h5-container">
         <TUIProfile className="sample-profile" />
@@ -119,7 +119,7 @@ function RenderForH5({
           />
         </TUIContact>
       )}
-    </>
+    </div>
   );
 }
 export function TUIKit<

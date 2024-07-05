@@ -1,5 +1,7 @@
 ## Get Started
 
+> In respect for the copyright of emoji designs, the Chat Demo/TUIKit project does not include large emoji element cutouts. Please replace them with your own designed or copyrighted emoji packs before the official commercial launch. The default QQ emojis are copyrighted by Tencent and do not support authorization. We ask for your understanding and to be aware of this.
+
 ### Step 1. Create an app
 
 1. Log in to the [Chat console](https://console.tencentcloud.com/im).

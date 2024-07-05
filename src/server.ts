@@ -12,8 +12,7 @@ export default class TUIChatKit {
   }
 
   /**
-   * 监听 TUILogin.login 的成功通知
-   * @param { TUIInitParam } params 初始化参数
+   * @param { TUIInitParam } params
    */
   public onNotifyEvent(eventName: string, subKey: string) {
     if (eventName === TUIConstants.TUILogin.EVENT.LOGIN_STATE_CHANGED) {
@@ -28,7 +27,7 @@ export default class TUIChatKit {
   }
 
   /**
-   * login 登录
+   * login
    */
   private login() {
     const {

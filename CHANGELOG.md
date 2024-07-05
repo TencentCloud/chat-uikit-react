@@ -1,3 +1,8 @@
+## [2.2.3] (2024-7-05)
+
+#### fix
+* fix: uikit tabbar language switching is invalid
+
 ## [2.2.2] (2024-6-25)
 
 #### feat
