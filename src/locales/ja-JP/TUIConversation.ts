@@ -1,0 +1,33 @@
+/* eslint-disable quote-props */
+const TUIConversation = {
+  'Start chat': 'チャットを開始',
+  'New one-to-one chat': '新しい一対一のチャットを開始',
+  'New group chat': '新しいグループチャットを開始',
+  'Delete': 'チャットを削除',
+  'Pin': 'チャットをトップに固定',
+  'Unpin': 'トップ固定を解除',
+  'Conversation Information': 'チャット情報',
+  'Search': '検索',
+  'Add Participants': 'グループチャットを作成',
+  'No conversation': 'チャットなし',
+  'Next': '次へ',
+  'Group Name': 'グループ名',
+  'Group ID': 'グループID',
+  'Group Type': 'グループタイプ',
+  'Participants': '参加者',
+  'Create': '作成',
+  'Details': '詳細',
+  'Work': '友達の仕事グループ(Work)',
+  'Public': '見知らぬ人の社交グループ(Public)',
+  'Meeting': '一時的な会議グループ(Meeting)',
+  'AVChatRoom': 'ライブチャットルーム(AVChatroom)',
+  'Community': 'コミュニティ(Community)',
+  'Users can join the group only via invitation by existing members. The invitation does not need to be agreed by the invitee or approved by the group owner. See the documentation for details.': '通常のWeChatグループのように、作成後はグループ内の友達のみが招待してグループに参加できます。招待は招待される側の同意やグループオーナーの承認が必要ありません。詳細はドキュメントを参照してください。',
+  'After a public group is created, the group owner can designate group admins. To join the group, a user needs to search the group ID and send a request, which needs to be approved by the group owner or an admin before the user can join the group. See the documentation for details.': 'QQグループのように、作成後にグループオーナーがグループ管理者を指名できます。ユーザーはグループIDを検索してグループ参加申請を行い、グループオーナーまたは管理者の承認を得た後にグループに参加できます。詳細はドキュメントを参照してください。',
+  'After the group is created, a user can join and quit the group freely and can view the messages sent before joining the group. It is suitable for scenarios that integrate Tencent Real-Time Communication (TRTC), such as audio and video conferences and online education. See the documentation for details.': 'グループ作成後、ユーザーは自由にグループに参加したり退出したりでき、グループ参加前のメッセージも閲覧できます。これは、音声およびビデオ会議やオンライン教育などの腾讯实时通信(TRTC)を統合するシナリオに適しています。詳細はドキュメントを参照してください。',
+  'After a group is created, a user can join and quit the group freely. The group can have an unlimited number of members, but it does not store message history. It can be combined with Live Video Broadcasting (LVB) to support on-screen comment scenarios. See the documentation for details.': 'グループ作成後、ユーザーは自由にグループに参加したり退出したりできますが、グループメンバー数に上限はありませんが、メッセージ履歴は保存されません。これはライブビデオ放送(LVB)と組み合わせて、画面上のコメントシナリオをサポートするために使用できます。詳細はドキュメントを参照してください。',
+  'After creation, you can enter and leave at will, support up to 100,000 people, support historical message storage, and after users search for group ID and initiate a group application, they can join the group without administrator approval. See product documentation for details.': '作成後は自由に出入りでき、最大10万人をサポートし、歴史的メッセージの保存をサポートしています。ユーザーがグループIDを検索してグループ参加申請を行った後、管理者承認なしにグループに参加できます。詳細は製品ドキュメントを参照してください。',
+  'Participant cannot be empty': '参加者は空にできません',
+};
+
+export default TUIConversation;

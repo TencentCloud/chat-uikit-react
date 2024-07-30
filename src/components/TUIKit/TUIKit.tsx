@@ -134,7 +134,7 @@ export function TUIKit<
     chat = TUILogin.getContext().chat,
     customClasses,
     activeConversation,
-    language = 'en',
+    language = 'en-US',
   } = props;
 
   (window as any).tencent_cloud_im_csig_react_uikit_23F_xa = true;

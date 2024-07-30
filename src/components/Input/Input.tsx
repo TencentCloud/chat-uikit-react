@@ -83,7 +83,9 @@ export const Input = React.forwardRef<InputRef, InputProps>(
     };
     const focus = () => {
       if (inputRef.current) {
-        inputRef.current.focus();
+        inputRef.current.focus({
+          preventScroll: true,
+        });
       }
     };
     useImperativeHandle(ref, () => ({

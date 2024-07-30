@@ -147,7 +147,9 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
           end: state?.cursorPos?.end && state.cursorPos.end + textToInsert.length,
         },
       });
-      textareaRef?.current?.focus();
+      textareaRef?.current?.focus({
+        preventScroll: true,
+      });
     },
     [textareaRef, state],
   );

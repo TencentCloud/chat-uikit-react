@@ -112,7 +112,7 @@ export const getMessageProfile = (conversation: Conversation):TProfile => {
   }
   return result as TProfile;
 };
-export const getDisplayTime = (conversation: Conversation, language?: string) => {
+export const getDisplayTime = (conversation: Conversation, language: string) => {
   const { lastMessage } = conversation;
   return getTimeStamp(lastMessage.lastTime * 1000, language);
 };

@@ -22,7 +22,9 @@ export function WithText<T extends WithEditProps>(props:PropsWithChildren<T>) {
   const [value, setValue] = useState(propsVal);
 
   useLayoutEffect(() => {
-    inputRef?.current?.focus();
+    inputRef?.current?.focus({
+      preventScroll: true,
+    });
     setValue(value);
   }, [inputRef, propsVal]);
 
@@ -35,7 +37,7 @@ export function WithText<T extends WithEditProps>(props:PropsWithChildren<T>) {
   };
   return (
     <div className={`edit ${className}`}>
-      {/* // eslint-disable-next-line 
+      {/* // eslint-disable-next-line
       // @ts-ignore */}
       <input ref={inputRef} type="text" value={value} onChange={handleChange} />
       <Icon className="icon" width={15} height={10.5} type={IconTypes.CONFIRM} onClick={handleConfirm} />

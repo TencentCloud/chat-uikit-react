@@ -1,0 +1,27 @@
+/* eslint-disable quote-props */
+const TUIChat = {
+  'Recall': '회수',
+  'Reference': '인용',
+  'Forward': '전송',
+  'Copy': '복사',
+  'Delete': '삭제',
+  'Forward to': '전송 대상',
+  'recalled a message': '메시지를 회수했습니다',
+  'Re-edit': '재편집',
+  'Resend': '재전송',
+  'You': '당신',
+  'Recent Chats': '대화',
+  'Frequently Contacted': '자주 연락하는 사람들',
+  'No Result': '검색 결과 없음',
+  'Search Result': '검색 결과',
+  'Image': '이미지',
+  'Video': '비디오',
+  'File': '파일',
+  'Enter a message': '메시지를 입력하세요',
+  'No More': '더 이상 없습니다',
+  'Error deleting message': '메시지 삭제에 실패했습니다',
+  'The message recall exceeded the time limit (default 2 minutes)': '메시지 회수 시간이 제한을 초과했습니다 (기본 2분)',
+  'Error revoke Message': '메시지 회수에 실패했습니다',
+  'Custom message': '사용자 정의 메시지',
+};
+export default TUIChat;

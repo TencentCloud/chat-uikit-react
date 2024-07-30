@@ -1,0 +1,33 @@
+/* eslint-disable quote-props */
+const TUIConversation = {
+  'Start chat': '채팅 시작',
+  'New one-to-one chat': '1:1 채팅 시작',
+  'New group chat': '그룹 채팅 시작',
+  'Delete': '채팅 삭제',
+  'Pin': '채팅 고정',
+  'Unpin': '채팅 고정 해제',
+  'Conversation Information': '채팅 정보',
+  'Search': '검색',
+  'Add Participants': '그룹 채팅 생성',
+  'No conversation': '채팅 없음',
+  'Next': '다음',
+  'Group Name': '그룹 이름',
+  'Group ID': '그룹 ID',
+  'Group Type': '그룹 유형',
+  'Participants': '멤버',
+  'Create': '생성',
+  'Details': '상세',
+  'Work': '친구 작업 그룹(Work)',
+  'Public': '낯선 사람 소셜 그룹(Public)',
+  'Meeting': '임시 회의 그룹(Meeting)',
+  'AVChatRoom': '라이브 방송 그룹(AVChatroom)',
+  'Community': '커뮤니티(Community)',
+  'Users can join the group only via invitation by existing members. The invitation does not need to be agreed by the invitee or approved by the group owner. See the documentation for details.': '일반 위챗 그룹과 유사하게, 생성 후에는 이미 그룹에 있는 친구의 초대로만 그룹 가입이 가능하며, 초대자는 수락하지 않아도 되고 그룹 소유자의 승인을 받지 않아도 됩니다. 자세한 내용은 문서를 참조하십시오.',
+  'After a public group is created, the group owner can designate group admins. To join the group, a user needs to search the group ID and send a request, which needs to be approved by the group owner or an admin before the user can join the group. See the documentation for details.': 'QQ 그룹과 유사하게, 생성 후에는 그룹 소유자가 그룹 관리자를 지정할 수 있습니다. 사용자가 그룹 ID를 검색하여 가입 요청을 보내면, 그룹 소유자 또는 관리자의 승인을 받아야만 그룹에 가입할 수 있습니다. 자세한 내용은 문서를 참조하십시오.',
+  'After the group is created, a user can join and quit the group freely and can view the messages sent before joining the group. It is suitable for scenarios that integrate Tencent Real-Time Communication (TRTC), such as audio and video conferences and online education. See the documentation for details.': '그룹을 생성한 후에는 사용자가 그룹에 자유롭게 가입하고 탈퇴할 수 있으며, 가입하기 전에 보낸 메시지를 볼 수 있습니다. 이는 음성 및 비디오 회의, 온라인 교육 등 Tencent 실시간 통신(TRTC)과 통합되는 시나리오에 적합합니다. 자세한 내용은 문서를 참조하십시오.',
+  'After a group is created, a user can join and quit the group freely. The group can have an unlimited number of members, but it does not store message history. It can be combined with Live Video Broadcasting (LVB) to support on-screen comment scenarios. See the documentation for details.': '그룹을 생성한 후에는 사용자가 그룹에 자유롭게 가입하고 탈퇴할 수 있으며, 그룹은 무제한의 멤버 수를 가질 수 있지만 메시지 역사를 저장하지는 않습니다. 이는 라이브 비디오 방송(LVB)과 결합하여 화면상 커멘트 시나리오를 지원하는 데 사용할 수 있습니다. 자세한 내용은 문서를 참조하십시오.',
+  'After creation, you can enter and leave at will, support up to 100,000 people, support historical message storage, and after users search for group ID and initiate a group application, they can join the group without administrator approval. See product documentation for details.': '생성 후에는 자유롭게 입장하고 탈퇴할 수 있으며, 최대 100,000명을 지원하고, 메시지 역사를 저장하며, 사용자가 그룹 ID를 검색하여 그룹 신청을 시작한 후에는 관리자 승인 없이 그룹에 가입할 수 있습니다. 자세한 내용은 제품 문서를 참조하십시오.',
+  'Participant cannot be empty': '참여자는 비워둘 수 없습니다',
+};
+
+export default TUIConversation;

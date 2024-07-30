@@ -3,6 +3,7 @@
     "target": "es5",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "exactOptionalPropertyTypes": false,
     "moduleResolution": "node",
     "jsx": "react-jsx",
     "strict": true,

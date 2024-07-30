@@ -9,29 +9,9 @@ import autoprefixer from 'autoprefixer';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import url from '@rollup/plugin-url';
 
-const baseConfig = {
-  input: [
-    './src/index.ts',
-  ],
-  output: [
-    {
-      preserveModules: true,
-      preserveModulesRoot: './src',
-      dir: './dist/esm/',
-      format: 'esm',
-    },
-    {
-      preserveModules: true,
-      preserveModulesRoot: './src',
-      dir: './dist/cjs/',
-      format: 'cjs',
-      // sourcemap: true,
-    },
-  ],
-};
 export default [
   {
-    ...baseConfig,
+    ...getBaseConfig(),
     plugins: [
       url(),
       postcss({
@@ -51,10 +31,10 @@ export default [
       terser(),
     ],
     external: ['react', 'date-fns', 'tslib', 'react-date-picker', 'i18next', 'react-i18next', '@tencentcloud/tui-core',
-     '@tencentcloud/chat', '@tencentcloud/chat-uikit-engine', '@tencentcloud/universal-api'],
+      '@tencentcloud/chat', '@tencentcloud/chat-uikit-engine', '@tencentcloud/universal-api'],
   },
   {
-    ...baseConfig,
+    ...getBaseConfig(),
     plugins: [
       postcss({
         extract: true,
@@ -64,3 +44,27 @@ export default [
     ],
   },
 ];
+
+function getBaseConfig() {
+  return {
+    input: [
+      './src/index.ts',
+    ],
+    output: [
+      {
+        preserveModules: true,
+        preserveModulesRoot: './src',
+        dir: './dist/esm/',
+        format: 'esm',
+      },
+      {
+        preserveModules: true,
+        preserveModulesRoot: './src',
+        dir: './dist/cjs/',
+        format: 'cjs',
+        exports: 'auto',
+        // sourcemap: true,
+      },
+    ],
+  };
+}

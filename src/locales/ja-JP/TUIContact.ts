@@ -1,0 +1,30 @@
+/* eslint-disable quote-props */
+const TUIContact = {
+  'Enter a userID': 'ユーザーIDを入力して、エンターで検索',
+  'Enter the verification info': '認証情報を記入してください',
+  'Request to join': '参加申請',
+  'Requested': '申請済み',
+  'Accept': '受け入れる',
+  'Refuse': '拒否',
+  'Handled': '処理済み',
+  'Friends': '私の友達',
+  'Send Message': 'メッセージを送信',
+  'Signature': '個性的なサイン',
+  'Successful application, waiting for the administrator to agree to join the group application': '申請が成功し、管理者のグループ参加同意を待っています',
+  'New Contacts': '新しい連絡先',
+  'Blocked List': 'ブロックリスト',
+  'Group List': '私のグループチャット',
+  'No Result': '検索結果なし',
+  'ID': 'ID',
+  'User': '連絡先',
+  'Add Friend': '友達追加',
+  'remark': '備考',
+  'block': 'ブロック',
+  'Delete friend': '友達削除',
+  'waiting for verification': '認証待ち',
+  'verification info': '認証情報',
+  'Send application': '申請を送信',
+  'Agree': '賛成',
+};
+
+export default TUIContact;

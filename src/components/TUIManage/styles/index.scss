@@ -49,16 +49,16 @@
     }
     .tui-manage-handle {
       .manage-handle-box {
-        &:nth-child(2) {
-          margin-top: 10px;
-          cursor: pointer;
-        }
         display: flex;
         background: rgba(249, 249, 249, 0.94);
         align-items: center;
         justify-content: space-between;
         padding: 10px;
         box-sizing: border-box;
+        &:nth-child(2) {
+          margin-top: 10px;
+          cursor: pointer;
+        }
         .manage-handle-title {
           font-size: 16px;
           font-family: PingFangSC-Medium;
