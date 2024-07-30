@@ -6,11 +6,10 @@ import {
   isToday,
   isYesterday,
 } from 'date-fns';
-import { enGB, zhCN } from 'date-fns/locale';
+import { enGB, zhCN, ja, ko } from 'date-fns/locale';
 import TencentCloudChat from '@tencentcloud/chat';
 import { TUIStore, StoreName } from '@tencentcloud/chat-uikit-engine';
 import { defaultGroupAvatarWork, defaultUserAvatar } from './Avatar';
-
 // Determine if it is a JSON string
 export function isJSON(str: string) {
   if (typeof str === 'string') {
@@ -52,41 +51,38 @@ export const handleDisplayAvatar = (avatar: string, type:string = TencentCloudCh
   return displayImage;
 };
 
-export const getTimeStamp = (time: number, language?: string) => {
-  const locales: any = { enGB, zhCN };
-  let lng = '';
-  if (language === 'zh') {
-    lng = 'zhCN';
-  }
-  if (language === 'en') {
-    lng = 'enGB';
-  }
-
+export const getTimeStamp = (time: number, language: string = 'en-US') => {
+  const locales: any = {
+    'zh-CN': zhCN,
+    'en-US': enGB,
+    'ja-JP': ja,
+    'ko-KR': ko,
+   };
   if (!time) {
     return '';
   }
   if (!isThisYear(time)) {
     return format(time, 'yyyy MMM dd', {
-      locale: locales[lng],
+      locale: locales[language],
     });
   }
   if (isToday(time)) {
     return format(time, 'p', {
-      locale: locales[lng],
+      locale: locales[language],
     });
   }
   if (isYesterday(time)) {
     return formatDistance(time, new Date(), {
-      locale: locales[lng],
+      locale: locales[language],
     });
   }
   if (isThisWeek(time)) {
     return format(time, 'eeee', {
-      locale: locales[lng],
+      locale: locales[language],
     });
   }
   return format(time, 'MMM dd', {
-    locale: locales[lng],
+    locale: locales[language],
   });
 };
 

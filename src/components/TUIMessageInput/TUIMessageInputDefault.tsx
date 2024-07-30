@@ -34,7 +34,9 @@ export function TUIMessageInputDefault():React.ReactElement {
   useEffect(() => {
     if (focus && textareaRef && textareaRef.current) {
       textareaRef.current.autofocus = true;
-      isPC && textareaRef?.current?.focus();
+      isPC && textareaRef?.current?.focus({
+        preventScroll: true,
+      });
       // eslint-disable-next-line
       // @ts-ignore
       textareaRef?.current?.addEventListener('paste', handlePasete);

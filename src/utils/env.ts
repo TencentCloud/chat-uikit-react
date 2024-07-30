@@ -1,5 +1,10 @@
 import { getPlatform } from '@tencentcloud/universal-api';
 
-export const isPC = getPlatform() === 'pc';
+export let isPC = getPlatform() === 'pc';
 
-export const isH5 = getPlatform() === 'h5';
+export let isH5 = getPlatform() === 'h5';
+
+export const setPlatform = (platform: 'pc' | 'h5') => {
+  isPC = platform === 'pc';
+  isH5 = platform === 'h5';
+};

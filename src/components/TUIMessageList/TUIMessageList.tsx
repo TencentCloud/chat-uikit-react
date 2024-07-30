@@ -20,9 +20,9 @@ export interface MessageListProps extends InfiniteScrollProps {
   highlightedMessageId?: string,
   intervalsTimer?: number,
 }
-function TUIMessageListWithContext <T extends MessageListProps>(
+function TUIMessageListWithContext<T extends MessageListProps>(
   props: PropsWithChildren<T>,
-):React.ReactElement {
+): React.ReactElement {
   const {
     highlightedMessageId: propsHighlightedMessageId,
     loadMore: propsLoadMore,
@@ -46,8 +46,8 @@ function TUIMessageListWithContext <T extends MessageListProps>(
   const { TUIMessage, EmptyStateIndicator = DefaultEmptyStateIndicator } = useComponentContext('TUIMessageList');
 
   const highlightedMessageId = propsHighlightedMessageId
-  || TUIMessageListConfig?.highlightedMessageId
-  || contextHighlightedMessageId;
+    || TUIMessageListConfig?.highlightedMessageId
+    || contextHighlightedMessageId;
 
   const intervalsTimer = (propsIntervalsTimer || TUIMessageListConfig?.intervalsTimer || 30) * 60;
 
@@ -71,7 +71,9 @@ function TUIMessageListWithContext <T extends MessageListProps>(
         const HTMLCollection = ulElement?.children || [];
         const element = HTMLCollection[HTMLCollection.length - 1];
         const timer = setTimeout(() => {
-          element?.scrollIntoView();
+          if (messageListRef?.current) {
+            messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+          }
           setFirstRender(true);
           clearTimeout(timer);
         }, 100);
@@ -87,7 +89,12 @@ function TUIMessageListWithContext <T extends MessageListProps>(
       }
       const { children } = element;
       children[children.length - 1].classList.add('high-lighted');
-      element?.scrollIntoView({ block: 'center' });
+      if (messageListRef?.current) {
+        const highlightedMessageRect = element.getBoundingClientRect();
+        const messageListRect = messageListRef.current.getBoundingClientRect();
+        const finalScrollTop = highlightedMessageRect.top - messageListRect.top + messageListRef.current.scrollTop;
+        messageListRef.current.scrollTop = finalScrollTop;
+      }
       const timer = setTimeout(() => {
         children[children.length - 1].classList.remove('high-lighted');
         clearTimeout(timer);
@@ -108,8 +115,8 @@ function TUIMessageListWithContext <T extends MessageListProps>(
       >
         <ul ref={setUlElement}>
           {
-              elements?.length && elements.length > 0 ? elements : <EmptyStateIndicator listType="message" />
-            }
+            elements?.length && elements.length > 0 ? elements : <EmptyStateIndicator listType="message" />
+          }
         </ul>
       </InfiniteScroll>
     </div>
@@ -117,9 +124,9 @@ function TUIMessageListWithContext <T extends MessageListProps>(
 }
 
 const MemoizedTUIMessageListContext = React.memo(TUIMessageListWithContext) as
-typeof TUIMessageListWithContext;
+  typeof TUIMessageListWithContext;
 
-export function TUIMessageList(props:MessageListProps):React.ReactElement {
+export function TUIMessageList(props: MessageListProps): React.ReactElement {
   return (
     <MemoizedTUIMessageListContext {...props} />
   );

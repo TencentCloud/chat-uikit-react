@@ -1,4 +1,4 @@
-export const zhCN = {
+export const zh_CN = {
   'We provide a demo for you to try out the features. You can start a one-to-one chat or group chat. Let us chat!': '我们提供了一个 demo 供您试用这些功能。您可以开始一对一聊天或群聊。我们来聊聊吧！',
   'Please note that by using this demo, we will process your personal data in accordance with our Tencent Cloud': '请注意，通过使用此 demo，我们将处理您的个人数据根据腾讯云',
   'Privacy Policy': '隐私政策',

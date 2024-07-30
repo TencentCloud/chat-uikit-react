@@ -7,20 +7,21 @@ import { TUILogin } from "@tencentcloud/tui-core";
 import '@tencentcloud/chat-uikit-react/dist/cjs/index.css';
 import './style.scss';
 import languageIcon from './assets/image/language.svg';
-import { sampleResources } from '../locales/index';
+import { en_US, zh_CN ,ko_KR, ja_JP } from '../locales/index';
 import { genTestUserSig } from '../debug/GenerateTestUserSig';
 import { ChatSDK } from '@tencentcloud/chat';
-if (i18next.language === 'zh') {
-  i18next.addResources(i18next.language, 'translation', sampleResources?.zh);
-} else {
-  i18next.addResources(i18next.language, 'translation', sampleResources?.en);
-}
 
+const sampleLanguge: any = {
+  'zh-CN': zh_CN,
+  'en-US': en_US,
+  'ko-KR': ko_KR,
+  'ja-JP': ja_JP,
+}
 export default function SampleChat() {
   const [chat, setChat] = useState<ChatSDK>();
   const [currentLng, setCurrentLng] = useState({
     label: 'English',
-    value: 'en'
+    value: 'en-US'
   });
   const [isShowLngPop, setShowLngPop] = useState(false);
 
@@ -28,13 +29,22 @@ export default function SampleChat() {
   const languageList = [
     {
       label: '简体中文',
-      value: 'zh'
+      value: 'zh-CN'
     },
     {
       label: 'English',
-      value: 'en'
-    }
+      value: 'en-US'
+    },
+    {
+      label: '日本語',
+      value: 'ja-JP'
+    },
+    {
+      label: '한국어',
+      value: 'ko-KR'
+    },
   ]
+  
   const init = () => {
     const userID = `test-${Math.ceil(Math.random() * 10000)}`;
     const loginInfo: any = {
@@ -54,6 +64,7 @@ export default function SampleChat() {
 
   const changeLanguage = (lng: any) => {
     setCurrentLng(lng);
+    i18next.addResources(i18next.language, 'translation', sampleLanguge[lng.value]);
     i18next.changeLanguage(lng.value);
     setShowLngPop(!isShowLngPop);
   };

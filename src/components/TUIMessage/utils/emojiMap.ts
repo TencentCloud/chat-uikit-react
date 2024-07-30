@@ -468,7 +468,7 @@ export function formatEmojiString(data: string, type = 0, language?: string) {
   };
   Object.entries(emojiEnKey).map((item) => {
     if (text.includes(item[replace.key])) {
-      if (language && language === 'zh') {
+      if (language && language === 'zh-CN') {
         text = item[replace.key];
       } else {
         text = transText(text, item[replace.key], item[replace.value]);

@@ -1,3 +1,8 @@
+## [2.2.3] (2024-7-30)
+
+#### feat
+* feat:  Localization language Added for ja-JP and ko-KR
+
 ## [2.2.3] (2024-7-05)
 
 #### fix

@@ -1,4 +1,4 @@
-export const enUS = {
+export const en_US = {
   'We provide a demo for you to try out the features. You can start a one-to-one chat or group chat. Let us chat!': 'We provide a demo for you to try out the features. You can start a one-to-one chat or group chat. Let us chat!',
   'Please note that by using this demo, we will process your personal data in accordance with our Tencent Cloud': 'Please note that by using this demo, we will process your personal data in accordance with our Tencent Cloud',
   'Privacy Policy': 'Privacy Policy',
