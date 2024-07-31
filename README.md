@@ -2,8 +2,7 @@
 
 ## About Tencent Cloud Chat
 
-[Tencent Cloud Chat](https://www.tencentcloud.com/products/im) provides globally interconnected chat APIs, multi-platform SDKs, and UIKit components to help you quickly bring messaging capabilities such as one-to-one chat, group chat, chat rooms, and system notifications to your applications and websites.
-
+[Tencent Cloud Chat](https://trtc.io/document/50061?platform=web&product=chat&menulabel=uikit) provides globally interconnected chat APIs, multi-platform SDKs, and UIKit components to help you quickly bring messaging capabilities such as one-to-one chat, group chat, chat rooms, and system notifications to your applications and websites.
 ## Global Compliance Certifications
 <table>
 <tr>
@@ -22,6 +21,7 @@
 </tr>
 </table>
 
+
 ## Core Capabilities
 
 - 1 Billion+ Monthly active users
@@ -34,7 +34,7 @@
 ![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/712468b756a111ee974d5254005f490f.png)
 ![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/80785e9c56a111ee974d5254005f490f.png)
 
-👉🏻 [Free Demo](https://web.sdk.qcloud.com/im/demo/intl/index.html)
+👉🏻 [Free Demo](https://trtc.io/demo/homepage/#/detail?scene=messenger)
 
 
 ## Get Started
@@ -43,16 +43,15 @@
 
 ### Step 1. Create an app
 
-1. Log in to the [Chat console](https://console.tencentcloud.com/im).
-2. Click `Create Application`, enter your app name, and click `Confirm`.
-![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/f016163c56a111ee94c3525400d793d0.png)
+1. Log in to the [Chat console](https://console.trtc.io/).
+2. Click `Create Application`, enter your app name, and click `Create`.
+![](https://github.com/user-attachments/assets/1ce0bdc2-2770-4006-b480-8c0e7d89271f)
 3. After creation, you can see the status, service version, SDKAppID, creation time, tag, and expiration time of the new app on the overview page of the console.
-![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/2adc015456a211ee974d5254005f490f.png)
 
 ### Step 2. Obtain the SDKAppID and SECRETKEY
 1. Click the target app card to go to the basic configuration page of the app.
 2. In the Basic info area, click `Display key`, and then copy and save the key information, which is SECRETKEY.
-![](https://cloudcache.intl.tencent-cloud.com/cms/backend-cms/696c6df756a211ee84f2525400494e51.png)
+![](https://github.com/user-attachments/assets/26c1f583-cc2a-4f19-b952-6ca7ebccf27f)
 
 ### Step 3. Download the source code and install dependencies
 ```
@@ -66,6 +65,7 @@ $ npm install
 ### Step 4. Configure
 1. Open the `examples/sample-chat` project and locate the `GenerateTestUserSig.js` file in `./examples/sample-chat/src/debug/GenerateTestUserSig.js`.
 2. Set the `SDKAppID` and `SECRETKEY` obtained at Step 2.
+![](https://github.com/user-attachments/assets/57858e6d-6dad-4c99-bb69-b32b5f78f813)
 
 ### Step 5. Run the demo
 ```
