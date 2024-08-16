@@ -1,24 +1,29 @@
+@use "../../../styles/colors/color-theme" as *;
+
 // message input styles
 .tui-message-input {
   display: flex;
   flex-direction: column;
+
   &-main {
     flex: 1;
     display: flex;
     align-items: center;
     padding: 14px 12px;
     gap: 12px;
+
     .input-box {
       flex: 1;
       display: flex;
-      padding: 0 8px;
       position: relative;
       min-height: 20px;
       max-height: 200px;
       border-radius: 15px;
       overflow: hidden;
       padding: 10px;
+
       .input-visibility-content {
+        min-height: 20px;
         word-break: break-all;
         visibility: hidden;
         max-width: -webkit-fill-available;
@@ -29,6 +34,7 @@
         line-height: 17px;
         padding: 1px 2px;
       }
+
       textarea {
         position: absolute;
         top: 0;
@@ -45,17 +51,24 @@
         resize: none;
         border: none;
         background: none;
-        &:focus, &:active{
+
+        @include theme() {
+          color: get(text-primary);
+        }
+
+        &:focus,
+        &:active {
           border: none;
           outline: none;
         }
       }
     }
-  
+
     .disabled {
       display: none;
     }
   }
+
   &-box {
     flex: 1;
     display: flex;
@@ -69,12 +82,14 @@ ul li {
 
 .input-plugin-popup {
   position: relative;
+
   &-box {
     position: absolute;
     z-index: 2;
     bottom: 30px;
   }
 }
+
 .input-plugin-item {
   font-style: normal;
   font-weight: 500;
@@ -82,11 +97,11 @@ ul li {
   font-family: PingFangSC-Medium;
   line-height: 19px;
   display: flex;
+
   span {
     padding: 0 17px;
   }
 }
-
 
 // emoji picker styles
 .emoji-picker {
@@ -97,44 +112,53 @@ ul li {
     display: flex;
     flex-wrap: wrap;
     overflow-y: auto;
+
     &-item {
       padding: 5px;
       cursor: pointer;
+      user-select: none;
+
       img {
         width: 20px;
       }
+
       .face-img {
         width: 38px;
       }
     }
   }
+
   .face-tab {
     display: flex;
     align-items: center;
     min-width: 265px;
+
     &-item {
       cursor: pointer;
       width: 24px;
       padding: 10px;
+
       img {
         width: 100%;
       }
     }
   }
+
   .emoji-plugin-right {
     right: 0;
   }
 }
-
 
 // upload styles
 .upload-picker {
   position: relative;
   padding: 10px 16px;
   min-width: 180px;
+
   &:hover {
     color: #147aff;
   }
+
   input {
     position: absolute;
     cursor: pointer;
@@ -148,12 +172,13 @@ ul li {
 
 .input-quote {
   padding: 7px 16px;
-  background: #F9F9F9;
+  background: #f9f9f9;
   display: flex;
   align-items: center;
+
   &-content {
     flex: 1;
-    background: #FFFFFF;
+    background: #fff;
     padding: 2px 14px;
     position: relative;
     display: flex;
@@ -162,21 +187,24 @@ ul li {
     font-size: 14px;
     font-family: PingFangSC-Medium;
     line-height: 17px;
-    color: #000000;
+    color: #000;
+
     &::before {
       content: "";
       position: absolute;
       width: 6px;
       height: 100%;
-      background: #999999;
+      background: #999;
       top: 0;
       left: 0;
     }
+
     span {
       padding-top: 8px;
       opacity: 0.6;
     }
   }
+
   .icon {
     margin: 0 5px 0 16px;
   }
@@ -184,18 +212,20 @@ ul li {
 
 // TUIForward
 .tui-forward {
-  background: #FFFFFF;
+  background: #fff;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   width: 300px;
   max-height: 90%;
+
   &-header {
     display: flex;
     align-items: center;
     padding: 24px 20px;
   }
+
   &-title {
     padding: 0 16px;
     font-family: PingFangSC-Medium;
@@ -204,10 +234,12 @@ ul li {
     font-size: 14px;
     line-height: 17px;
   }
+
   &-main {
     padding: 0 20px;
     max-height: calc(100vh - 200px);
     overflow-y: auto;
+
     .no-result {
       font-family: PingFangSC-Medium;
       font-size: 14px;
@@ -215,14 +247,17 @@ ul li {
       line-height: 20px;
       padding: 10px;
       text-align: center;
-      color: #999999;
+      color: #999;
     }
   }
+
   &-search {
     padding: 10px 15px;
   }
+
   &-list {
     padding: 13px 0;
+
     &-title {
       font-family: PingFangSC-Medium;
       font-style: normal;
@@ -230,6 +265,7 @@ ul li {
       font-size: 14px;
       line-height: 20px;
     }
+
     &-item {
       padding: 6px 0;
       font-family: PingFangSC-Medium;
@@ -241,11 +277,13 @@ ul li {
       justify-content: space-between;
       align-items: center;
       width: 100%;
+
       .info {
         display: flex;
         align-items: center;
         flex-shrink: 0;
         width: 100%;
+
         &-nick {
           padding: 0 13px;
           font-family: PingFangSC-Medium;
@@ -263,15 +301,17 @@ ul li {
       }
     }
   }
+
   &-footer {
-    background: rgba(249, 249, 249, 0.94);
+    background: rgba(249, 249, 249, 94%);
     padding: 13px 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .button {
       cursor: pointer;
-      background: #0365F9;
+      background: #0365f9;
       border-radius: 31px;
       padding: 10px 21px;
       font-family: PingFangSC-Medium;
@@ -279,12 +319,13 @@ ul li {
       font-weight: 400;
       font-size: 14px;
       line-height: 20px;
-      color: #FFFFFF;
+      color: #fff;
       border: none;
     }
+
     &-name {
       flex: 1;
-      overflow : hidden;
+      overflow: hidden;
       word-break: break-all;
       text-overflow: ellipsis;
       display: -webkit-box;
@@ -296,6 +337,7 @@ ul li {
 
 .transmitter {
   padding: 0 10px;
+
   .icon-send {
     transform: rotate(90deg);
   }

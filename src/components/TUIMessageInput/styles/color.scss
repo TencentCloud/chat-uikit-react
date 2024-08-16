@@ -1,17 +1,36 @@
+@use "../../../styles/colors/color-theme" as *;
+
 .tui-message-input {
-  .tui-kit-input-box--focus {
-    outline: 1px solid #147AFF;
+  @include theme() {
+    background-color: get(bg-primary);
   }
+
+  .tui-kit-input-box--focus {
+    @include theme() {
+      outline: 1px solid get(status-info);
+    }
+  }
+
   .input-box {
-    border: 1px solid #D3DAF3;
-    background: #FFFFFF;
+    @include theme() {
+      background-color: get(bg-primary);
+      border: 1px solid get(border-5);
+    }
   }
 }
 
 .input-plugin-popup {
   &-box {
-    background: #FFFFFF;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
     border-radius: 16px;
+
+    [data-chat-theme="light"] & {
+      background-color: var(--chat-theme-light-bg-primary);
+      box-shadow: var(--chat-theme-light-box-shadow-1);
+    }
+
+    [data-chat-theme="dark"] & {
+      background-color: var(--chat-theme-dark-bg-3);
+      box-shadow: var(--chat-theme-dark-box-shadow-1);
+    }
   }
 }

@@ -1,7 +1,16 @@
-## [2.2.3] (2024-7-30)
+## [2.2.5] (2024-8-16)
 
 #### feat
-* feat:  Localization language Added for ja-JP and ko-KR
+* feat: Support icon font
+* feat: Support node20+
+
+#### fix
+* fix: Conversation search title displays incorrectly
+
+## [2.2.4] (2024-7-30)
+
+#### feat
+* feat: Localization language Added for ja-JP and ko-KR
 
 ## [2.2.3] (2024-7-05)
 

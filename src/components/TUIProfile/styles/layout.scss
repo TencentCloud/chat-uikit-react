@@ -2,99 +2,116 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 30%;
-  max-width: 360px;
-  min-width: 360px;
-  height: 100%;
+
   &-header {
     box-sizing: border-box;
     width: 100%;
-    padding: 16px 20px;
+    padding: 15px;
     display: flex;
     align-items: center;
-    line-height: 32px;
+
     h1 {
+      font-size: 16px;
       font-weight: 600;
       padding: 0 11px;
     }
   }
+
   &-main {
     max-width: 100%;
     box-sizing: border-box;
-    padding: 20px;
+    padding: 10px 10px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+
   &-avatar {
     margin: 13px 0;
     position: relative;
   }
+
   .displayFlex {
     display: flex;
   }
+
   &-nick {
     font-weight: 700;
     font-size: 24px;
     font-family: PingFangSC-Medium;
     line-height: 29px;
     text-align: center;
+
     .show {
       padding-left: 25px;
     }
   }
-  &-ID{
+
+  &-ID {
     padding: 6px 0;
+    margin: 0;
     display: flex;
     align-items: center;
     font-weight: 400;
     font-size: 12px;
     font-family: PingFangSC-Medium;
     line-height: 14px;
-    color: #666666;
+    color: #666;
+
+    h5 {
+      margin: 0;
+    }
   }
+
   &-list {
     box-sizing: border-box;
     width: 100%;
-    padding: 0 20px;
+    padding: 0 15px;
     display: flex;
     flex-direction: column;
     user-select: none;
+
     &-item {
-      padding: 20px 0 0;
+      padding: 0;
       cursor: pointer;
+
       h4 {
         padding-bottom: 3px;
         font-weight: 400;
         font-size: 16px;
         font-family: PingFangSC-Medium;
         line-height: 22px;
-        color: rgba(0, 0, 0, 0.6);
+        margin: 10px 0;
+        color: rgba(0, 0, 0, 60%);
       }
     }
   }
+
   &-div-with-edit {
     padding: 4px 0;
-    border-bottom: 1px solid #EEEEEE;
+    border-bottom: 1px solid #eee;
   }
+
   &-edit {
     border-bottom: none !important;
   }
 }
 
 .tui-profile-birthday {
-  .react-date-picker__wrapper{
+  .react-date-picker__wrapper {
     display: none !important;
   }
+
   .react-date-picker__calendar {
     position: static !important;
+
     .react-calendar__navigation {
       height: 20px !important;
-      margin-bottom: 0px;
+      margin-bottom: 0;
     }
   }
+
   &-calendar {
     border: none !important;
   }
 }
-

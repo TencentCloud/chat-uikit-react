@@ -1,7 +1,21 @@
+@use "../../../styles/colors/color-theme" as *;
+
 .plugin-popup {
   &-box {
-    background: #FFFFFF;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     border-radius: 16px;
+
+    @include theme() {
+      color: get(text-primary);
+    }
+
+    [data-chat-theme="light"] & {
+      background-color: var(--chat-theme-light-bg-primary);
+      box-shadow: var(--chat-theme-light-box-shadow-1);
+    }
+
+    [data-chat-theme="dark"] & {
+      background-color: var(--chat-theme-dark-bg-3);
+      box-shadow: var(--chat-theme-dark-box-shadow-1);
+    }
   }
 }

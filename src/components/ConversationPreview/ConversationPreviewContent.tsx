@@ -159,8 +159,7 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
                     {t(!conversation.isPinned ? 'TUIConversation.Pin' : 'TUIConversation.Unpin')}
                   </div>,
                   <div
-                    className="more-handle-item"
-                    style={{ color: '#FF584C' }}
+                    className="more-handle-item delete"
                     onClick={(e) => {
                       moreHandle(e, 'delete');
                     }}

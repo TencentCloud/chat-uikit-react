@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useContext } from 'react';
+import React, { PropsWithChildren, useContext, useLayoutEffect } from 'react';
 import {
   ChatSDK,
   Conversation,
@@ -24,6 +24,11 @@ export const TUIKitContext = React.createContext<TUIKitContextValue | undefined>
 export function TUIKitProvider({ children, value }:PropsWithChildren<{
     value: TUIKitContextValue
 }>):React.ReactElement {
+
+  useLayoutEffect(() => {
+    document.documentElement.dataset.chatTheme = 'light';
+  }, []);
+
   return (
     <TUIKitContext.Provider value={(value as unknown) as TUIKitContextValue}>
       {children}

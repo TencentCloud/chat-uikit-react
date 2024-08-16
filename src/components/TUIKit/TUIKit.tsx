@@ -7,8 +7,6 @@ import { isH5, isPC } from '../../utils/env';
 import { useTUIKit, UseContactParams } from './hooks/useTUIKit';
 import { useCreateTUIKitContext } from './hooks/useCreateTUIKitContext';
 import { TUIKitProvider } from '../../context/TUIKitContext';
-import './styles/index.scss';
-import './styles/h5.scss';
 import { TUIConversation } from '../TUIConversation';
 import { TUIChat } from '../TUIChat';
 import { TUIManage } from '../TUIManage';
@@ -21,6 +19,9 @@ import chats from '../Icon/images/chats.svg';
 import chatsSelected from '../Icon/images/chats-selected.svg';
 import contacts from '../Icon/images/contacts.svg';
 import contactsSelected from '../Icon/images/contacts-selected.svg';
+import './styles/index.scss';
+import './styles/h5.scss';
+import '../../styles/index.scss';
 
 export interface ChatProps {
   chat?: any,
