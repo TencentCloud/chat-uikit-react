@@ -1,9 +1,28 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import TencentCloudChat, { Conversation, Group, Profile } from '@tencentcloud/chat';
 import { defaultGroupAvatarWork, defaultUserAvatar } from '../Avatar';
 import { formatEmojiString } from '../TUIMessage/utils/emojiMap';
 import { getTimeStamp } from '../untils';
+
+interface TProfile extends Profile, Group {}
+export const getMessageProfile = (conversation: Conversation): TProfile => {
+  // eslint-disable-next-line
+  // @ts-ignore
+  if (!conversation) return null;
+  let result = {};
+  const { type, groupProfile, userProfile } = conversation;
+  switch (type) {
+    case TencentCloudChat.TYPES.CONV_C2C:
+      result = userProfile;
+      break;
+    case TencentCloudChat.TYPES.CONV_GROUP:
+      result = groupProfile;
+      break;
+    case TencentCloudChat.TYPES.CONV_SYSTEM:
+    default:
+  }
+  return result as TProfile;
+};
 
 export const getDisplayTitle = (
   conversation: Conversation,
@@ -25,15 +44,22 @@ export const getDisplayTitle = (
     default:
       title = '';
   }
-  const handleTitle = (str:string) => {
+  const handleTitle = (str: string) => {
     const tempStr = str.toLocaleLowerCase();
     const pos = searchValue && tempStr.indexOf(searchValue.toLocaleLowerCase());
-    if (pos === '') return <></>
+    const titleList = str.split(new RegExp(`(${searchValue})`, 'gi'));
+    if (pos === '') return <></>;
     return (
       <div>
-        <span>{str.slice(0, pos)}</span>
-        <span style={{ color: highlightColor }}>{pos && str.slice(pos, pos + searchValue.length)}</span>
-        <span>{pos && str.slice(pos + searchValue.length)}</span>
+        {searchValue && titleList.map((textItem: string, index: number) =>
+          (textItem.toLowerCase() === searchValue.toLowerCase())
+            ? (
+                <span key={index} style={{ color: highlightColor }}>{textItem}</span>
+              ) : (
+                <span key={index}>{textItem}</span>
+              ),
+        )}
+        ;
       </div>
     );
   };
@@ -58,9 +84,9 @@ export const getDisplayImage = (conversation: Conversation) => {
   return displayImage;
 };
 export const getDisplayMessage = (
-  conversation:Conversation,
-  myProfile:Profile,
-  language?:string,
+  conversation: Conversation,
+  myProfile: Profile,
+  language?: string,
 ) => {
   const { lastMessage, type } = conversation;
   const {
@@ -93,25 +119,7 @@ export const getDisplayMessage = (
     </div>
   );
 };
-interface TProfile extends Profile, Group {}
-export const getMessageProfile = (conversation: Conversation):TProfile => {
-  // eslint-disable-next-line
-  // @ts-ignore
-  if (!conversation) return null;
-  let result = {};
-  const { type, groupProfile, userProfile } = conversation;
-  switch (type) {
-    case TencentCloudChat.TYPES.CONV_C2C:
-      result = userProfile;
-      break;
-    case TencentCloudChat.TYPES.CONV_GROUP:
-      result = groupProfile;
-      break;
-    case TencentCloudChat.TYPES.CONV_SYSTEM:
-    default:
-  }
-  return result as TProfile;
-};
+
 export const getDisplayTime = (conversation: Conversation, language: string) => {
   const { lastMessage } = conversation;
   return getTimeStamp(lastMessage.lastTime * 1000, language);

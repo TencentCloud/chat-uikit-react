@@ -8,6 +8,7 @@ import postcss from 'rollup-plugin-postcss';
 import autoprefixer from 'autoprefixer';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import url from '@rollup/plugin-url';
+import copy from 'rollup-plugin-copy';
 
 export default [
   {
@@ -21,13 +22,23 @@ export default [
           autoprefixer(),
         ],
       }),
+      copy({
+        targets: [{
+          src: [
+            'src/assets/fonts/iconfont.ttf',
+            'src/assets/fonts/iconfont.woff',
+            'src/assets/fonts/iconfont.woff2',
+          ],
+          dest: ['dist/cjs/assets/fonts', 'dist/esm/assets/fonts'],
+        }],
+      }),
       peerDepsExternal(),
       resolve(),
       commonjs(),
-      babel({
-        extensions: ['.js', '.jsx', '.es6', '.es', '.mjs', 'ts', 'tsx'],
-      }),
       typescript(),
+      babel({
+        extensions: ['.js', '.jsx', '.es6', '.es', '.mjs', '.ts', '.tsx'],
+      }),
       terser(),
     ],
     external: ['react', 'date-fns', 'tslib', 'react-date-picker', 'i18next', 'react-i18next', '@tencentcloud/tui-core',

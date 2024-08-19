@@ -1,3 +1,5 @@
+@use "../../../styles/colors/color-theme" as *;
+
 .message-default {
   width: 100%;
   flex: 1;
@@ -24,6 +26,10 @@
       display: inline-block;
       padding-bottom: 3px;
       max-width: 60%;
+
+      @include theme() {
+        color: get(text-primary);
+      }
     }
   }
 }
@@ -80,7 +86,10 @@
     font-family: PingFangSC-Medium;
     line-height: 14px;
     text-align: right;
-    color: #7A7A7A;
+
+    @include theme() {
+      color: get(text-secondary);
+    }
   }
 }
 
@@ -91,7 +100,9 @@
     bottom: 10px;
     right: 10px;
     .time {
-      color: #FFFFFF;
+      @include theme() {
+        color: get(text-primary);
+      }
     }
   }
 }
@@ -110,6 +121,10 @@
       white-space: pre-wrap;
       display: inline;
       vertical-align: middle;
+
+      @include theme() {
+        color: get(text-primary);
+      }
     }
     .message-status {
       display: inline-flex;
@@ -232,46 +247,64 @@
 }
 
 .meesage-bubble-reply {
-  background: #ECEBEB;
   padding: 8px 16px;
+
+  @include theme() {
+    background-color: get(bg-secondary);
+  }
+
   &-in {
     border-radius: 16px 16px 16px 0;
   }
+
   &-out {
     border-radius: 16px 16px 0px 16px;
   }
+
   .message-text {
-    border-radius: none;
-    border: none;
+    border: none !important;
   }
+
   .bubble {
     padding: 0;
+
     &-in {
       border-radius: 0;
     }
   }
+
   &-main {
     position: relative;
     padding: 10px 14px;
     margin-bottom: 10px;
-    background: #FFFFFF;
+
+    @include theme() {
+      background-color: get(bg-primary);
+    }
+
     &::before {
       content: "";
       position: absolute;
       width: 6px;
       height: 100%;
-      background: #D9D9D9;
       top: 0;
       left: 0;
+
+      @include theme() {
+        background-color: get(bg-5);
+      }
     }
+
     .title {
-      font-family: PingFangSC-Medium;
-      font-style: normal;
       font-weight: 500;
       font-size: 14px;
-      line-height: 17px;
       padding-bottom: 10px;
+
+      @include theme() {
+        color: get(text-primary);
+      }
     }
+
     .message-context {
       opacity: 0.6;
     }

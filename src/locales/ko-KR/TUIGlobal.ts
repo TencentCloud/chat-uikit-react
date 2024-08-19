@@ -1,6 +1,6 @@
 /* eslint-disable quote-props */
 export const TUIGlobal = {
-  'chats': 'メッセージ',
-  'contacts': '連絡先'
+  'chats': '채팅',
+  'contacts': '연락처'
 }
 export default TUIGlobal;

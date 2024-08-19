@@ -2,49 +2,57 @@
   .create-group-box {
     padding: 10px 0;
   }
+
   .input-group-text {
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     font-family: PingFangSC-Medium;
     line-height: 22px;
-    color: #000000;
+    color: #000;
   }
+
   .create-group-name {
     .input-group-name {
       font-weight: 700;
-      font-size: 16px;
+      font-size: 14px;
       font-family: PingFangSC-Medium;
       line-height: 19px;
-      color: #000000;
+      color: #000;
     }
   }
+
   .input-group-title {
-    color: rgba(0, 0, 0, 0.4);
+    color: rgba(0, 0, 0, 40%);
     width: 106px;
+    font-size: 14px;
   }
+
   .create-group-illustrate {
     font-weight: 400;
     font-size: 12px;
     font-family: PingFangSC-Medium;
     line-height: 17px;
     text-align: justify;
-    color: rgba(0, 0, 0, 0.4);
+    color: rgba(0, 0, 0, 40%);
     padding-left: 8px;
   }
+
   .create-group-portrait {
     .create-group-portrait-title {
       font-weight: 600;
       font-size: 14px;
       font-family: PingFangSC-Medium;
       line-height: 20px;
-      color: #000000;
+      color: #000;
       padding: 20px 0 20px 8px;
     }
+
     .create-group-portrait-info-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: flex-start;
       margin-bottom: 10px;
+
       .create-group-portrait-info {
         align-items: center;
         display: flex;
@@ -52,6 +60,7 @@
         width: calc((100% - 10px) / 6);
         padding: 6px;
         box-sizing: border-box;
+
         &-nick {
           font-size: 12px;
           font-family: PingFangSC-Medium;

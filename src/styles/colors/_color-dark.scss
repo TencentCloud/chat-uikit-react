@@ -1,0 +1,35 @@
+$dark-colors: (
+  // bg
+  --chat-theme-dark-bg-5: #76777e,
+  --chat-theme-dark-bg-4: #5d5e67,
+  --chat-theme-dark-bg-3: #454650,
+  --chat-theme-dark-bg-2: #2e303a,
+  --chat-theme-dark-bg-1: #191b26,
+  --chat-theme-dark-bg-primary: #191b26,
+  --chat-theme-dark-bg-secondary: #2e303a,
+  --chat-theme-dark-bg-active: #4e4e4e,
+  // text
+  --chat-theme-dark-text-5: #000,
+  --chat-theme-dark-text-4: #666,
+  --chat-theme-dark-text-3: #7a7a7a,
+  --chat-theme-dark-text-2: #7a7a7a,
+  --chat-theme-dark-text-1: #7a7a7a,
+  --chat-theme-dark-text-primary: #fff,
+  --chat-theme-dark-text-secondary: #8b8b8b,
+  // status
+  --chat-theme-dark-status-info: #147aff,
+  --chat-theme-dark-status-success: #34c759,
+  --chat-theme-dark-status-danger: #ff3742,
+  // border
+  --chat-theme-dark-border-5: #4e4e4e,
+  // box-shadow
+  --chat-theme-dark-box-shadow-1: (rgba(203, 203, 203, 0.755) 0 3px 8px),
+);
+
+:root {
+  @each $name, $color in $dark-colors {
+    #{$name}: $color;
+  }
+
+  color-scheme: light dark;
+}
