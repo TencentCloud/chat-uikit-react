@@ -1,3 +1,5 @@
+@use "../../../styles/colors/color-theme" as *;
+
 ul,li,div,p,label,span {
   margin: 0;
   padding: 0;
@@ -12,6 +14,11 @@ ul li {
   overflow-y: auto;
   position: relative;
   padding: 0 20px;
+
+  @include theme() {
+    background-color: get(bg-primary);
+  }
+
   &.hide {
     opacity: 0;
   }
@@ -26,15 +33,22 @@ ul li {
     font-style: normal;
     font-weight: 500;
     line-height: 17px;
-    color: #999999;
+
+    @include theme() {
+      color: get(text-secondary);
+    }
+
   }
   &-time {
-    color: #7a7a7a;
     font-family: PingFangSC-Medium;
     font-size: 12px;
     font-weight: 400;
     line-height: 14px;
     padding: 10px;
     text-align: center;
+
+    @include theme() {
+      color: get(text-secondary);
+    }
   }
 }

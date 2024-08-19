@@ -1,0 +1,35 @@
+$light-colors: (
+  // bg
+  --chat-theme-light-bg-5: #999,
+  --chat-theme-light-bg-4: #b3b3b3,
+  --chat-theme-light-bg-3: #e5e7eb,
+  --chat-theme-light-bg-2: #f0f0f0,
+  --chat-theme-light-bg-1: #fff,
+  --chat-theme-light-bg-primary: #fff,
+  --chat-theme-light-bg-secondary: #f0f0f0,
+  --chat-theme-light-bg-active: #e6f1ff,
+  // text
+  --chat-theme-light-text-5: #000,
+  --chat-theme-light-text-4: #666,
+  --chat-theme-light-text-3: #7a7a7a,
+  --chat-theme-light-text-2: #7a7a7a,
+  --chat-theme-light-text-1: #7a7a7a,
+  --chat-theme-light-text-primary: #000,
+  --chat-theme-light-text-secondary: #7a7a7a,
+  // status
+  --chat-theme-light-status-info: #147aff,
+  --chat-theme-light-status-success: #34c759,
+  --chat-theme-light-status-danger: #ff3742,
+  // border
+  --chat-theme-light-border-5: #e0e0e0,
+  // box-shadow
+  --chat-theme-light-box-shadow-1: (rgba(0, 0, 0, 0.24) 0 3px 8px),
+);
+
+:root {
+  @each $name, $color in $light-colors {
+    #{$name}: $color;
+  }
+
+  color-scheme: light dark;
+}

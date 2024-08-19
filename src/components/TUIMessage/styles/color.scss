@@ -1,26 +1,37 @@
-.message-text, .message-custom{
-  border: 1px solid #DDDDDD;
+@use "../../../styles/colors/color-theme" as *;
+
+.message-text,
+.message-custom {
+  @include theme() {
+    border: 1px solid get(border-5);
+  }
 }
 
 .bubble {
+  @include theme() {
+    background-color: get(bg-primary);
+  }
+
   &-out {
-    background: #F2F7FF;
-    border: 1px solid #F2F7FF;
+    @include theme() {
+      border: none;
+      background-color: get(bg-secondary);
+    }
   }
 }
 
 .meesage-bubble-reply-out {
-  background: #F2F7FF;
   .meesage-bubble-reply-main {
-    .message-text{
+    .message-text {
       background: none;
     }
   }
 }
 
-
 .message-tip {
-  color: #999999;
+  @include theme() {
+    color: get(text-secondary);
+  }
 }
 
 .tip {
