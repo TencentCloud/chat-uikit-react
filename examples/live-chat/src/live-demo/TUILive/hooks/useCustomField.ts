@@ -5,7 +5,7 @@ import React, {
   useState,
 } from 'react';
 import TencentCloudChat, { ChatSDK, Conversation, Group } from '@tencentcloud/chat';
-import { useTUIKitContext } from '../../../../../../src/context';
+import { useUIKit } from '@tencentcloud/chat-uikit-react';
 import { useTUILiveContext } from '../context/TUILiveContext';
 import { Icon, IconTypes } from '../../../../../../src/components/Icon';
 
@@ -33,7 +33,7 @@ export interface useLiveAtiveElementsParams extends useLiveAtiveBasicParams {
 export function useCustomField<T extends useLiveAtiveElementsParams>(
   props:PropsWithChildren<T>,
 ) {
-  const { chat } = useTUIKitContext('useCustomField');
+  const { chat } = useUIKit('useCustomField');
   const { group } = useTUILiveContext('TUILiveHeader');
   const setGroupMemberCustomField = useCallback(() => {
     chat.setGroupMemberCustomField({ groupID: (group as any).groupID, memberCustomField: [{ key: 'group_member_test', value: 'test' }] });

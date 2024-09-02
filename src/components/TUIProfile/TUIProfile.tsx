@@ -4,7 +4,7 @@ import { Profile } from '../Profile';
 import './styles/index.scss';
 import { useMyProfile } from './hooks';
 import { TUIProfileDefault } from './TUIProfileDefault';
-import { useTUIKitContext } from '../../context';
+import { useUIManager } from '../../context';
 
 interface TUIProfileProps {
   className?: string,
@@ -21,13 +21,13 @@ function UnMemoizedTUIProfile<T extends TUIProfileProps>(
 
   const { myProfile, updateMyProfile } = useMyProfile();
 
-  const { setTUIProfileShow, TUIProfileShow } = useTUIKitContext('TUIProfile');
+  const { setTUIProfileShow, TUIProfileShow } = useUIManager('TUIProfile');
 
   const TUIProfileUIComponent = PropTUIProfile || TUIProfileDefault;
 
   return (
     <>
-    {/* //eslint-disable-next-line 
+    {/* //eslint-disable-next-line
     @ts-ignore */}
       <Profile
         profile={myProfile}

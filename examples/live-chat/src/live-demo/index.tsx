@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  TUIKit,
+  UIKitProvider,
   TUIChat,
   TUIMessageInput,
   TUIMessageList,
@@ -36,7 +36,7 @@ export default function LiveDemo(props: any) {
     className,
   } = props;
 
-  // group for memeberList 
+  // group for memeberList
   const memberGroupList:Array<TUILiveMemberListItemParams> = [
     {
       title:<><img className="icon-title" src={admin} alt='' /> Administrator</> ,
@@ -133,7 +133,7 @@ export default function LiveDemo(props: any) {
 
   return (
     <div className={`live ${className}`}>
-      <TUIKit chat={chat}>
+      <UIKitProvider chat={chat}>
         <TUILive
           className='live-player'
           menuIcon={!isChatShow ? <img className="icon icon-expand" src={expand} alt='Expand' onClick={toggleChat} /> : <></>}
@@ -166,7 +166,7 @@ export default function LiveDemo(props: any) {
               </div>}
           </TUIChat>
         </TUILive>
-    </TUIKit>
+    </UIKitProvider>
     </div>
   );
 }

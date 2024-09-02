@@ -1,7 +1,7 @@
 import React, {
   PropsWithChildren,
 } from 'react';
-import { useTUIKitContext } from '../../../context';
+import { useUIManager } from '../../../context';
 import { isH5 } from '../../../utils/env';
 import { FriendInfo } from './friendInfo';
 import { BlockInfo } from './blockInfo';
@@ -18,7 +18,7 @@ export function UnMemoizedTUIContactInfo<T extends TUIContactInfoProps>(
   props: PropsWithChildren<T>,
 ): React.ReactElement {
   const { showChats } = props;
-  const { contactData } = useTUIKitContext('TUIContact');
+  const { contactData } = useUIManager('TUIContact');
   if (!contactData?.type) {
     return (<> </>);
   }

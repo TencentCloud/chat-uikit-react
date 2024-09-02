@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Conversation } from '@tencentcloud/chat';
-import { TUIKitContextValue, useTUIKitContext } from '../../context';
+import type { Conversation } from '@tencentcloud/chat';
+import { useUIKit, useUIManager } from '../../context';
 import { ConversationPreviewContent } from './ConversationPreviewContent';
 import { AvatarProps } from '../Avatar';
 
@@ -8,34 +8,34 @@ import {
   getDisplayImage, getDisplayMessage, getDisplayTitle, getDisplayTime,
 } from './utils';
 
-export interface ConversationPreviewUIComponentProps extends ConversationPreviewProps{
+export interface ConversationPreviewUIComponentProps extends ConversationPreviewProps {
   /** If the component's Conversation is the active (selected) Conversation */
-  active?: boolean,
+  active?: boolean;
   /** Image of Conversation to display */
-  displayImage?: string,
+  displayImage?: string;
   /** Title of Conversation to display */
-  displayTitle?: string | React.ReactElement,
+  displayTitle?: string | React.ReactElement;
   /** Message of Conversation to display */
-  displayMessage?: string | React.ReactElement,
+  displayMessage?: string | React.ReactElement;
   /** Time of Conversation to display */
-  displayTime?: string,
+  displayTime?: string;
   /** Number of unread Messages */
-  unread?: number,
+  unread?: number;
 }
 export interface ConversationPreviewProps {
-  conversation: Conversation,
-  activeConversation?: Conversation,
-  Preview?: React.ComponentType<ConversationPreviewUIComponentProps>,
-  Avatar?: React.ComponentType<AvatarProps>
-  setActiveConversation?: TUIKitContextValue['setActiveConversation'],
-  searchValue?: string,
-  conversationUpdateCount?: number
-  activeConversationID?: string,
-  setActiveConversationID?: (conversationID: string) => void,
+  conversation: Conversation;
+  activeConversation?: Conversation;
+  Preview?: React.ComponentType<ConversationPreviewUIComponentProps>;
+  Avatar?: React.ComponentType<AvatarProps>;
+  setActiveConversation?: (conversation: Conversation | undefined) => void;
+  searchValue?: string;
+  conversationUpdateCount?: number;
+  activeConversationID?: string;
+  setActiveConversationID?: (conversationID: string) => void;
 }
 export function ConversationPreview<T extends ConversationPreviewProps>(
   props: T,
-):React.ReactElement {
+) {
   const {
     activeConversation,
     conversation,
@@ -43,11 +43,11 @@ export function ConversationPreview<T extends ConversationPreviewProps>(
     searchValue,
     conversationUpdateCount,
   } = props;
-  const { language } = useTUIKitContext('TUIConversation');
+  const { language } = useUIKit();
   const {
     setActiveConversation,
     myProfile,
-  } = useTUIKitContext('ConversationPreview');
+  } = useUIManager('ConversationPreview');
   const [displayImage, setDisplayImage] = useState(getDisplayImage(conversation));
   const [displayTitle, setDisplayTitle] = useState(getDisplayTitle(conversation, searchValue));
   const [displayMessage, setDisplayMessage] = useState(myProfile && getDisplayMessage(conversation, myProfile, language));

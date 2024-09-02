@@ -3,21 +3,21 @@ import TencentCloudChat, { Message } from '@tencentcloud/chat';
 import { UnknowPorps, useTUIChatStateContext, useComponentContext } from '../../context';
 
 export interface MessageContextProps {
-  context?: UnknowPorps,
-  message?: Message,
-  className?: string,
+  context?: UnknowPorps;
+  message?: Message;
+  className?: string;
 }
 
-function MessageTextWithContext <T extends MessageContextProps>(
-  props: PropsWithChildren<T>,
-):React.ReactElement {
+function MessageTextWithContext(props: PropsWithChildren<MessageContextProps>) {
   const {
     context,
     message,
     children,
   } = props;
+
   const { MessageTextPlugins } = useComponentContext('MessageText');
   const { firstSendMessage } = useTUIChatStateContext('MessageText');
+
   if (MessageTextPlugins && message?.flow === 'in' && (firstSendMessage && firstSendMessage?.time <= message?.time)) {
     return (
       <div className={`bubble message-text bubble-${message.flow} ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`}>
@@ -25,14 +25,15 @@ function MessageTextWithContext <T extends MessageContextProps>(
       </div>
     );
   }
-  const urlToLink = function (text: string) {
+
+  function urlToLink(text: string) {
     if (!text) {
       return text;
     }
-    // eslint-disable-next-line no-useless-escape
     const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-    return text.replace(urlRegex, (website) => `<a class='website' href='${website}' target='_blank'>${website}</a>`);
-  };
+    return text.replace(urlRegex, website => `<a class='website' href='${website}' target='_blank'>${website}</a>`);
+  }
+
   return (
     <div className={`bubble message-text bubble-${message?.flow} ${message?.conversationType === TencentCloudChat.TYPES.CONV_GROUP ? 'group' : ''}`}>
       <div className="message-text-content">
@@ -43,8 +44,9 @@ function MessageTextWithContext <T extends MessageContextProps>(
               <p
                 className="message-text-content-p"
                 key={item.src + key}
-                dangerouslySetInnerHTML={{ __html: urlToLink(item.text) }}
-              />
+              >
+                {item.text}
+              </p>
             );
           }
           return <img className="text-img" key={item.src + key} src={item.src} alt="" />;
@@ -55,10 +57,9 @@ function MessageTextWithContext <T extends MessageContextProps>(
   );
 }
 
-const MemoizedMessageText = React.memo(MessageTextWithContext) as
-typeof MessageTextWithContext;
+const MemoizedMessageText = React.memo(MessageTextWithContext) as typeof MessageTextWithContext;
 
-export function MessageText(props:MessageContextProps):React.ReactElement {
+export function MessageText(props: MessageContextProps) {
   return (
     <MemoizedMessageText {...props} />
   );

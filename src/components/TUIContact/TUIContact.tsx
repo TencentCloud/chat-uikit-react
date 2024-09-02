@@ -5,7 +5,7 @@ import {
   TUIContactContextValue,
 } from '../../context/TUIContactContext';
 import { isH5 } from '../../utils/env';
-import { useTUIKitContext } from '../../context';
+import { useUIManager } from '../../context';
 import useTUIContact from './hooks/useTUIContact';
 import { TUIContactList } from './TUIContactList/TUIContactList';
 import { TUIContactSearch } from '../TUIContactSearch/TUIContactSearch';
@@ -17,7 +17,7 @@ export function UnMemoizedTUIContact<T>(
 ): React.ReactElement {
   const { children } = props;
   const { t } = useTranslation();
-  const { setActiveContact } = useTUIKitContext('TUIContact');
+  const { setActiveContact } = useUIManager('TUIContact');
   const [isShowAddFriend, setShowAddFriend] = useState(false);
   const addFriend = () => {
     setActiveContact();

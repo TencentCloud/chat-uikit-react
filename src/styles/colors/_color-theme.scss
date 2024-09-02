@@ -38,7 +38,7 @@ $color-map: ();
 
     $color-map: () !global;
 
-    [data-chat-theme="#{$theme}"] & {
+    [data-uikit-theme="#{$theme}"] & {
       @each $color in $colors {
         $value: #{$prefix}-#{$theme}-#{$color};
         $color-map: map.merge($color-map, ($color: var($value))) !global;

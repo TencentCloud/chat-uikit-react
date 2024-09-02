@@ -5,7 +5,7 @@ import { Conversation } from '@tencentcloud/chat';
 import { Icon, IconTypes } from '../Icon';
 import { ConversationCreateUserSelectList } from './ConversationCreateUserSelectList';
 import { ConversationCreatGroupDetail } from './ConversationCreatGroupDetail';
-import { useTUIKitContext } from '../../context';
+import { useUIKit } from '../../context';
 import { useConversation } from '../../hooks';
 
 export interface ConversationCreateProps {
@@ -24,7 +24,7 @@ export function ConversationCreate<T extends ConversationCreateProps>(props:T) {
   const [isCreateGroup, setIsCreateGroup] = useState(false);
   const [pageState, setPageState] = useState<PageStateTypes>(PageStateTypes.USER_SELECT);
   const [selectList, setSelectList] = useState([]);
-  const { chat } = useTUIKitContext();
+  const { chat } = useUIKit();
   const { createConversation } = useConversation(chat);
 
   const back = () => {

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Conversation } from '@tencentcloud/chat';
-import { useTUIKitContext } from '../../context';
+import { useUIKit, useUIManager } from '../../context';
 import { isH5 } from '../../utils/env';
 import useConversationList from './hooks/useConversationList';
 import './index.scss';
@@ -43,13 +43,13 @@ export function UnMemoTUIConversationList<T extends Props>(props: T):React.React
     },
   } = props;
   const { t } = useTranslation();
+  const { chat } = useUIKit('TUIConversationList');
   const {
-    chat,
     customClasses,
     conversation,
     setActiveConversation,
     setTUIProfileShow,
-  } = useTUIKitContext('TUIConversationList');
+  } = useUIManager('TUIConversationList');
   const { filterConversation: contextFilterConversation } = useTUIConversationContext('TUIConversationList');
   const filterConversation = propsFilterConversation || contextFilterConversation;
   const [conversationUpdateCount, setConversationUpdateCount] = useState(0);
@@ -64,7 +64,6 @@ export function UnMemoTUIConversationList<T extends Props>(props: T):React.React
     if (!conversationList.length) {
       return;
     }
-    setActiveConversation(conversation);
   };
   const { conversationList, setConversationList } = useConversationList(
     chat,

@@ -1,3 +1,11 @@
+## [2.2.6] (2024-09-02)
+
+#### feat
+* feat: Deprecate the root component TUIKIt and replace it with UIKitProvider
+
+#### fix
+* fix: Fix the issue where ConversationList collapses in height on mobile devices in the demo
+
 ## [2.2.5] (2024-8-16)
 
 #### feat

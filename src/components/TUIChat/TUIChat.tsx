@@ -10,7 +10,7 @@ import TUIChatEngine, {
   StoreName,
 } from '@tencentcloud/chat-uikit-engine';
 import { JSONStringToParse } from '../untils';
-import { useTUIKitContext } from '../../context/TUIKitContext';
+import { useUIKit, useUIManager } from '../../context';
 import { TUIChatStateContextProvider } from '../../context/TUIChatStateContext';
 import { TUIChatActionProvider } from '../../context/TUIChatActionContext';
 import { ComponentProvider, UnknowPorps } from '../../context/ComponentContext';
@@ -79,7 +79,8 @@ function UnMemoizedTUIChat <T extends TUIChatProps>(
     EmptyPlaceholder = <EmptyStateIndicator listType="chat" />,
   } = props;
 
-  const { conversation: contextConversation, chat } = useTUIKitContext('TUIChat');
+  const { chat } = useUIKit();
+  const { conversation: contextConversation } = useUIManager('TUIChat');
 
   const conversation = propsConversation || contextConversation;
 
@@ -162,7 +163,7 @@ function TUIChatInner <T extends TUIChatInnerProps>(
     setHighlightedMessageId,
     setActiveMessageID,
   } = useHandleMessage({
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
     // @ts-ignore
     state,
     dispatch,

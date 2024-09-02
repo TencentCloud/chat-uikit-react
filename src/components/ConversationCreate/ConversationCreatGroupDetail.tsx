@@ -14,7 +14,7 @@ import {
 } from '../Avatar';
 import { PageStateTypes } from './ConversationCreate';
 import { ConversationGroupTypeInfo, GroupType, typeInfoList } from './ConversationGroupTypeInfo';
-import { useTUIKitContext } from '../../context';
+import { useUIManager } from '../../context';
 import { CreateGroupConversationParams } from '../../hooks';
 
 export interface ConversationCreatGroupDetailProps {
@@ -30,7 +30,7 @@ export function ConversationCreatGroupDetail(props: ConversationCreatGroupDetail
     profileList, pageState, setPageState, createConversation, setConversationCreated,
   } = props;
   const { t } = useTranslation();
-  const { setActiveConversation, myProfile } = useTUIKitContext();
+  const { setActiveConversation, myProfile } = useUIManager();
   const temp = [...profileList];
   myProfile && temp.unshift(myProfile);
   const name = temp.map((item) => item.nick || item.userID).toString();
@@ -84,9 +84,9 @@ export function ConversationCreatGroupDetail(props: ConversationCreatGroupDetail
       name: groupName,
       // eslint-disable-next-line
       // @ts-ignore
-      type: GroupType[groupType], 
+      type: GroupType[groupType],
       groupID,
-      avatar, 
+      avatar,
       memberList,
     });
     setActiveConversation(conversation);

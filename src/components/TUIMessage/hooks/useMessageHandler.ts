@@ -4,7 +4,7 @@ import { Message } from '@tencentcloud/chat';
 import { TUIStore } from '@tencentcloud/chat-uikit-engine';
 import { CONSTANT_DISPATCH_TYPE, MESSAGE_FLOW, MESSAGE_OPERATE } from '../../../constants';
 import { enableSampleTaskStatus } from '../../untils';
-import { useTUIChatActionContext, useTUIKitContext } from '../../../context';
+import { useTUIChatActionContext, useUIKit } from '../../../context';
 import { Toast } from '../../Toast';
 
 interface MessageHandlerProps {
@@ -24,7 +24,7 @@ export const useMessageHandler = (props: MessageHandlerProps) => {
     revokeMessage,
   } = useTUIChatActionContext('useDeleteHandler');
   const { t } = useTranslation();
-  const { chat } = useTUIKitContext('useDeleteHandler');
+  const { chat } = useUIKit('useDeleteHandler');
 
   const handleDelMessage = useCallback(async (event?: any) => {
     event.preventDefault();

@@ -4,7 +4,7 @@ import DatePicker from 'react-date-picker';
 import TencentCloudChat, { Profile } from '@tencentcloud/chat';
 import { UpdateMyProfileParams } from "@tencentcloud/chat-uikit-engine";
 import { isH5 } from '../../utils/env';
-import { useTUIKitContext } from '../../context';
+import { useUIManager } from '../../context';
 
 import { Avatar } from '../Avatar';
 import { DivWithEdit } from '../DivWithEdit';
@@ -73,7 +73,7 @@ function TUIProfileDefaultWithContext<T extends TUIProfileDefaultProps>(
   } = props;
 
   const { t } = useTranslation();
-  const { setTUIProfileShow } = useTUIKitContext('TUIProfileDefault');
+  const { setTUIProfileShow } = useUIManager('TUIProfileDefault');
 
   const [isEditName, setIsEditName] = useState('');
 

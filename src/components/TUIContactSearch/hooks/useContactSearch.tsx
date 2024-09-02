@@ -1,9 +1,9 @@
 import TencentCloudChat from '@tencentcloud/chat';
-import { useTUIKitContext, useTUIContactContext } from '../../../context';
+import { useUIKit, useTUIContactContext } from '../../../context';
 
 function useContactSearch() {
   const { blockList } = useTUIContactContext('TUIContactList');
-  const { chat } = useTUIKitContext('TUIContactSearch');
+  const { chat } = useUIKit('TUIContactSearch');
 
   const checkFriend = (info: any): Promise<any> => chat.checkFriend({
     userIDList: [info?.userID],

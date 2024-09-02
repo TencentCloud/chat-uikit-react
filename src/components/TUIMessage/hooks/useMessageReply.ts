@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from 'react';
 import TencentCloudChat, { Message } from '@tencentcloud/chat';
-import { useTUIChatStateContext, useTUIKitContext } from '../../../context';
+import { useTUIChatStateContext, useUIKit } from '../../../context';
 import { JSONStringToParse } from '../../untils';
 
 interface messageContextParams {
@@ -26,7 +26,7 @@ export const useMessageReply = <T extends messageContextParams>(params:T) => {
   const [replyMessage, setReplyMessage] = useState(null);
   const [messageID, setMessageID] = useState('');
 
-  const { chat } = useTUIKitContext('TUIChat');
+  const { chat } = useUIKit('TUIChat');
   const { messageList } = useTUIChatStateContext('useMessageReply');
 
   useLayoutEffect(() => {

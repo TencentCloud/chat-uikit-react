@@ -9,7 +9,7 @@ import { Icon, IconTypes } from '../Icon';
 import { ConversationCreateSelectView, ConversationCreateSelectViewProps } from './ConversationCreateSelectView';
 import { Avatar, defaultUserAvatar } from '../Avatar';
 import { useConversationCreate } from './hooks/useConversationCreate';
-import { useTUIKitContext } from '../../context';
+import { useUIKit, useUIManager } from '../../context';
 import { PageStateTypes } from './ConversationCreate';
 import { useConversation } from '../../hooks';
 import { Toast } from '../Toast';
@@ -35,7 +35,8 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
   } = props;
   const { t } = useTranslation();
   const [searchValue, setSearchValue] = useState('');
-  const { chat, setActiveConversation } = useTUIKitContext();
+  const { chat } = useUIKit();
+  const { setActiveConversation } = useUIManager();
   const [friendList, setFriendList] = useState<any>({});
   const {
     getFriendListSortSearchResult,

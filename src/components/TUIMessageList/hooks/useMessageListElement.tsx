@@ -2,7 +2,7 @@ import React, {
   PropsWithChildren, useMemo,
 } from 'react';
 import { Message } from '@tencentcloud/chat';
-import { UnknowPorps, useTUIKitContext } from '../../../context';
+import { UnknowPorps, useUIKit } from '../../../context';
 import { TUIMessageProps } from '../../TUIMessage/TUIMessage';
 import { getTimeStamp } from '../../untils';
 
@@ -20,7 +20,7 @@ function useMessageListElement <T extends MessageListElementProps>(
     TUIMessage,
     intervalsTimer,
   } = props;
-  const { language } = useTUIKitContext('TUIConversation');
+  const { language } = useUIKit('TUIConversation');
 
   return useMemo(() => enrichedMessageList?.map((item: Message, index:number) => {
     const key = `${item.ID}-${index}`;

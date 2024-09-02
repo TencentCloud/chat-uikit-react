@@ -2,7 +2,7 @@ import React from 'react';
 import '@tencentcloud/chat-uikit-react/dist/cjs/index.css';
 import './style.scss'
 import ownerIcon from './image/owner.png';
-import { useTUIKitContext, useTUIMessageContext } from '@tencentcloud/chat-uikit-react';
+import { useUIManager, useTUIMessageContext } from '@tencentcloud/chat-uikit-react';
 import { useTUILiveContext } from "./TUILive";
 
 
@@ -11,10 +11,10 @@ export function LiveMessageName():React.ReactElement  {
     const { message } = useTUIMessageContext('Prefix');
     const {
       myProfile
-    } = useTUIKitContext('TUILive');
+    } = useUIManager('TUILive');
     const isOwner = group?.ownerID === message?.from;
     const isSelf = myProfile?.userID === message?.from;
-    
+
     return (
       <div className={`live-custom-name ${isOwner && 'live-owner-name'}  ${isSelf && 'live-self-name'}`}>
         <label htmlFor="content">{message?.nick || message?.from}</label>

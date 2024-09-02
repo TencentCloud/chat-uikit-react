@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTUIKitContext, useTUIContactContext } from '../../context';
+import { useUIManager, useTUIContactContext } from '../../context';
 import useContactSearch from './hooks/useContactSearch';
 import { Icon, IconTypes } from '../Icon';
 import { Avatar, defaultUserAvatar } from '../Avatar';
@@ -8,7 +8,7 @@ import { Input } from '../Input';
 import './index.scss';
 
 export function UnMemoizedTUIContactSearch<T>(): React.ReactElement {
-  const { chat, setActiveContact } = useTUIKitContext('TUIContactSearch');
+  const { setActiveContact } = useUIManager('TUIContactSearch');
   const { t } = useTranslation();
   const { friendList, setShowContactList } = useTUIContactContext('TUIContactList');
   const [isShowSearchResult, setShowSearchResult] = useState(false);

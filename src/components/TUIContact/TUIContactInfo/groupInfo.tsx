@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { TUIConversationService, IGroupModel, IConversationModel } from '@tencentcloud/chat-uikit-engine';
-import { useTUIKitContext } from '../../../context';
+import { useUIManager } from '../../../context';
 import { Icon, IconTypes } from '../../Icon';
 import { isH5 } from '../../../utils/env';
 import '../index.scss';
@@ -16,8 +16,8 @@ export function UnMemoizedGroupInfo<T extends Props>(
   props: T,
 ): React.ReactElement {
   const { group, showChats } = props;
-  
-  const { setActiveContact, setActiveConversation } = useTUIKitContext('TUIContact');
+
+  const { setActiveContact, setActiveConversation } = useUIManager('TUIContact');
   const { t } = useTranslation();
   const { groupID, name, avatar } = group;
 

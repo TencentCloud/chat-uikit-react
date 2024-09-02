@@ -1,6 +1,6 @@
 {
   "name": "@tencentcloud/chat-uikit-react",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "license": "MIT",
@@ -15,8 +15,8 @@
     "uikit"
   ],
   "scripts": {
-    "build": "rimraf ./dist && yarn run rollup -c",
-    "start": "yarn run rollup -c -w",
+    "build": "rimraf dist && rollup -c",
+    "start": "rimraf dist && rollup -c -w",
     "clean": "rimraf -g ./dist node_modules examples/*/node_modules",
     "prepare": "husky install"
   },
@@ -42,6 +42,7 @@
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.36.2",
     "autoprefixer": "^10.4.11",
+    "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-import-resolver-typescript": "^3.5.1",
