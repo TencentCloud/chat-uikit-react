@@ -9,7 +9,7 @@ import {
 import { CONSTANT_DISPATCH_TYPE, MESSAGE_OPERATE, MESSAGE_TYPE_NAME } from '../../../constants';
 import {
   useTUIChatActionContext,
-  useTUIKitContext,
+  useUIKit,
 } from '../../../context';
 import { enableSampleTaskStatus } from '../../untils';
 import { formatEmojiString } from '../../TUIMessage/utils/emojiMap';
@@ -33,7 +33,7 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
     sendUploadMessage,
   } = props;
 
-  const { chat } = useTUIKitContext('useMessageInputText');
+  const { chat } = useUIKit('useMessageInputText');
   const { operateMessage, setFirstSendMessage } = useTUIChatActionContext('TUIMessageInput');
 
   const { cloudCustomData } = useHandleQuoteMessage();

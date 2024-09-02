@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Friend } from '@tencentcloud/chat';
 import { TUIConversationService, IConversationModel } from '@tencentcloud/chat-uikit-engine';
-import { useTUIKitContext } from '../../../context';
+import { useUIKit, useUIManager } from '../../../context';
 import { BasicInfo } from './basicInfo';
 import { Switch } from '../../Switch';
 import useContactInfo from './hooks/useContactInfo';
@@ -16,9 +16,10 @@ interface Props {
 export function UnMemoizedFriendInfo<T extends Props>(
   props: T,
 ): React.ReactElement {
+  const { chat } = useUIKit();
   const {
-    chat, contactData, setActiveContact, setActiveConversation,
-  } = useTUIKitContext('TUIContact');
+    contactData, setActiveContact, setActiveConversation,
+  } = useUIManager('TUIContact');
   const { t } = useTranslation();
   const { friend, showChats } = props;
   const { userID, profile, remark } = friend;

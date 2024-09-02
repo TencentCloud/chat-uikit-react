@@ -10,7 +10,7 @@ import './styles/index.scss';
 import { Icon, IconTypes } from '../Icon';
 import { Plugins } from '../Plugins';
 import { useConversation } from '../../hooks';
-import { useTUIKitContext } from '../../context';
+import { useUIKit, useUIManager } from '../../context';
 
 export interface IPluginsRef {
   closeMore?: () => void,
@@ -34,7 +34,8 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
 
   const { t } = useTranslation();
   const conversationPreviewButton = useRef<HTMLButtonElement | null>(null);
-  const { chat, conversation: activeConversation } = useTUIKitContext('ConversationPreviewContent');
+  const { chat } = useUIKit();
+  const { conversation: activeConversation } = useUIManager('ConversationPreviewContent');
   const { pinConversation, deleteConversation } = useConversation(chat);
   const activeClass = active ? 'conversation-preview-content--active' : '';
   const unreadClass = unread && unread >= 1 ? 'conversation-preview-content--unread' : '';

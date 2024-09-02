@@ -5,7 +5,7 @@ import './styles/index.scss';
 import { Icon, IconTypes } from '../Icon';
 import { Avatar, defaultGroupAvatarWork, defaultUserAvatar } from '../Avatar';
 import { Switch } from '../Switch';
-import { useTUIKitContext } from '../../context';
+import { useUIKit, useUIManager } from '../../context';
 import { isH5, isPC } from '../../utils/env';
 import { getMessageProfile } from '../ConversationPreview/utils';
 import { useConversationUpdate } from '../TUIConversationList/hooks/useConversationUpdate';
@@ -19,13 +19,13 @@ function UnMemoizedTUIManage<T>(
   const [profile, setProfile] = useState<any>();
   const [isPinned, setIsPinned] = useState<boolean>(false);
   const [forceUpdateCount, setForceUpdateCount] = useState(0);
+  const { chat } = useUIKit('TUIManage');
   const {
     conversation: activeConversation,
     setActiveConversation,
-    chat,
     TUIManageShow,
     setTUIManageShow,
-  } = useTUIKitContext('TUIManage');
+  } = useUIManager('TUIManage');
   useConversationUpdate(undefined, () => {
     setForceUpdateCount((count) => count + 1);
   });

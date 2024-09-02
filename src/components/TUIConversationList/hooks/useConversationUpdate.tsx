@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import TencentCloudChat, { Conversation } from '@tencentcloud/chat';
-import { useTUIKitContext } from '../../../context';
+import { useUIKit } from '../../../context';
 
 export const useConversationUpdate = (
   setConversationList?: React.Dispatch<React.SetStateAction<Array<Conversation>>>,
@@ -11,7 +11,7 @@ export const useConversationUpdate = (
   forceUpdate?: () => void,
   filterConversation?:(conversationList: Array<Conversation>) => Array<Conversation>,
 ) => {
-  const { chat } = useTUIKitContext('useConversationUpdate');
+  const { chat } = useUIKit('useConversationUpdate');
   useEffect(() => {
     const onConversationListUpdated = (event:any) => {
       if (setConversationList) {

@@ -1,4 +1,5 @@
-export * from './TUIKitContext';
+export * from './UIKitContext';
+export * from './UIManagerContext';
 export * from './TUIChatStateContext';
 export * from './TUIChatActionContext';
 export * from './TUIMessageContext';

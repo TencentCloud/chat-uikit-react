@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useMemo } from 'react';
 import { Conversation, GroupMember, Profile } from '@tencentcloud/chat';
-import { useTUIKitContext } from '@tencentcloud/chat-uikit-react';
+import { useUIKit, useUIManager } from '@tencentcloud/chat-uikit-react';
 import {
   OwnerLabelListItem,
   TUILiveContextProvider,
@@ -51,12 +51,12 @@ function UnMemoizedTUILive<T extends TUILiveProps>(
     callback,
   } = props;
 
+  const { chat } = useUIKit('TUILive');
   const {
-    chat,
     conversation: contextConversation,
     myProfile: contextMyProfile,
     setActiveConversation,
-  } = useTUIKitContext('TUILive');
+  } = useUIManager('TUILive');
 
   const myProfile = propsMyProfile || contextMyProfile;
 

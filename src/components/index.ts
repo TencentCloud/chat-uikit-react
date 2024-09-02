@@ -1,4 +1,3 @@
-export * from './TUIKit';
 export * from './TUIConversation';
 export * from './TUIConversationList';
 export * from './TUIChat';

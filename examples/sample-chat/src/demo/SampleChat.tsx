@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
-import { TUIKit, i18next } from '@tencentcloud/chat-uikit-react';
+import {
+  UIKitProvider,
+  TUIConversationList,
+  TUIChat,
+  TUIManage,
+  i18next,
+} from '@tencentcloud/chat-uikit-react';
 import { TUILogin } from "@tencentcloud/tui-core";
 import { ChatSDK } from '@tencentcloud/chat';
 import { StoreName, TUIStore } from '@tencentcloud/chat-uikit-engine';
@@ -126,9 +132,11 @@ export default function SampleChat() {
         </div>
       </div>
       <div className="chat-main">
-        <div className="chat-demo">
-          <TUIKit chat={chat} language={currentLng.value}></TUIKit>
-        </div>
+        <UIKitProvider chat={chat} language={currentLng.value}>
+          <TUIConversationList />
+          <TUIChat />
+          <TUIManage />
+        </UIKitProvider>
       </div>
     </div>
   );

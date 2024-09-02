@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Profile } from '@tencentcloud/chat';
 import { TUIConversationService } from '@tencentcloud/chat-uikit-engine';
-import { useTUIKitContext } from '../../../context';
+import { useUIManager } from '../../../context';
 import { Icon, IconTypes } from '../../Icon';
 import { isH5 } from '../../../utils/env';
 
@@ -19,7 +19,7 @@ export function UnMemoizedBasicInfo<T extends Props>(
   const {
     userID, nick, selfSignature, avatar,
   } = profile;
-  const { setActiveContact } = useTUIKitContext('TUIContact');
+  const { setActiveContact } = useUIManager('TUIContact');
   const back = () => {
     TUIConversationService.switchConversation('');
     setActiveContact();

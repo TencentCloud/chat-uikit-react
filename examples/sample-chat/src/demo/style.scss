@@ -11,15 +11,8 @@
     flex-direction: column;
   }
 
-  .chat-demo {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-    background: #f9fafb;
-  }
-
   .chat-main {
+    display: flex;
     flex: 1 1 auto;
     height: 100%;
     overflow: hidden;

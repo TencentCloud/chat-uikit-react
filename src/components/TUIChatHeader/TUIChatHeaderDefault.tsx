@@ -6,7 +6,7 @@ import { handleDisplayAvatar } from '../untils';
 import { isH5 } from '../../utils/env';
 import './styles/index.scss';
 import { Icon, IconTypes } from '../Icon';
-import { useTUIKitContext } from '../../context';
+import { useUIManager } from '../../context';
 
 export interface TUIChatHeaderDefaultProps {
   title?: string,
@@ -32,7 +32,7 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderBasicProps>(
     isLive,
     opateIcon,
   } = props;
-  const { setActiveContact } = useTUIKitContext('TUIContact');
+  const { setActiveContact } = useUIManager('TUIContact');
   const [title, setTitle] = useState(propTitle);
   const [avatar, setAvatar] = useState<React.ReactElement | string>('');
 
@@ -82,7 +82,7 @@ function TUIChatHeaderDefaultWithContext <T extends TUIChatHeaderBasicProps>(
     TUIConversationService.switchConversation('');
     setActiveContact();
   };
-  const { setTUIManageShow } = useTUIKitContext();
+  const { setTUIManageShow } = useUIManager();
   const openTUIManage = () => {
     setTUIManageShow && setTUIManageShow(true);
   };

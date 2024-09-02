@@ -1,4 +1,6 @@
 .live {
+  display: flex;
+  background-color: #fff;
   position:relative;
   margin: 0 auto;
   width: calc(100% - 20rem);
@@ -82,11 +84,11 @@
     height: 18px;
   }
   &-arrow {
-    width: 13.5px; 
+    width: 13.5px;
     height: 6.75px;
   }
   &-owner {
-    width: 14px; 
+    width: 14px;
     height: 14px;
   }
   &-gift {

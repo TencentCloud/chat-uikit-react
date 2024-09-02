@@ -7,7 +7,7 @@ import {
   UnknowPorps,
   useComponentContext,
   useTUIChatStateContext,
-  useTUIKitContext,
+  useUIManager,
 } from '../../context';
 import { EmptyStateIndicator } from '../EmptyStateIndicator';
 import { InputQuoteDefalut } from './InputQuoteDefalut';

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import TencentCloudChat from '@tencentcloud/chat';
 import { isH5 } from '../../../utils/env';
-import { useTUIKitContext, useTUIContactContext } from '../../../context';
+import { useUIManager, useTUIContactContext } from '../../../context';
 import useContactInfo from '../TUIContactInfo/hooks/useContactInfo';
 import useTUIContact from '../hooks/useTUIContact';
 import { Avatar, defaultUserAvatar } from '../../Avatar';
@@ -19,7 +19,7 @@ interface RenderContactListProps {
 }
 
 function UnMemoizedTUIContactList<T>(): React.ReactElement {
-  const { setActiveContact } = useTUIKitContext();
+  const { setActiveContact } = useUIManager();
   const { t } = useTranslation();
   const {
     isShowContactList, friendList, blocklistProfile, friendApplicationList,
@@ -143,21 +143,21 @@ const RenderContactList = ({ type, isShow, setShow, list, title } : RenderContac
               </div>
             );
           })}
-        <RenderContactList 
+        <RenderContactList
           type={'block'}
           title={t('TUIContact.Blocked List')}
           isShow={isShowBlocklist}
           setShow={setShowBlocklist}
           list={blocklistProfile}
         />
-        <RenderContactList 
+        <RenderContactList
           type={'group'}
           title={t('TUIContact.Group List')}
           setShow={setShowGrouplist}
           isShow={isShowGrouplist}
           list={groupList}
         />
-        <RenderContactList 
+        <RenderContactList
           type={'friend'}
           title={t('TUIContact.Friends')}
           setShow={setShowFriends}

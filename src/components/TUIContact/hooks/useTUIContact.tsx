@@ -5,10 +5,10 @@ import {
   StoreName,
   IGroupModel,
 } from '@tencentcloud/chat-uikit-engine';
-import { useTUIKitContext } from '../../../context';
+import { useUIKit } from '../../../context';
 
 function useTUIContact() {
-  const { chat } = useTUIKitContext();
+  const { chat } = useUIKit();
   const [friendList, setFriendList] = useState([]);
   const [blockList, setBlockList] = useState([]);
   const [friendApplicationList, setFriendApplicationList] = useState([]);

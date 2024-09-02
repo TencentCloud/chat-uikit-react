@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Profile } from '@tencentcloud/chat';
-import { useTUIKitContext } from '../../../context';
+import { useUIManager } from '../../../context';
 import { BasicInfo } from './basicInfo';
 import { Switch } from '../../Switch';
 import useContactInfo from './hooks/useContactInfo';
@@ -13,7 +13,7 @@ export function UnMemoizedBlockInfo<T extends Props>(
   props: T,
 ): React.ReactElement {
   const { profile } = props;
-  const { contactData, setActiveContact } = useTUIKitContext('TUIContact');
+  const { contactData, setActiveContact } = useUIManager('TUIContact');
   const { t } = useTranslation();
   const [isAddToBlocklist, setIsAddToBlocklist] = useState(false);
 
