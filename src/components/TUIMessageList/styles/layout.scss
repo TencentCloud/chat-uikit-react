@@ -1,31 +1,39 @@
 @use "../../../styles/colors/color-theme" as *;
 
-ul,li,div,p,label,span {
+ul,
+li,
+div,
+p,
+label,
+span {
   margin: 0;
   padding: 0;
 }
+
 ul li {
   list-style: none;
 }
-.message-list{
+
+.message-list {
   flex: 1;
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden auto;
   position: relative;
   padding: 0 20px;
 
   @include theme() {
-    background-color: get(bg-primary);
+    background-color: get(bg-color-operate);
   }
 
   &.hide {
     opacity: 0;
   }
+
   &-item {
     display: grid;
     padding: 5px 0;
   }
+
   .no-more {
     text-align: center;
     font-family: PingFangSC-Medium;
@@ -35,12 +43,11 @@ ul li {
     line-height: 17px;
 
     @include theme() {
-      color: get(text-secondary);
+      color: get(text-color-secondary);
     }
-
   }
+
   &-time {
-    font-family: PingFangSC-Medium;
     font-size: 12px;
     font-weight: 400;
     line-height: 14px;
@@ -48,7 +55,7 @@ ul li {
     text-align: center;
 
     @include theme() {
-      color: get(text-secondary);
+      color: get(text-color-secondary);
     }
   }
 }

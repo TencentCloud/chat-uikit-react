@@ -1,10 +1,17 @@
+@use "../../../styles/colors/color-theme" as *;
+
 .tui-manage {
   display: flex;
   flex-direction: column;
   width: 22%;
   max-width: 300px;
   min-width: 200px;
-  border-left: 1px solid #f9fafb;
+
+  @include theme() {
+    background-color: get(bg-color-operate);
+    color: get(text-color-primary);
+    border-left: 1px solid get(stroke-color-primary);
+  }
 
   .red {
     color: #ff584c !important;
@@ -19,8 +26,6 @@
       margin-right: 10px;
       font-weight: 700;
       font-size: 14px;
-      font-family: PingFangSC-Medium;
-      line-height: 17px;
     }
   }
 
@@ -39,16 +44,11 @@
         text-align: center;
         font-weight: 700;
         font-size: 24px;
-        font-family: PingFangSC-Medium;
-        line-height: 29px;
         margin-bottom: 10px;
       }
 
       .info-id {
-        font-weight: 400;
         font-size: 12px;
-        font-family: PingFangSC-Medium;
-        line-height: 14px;
         color: #666;
         margin-bottom: 30px;
         text-align: center;
@@ -58,11 +58,13 @@
     .tui-manage-handle {
       .manage-handle-box {
         display: flex;
-        background: rgba(249, 249, 249, 94%);
         align-items: center;
         justify-content: space-between;
         padding: 10px;
-        box-sizing: border-box;
+
+        @include theme() {
+          background: get(bg-color-operate);
+        }
 
         &:nth-child(2) {
           margin-top: 10px;
@@ -71,9 +73,10 @@
 
         .manage-handle-title {
           font-size: 16px;
-          font-family: PingFangSC-Medium;
-          line-height: 22px;
-          color: rgba(0, 0, 0, 60%);
+
+          @include theme() {
+            color: get(text-color-primary);
+          }
         }
       }
     }
@@ -91,5 +94,8 @@
   max-width: 100%;
   min-width: 100%;
   z-index: 1;
-  background: #fff;
+
+  @include theme() {
+    background: get(bg-color-operate);
+  }
 }

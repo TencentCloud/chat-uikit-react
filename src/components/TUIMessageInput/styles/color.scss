@@ -2,19 +2,19 @@
 
 .tui-message-input {
   @include theme() {
-    background-color: get(bg-primary);
+    background-color: get(bg-color-operate);
   }
 
   .tui-kit-input-box--focus {
     @include theme() {
-      outline: 1px solid get(status-info);
+      outline: 1px solid get(text-color-link);
     }
   }
 
   .input-box {
     @include theme() {
-      background-color: get(bg-primary);
-      border: 1px solid get(border-5);
+      background-color: get(bg-color-operate);
+      border: 1px solid get(stroke-color-primary);
     }
   }
 }
@@ -23,14 +23,18 @@
   &-box {
     border-radius: 16px;
 
-    [data-uikit-theme="light"] & {
-      background-color: var(--chat-theme-light-bg-primary);
-      box-shadow: var(--chat-theme-light-box-shadow-1);
+    @include theme() {
+      background-color: get(dropdown-color-default);
+      box-shadow: 0 0 10px 0 get(shadow-color);
     }
+  }
+}
 
-    [data-uikit-theme="dark"] & {
-      background-color: var(--chat-theme-dark-bg-3);
-      box-shadow: var(--chat-theme-dark-box-shadow-1);
-    }
+.input-icon {
+  width: 20px;
+  height: 20px;
+
+  @include theme() {
+    color: get(text-color-primary);
   }
 }

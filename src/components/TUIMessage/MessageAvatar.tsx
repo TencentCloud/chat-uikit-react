@@ -5,18 +5,18 @@ import TencentCloudChat, { Message } from '@tencentcloud/chat';
 import { MESSAGE_FLOW } from '../../constants';
 import { messageShowType } from '../../context';
 import { Avatar } from '../Avatar';
-import { handleDisplayAvatar } from '../untils';
+import { handleDisplayAvatar } from '../utils';
 
 export interface MessageAvatarProps {
-  CustomAvatar?: React.ReactElement,
-  className?: string,
-  message: Message,
-  showType?: messageShowType,
+  CustomAvatar?: React.ReactElement;
+  className?: string;
+  message: Message;
+  showType?: messageShowType;
 }
 
-export function MessageAvatar <T extends MessageAvatarProps>(
+export function MessageAvatar<T extends MessageAvatarProps>(
   props: PropsWithChildren<T>,
-):React.ReactElement {
+): React.ReactElement {
   const {
     className,
     CustomAvatar,

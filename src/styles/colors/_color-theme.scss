@@ -1,7 +1,7 @@
 @use "sass:map";
 @use "sass:list";
 
-$prefix: "--chat-theme";
+$prefix: "--uikit-theme";
 
 $themes: (
   "light",
@@ -9,26 +9,35 @@ $themes: (
 );
 
 $colors: (
-  "bg-5",
-  "bg-4",
-  "bg-3",
-  "bg-2",
-  "bg-1",
-  "bg-primary",
-  "bg-secondary",
-  "bg-active",
-  "text-5",
-  "text-4",
-  "text-3",
-  "text-2",
-  "text-1",
-  "text-primary",
-  "text-secondary",
-  "status-info",
-  "status-success",
-  "status-danger",
-  "border-5",
-  "box-shadow-1",
+  "bg-color-topbar",
+  "bg-color-operate",
+  "bg-color-input",
+  "bg-color-bubble-reciprocal",
+  "bg-color-bubble-own",
+  "bg-color-default",
+  "bg-color-tag-mask",
+  "bg-color-mask",
+  "text-color-primary",
+  "text-color-secondary",
+  "text-color-tertiary",
+  "text-color-disable",
+  "text-color-link",
+  "text-color-link-hover",
+  "text-color-link-disabled",
+  "text-color-anti-primary",
+  "text-color-anti-secondary",
+  "text-color-warning",
+  "text-color-success",
+  "text-color-error",
+  "dropdown-color-default",
+  "dropdown-color-hover",
+  "dropdown-color-active",
+  "list-color-default",
+  "list-color-hover",
+  "list-color-active",
+  "stroke-color-primary",
+  "stroke-color-secondary",
+  "shadow-color",
 );
 
 $color-map: ();
@@ -45,6 +54,8 @@ $color-map: ();
       }
 
       @content;
+
+      transition: background-color 0.3s ease-in-out;
     }
   }
 }

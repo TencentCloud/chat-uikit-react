@@ -8,40 +8,47 @@
   align-items: center;
 
   @include theme() {
-    background-color: get(bg-primary);
+    background-color: get(bg-color-operate);
   }
 
   &-left {
     display: flex;
     align-items: center;
   }
+
   .header-content {
     flex: 1;
     padding: 0 8px;
   }
+
+  .call-btn-container {
+    display: flex;
+    margin-right: 10px;
+
+    .call-btn {
+      margin-right: 16px;
+    }
+  }
+
   &-right {
     .header-handle {
       &-more {
-       padding: 10px 3px;
+        padding: 10px 3px;
       }
     }
   }
+
   .title {
-    font-family: PingFangSC-Medium;
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
 
     @include theme() {
-      color: get(text-primary);
+      color: get(text-color-primary);
     }
-
   }
+
   .system {
     height: 32px;
   }
-}
-
-.tui-chat-live-header {
-
 }

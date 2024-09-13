@@ -1,15 +1,15 @@
 import React, { PropsWithChildren } from 'react';
 import { Message } from '@tencentcloud/chat';
 import { useTUIMessageContext, useUIKit } from '../../context';
-import { getTimeStamp } from '../untils';
+import { getTimeStamp } from '../utils';
 
 export interface MessageContextProps {
-  message?: Message,
+  message?: Message;
 }
 
-function MessageStatustWithContext <T extends MessageContextProps>(
+function MessageStatustWithContext<T extends MessageContextProps>(
   props: PropsWithChildren<T>,
-):React.ReactElement {
+): React.ReactElement {
   const {
     message,
   } = props;
@@ -30,7 +30,7 @@ function MessageStatustWithContext <T extends MessageContextProps>(
 const MemoizedMessageStatus = React.memo(MessageStatustWithContext) as
 typeof MessageStatustWithContext;
 
-export function MessageStatus(props:MessageContextProps):React.ReactElement {
+export function MessageStatus(props: MessageContextProps): React.ReactElement {
   return (
     <MemoizedMessageStatus
       {...props}

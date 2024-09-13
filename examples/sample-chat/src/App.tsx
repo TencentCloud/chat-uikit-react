@@ -1,5 +1,5 @@
 import React from 'react';
-import SampleChat from './demo/SampleChat';
+import SampleChat from './pages/Chat';
 
 function App() {
   return (

@@ -1,21 +1,22 @@
 @use "../../../styles/colors/color-theme" as *;
 
-.message-text,
 .message-custom {
   @include theme() {
-    border: 1px solid get(border-5);
+    border: 1px solid  get(stroke-color-primary);
   }
 }
 
 .bubble {
   @include theme() {
-    background-color: get(bg-primary);
+    background-color: get(bg-color-bubble-reciprocal);
+    color: get(text-color-primary);
   }
 
   &-out {
     @include theme() {
       border: none;
-      background-color: get(bg-secondary);
+      background-color: get(bg-color-bubble-own);
+      color: get(text-color-anti-primary);
     }
   }
 }
@@ -30,7 +31,7 @@
 
 .message-tip {
   @include theme() {
-    color: get(text-secondary);
+    color: get(text-color-secondary);
   }
 }
 

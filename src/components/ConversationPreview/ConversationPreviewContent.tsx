@@ -124,6 +124,7 @@ export function unMemoConversationPreviewContent<T extends ConversationPreviewUI
       onTouchStart={() => handleH5LongPress('touchstart')}
       onTouchEnd={() => handleH5LongPress('touchend')}
       ref={conversationPreviewButton}
+      id={conversation.conversationID}
     >
       <div className="avatar">
         <Avatar image={displayImage} name={displayTitle} size={40} />

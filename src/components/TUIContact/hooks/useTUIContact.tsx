@@ -43,13 +43,13 @@ function useTUIContact() {
   };
 
   const getFriendList = async () => {
-    const { code, data } = await chat.getFriendList();
+    const { code, data } = await chat?.getFriendList();
     if (code === 0) {
       setFriendList(data);
     }
   };
   const getBlocklist = async () => {
-    const { data: _blocklist } = await chat.getBlacklist();
+    const { data: _blocklist } = await chat?.getBlacklist();
     if (_blocklist.length === 0) {
       return;
     }
@@ -57,7 +57,7 @@ function useTUIContact() {
     getBlocklistProfile(_blocklist);
   };
 
-  const getBlocklistProfile = async (_blocklist: Array<string>) => {
+  const getBlocklistProfile = async (_blocklist: string[]) => {
     const { data } = await chat.getUserProfile({
       userIDList: _blocklist,
     });

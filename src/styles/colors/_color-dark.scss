@@ -1,29 +1,39 @@
 $dark-colors: (
   // bg
-  --chat-theme-dark-bg-5: #76777e,
-  --chat-theme-dark-bg-4: #5d5e67,
-  --chat-theme-dark-bg-3: #454650,
-  --chat-theme-dark-bg-2: #2e303a,
-  --chat-theme-dark-bg-1: #191b26,
-  --chat-theme-dark-bg-primary: #191b26,
-  --chat-theme-dark-bg-secondary: #2e303a,
-  --chat-theme-dark-bg-active: #4e4e4e,
+  --uikit-theme-dark-bg-color-topbar: #16171a,
+  --uikit-theme-dark-bg-color-operate: #1f2024,
+  --uikit-theme-dark-bg-color-input: #2b2c30,
+  --uikit-theme-dark-bg-color-bubble-reciprocal: #2b2c30,
+  --uikit-theme-dark-bg-color-bubble-own: #5c9dff,
+  --uikit-theme-dark-bg-color-default: #16171a,
+  --uikit-theme-dark-bg-color-tag-mask: rgba(0, 0, 0, 55%),
+  --uikit-theme-dark-bg-color-mask: rgba(0, 0, 0, 55%),
   // text
-  --chat-theme-dark-text-5: #000,
-  --chat-theme-dark-text-4: #666,
-  --chat-theme-dark-text-3: #7a7a7a,
-  --chat-theme-dark-text-2: #7a7a7a,
-  --chat-theme-dark-text-1: #7a7a7a,
-  --chat-theme-dark-text-primary: #fff,
-  --chat-theme-dark-text-secondary: #8b8b8b,
-  // status
-  --chat-theme-dark-status-info: #147aff,
-  --chat-theme-dark-status-success: #34c759,
-  --chat-theme-dark-status-danger: #ff3742,
+  --uikit-theme-dark-text-color-primary: rgba(255, 255, 255, 93%),
+  --uikit-theme-dark-text-color-secondary: rgba(255, 255, 255, 66%),
+  --uikit-theme-dark-text-color-tertiary: rgba(255, 255, 255, 40%),
+  --uikit-theme-dark-text-color-disable: rgba(255, 255, 255, 28%),
+  --uikit-theme-dark-text-color-link: #4086ff,
+  --uikit-theme-dark-text-color-link-hover: #2b6ad6,
+  --uikit-theme-dark-text-color-link-disabled: #243047,
+  --uikit-theme-dark-text-color-anti-primary: rgba(0, 0, 0, 90%),
+  --uikit-theme-dark-text-color-anti-secondary: rgba(0, 0, 0, 55%),
+  --uikit-theme-dark-text-color-warning: #e37f32,
+  --uikit-theme-dark-text-color-success: #38a673,
+  --uikit-theme-dark-text-color-error: #e6594c,
+  // dropdown
+  --uikit-theme-dark-dropdown-color-default: #2b2c30,
+  --uikit-theme-dark-dropdown-color-hover: #3a3c42,
+  --uikit-theme-dark-dropdown-color-active: #1f2024,
+  // list
+  --uikit-theme-dark-list-color-default: #1f2024,
+  --uikit-theme-dark-list-color-hover: #2b2c30,
+  --uikit-theme-dark-list-color-active: #243047,
   // border
-  --chat-theme-dark-border-5: #4e4e4e,
+  --uikit-theme-dark-stroke-color-primary: #3a3c42,
+  --uikit-theme-dark-stroke-color-secondary: #2b2c30,
   // box-shadow
-  --chat-theme-dark-box-shadow-1: (rgba(203, 203, 203, 0.755) 0 3px 8px),
+  --uikit-theme-dark-shadow-color: rgba(0, 0, 0, 6%),
 );
 
 :root {

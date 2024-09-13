@@ -1,10 +1,10 @@
 import { useLayoutEffect, useState } from 'react';
 import TencentCloudChat, { Message } from '@tencentcloud/chat';
 import { useTUIChatStateContext, useUIKit } from '../../../context';
-import { JSONStringToParse } from '../../untils';
+import { JSONStringToParse } from '../../utils';
 
 interface messageContextParams {
-  message?: Message,
+  message?: Message;
 }
 
 const replyType: any = {
@@ -17,7 +17,7 @@ const replyType: any = {
   [TencentCloudChat.TYPES.MSG_CUSTOM]: 2,
 };
 
-export const useMessageReply = <T extends messageContextParams>(params:T) => {
+export const useMessageReply = <T extends messageContextParams>(params: T) => {
   const {
     message,
   } = params;
@@ -33,7 +33,7 @@ export const useMessageReply = <T extends messageContextParams>(params:T) => {
     message && handleMessageReply(message);
   }, [message]);
 
-  const handleMessageReply = (data:Message) => {
+  const handleMessageReply = (data: Message) => {
     if (!data?.cloudCustomData) {
       return;
     }
@@ -49,7 +49,8 @@ export const useMessageReply = <T extends messageContextParams>(params:T) => {
       const isSomeID = item.ID === reply?.messageID;
       const isSomeType = isSomeID && replyType[item.type] === reply.messageType;
       const isSomeContent = item.type === TencentCloudChat.TYPES.MSG_TEXT
-        ? item.payload.text === reply.messageAbstract : true;
+        ? item.payload.text === reply.messageAbstract
+        : true;
       return isSomeID && isSomeType && isSomeContent;
     });
     // eslint-disable-next-line

@@ -5,10 +5,10 @@ import { useProfile } from '../../../hooks';
 
 export const useConversationCreate = (
   chat: any,
-  conversationList: Array<Conversation>,
-  setFriendListResultHandler?:(
+  conversationList: Conversation[],
+  setFriendListResultHandler?: (
     newFriendListResult: object,
-    setFriendListResult: React.Dispatch<React.SetStateAction<{string:Array<object>}>>
+    setFriendListResult: React.Dispatch<React.SetStateAction<{ string: object[] }>>
   ) => void,
 ) => {
   const [friendListSortResult, setFriendListSortResult] = useState<any>();
@@ -24,7 +24,7 @@ export const useConversationCreate = (
     const frequentlyConversationProfile = conversationList.filter(
       (item: Conversation) => item?.type === TencentCloudChat.TYPES.CONV_C2C,
     ).slice(0, 5).map((item: Conversation) => item?.userProfile);
-    const { code, data } = await chat.getFriendList();
+    const { code, data } = await chat?.getFriendList() || {};
     if (code === 0) {
       const sortResult = handleData(
         data.map((item: Friend) => item.profile),
@@ -36,7 +36,7 @@ export const useConversationCreate = (
       }
     }
   };
-  const handleData = (profileList: Array<Profile>, frequentlyConversationProfile?: any) => {
+  const handleData = (profileList: Profile[], frequentlyConversationProfile?: any) => {
     const sortResult: any = {
       '#': [],
     };

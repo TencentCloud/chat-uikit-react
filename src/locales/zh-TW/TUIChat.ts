@@ -1,0 +1,27 @@
+/* eslint-disable quote-props */
+const TUIChat = {
+  'Recall': '撤回',
+  'Reference': '引用',
+  'Forward': '轉發',
+  'Copy': '複製',
+  'Delete': '刪除',
+  'Forward to': '轉發給',
+  'recalled a message': '撤回了一條消息',
+  'Re-edit': '重新編輯',
+  'Resend': '重新發送',
+  'You': '您',
+  'Recent Chats': '會話紀錄',
+  'Frequently Contacted': '頻繁聯繫',
+  'No Result': '無結果',
+  'Search Result': '搜尋結果',
+  'Image': '圖片',
+  'Video': '影片',
+  'File': '檔案',
+  'Enter a message': '請輸入訊息',
+  'No More': '沒有了',
+  'Error deleting message': '刪除訊息失敗',
+  'The message recall exceeded the time limit (default 2 minutes)': '訊息撤回超時（預設 2 分鐘）',
+  'Error revoke Message': '訊息撤回失敗',
+  'Custom message': '自訂訊息',
+};
+export default TUIChat;

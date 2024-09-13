@@ -3,19 +3,11 @@
 .plugin-popup {
   &-box {
     border-radius: 16px;
+    overflow: hidden;
 
     @include theme() {
-      color: get(text-primary);
-    }
-
-    [data-uikit-theme="light"] & {
-      background-color: var(--chat-theme-light-bg-primary);
-      box-shadow: var(--chat-theme-light-box-shadow-1);
-    }
-
-    [data-uikit-theme="dark"] & {
-      background-color: var(--chat-theme-dark-bg-3);
-      box-shadow: var(--chat-theme-dark-box-shadow-1);
+      background-color: get(dropdown-color-default);
+      box-shadow: 0 0 10px 0 get(shadow-color);
     }
   }
 }

@@ -6,22 +6,23 @@ import React, {
 } from 'react';
 import TencentCloudChat, { Message } from '@tencentcloud/chat';
 import { MESSAGE_STATUS } from '../../constants';
+import { isCallMessage } from './utils';
 import { useTUIChatActionContext, useTUIChatStateContext } from '../../context';
 import { Icon, IconTypes } from '../Icon';
 import { useMessageReply } from './hooks/useMessageReply';
 import { MessageProgress } from './MessageProgress';
 
 export interface MessageBubbleProps {
-  message?: Message,
-  className?: string,
-  children?: ReactNode,
-  Context?: React.ComponentType<any>,
-  Plugins?: React.ComponentType<any> | undefined,
+  message?: Message;
+  className?: string;
+  children?: ReactNode;
+  Context?: React.ComponentType<any>;
+  Plugins?: React.ComponentType<any> | undefined;
 }
 
-function MessageBubbleWithContext <T extends MessageBubbleProps>(
+function MessageBubbleWithContext<T extends MessageBubbleProps>(
   props: PropsWithChildren<T>,
-):React.ReactElement {
+): React.ReactElement {
   const {
     message,
     children,
@@ -68,7 +69,7 @@ function MessageBubbleWithContext <T extends MessageBubbleProps>(
   const handleReplyMessage = () => {
     // eslint-disable-next-line
     // @ts-ignore
-    setHighlightedMessageId  && setHighlightedMessageId(replyMessage?.ID);
+    setHighlightedMessageId && setHighlightedMessageId(replyMessage?.ID);
   };
 
   return (
@@ -90,15 +91,15 @@ function MessageBubbleWithContext <T extends MessageBubbleProps>(
         >
           {
             messageReply && (
-            <div
-              className="meesage-bubble-reply-main"
-              role="menuitem"
-              tabIndex={0}
-              onClick={handleReplyMessage}
-            >
-              <header className="title">{sender}</header>
-              {Context && <Context message={replyMessage} />}
-            </div>
+              <div
+                className="meesage-bubble-reply-main"
+                role="menuitem"
+                tabIndex={0}
+                onClick={handleReplyMessage}
+              >
+                <header className="title">{sender}</header>
+                {Context && <Context message={replyMessage} />}
+              </div>
             )
           }
           {children}
@@ -106,9 +107,9 @@ function MessageBubbleWithContext <T extends MessageBubbleProps>(
         </div>
         {
           Plugins && (
-          <div className="message-plugin">
-            {PluginsShow && <Plugins message={message} />}
-          </div>
+            <div className="message-plugin">
+              {PluginsShow && <Plugins message={message} />}
+            </div>
           )
         }
       </div>
@@ -129,7 +130,7 @@ function MessageBubbleWithContext <T extends MessageBubbleProps>(
 const MemoizedMessageBubble = React.memo(MessageBubbleWithContext) as
 typeof MessageBubbleWithContext;
 
-export function MessageBubble(props:MessageBubbleProps):React.ReactElement {
+export function MessageBubble(props: MessageBubbleProps): React.ReactElement {
   return (
     <MemoizedMessageBubble {...props} />
   );
