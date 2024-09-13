@@ -1,19 +1,26 @@
+@use "../../../styles/colors/color-theme" as *;
+
 .tui-conversation-create-header {
-  background-color: #f9fafb;
   display: flex;
   flex-direction: row;
   padding: 16px 20px;
   align-items: center;
   text-align: center;
 
+  @include theme() {
+    background-color: get(bg-color-operate);
+  }
+
   .title {
     margin-left: 10px;
     font-weight: 600;
     font-size: 16px;
-    font-family: PingFangSC-Medium;
     line-height: 32px;
     letter-spacing: -0.41px;
-    color: #000;
+
+    @include theme() {
+      color: get(text-color-primary);
+    }
   }
 }
 
@@ -22,32 +29,35 @@
 }
 
 .tui-user {
-  padding: 10px;
+  padding: 6px;
   display: flex;
   align-items: center;
   text-align: center;
   cursor: pointer;
 
   &:hover {
-    background-color: rgba(0, 110, 255, 10%);
+    @include theme() {
+      background-color: get(list-color-hover);
+    }
   }
 
   .tui-user-name {
     margin-left: 10px;
-    font-weight: 400;
     font-size: 14px;
-    font-family: PingFangSC-Medium;
-    line-height: 20px;
-    color: #000;
     width: 80%;
     text-align: left;
+
+    @include theme() {
+      color: get(text-color-primary);
+    }
 
     &.active {
       font-weight: 600;
       font-size: 14px;
-      font-family: PingFangSC-Medium;
-      line-height: 20px;
-      color: rgba(3, 101, 249, 100%);
+
+      @include theme() {
+        color: get(text-color-link);
+      }
     }
   }
 }
@@ -71,13 +81,14 @@
   .tui-conversation-create-next {
     cursor: pointer;
     text-align: center;
-    background-color: rgba(3, 101, 249, 100%);
     border-radius: 31px;
     font-size: 14px;
-    font-family: PingFangSC-Medium;
-    line-height: 20px;
     color: #fff;
     padding: 12px 36px;
+
+    @include theme() {
+      background-color: get(text-color-link);
+    }
   }
 }
 
@@ -95,9 +106,11 @@
       .title {
         font-weight: 600;
         font-size: 14px;
-        font-family: PingFangSC-Medium;
-        line-height: 20px;
         padding: 10px;
+
+        @include theme() {
+          color: get(text-color-primary);
+        }
       }
     }
   }

@@ -1,4 +1,4 @@
-import { PropsWithChildren, useContext, createContext } from 'react';
+import { PropsWithChildren, useState, useContext, createContext, useEffect } from 'react';
 import type {
   ChatSDK,
   Conversation,
@@ -34,10 +34,19 @@ function UIKitProvider(props: PropsWithChildren<UIKitProviderProps>) {
     children,
   } = props;
 
+  const [chatSDK, setChatSDK] = useState<ChatSDK>(chat);
+
+  useEffect(() => {
+    if (!chatSDK) {
+      setChatSDK(chat);
+    }
+  }, [chat]);
+
+  const value = { chat: chatSDK };
   return (
     <LanguageProvider language={language}>
       <ThemeProvider theme={theme} colors={colors}>
-        <UIKitContext.Provider value={{ chat }}>
+        <UIKitContext.Provider value={value}>
           <UIManagerProvider activeConversation={activeConversation} customClasses={customClasses}>
             {children}
           </UIManagerProvider>

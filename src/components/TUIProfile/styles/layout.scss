@@ -1,7 +1,13 @@
+@use "../../../styles/colors/color-theme" as *;
+
 .tui-profile {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @include theme() {
+    color: get(text-color-primary);
+  }
 
   &-header {
     box-sizing: border-box;
@@ -38,7 +44,6 @@
   &-nick {
     font-weight: 700;
     font-size: 24px;
-    font-family: PingFangSC-Medium;
     line-height: 29px;
     text-align: center;
 
@@ -48,15 +53,14 @@
   }
 
   &-ID {
-    padding: 6px 0;
-    margin: 0;
+    margin: 6px 0;
     display: flex;
     align-items: center;
-    font-weight: 400;
     font-size: 12px;
-    font-family: PingFangSC-Medium;
-    line-height: 14px;
-    color: #666;
+
+    @include theme() {
+      color: get(text-color-secondary);
+    }
 
     h5 {
       margin: 0;
@@ -76,20 +80,18 @@
       cursor: pointer;
 
       h4 {
-        padding-bottom: 3px;
-        font-weight: 400;
         font-size: 16px;
-        font-family: PingFangSC-Medium;
-        line-height: 22px;
         margin: 10px 0;
-        color: rgba(0, 0, 0, 60%);
       }
     }
   }
 
   &-div-with-edit {
-    padding: 4px 0;
-    border-bottom: 1px solid #eee;
+    height: auto !important;
+
+    @include theme() {
+      border-bottom: 1px solid get(stroke-color-primary);
+    }
   }
 
   &-edit {

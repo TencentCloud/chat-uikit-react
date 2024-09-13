@@ -6,15 +6,15 @@ import {
   TUIChatService,
 } from '@tencentcloud/chat-uikit-engine';
 import { MESSAGE_TYPE_NAME } from '../../../constants';
-import { enableSampleTaskStatus } from '../../untils';
+import { enableSampleTaskStatus } from '../../utils';
 import { useTUIChatActionContext } from '../../../context';
 import type { IbaseStateProps } from './useMessageInputState';
 
 export interface filesData {
-  file: HTMLInputElement | File
+  file: HTMLInputElement | File;
 }
 
-export function useUploadPicker<T extends IbaseStateProps>(props:PropsWithChildren<T>) {
+export function useUploadPicker<T extends IbaseStateProps>(props: PropsWithChildren<T>) {
   const {
     updateUploadPendingMessageList,
   } = useTUIChatActionContext('useUploadPicker');
@@ -25,7 +25,7 @@ export function useUploadPicker<T extends IbaseStateProps>(props:PropsWithChildr
     [MESSAGE_TYPE_NAME.FILE]: TUIChatService.sendFileMessage,
   };
 
-  const sendUploadMessage = useCallback((file: filesData, type:MESSAGE_TYPE_NAME) => {
+  const sendUploadMessage = useCallback((file: filesData, type: MESSAGE_TYPE_NAME) => {
     creatUploadMessage[type]({
       payload: file,
     });

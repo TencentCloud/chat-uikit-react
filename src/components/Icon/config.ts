@@ -41,19 +41,21 @@ import IconVectorUrl from './images/vector.png';
 import IconUnvectorUrl from './images/unvector.png';
 import IconVoiceUrl from './images/voice.png';
 import IconAddCircleUrl from './images/add-friend.svg';
+import IconVideoCallUrl from './images/video-call.svg';
+import IconVoiceCallUrl from './images/voice-call.svg';
 
 import { IconTypes } from './type';
 
 interface IconConfigItem {
-  url: string,
-  className: string,
+  url: string;
+  className: string;
 }
 
 interface IconConfig {
-  [propName: string]: IconConfigItem
+  [propName: string]: IconConfigItem;
 }
 
-export const ICON_CONFIG:IconConfig = {
+export const ICON_CONFIG: IconConfig = {
   [IconTypes.MORE]: {
     url: IconMoreUrl,
     className: 'tui-kit-icon-more',
@@ -229,5 +231,13 @@ export const ICON_CONFIG:IconConfig = {
   [IconTypes.ADDFRIEND]: {
     url: IconAddCircleUrl,
     className: 'tui-kit-icon-add-friend',
+  },
+  [IconTypes.VIDEOCALL]: {
+    url: IconVideoCallUrl,
+    className: 'tui-kit-icon-video-call',
+  },
+  [IconTypes.VOICECALL]: {
+    url: IconVoiceCallUrl,
+    className: 'tui-kit-icon-voice-call',
   },
 };

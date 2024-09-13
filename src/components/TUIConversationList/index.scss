@@ -1,17 +1,16 @@
 @use "../../styles/colors/color-theme" as *;
 
 .tui-conversation {
-  flex: 1;
-  box-sizing: border-box;
-  overflow: hidden;
+  flex: 1 1 auto;
   min-width: 0;
   display: flex;
   flex-direction: column;
   position: relative;
   text-align: initial;
+  overflow: auto;
 
   @include theme() {
-    background-color: get(bg-primary);
+    background-color: get(bg-color-operate);
   }
 
   .tui-conversation-header {

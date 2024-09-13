@@ -1,9 +1,9 @@
 import TencentCloudChat, { Conversation, Group, Message } from '@tencentcloud/chat';
 import { decodeText } from './decodeText';
 import constant, { MESSAGE_STATUS } from '../../../constants';
-import { JSONStringToParse } from '../../untils';
+import { JSONStringToParse } from '../../utils';
 
-function t(params:string) {
+function t(params: string) {
   const str = params.split('.');
   return str[str.length - 1];
 }
@@ -141,7 +141,7 @@ export function handleTipMessageShowContext(message: Message) {
       options.text = handleTipGrpUpdated(message);
       break;
     case TencentCloudChat.TYPES.GRP_TIP_MBR_PROFILE_UPDATED:
-      message.payload.memberList.map((member:any) => {
+      message.payload.memberList.map((member: any) => {
         if (member.muteTime > 0) {
           options.text = `${t('message.tip.member')}：${member.userID}${t('message.tip.muted')}`;
         } else {
@@ -222,11 +222,11 @@ export function handleLocationMessageShowContext(item: any) {
   location.lon = item.payload.longitude.toFixed(6);
   location.lat = item.payload.latitude.toFixed(6);
   location.href = 'https://map.qq.com/?type=marker&isopeninfowin=1&markertype=1&'
-    + `pointx=${location.lon}&pointy=${location.lat}&name=${item.payload.description}`;
+  + `pointx=${location.lon}&pointy=${location.lat}&name=${item.payload.description}`;
   location.url = 'https://apis.map.qq.com/ws/staticmap/v2/?'
-    + `center=${location.lat},${location.lon}&zoom=10&size=300*150&maptype=roadmap&`
-    + `markers=size:large|color:0xFFCCFF|label:k|${location.lat},${location.lon}&`
-    + 'key=UBNBZ-PTP3P-TE7DB-LHRTI-Y4YLE-VWBBD';
+  + `center=${location.lat},${location.lon}&zoom=10&size=300*150&maptype=roadmap&`
+  + `markers=size:large|color:0xFFCCFF|label:k|${location.lat},${location.lon}&`
+  + 'key=UBNBZ-PTP3P-TE7DB-LHRTI-Y4YLE-VWBBD';
   location.description = item.payload.description;
   return location;
 }
@@ -286,8 +286,8 @@ export function handleMergerMessageShowContext(item: Message) {
 
 // Parse audio and video call messages
 export function extractCallingInfoFromMessage(message: Message) {
-  let callingmessage:any = {};
-  let objectData:any = {};
+  let callingmessage: any = {};
+  let objectData: any = {};
   try {
     callingmessage = JSONStringToParse(message.payload.data);
   } catch (error) {
@@ -441,13 +441,13 @@ export function isTypingMessage(item: Message) {
   return false;
 }
 
-export function formatTime(secondTime:number) {
-  const time:number = secondTime;
+export function formatTime(secondTime: number) {
+  const time: number = secondTime;
   let newTime; let hour; let minite; let seconds;
   if (time >= 3600) {
     hour = parseInt(`${time / 3600}`, 10) < 10 ? `0${parseInt(`${time / 3600}`, 10)}` : parseInt(`${time / 3600}`, 10);
     minite = parseInt(`${(time % 60) / 60}`, 10) < 10 ? `0${parseInt(`${(time % 60) / 60}`, 10)}` : parseInt(`${(time % 60) / 60}`, 10);
-    seconds  = time % 3600 < 10 ? parseInt(`0${time % 3600}`) : time % 3600;
+    seconds = time % 3600 < 10 ? parseInt(`0${time % 3600}`) : time % 3600;
     if (seconds > 60) {
       minite = parseInt(`${seconds / 60}`, 10) < 10 ? `0${parseInt(`${seconds / 60}`, 10)}` : parseInt(`${seconds / 60}`, 10);
       seconds = seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60;
@@ -463,3 +463,14 @@ export function formatTime(secondTime:number) {
   }
   return newTime;
 }
+
+export const isCallMessage = (message: Message): boolean => {
+  const payloadData = JSONStringToParse(message?.payload?.data);
+  if (payloadData?.businessID === 1 && payloadData?.data) {
+    const payloadDataData = JSONStringToParse(payloadData.data);
+    if (payloadDataData.businessID === 'av_call') {
+      return true;
+    }
+  }
+  return false;
+};

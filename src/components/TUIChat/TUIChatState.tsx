@@ -7,61 +7,61 @@ import { OperateMessageParams } from './hooks/useHandleMessage';
 import {
   handleEditMessage,
   handleUploadPendingMessage,
-} from './unitls';
+} from './utils';
 
 export type ChatStateReducerAction =
   | {
-      type: CONSTANT_DISPATCH_TYPE.SET_CONVERSATION_PRPFILE;
-      value?: Conversation
-    }
-  | {
-      type: CONSTANT_DISPATCH_TYPE.SET_MESSAGELIST,
-      value?: Array<IMessageModel>,
-    }
-  | {
-    type: CONSTANT_DISPATCH_TYPE.SET_EDIT_MESSAGE,
-    value?: Message,
-    index?: number,
+    type: CONSTANT_DISPATCH_TYPE.SET_CONVERSATION_PRPFILE;
+    value?: Conversation;
   }
   | {
-      type: CONSTANT_DISPATCH_TYPE.SET_IS_COMPLETE,
-      value?: boolean,
-    }
+    type: CONSTANT_DISPATCH_TYPE.SET_MESSAGELIST;
+    value?: IMessageModel[];
+  }
   | {
-      type: CONSTANT_DISPATCH_TYPE.RESET;
-    }
+    type: CONSTANT_DISPATCH_TYPE.SET_EDIT_MESSAGE;
+    value?: Message;
+    index?: number;
+  }
   | {
-      type: CONSTANT_DISPATCH_TYPE.SET_HIGH_LIGHTED_MESSAGE_ID,
-      value?: string,
-    }
+    type: CONSTANT_DISPATCH_TYPE.SET_IS_COMPLETE;
+    value?: boolean;
+  }
   | {
-      type: CONSTANT_DISPATCH_TYPE.OPERATE_MESSAGE,
-      value?: OperateMessageParams,
-    }
+    type: CONSTANT_DISPATCH_TYPE.RESET;
+  }
   | {
-      type: CONSTANT_DISPATCH_TYPE.SET_NO_MORE,
-      value?: boolean,
-    }
+    type: CONSTANT_DISPATCH_TYPE.SET_HIGH_LIGHTED_MESSAGE_ID;
+    value?: string;
+  }
   | {
-      type: CONSTANT_DISPATCH_TYPE.SET_AUDIO_SOURCE,
-      value?: HTMLAudioElement | null,
-    }
+    type: CONSTANT_DISPATCH_TYPE.OPERATE_MESSAGE;
+    value?: OperateMessageParams;
+  }
   | {
-      type: CONSTANT_DISPATCH_TYPE.SET_VIDEO_SOURCE,
-      value?: HTMLVideoElement | null,
-    }
+    type: CONSTANT_DISPATCH_TYPE.SET_NO_MORE;
+    value?: boolean;
+  }
   | {
-      type: CONSTANT_DISPATCH_TYPE.UPDATE_UPLOAD_PENDING_MESSAGE_LIST,
-      value?: Message,
-    }
+    type: CONSTANT_DISPATCH_TYPE.SET_AUDIO_SOURCE;
+    value?: HTMLAudioElement | null;
+  }
   | {
-      type: CONSTANT_DISPATCH_TYPE.SET_FIRST_SEND_MESSAGE;
-      value?: Message;
-    }
+    type: CONSTANT_DISPATCH_TYPE.SET_VIDEO_SOURCE;
+    value?: HTMLVideoElement | null;
+  }
   | {
-      type: CONSTANT_DISPATCH_TYPE.SET_ACTIVE_MESSAGE_ID,
-      value?: string,
-   };
+    type: CONSTANT_DISPATCH_TYPE.UPDATE_UPLOAD_PENDING_MESSAGE_LIST;
+    value?: Message;
+  }
+  | {
+    type: CONSTANT_DISPATCH_TYPE.SET_FIRST_SEND_MESSAGE;
+    value?: Message;
+  }
+  | {
+    type: CONSTANT_DISPATCH_TYPE.SET_ACTIVE_MESSAGE_ID;
+    value?: string;
+  };
 export type ChatStateReducer = Reducer<TUIChatStateContextValue, ChatStateReducerAction>;
 
 export const chatReducer = (
@@ -78,7 +78,7 @@ export const chatReducer = (
         messageList: action.value,
       };
     case CONSTANT_DISPATCH_TYPE.SET_EDIT_MESSAGE:
-      return state.messageList &&  action.value && {
+      return state.messageList && action.value && {
         ...state,
         messageList: [...handleEditMessage(state.messageList, action.value)],
       };
@@ -110,7 +110,7 @@ export const chatReducer = (
   }
 };
 
-export const initialState:TUIChatStateContextValue = {
+export const initialState: TUIChatStateContextValue = {
   conversation: {} as Conversation,
   messageList: [],
   nextReqMessageID: '',

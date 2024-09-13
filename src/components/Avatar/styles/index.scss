@@ -1,29 +1,34 @@
-.tui-kit-avatar{
+.tui-kit-avatar {
   display: flex;
   align-items: center;
   position: relative;
   cursor: pointer;
   flex-shrink: 0;
+
   &.circle .avatar-image {
     border-radius: 50%;
   }
+
   &.square .avatar-image {
     border-radius: 4px;
   }
+
   img {
     width: 100%;
     height: 100%;
   }
+
   &:hover {
     .tui-kit-avatar-edit {
       display: flex;
     }
   }
+
   &-edit {
     position: absolute;
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.33);
+    background: rgba(0, 0, 0, 33%);
     width: 100%;
     height: 100%;
     border-radius: 100%;
@@ -31,11 +36,12 @@
     justify-content: center;
     align-items: center;
   }
+
   &-list {
     position: absolute;
     z-index: 2;
     top: 100%;
-    background: #FFFFFF;
+    background: #fff;
     border-radius: 5px;
     box-shadow: 0 11px 20px 0 rgb(0, 0, 0.3);
     display: flex;
@@ -45,12 +51,13 @@
     min-width: 200px;
     max-width: 400px;
     padding: 10px;
+
     &-item {
       padding: 10px;
+
       img {
         width: 40px;
       }
     }
   }
 }
-

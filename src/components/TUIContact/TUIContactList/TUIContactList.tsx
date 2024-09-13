@@ -11,11 +11,11 @@ import downArrow from '../../Icon/images/down-arrow.png';
 import './index.scss';
 
 interface RenderContactListProps {
-  type: 'group' | 'block' | 'friend' ,
-  isShow: boolean,
-  title: string,
-  list: Array<any> | undefined,
-  setShow: (value: boolean) => void
+  type: 'group' | 'block' | 'friend';
+  isShow: boolean;
+  title: string;
+  list: any[] | undefined;
+  setShow: (value: boolean) => void;
 }
 
 function UnMemoizedTUIContactList<T>(): React.ReactElement {
@@ -39,21 +39,23 @@ function UnMemoizedTUIContactList<T>(): React.ReactElement {
     setActiveContact();
   };
 
-const RenderContactList = ({ type, isShow, setShow, list, title } : RenderContactListProps) => {
-  return (
-    <>
-      <div
-        className="tui-contacts-title"
-        role="button"
-        tabIndex={0}
-        onClick={() => setShow(!isShow)}
-      >
-        <div className="tui-contacts-list-title">{title}</div>
-        <div className="tui-contacts-list-icon">
-          <img src={isShow ? downArrow : rightArrow} alt="" />
+  const RenderContactList = ({ type, isShow, setShow, list, title }: RenderContactListProps) => {
+    return (
+      <>
+        <div
+          className="tui-contacts-title"
+          role="button"
+          tabIndex={0}
+          onClick={() => setShow(!isShow)}
+        >
+          <div className="tui-contacts-list-title">{title}</div>
+          <div className="tui-contacts-list-icon">
+            {isShow
+              ? <i className="iconfont contacts-list-icon">&#xe605;</i>
+              : <i className="iconfont contacts-list-icon">&#xe606;</i>}
+          </div>
         </div>
-      </div>
-      {isShow
+        {isShow
         && list?.map((item: any) => {
           const { userID, groupID, avatar, name, nick } = item.profile || item;
           const showName = item.remark || nick || userID || name || groupID;
@@ -74,9 +76,9 @@ const RenderContactList = ({ type, isShow, setShow, list, title } : RenderContac
             </div>
           );
         })}
-    </>
-  );
-}
+      </>
+    );
+  };
   // eslint-disable-next-line
   // @ts-ignore
   return (
@@ -90,75 +92,77 @@ const RenderContactList = ({ type, isShow, setShow, list, title } : RenderContac
         >
           <p className="tui-contacts-list-title">{t('TUIContact.New Contacts')}</p>
           <div className="tui-contacts-list-icon">
-            <img src={iShowFriendApplication ? downArrow : rightArrow} alt="" />
+            {iShowFriendApplication
+              ? <i className="iconfont contacts-list-icon">&#xe605;</i>
+              : <i className="iconfont contacts-list-icon">&#xe606;</i>}
           </div>
         </div>
         {iShowFriendApplication
-          && friendApplicationList?.map((item, index) => {
-            const {
-              userID, avatar, nick, wording, type,
-            } = item;
-            return (
-              <div
-                role="button"
-                tabIndex={0}
-                className="tui-contacts-list-item"
-                key={userID}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActiveContact({
-                    type: 'friendApplication',
-                    data: item,
-                  });
-                }}
-              >
-                <Avatar size={30} image={avatar || defaultUserAvatar} />
-                <div className="tui-contacts-list-item-card">
-                  <div>
-                    <p className="tui-contacts-list-item-name text-ellipsis">
-                      {nick || userID}
+        && friendApplicationList?.map((item, index) => {
+          const {
+            userID, avatar, nick, wording, type,
+          } = item;
+          return (
+            <div
+              role="button"
+              tabIndex={0}
+              className="tui-contacts-list-item"
+              key={userID}
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveContact({
+                  type: 'friendApplication',
+                  data: item,
+                });
+              }}
+            >
+              <Avatar size={30} image={avatar || defaultUserAvatar} />
+              <div className="tui-contacts-list-item-card">
+                <div>
+                  <p className="tui-contacts-list-item-name text-ellipsis">
+                    {nick || userID}
+                  </p>
+                  {wording !== '' && (
+                    <p className="tui-contacts-list-item-text text-ellipsis">
+                      {wording}
                     </p>
-                    {wording !== '' && (
-                      <p className="tui-contacts-list-item-text text-ellipsis">
-                        {wording}
-                      </p>
-                    )}
-                  </div>
-                  {type === TencentCloudChat.TYPES.SNS_APPLICATION_SENT_BY_ME && (
-                  <p className="tui-contacts-list-btn-text text-ellipsis">{t('TUIContact.waiting for verification')}</p>
-                  )}
-                  {type === TencentCloudChat.TYPES.SNS_APPLICATION_SENT_TO_ME && (
-                    <div
-                      className="application-btn"
-                      role="button"
-                      tabIndex={0}
-                      onClick={(e) => {
-                        acceptFriendApplicationHandle(e, userID);
-                      }}
-                    >
-                      {t('TUIContact.Agree')}
-                    </div>
                   )}
                 </div>
+                {type === TencentCloudChat.TYPES.SNS_APPLICATION_SENT_BY_ME && (
+                  <p className="tui-contacts-list-btn-text text-ellipsis">{t('TUIContact.waiting for verification')}</p>
+                )}
+                {type === TencentCloudChat.TYPES.SNS_APPLICATION_SENT_TO_ME && (
+                  <div
+                    className="application-btn"
+                    role="button"
+                    tabIndex={0}
+                    onClick={(e) => {
+                      acceptFriendApplicationHandle(e, userID);
+                    }}
+                  >
+                    {t('TUIContact.Agree')}
+                  </div>
+                )}
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
         <RenderContactList
-          type={'block'}
+          type="block"
           title={t('TUIContact.Blocked List')}
           isShow={isShowBlocklist}
           setShow={setShowBlocklist}
           list={blocklistProfile}
         />
         <RenderContactList
-          type={'group'}
+          type="group"
           title={t('TUIContact.Group List')}
           setShow={setShowGrouplist}
           isShow={isShowGrouplist}
           list={groupList}
         />
         <RenderContactList
-          type={'friend'}
+          type="friend"
           title={t('TUIContact.Friends')}
           setShow={setShowFriends}
           isShow={iShowFriends}

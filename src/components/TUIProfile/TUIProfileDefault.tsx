@@ -2,14 +2,14 @@ import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-date-picker';
 import TencentCloudChat, { Profile } from '@tencentcloud/chat';
-import { UpdateMyProfileParams } from "@tencentcloud/chat-uikit-engine";
+import { UpdateMyProfileParams } from '@tencentcloud/chat-uikit-engine';
 import { isH5 } from '../../utils/env';
 import { useUIManager } from '../../context';
 
 import { Avatar } from '../Avatar';
 import { DivWithEdit } from '../DivWithEdit';
 import { Icon, IconTypes } from '../Icon';
-import { handleDisplayAvatar } from '../untils';
+import { handleDisplayAvatar } from '../utils';
 
 const gender: any = {
   [TencentCloudChat.TYPES.GENDER_UNKNOWN]: 'unknow',
@@ -58,9 +58,9 @@ const allowTypeList = [
 ];
 
 export interface TUIProfileDefaultProps {
-  userInfo?: Profile,
-  update?: (option: UpdateMyProfileParams) => void,
-  className?: string,
+  userInfo?: Profile;
+  update?: (option: UpdateMyProfileParams) => void;
+  className?: string;
 }
 
 function TUIProfileDefaultWithContext<T extends TUIProfileDefaultProps>(
@@ -117,13 +117,15 @@ function TUIProfileDefaultWithContext<T extends TUIProfileDefaultProps>(
     },
     {
       name: 'Gender',
-      value: t( userInfo?.gender && gender[userInfo?.gender]?.replace(
+      value: t(userInfo?.gender && gender[userInfo?.gender]?.replace(
         gender[userInfo?.gender][0],
         gender[userInfo?.gender][0]?.toLocaleUpperCase(),
-      ) ? `TUIProfile.${gender[userInfo?.gender]?.replace(
+      )
+        ? `TUIProfile.${gender[userInfo?.gender]?.replace(
           gender[userInfo?.gender][0],
           gender[userInfo?.gender][0]?.toLocaleUpperCase(),
-        )}` : ''),
+        )}`
+        : ''),
       type: 'select',
       children: (
         <ul className="select-list">
@@ -193,7 +195,7 @@ function TUIProfileDefaultWithContext<T extends TUIProfileDefaultProps>(
   if (isH5) {
     editListMap = editListMap.filter((item: any) => item.name !== 'Birthday');
   }
-  const handleSetEditName = (name:string) => {
+  const handleSetEditName = (name: string) => {
     setIsEditName(name);
   };
 
@@ -312,8 +314,7 @@ function TUIProfileDefaultWithContext<T extends TUIProfileDefaultProps>(
 const MemoizedTUIProfileDefault = React.memo(TUIProfileDefaultWithContext) as
   typeof TUIProfileDefaultWithContext;
 
-export function TUIProfileDefault(props: TUIProfileDefaultProps)
-  : React.ReactElement {
+export function TUIProfileDefault(props: TUIProfileDefaultProps): React.ReactElement {
   const options = { ...props };
   return <MemoizedTUIProfileDefault {...options} />;
 }

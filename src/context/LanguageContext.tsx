@@ -29,12 +29,13 @@ function LanguageProvider(props: PropsWithChildren<Partial<LanguageProviderProps
   const [language, setLanguage] = useState(_language);
 
   useLayoutEffect(() => {
-    i18n.changeLanguage(language);
-  }, [language, i18n]);
+    i18n.changeLanguage(_language);
+    setLanguage(_language);
+  }, [_language, i18n]);
 
   useLayoutEffect(() => {
-    document.documentElement.lang = language;
-  }, [language]);
+    document.documentElement.lang = _language;
+  }, [_language]);
 
   const value = {
     language,

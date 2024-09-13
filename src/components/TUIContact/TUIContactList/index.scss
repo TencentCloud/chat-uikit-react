@@ -1,3 +1,5 @@
+@use "../../../styles/colors/color-theme" as *;
+
 .tui-contacts-list {
   flex: 1 1 auto;
   min-width: 360px;
@@ -5,33 +7,47 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  border-right: 1px solid #F9FAFB;
   text-align: initial;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: hidden scroll;
+
+  @include theme() {
+    color: get(text-color-primary);
+  }
+
   .tui-contacts-title {
     display: flex;
     justify-content: space-between;
   }
+
   .tui-contacts-list-title {
     display: flex;
     padding: 10px 20px;
+    cursor: pointer;
   }
+
   .tui-contacts-list-icon {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 20px;
+
+    .contacts-list-icon {
+      font-size: 12px;
+
+      @include theme() {
+        color: get(text-color-primary);
+      }
+    }
   }
+
   .tui-contacts-list-item {
     align-items: center;
     cursor: pointer;
     display: flex;
     padding: 10px 20px;
     text-align: center;
-    font-family: PingFangSC-Medium;
     font-size: 14px;
-    line-height: 20px;
+
     .tui-contacts-list-item-card {
       display: flex;
       padding: 0 10px;
@@ -40,39 +56,41 @@
       justify-content: space-between;
       flex: 1;
     }
+
     .tui-contacts-list-item-container {
       margin-left: 10px;
     }
+
+    .text-ellipsis {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     .tui-contacts-list-item-text {
       color: #999;
       font-size: 12px;
       text-align: left;
-      @extend .text-ellipsis
+
+      @extend .text-ellipsis;
     }
+
     .tui-contacts-list-btn-text {
       color: #999;
       font-size: 12px;
       text-align: left;
     }
-    .tui-contacts-list-item-name {
-      color: #000;
-      font-weight: 400;
-      text-align: left;
-      @extend .text-ellipsis
-    }
 
+    .tui-contacts-list-item-name {
+      @extend .text-ellipsis;
+    }
   }
-  .text-ellipsis {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+
   .application-btn {
     width: 30px;
     height: 14px;
     padding: 5px;
     border-radius: 15px;
-    border: none;
     font-size: 10px;
     text-align: center;
     line-height: 14px;
@@ -80,14 +98,16 @@
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
-    border: 1px solid #006EFF;
-    background: #006EFF;
+    border: 1px solid #006eff;
+    background: #006eff;
     color: #fff;
   }
 }
+
 ::-webkit-scrollbar {
   display: none;
 }
+
 .tui-contacts-list-h5 {
   min-width: 100%;
   width: 100%;

@@ -1,11 +1,22 @@
+@use "../../../styles/colors/color-theme" as *;
+
 .info {
-  background: #FFFFFF;
+  @include theme() {
+    background-color: get(bg-color-operate);
+    color: get(text-color-primary);
+  }
 }
+
 .warn {
-  color: #FFFFFF;
-  background: #faad14;
+  @include theme() {
+    background-color: get(text-color-warning);
+    color: #fff;
+  }
 }
+
 .error {
-  color: #FFFFFF;
-  background: #ff4d4f;
+  @include theme() {
+    background-color: get(text-color-error);
+    color: #fff;
+  }
 }

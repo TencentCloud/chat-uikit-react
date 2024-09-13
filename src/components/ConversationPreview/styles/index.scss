@@ -16,7 +16,7 @@
   padding: 0 20px;
 
   @include theme() {
-    background-color: get(bg-primary);
+    background-color: get(bg-color-operate);
   }
 
   .content {
@@ -35,7 +35,7 @@
       width: 100%;
 
       @include theme() {
-        color: get(text-primary);
+        color: get(text-color-primary);
       }
     }
 
@@ -51,14 +51,14 @@
       padding: 1px 0;
 
       @include theme() {
-        color: get(text-secondary);
+        color: get(text-color-secondary);
       }
     }
   }
 
   .external {
     text-align: right;
-    flex: 0 1 auto;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
 
@@ -76,7 +76,7 @@
       padding: 1px 0;
 
       @include theme() {
-        color: get(text-secondary);
+        color: get(text-color-secondary);
       }
     }
 
@@ -84,21 +84,24 @@
       display: flex;
       justify-content: flex-end;
       flex: 1 1;
+
       .icon-more {
         transform: scale(1.5);
-        &:hover {
-        }
       }
 
       .more-handle-box {
         top: 0;
         right: 0;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .1);
         bottom: initial;
         padding: 14px 0;
         box-sizing: border-box;
         text-align: start;
         white-space: nowrap;
+
+        @include theme() {
+          background-color: get(dropdown-color-default);
+          box-shadow: 0 0 10px get(shadow-color);
+        }
 
         .more-handle-item {
           font-size: 16px;
@@ -109,15 +112,19 @@
           font-weight: 500;
           box-sizing: border-box;
 
+          @include theme() {
+            color: get(text-color-primary);
+          }
+
           &.delete {
             @include theme() {
-              color: get(status-danger);
+              color: get(text-color-error);
             }
           }
 
           &:hover {
             @include theme() {
-              background-color: get(bg-active);
+              background-color: get(dropdown-color-hover);
             }
           }
         }
@@ -127,7 +134,7 @@
 
   &:hover {
     @include theme() {
-      background-color: get(bg-active);
+      background-color: get(list-color-hover);
     }
   }
 
@@ -139,19 +146,12 @@
 
   &.conversation-preview-content--active {
     @include theme() {
-      background-color: get(bg-active);
-    }
-
-    .title {
-      @include theme() {
-        color: get(status-info);
-      }
+      background-color: get(list-color-active);
     }
   }
 
   &.conversation-preview-content--unread {
     .unread {
-      width: 16px;
       height: 13px;
       border-radius: 16px;
       display: flex;
@@ -164,7 +164,7 @@
       color: #fff;
 
       @include theme() {
-        background-color: get(status-danger);
+        background-color: get(text-color-error);
       }
     }
   }

@@ -1,3 +1,13 @@
+## [2.2.7] (2024-09-13)
+
+#### feat
+* feat: Support 1v1 audio and video calls
+* feat: Support light and dark theme switching
+* feat: Support Chinese Traditional TW
+
+#### fix
+* fix: Fix source code integration error
+
 ## [2.2.6] (2024-09-02)
 
 #### feat

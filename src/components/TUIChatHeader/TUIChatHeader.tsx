@@ -8,29 +8,31 @@ import './styles/index.scss';
 import { useComponentContext } from '../../context';
 
 interface TUIChatHeaderProps {
-  title?: string,
-  TUIChatHeader?: React.ComponentType<TUIChatHeaderDefaultProps>,
-  conversation?: Conversation,
-  avatar?: React.ReactElement | string,
-  headerOpateIcon?: React.ReactElement | string,
+  title?: string;
+  TUIChatHeader?: React.ComponentType<TUIChatHeaderDefaultProps>;
+  conversation?: Conversation;
+  avatar?: React.ReactElement | string;
+  headerOpateIcon?: React.ReactElement | string;
+  enableCall?: boolean;
 }
 
 function UnMemoizedTUIChatHeader<T extends TUIChatHeaderProps>(
   props: PropsWithChildren<T>,
-):React.ReactElement {
+): React.ReactElement {
   const {
     title,
     conversation: propsConversation,
     TUIChatHeader: propTUIChatHeader,
     avatar,
     headerOpateIcon,
+    enableCall,
   } = props;
 
   const { conversation: contextConversation } = useTUIChatStateContext('TUIChatHeader');
   const { TUIChatHeader: ContextTUIChatHeader } = useComponentContext('TUIChatHeader');
 
   const TUIChatHeaderUIComponent = propTUIChatHeader
-  || ContextTUIChatHeader || TUIChatHeaderDefault;
+    || ContextTUIChatHeader || TUIChatHeaderDefault;
   const conversation = propsConversation || contextConversation;
 
   return (
@@ -39,6 +41,7 @@ function UnMemoizedTUIChatHeader<T extends TUIChatHeaderProps>(
       conversation={conversation}
       avatar={avatar}
       opateIcon={headerOpateIcon}
+      enableCall={enableCall}
     />
   );
 }

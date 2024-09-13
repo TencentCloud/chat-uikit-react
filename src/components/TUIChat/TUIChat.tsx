@@ -9,7 +9,7 @@ import TUIChatEngine, {
   TUIStore,
   StoreName,
 } from '@tencentcloud/chat-uikit-engine';
-import { JSONStringToParse } from '../untils';
+import { JSONStringToParse } from '../utils';
 import { useUIKit, useUIManager } from '../../context';
 import { TUIChatStateContextProvider } from '../../context/TUIChatStateContext';
 import { TUIChatActionProvider } from '../../context/TUIChatActionContext';
@@ -39,41 +39,42 @@ import { TUIMessageInput as TUIMessageInputElement, TUIMessageInputBasicProps } 
 import { EmptyStateIndicator } from '../EmptyStateIndicator';
 
 interface TUIChatProps {
-  className?: string,
-  conversation?: Conversation,
-  EmptyPlaceholder?: React.ReactElement,
-  TUIMessage?: React.ComponentType<TUIMessageProps | UnknowPorps>,
-  TUIChatHeader?: React.ComponentType<TUIChatHeaderDefaultProps>,
-  MessageContext?: React.ComponentType<MessageContextProps>,
-  TUIMessageInput?: React.ComponentType<UnknowPorps>,
-  InputPlugins?: React.ComponentType<UnknowPorps>,
-  InputQuote?: React.ComponentType<UnknowPorps>,
-  MessagePlugins?: React.ComponentType<UnknowPorps>,
-  MessageCustomPlugins?: React.ComponentType<UnknowPorps>,
-  MessageTextPlugins?: React.ComponentType<UnknowPorps>,
+  className?: string;
+  conversation?: Conversation;
+  EmptyPlaceholder?: React.ReactElement;
+  TUIMessage?: React.ComponentType<TUIMessageProps | UnknowPorps>;
+  TUIChatHeader?: React.ComponentType<TUIChatHeaderDefaultProps>;
+  MessageContext?: React.ComponentType<MessageContextProps>;
+  TUIMessageInput?: React.ComponentType<UnknowPorps>;
+  InputPlugins?: React.ComponentType<UnknowPorps>;
+  InputQuote?: React.ComponentType<UnknowPorps>;
+  MessagePlugins?: React.ComponentType<UnknowPorps>;
+  MessageCustomPlugins?: React.ComponentType<UnknowPorps>;
+  MessageTextPlugins?: React.ComponentType<UnknowPorps>;
   onMessageRecevied?: (
-    updateMessage: (event?: Array<Message>) => void,
+    updateMessage: (event?: Message[]) => void,
     event: any,
-  ) => void,
-  sendMessage?: (message:Message, options?:any) => Promise<Message>,
-  revokeMessage?: (message:Message) => Promise<Message>,
-  selectedConversation?: (conversation:Conversation) => Promise<Conversation>,
-  filterMessage?: (messageList: Array<IMessageModel>) => Array<IMessageModel>,
-  messageConfig?: TUIMessageProps,
-  cloudCustomData?: string,
-  TUIMessageInputConfig?: TUIMessageInputBasicProps,
-  TUIMessageListConfig?: MessageListProps,
-  [propName: string]: any,
+  ) => void;
+  sendMessage?: (message: Message, options?: any) => Promise<Message>;
+  revokeMessage?: (message: Message) => Promise<Message>;
+  selectedConversation?: (conversation: Conversation) => Promise<Conversation>;
+  filterMessage?: (messageList: IMessageModel[]) => IMessageModel[];
+  callButtonClicked?: (callMediaType?: number, callType?: any) => void;
+  messageConfig?: TUIMessageProps;
+  cloudCustomData?: string;
+  TUIMessageInputConfig?: TUIMessageInputBasicProps;
+  TUIMessageListConfig?: MessageListProps;
+  [propName: string]: any;
 }
 
 interface TUIChatInnerProps extends TUIChatProps {
-  chat?: ChatSDK,
+  chat?: ChatSDK;
   key?: string;
 }
 
-function UnMemoizedTUIChat <T extends TUIChatProps>(
+function UnMemoizedTUIChat<T extends TUIChatProps>(
   props: PropsWithChildren<T>,
-):React.ReactElement {
+): React.ReactElement {
   const {
     conversation: propsConversation,
     EmptyPlaceholder = <EmptyStateIndicator listType="chat" />,
@@ -96,9 +97,9 @@ function UnMemoizedTUIChat <T extends TUIChatProps>(
   );
 }
 
-function TUIChatInner <T extends TUIChatInnerProps>(
+function TUIChatInner<T extends TUIChatInnerProps>(
   props: PropsWithChildren<T>,
-):React.ReactElement {
+): React.ReactElement {
   const {
     chat,
     conversation,
@@ -122,6 +123,7 @@ function TUIChatInner <T extends TUIChatInnerProps>(
     cloudCustomData,
     TUIMessageInputConfig,
     TUIMessageListConfig,
+    callButtonClicked,
   } = props;
 
   const [state, dispatch] = useReducer<any>(chatReducer, {
@@ -183,7 +185,7 @@ function TUIChatInner <T extends TUIChatInnerProps>(
   }, []);
 
   const onMessageListUpdated = (list: IMessageModel[]) => {
-    const messageList = list.filter((message) => !message.isDeleted);
+    const messageList = list.filter(message => !message.isDeleted);
     // eslint-disable-next-line
       // @ts-ignore
     dispatch({
@@ -223,7 +225,7 @@ function TUIChatInner <T extends TUIChatInnerProps>(
       });
     }
   };
-      // eslint-disable-next-line
+  // eslint-disable-next-line
       // @ts-ignore
   const chatActionContextValue: TUIChatActionContextValue = useMemo(
     () => ({
@@ -237,6 +239,7 @@ function TUIChatInner <T extends TUIChatInnerProps>(
       setActiveMessageID,
       updateUploadPendingMessageList,
       setFirstSendMessage,
+      callButtonClicked,
     }),
     [
       editLocalMessage,
@@ -249,6 +252,7 @@ function TUIChatInner <T extends TUIChatInnerProps>(
       setActiveMessageID,
       updateUploadPendingMessageList,
       setFirstSendMessage,
+      callButtonClicked,
     ],
   );
 
@@ -269,7 +273,7 @@ function TUIChatInner <T extends TUIChatInnerProps>(
 
   return (
     <div className={`chat ${className}`}>
-            {/* // eslint-disable-next-line
+      {/* // eslint-disable-next-line
       // @ts-ignore */}
       <TUIChatStateContextProvider value={chatStateContextValue}>
         <TUIChatActionProvider value={chatActionContextValue}>

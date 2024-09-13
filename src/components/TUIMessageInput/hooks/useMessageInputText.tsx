@@ -11,7 +11,7 @@ import {
   useTUIChatActionContext,
   useUIKit,
 } from '../../../context';
-import { enableSampleTaskStatus } from '../../untils';
+import { enableSampleTaskStatus } from '../../utils';
 import { formatEmojiString } from '../../TUIMessage/utils/emojiMap';
 import { useHandleQuoteMessage } from './useHandleQuoteMessage';
 import type { IbaseStateProps, ICursorPos } from './useMessageInputState';
@@ -19,12 +19,12 @@ import { filesData } from './useUploadPicker';
 import { de } from 'date-fns/locale';
 
 interface useMessageInputTextProps extends IbaseStateProps {
-  focus?: boolean,
-  textareaRef?: MutableRefObject<HTMLTextAreaElement | undefined>,
-  sendUploadMessage?: (file: filesData, type: MESSAGE_TYPE_NAME) => void
+  focus?: boolean;
+  textareaRef?: MutableRefObject<HTMLTextAreaElement | undefined>;
+  sendUploadMessage?: (file: filesData, type: MESSAGE_TYPE_NAME) => void;
 }
 
-export const useMessageInputText = (props:useMessageInputTextProps) => {
+export const useMessageInputText = (props: useMessageInputTextProps) => {
   const {
     state,
     dispatch,
@@ -48,7 +48,7 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
       }
       dispatch({
         type: CONSTANT_DISPATCH_TYPE.SET_TEXT,
-        getNewText: (text:string) => event.target.value,
+        getNewText: (text: string) => event.target.value,
       });
     },
     [chat],
@@ -61,7 +61,7 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
     if (!state.text) {
       return;
     }
-    const options:any = {
+    const options: any = {
       payload: {
         text: formatEmojiString(state.text),
       },
@@ -75,7 +75,7 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
     });
     enableSampleTaskStatus('sendMessage');
     dispatch({
-      getNewText: (text:string) => '',
+      getNewText: (text: string) => '',
       type: CONSTANT_DISPATCH_TYPE.SET_TEXT,
     });
     operateMessage && operateMessage({
@@ -86,7 +86,7 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
   };
 
   const handleKeyDown = useCallback(
-    (event?:React.KeyboardEvent<EventTarget>) => {
+    (event?: React.KeyboardEvent<EventTarget>) => {
       if (!event?.ctrlKey && event?.code && enterCodeList.indexOf(event?.code) > -1 && event.keyCode === 13) {
         event?.preventDefault();
         handleSubmit(event);
@@ -94,7 +94,7 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
       if (event?.ctrlKey && enterCodeList.indexOf(event?.code) > -1 && event.keyCode === 13) {
         dispatch({
           type: CONSTANT_DISPATCH_TYPE.SET_TEXT,
-          getNewText: (text:string) => `${text}\n`,
+          getNewText: (text: string) => `${text}\n`,
         });
       }
     },
@@ -115,7 +115,7 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
             item.getAsString((str: string) => {
               dispatch({
                 type: CONSTANT_DISPATCH_TYPE.SET_TEXT,
-                getNewText: (text:string) => `${text}${str}`,
+                getNewText: (text: string) => `${text}${str}`,
               });
             });
             return true;
@@ -138,7 +138,7 @@ export const useMessageInputText = (props:useMessageInputTextProps) => {
     (textToInsert: string) => {
       dispatch({
         type: CONSTANT_DISPATCH_TYPE.SET_TEXT,
-        getNewText: (text:string) => `${text.slice(0, state?.cursorPos?.start || 0)}${textToInsert}${text.slice(state?.cursorPos?.start || 0)}`,
+        getNewText: (text: string) => `${text.slice(0, state?.cursorPos?.start || 0)}${textToInsert}${text.slice(state?.cursorPos?.start || 0)}`,
       });
       dispatch({
         type: CONSTANT_DISPATCH_TYPE.SET_CURSOR_POS,

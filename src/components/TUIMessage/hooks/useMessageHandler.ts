@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { Message } from '@tencentcloud/chat';
 import { TUIStore } from '@tencentcloud/chat-uikit-engine';
 import { CONSTANT_DISPATCH_TYPE, MESSAGE_FLOW, MESSAGE_OPERATE } from '../../../constants';
-import { enableSampleTaskStatus } from '../../untils';
+import { enableSampleTaskStatus } from '../../utils';
 import { useTUIChatActionContext, useUIKit } from '../../../context';
 import { Toast } from '../../Toast';
 
 interface MessageHandlerProps {
-  handleError?: (error: any) => void,
-  message?: Message,
+  handleError?: (error: any) => void;
+  message?: Message;
 }
 
 export const useMessageHandler = (props: MessageHandlerProps) => {
@@ -54,7 +54,7 @@ export const useMessageHandler = (props: MessageHandlerProps) => {
     });
   }, [message]);
 
-  const handleReplyMessage = useCallback((event?:any) => {
+  const handleReplyMessage = useCallback((event?: any) => {
     event.preventDefault();
     if (!message?.ID || !chat || !operateMessage) {
       return;
@@ -64,7 +64,7 @@ export const useMessageHandler = (props: MessageHandlerProps) => {
     });
   }, [message]);
 
-  const handleCopyMessage = useCallback((event?:any) => {
+  const handleCopyMessage = useCallback((event?: any) => {
     event.preventDefault();
     if (navigator.clipboard) {
       // clipboard api
@@ -103,7 +103,7 @@ export const useMessageHandler = (props: MessageHandlerProps) => {
     }
   }, [message]);
 
-  const handleForWardMessage = useCallback(async (event?:any) => {
+  const handleForWardMessage = useCallback(async (event?: any) => {
     event.preventDefault();
     if (!message?.ID || !chat || !operateMessage) {
       return;

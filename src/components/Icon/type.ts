@@ -43,4 +43,6 @@ export enum IconTypes {
   UNVECTOR = 'unvector',
   VOICE = 'voice',
   ADDFRIEND = 'addFriend',
+  VIDEOCALL = 'videoCall',
+  VOICECALL = 'voiceCall',
 }

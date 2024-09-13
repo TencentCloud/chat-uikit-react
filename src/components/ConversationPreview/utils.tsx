@@ -2,7 +2,7 @@ import React from 'react';
 import TencentCloudChat, { Conversation, Group, Profile } from '@tencentcloud/chat';
 import { defaultGroupAvatarWork, defaultUserAvatar } from '../Avatar';
 import { formatEmojiString } from '../TUIMessage/utils/emojiMap';
-import { getTimeStamp } from '../untils';
+import { getTimeStamp } from '../utils';
 
 interface TProfile extends Profile, Group {}
 export const getMessageProfile = (conversation: Conversation): TProfile => {
@@ -55,7 +55,8 @@ export const getDisplayTitle = (
           (textItem.toLowerCase() === searchValue.toLowerCase())
             ? (
                 <span key={index} style={{ color: highlightColor }}>{textItem}</span>
-              ) : (
+              )
+            : (
                 <span key={index}>{textItem}</span>
               ),
         )}

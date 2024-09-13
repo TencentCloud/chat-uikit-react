@@ -8,7 +8,7 @@ import {
   useTUIChatStateContext, useUIKit,
 } from '../../../context';
 
-export function useHandleForwardMessage(msg?:Message) {
+export function useHandleForwardMessage(msg?: Message) {
   const {
     operateData,
   } = useTUIChatStateContext('TUIMessageInputDefault');
@@ -18,14 +18,15 @@ export function useHandleForwardMessage(msg?:Message) {
 
   const message = msg || (operateData && operateData[MESSAGE_OPERATE.FORWARD]);
 
-  const sendForwardMessage = (list:Array<Conversation>) => {
-    list.map((item:Conversation) => {
-      message &&  TUIChatService.sendForwardMessage([item], [message]);
+  const sendForwardMessage = (list: Conversation[]) => {
+    list.map((item: Conversation) => {
+      message && TUIChatService.sendForwardMessage([item], [message]);
       return item;
     });
   };
 
   useEffect(() => {
+    if (!chat) return;
     (async () => {
       const res = await chat.getConversationList();
       setConversationList(res?.data?.conversationList.filter(

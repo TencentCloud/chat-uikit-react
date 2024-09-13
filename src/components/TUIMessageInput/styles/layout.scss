@@ -53,7 +53,7 @@
         background: none;
 
         @include theme() {
-          color: get(text-primary);
+          color: get(text-color-primary);
         }
 
         &:focus,
@@ -155,8 +155,15 @@ ul li {
   padding: 10px 16px;
   min-width: 180px;
 
+  @include theme() {
+    color: get(text-color-primary);
+  }
+
   &:hover {
-    color: #147aff;
+    @include theme() {
+      color: get(text-color-hover);
+      background-color: get(dropdown-color-hover);
+    }
   }
 
   input {
@@ -172,9 +179,12 @@ ul li {
 
 .input-quote {
   padding: 7px 16px;
-  background: #f9f9f9;
   display: flex;
   align-items: center;
+
+  @include theme() {
+    background: get(bg-color-bubble-reciprocal);
+  }
 
   &-content {
     flex: 1;
@@ -185,7 +195,6 @@ ul li {
     flex-direction: column;
     font-weight: 500;
     font-size: 14px;
-    font-family: PingFangSC-Medium;
     line-height: 17px;
     color: #000;
 
@@ -212,7 +221,6 @@ ul li {
 
 // TUIForward
 .tui-forward {
-  background: #fff;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
@@ -220,19 +228,25 @@ ul li {
   width: 300px;
   max-height: 90%;
 
+  @include theme() {
+    background-color: get(bg-color-operate);
+  }
+
   &-header {
     display: flex;
     align-items: center;
     padding: 24px 20px;
+
+    @include theme() {
+      color: get(text-color-primary);
+    }
   }
 
   &-title {
     padding: 0 16px;
-    font-family: PingFangSC-Medium;
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
-    line-height: 17px;
   }
 
   &-main {
@@ -241,13 +255,13 @@ ul li {
     overflow-y: auto;
 
     .no-result {
-      font-family: PingFangSC-Medium;
       font-size: 14px;
-      font-style: normal;
-      line-height: 20px;
       padding: 10px;
       text-align: center;
-      color: #999;
+
+      @include theme() {
+        color: get(text-color-secondary);
+      }
     }
   }
 
@@ -259,7 +273,6 @@ ul li {
     padding: 13px 0;
 
     &-title {
-      font-family: PingFangSC-Medium;
       font-style: normal;
       font-weight: 600;
       font-size: 14px;
@@ -268,7 +281,6 @@ ul li {
 
     &-item {
       padding: 6px 0;
-      font-family: PingFangSC-Medium;
       font-style: normal;
       font-weight: 400;
       font-size: 14px;
@@ -282,11 +294,9 @@ ul li {
         display: flex;
         align-items: center;
         flex-shrink: 0;
-        width: 100%;
 
         &-nick {
           padding: 0 13px;
-          font-family: PingFangSC-Medium;
           font-style: normal;
           font-weight: 400;
           font-size: 14px;
@@ -303,18 +313,20 @@ ul li {
   }
 
   &-footer {
-    background: rgba(249, 249, 249, 94%);
     padding: 13px 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @include theme() {
+      background-color: get(bg-color-operate);
+    }
 
     .button {
       cursor: pointer;
       background: #0365f9;
       border-radius: 31px;
       padding: 10px 21px;
-      font-family: PingFangSC-Medium;
       font-style: normal;
       font-weight: 400;
       font-size: 14px;
@@ -331,6 +343,10 @@ ul li {
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
+
+      @include theme() {
+        color: get(text-color-primary);
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@tencentcloud/chat-uikit-react",
-  "version": "2.2.6",
+  "version": "2.2.7",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "license": "MIT",
@@ -66,6 +66,7 @@
     "typescript-eslint": "^7.16.0"
   },
   "dependencies": {
+    "@tencentcloud/call-uikit-react": "latest",
     "@tencentcloud/chat": "latest",
     "@tencentcloud/chat-uikit-engine": "latest",
     "@tencentcloud/tui-core": "latest",

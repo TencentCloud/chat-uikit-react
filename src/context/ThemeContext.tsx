@@ -1,4 +1,4 @@
-import {
+import React, {
   useState,
   useContext,
   createContext,
@@ -11,8 +11,8 @@ import '../styles/index.scss';
 interface ThemeContextType {
   theme: string;
   colors: Record<string, string> | undefined;
-  setTheme: (theme: string) => void;
-  setColors: (colors: Record<string, string>) => void;
+  setTheme: React.Dispatch<React.SetStateAction<string>>;
+  setColors: React.Dispatch<React.SetStateAction<Record<string, string> | undefined>>;
 }
 
 interface ThemeProviderProps {
@@ -22,6 +22,8 @@ interface ThemeProviderProps {
 
 const ThemeContext = createContext<ThemeContextType | null>(null);
 
+const supportedThemes = ['light', 'dark'];
+
 function ThemeProvider(props: PropsWithChildren<Partial<ThemeProviderProps>>) {
   const {
     theme: _theme = 'light',
@@ -29,12 +31,17 @@ function ThemeProvider(props: PropsWithChildren<Partial<ThemeProviderProps>>) {
     children,
   } = props;
 
+  if (supportedThemes.indexOf(_theme) === -1) {
+    throw new Error(`Theme ${_theme} is not supported, please check the supported themes list: [${supportedThemes.join(', ')}]`);
+  }
+
   const [theme, setTheme] = useState(_theme);
   const [colors, setColors] = useState(_colors);
 
   useLayoutEffect(() => {
-    document.documentElement.dataset.uikitTheme = theme;
-  }, [theme]);
+    document.documentElement.dataset.uikitTheme = _theme;
+    setTheme(_theme);
+  }, [_theme]);
 
   const value = {
     theme,

@@ -10,7 +10,7 @@ import { MESSAGE_TYPE_NAME } from '../../constants';
 import { useTUIMessageInputContext } from '../../context/TUIMessageInputContext';
 import { Icon, IconTypes } from '../Icon';
 import { useTUIChatStateContext } from '../../context';
-export function InputPluginsDefalut():React.ReactElement {
+export function InputPluginsDefalut(): React.ReactElement {
   const {
     sendUploadMessage,
     pluginConfig: propsPluginConfig,
@@ -20,14 +20,14 @@ export function InputPluginsDefalut():React.ReactElement {
   const { TUIMessageInputConfig } = useTUIChatStateContext('TUIMessageInput');
 
   const propPlugins = propsPluginConfig?.plugins
-  || TUIMessageInputConfig?.pluginConfig?.plugins || [];
+    || TUIMessageInputConfig?.pluginConfig?.plugins || [];
   const showNumber = propsPluginConfig?.showNumber
-  || TUIMessageInputConfig?.pluginConfig?.showNumber || 1;
+    || TUIMessageInputConfig?.pluginConfig?.showNumber || 1;
   const MoreIcon = propsPluginConfig?.MoreIcon || TUIMessageInputConfig?.pluginConfig?.MoreIcon;
 
   const handlePluginBoolenParams = (
-    porpsVal?:boolean | undefined,
-    contextVal?:boolean | undefined,
+    porpsVal?: boolean | undefined,
+    contextVal?: boolean | undefined,
     defaultVal?: boolean,
   ) => {
     if (typeof (porpsVal) === 'boolean') {
@@ -65,13 +65,13 @@ export function InputPluginsDefalut():React.ReactElement {
   const ImagePicker = isImagePicker && useUploadElement({
     children: (
       <div className="input-plugin-item">
-        <Icon width={20} height={20} type={IconTypes.IMAGE} />
+        <i className="iconfont input-icon">&#xe604;</i>
         <span>{t('TUIChat.Image')}</span>
       </div>
     ),
     type: 'image',
     accept: 'image/*',
-    onChange: (file:HTMLInputElement | File) => {
+    onChange: (file: HTMLInputElement | File) => {
       pluginsRef?.current?.closeMore && pluginsRef.current.closeMore();
       sendUploadMessage && sendUploadMessage({ file }, MESSAGE_TYPE_NAME.IMAGE);
     },
@@ -80,13 +80,13 @@ export function InputPluginsDefalut():React.ReactElement {
   const VideoPicker = isVideoPicker && useUploadElement({
     children: (
       <div className="input-plugin-item">
-        <Icon width={20} height={20} type={IconTypes.VIDEO} />
+        <i className="iconfont input-icon">&#xe603;</i>
         <span>{t('TUIChat.Video')}</span>
       </div>
     ),
     type: 'video',
     accept: 'video/*',
-    onChange: (file:HTMLInputElement | File) => {
+    onChange: (file: HTMLInputElement | File) => {
       pluginsRef?.current?.closeMore && pluginsRef.current.closeMore();
       sendUploadMessage && sendUploadMessage({ file }, MESSAGE_TYPE_NAME.VIDEO);
     },
@@ -95,20 +95,20 @@ export function InputPluginsDefalut():React.ReactElement {
   const FilePicker = isFilePicker && useUploadElement({
     children: (
       <div className="input-plugin-item">
-        <Icon width={20} height={20} type={IconTypes.DOCUMENT} />
+        <i className="iconfont input-icon">&#xe602;</i>
         <span>{t('TUIChat.File')}</span>
       </div>
     ),
     type: 'file',
     accept: 'file/*',
-    onChange: (file:HTMLInputElement | File) => {
+    onChange: (file: HTMLInputElement | File) => {
       pluginsRef?.current?.closeMore && pluginsRef.current.closeMore();
       sendUploadMessage && sendUploadMessage({ file }, MESSAGE_TYPE_NAME.FILE);
     },
   });
   const plugins = [
     isEmojiPicker && <EmojiPicker />, ImagePicker, VideoPicker, FilePicker, ...propPlugins,
-  ].filter((item) => item);
+  ].filter(item => item);
 
   return <Plugins ref={pluginsRef} plugins={plugins} showNumber={showNumber} MoreIcon={MoreIcon} />;
 }

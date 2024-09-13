@@ -4,17 +4,18 @@ import { IMessageModel } from '@tencentcloud/chat-uikit-engine';
 import { OperateMessageParams } from '../components/TUIChat/hooks/useHandleMessage';
 
 export interface TUIChatActionContextValue {
-  updateMessage?: (messages: Array<Message>) => void,
-  setFirstSendMessage?: (message: IMessageModel) => void,
-  editLocalMessage?: (message: Message) => void,
-  operateMessage?: (data?: OperateMessageParams) => void,
-  loadMore?: () => Promise<void>,
-  revokeMessage?: (message:Message) => Promise<Message>,
-  setAudioSource?: (source: HTMLAudioElement | null) => void,
-  setVideoSource?: (source: HTMLVideoElement | null) => void,
-  setHighlightedMessageId?: (highlightedMessageId: string) => void,
-  updateUploadPendingMessageList?: (message?:Message) => void,
-  setActiveMessageID?: (messageID: string) => void,
+  updateMessage?: (messages: Message[]) => void;
+  setFirstSendMessage?: (message: IMessageModel) => void;
+  editLocalMessage?: (message: Message) => void;
+  operateMessage?: (data?: OperateMessageParams) => void;
+  loadMore?: () => Promise<void>;
+  revokeMessage?: (message: Message) => Promise<Message>;
+  setAudioSource?: (source: HTMLAudioElement | null) => void;
+  setVideoSource?: (source: HTMLVideoElement | null) => void;
+  setHighlightedMessageId?: (highlightedMessageId: string) => void;
+  updateUploadPendingMessageList?: (message?: Message) => void;
+  setActiveMessageID?: (messageID: string) => void;
+  callButtonClicked?: (callMediaType?: number, callType?: any) => void;
 }
 
 export const TUIChatActionContext = React.createContext<
@@ -26,8 +27,8 @@ export function TUIChatActionProvider({
   children,
   value,
 }: PropsWithChildren<{
-  value: TUIChatActionContextValue
-}>):React.ReactElement {
+  value: TUIChatActionContextValue;
+}>): React.ReactElement {
   return (
     <TUIChatActionContext.Provider
       value={(value as unknown) as TUIChatActionContextValue}
