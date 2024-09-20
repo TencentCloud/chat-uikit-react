@@ -53,8 +53,8 @@ export default function SampleChat(props: ISampleChatProps) {
     value: 'en-US'
   });
   const [isShowLngPop, setShowLngPop] = useState(false);
-  const [moduleValue, setModuleValue] = useState("chats");
-  const [currentConversationID, setCurrentConversationID] = useState<string>("");
+  const [moduleValue, setModuleValue] = useState('chats');
+  const [currentConversationID, setCurrentConversationID] = useState<string>('');
 
   const languageList = [
     {
@@ -164,6 +164,14 @@ export default function SampleChat(props: ISampleChatProps) {
     transform: 'translate(-50%, -50%)',
   };
 
+  const callButtonClicked = (callMediaType?: number) => {
+    if (callMediaType === 2) {
+      reportEvent({ actionKey: REPORT_KEY.VIDEO_CALL});
+    } else {
+      reportEvent({ actionKey: REPORT_KEY.AUDIO_CALL });
+    }
+  };
+
   return (
     <div className="sample-demo">
       <div className="chat-header">
@@ -238,7 +246,7 @@ export default function SampleChat(props: ISampleChatProps) {
           </div>
           {moduleValue === "chats" && (
             <>
-              <TUIChat>
+              <TUIChat callButtonClicked={callButtonClicked}>
                 <TUIChatHeader enableCall={true} />
                 <TUIMessageList />
                 <TUIMessageInput />
@@ -272,7 +280,7 @@ export default function SampleChat(props: ISampleChatProps) {
           )}
           {currentConversationID && (
             <>
-              <TUIChat>
+              <TUIChat callButtonClicked={callButtonClicked}>
                 <TUIChatHeader enableCall={true}/>
                 <TUIMessageList />
                 <TUIMessageInput />
