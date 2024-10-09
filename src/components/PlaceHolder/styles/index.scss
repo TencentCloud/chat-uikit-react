@@ -1,0 +1,36 @@
+.tui-place-holder {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+
+  .tui-place-holder__icon {
+    margin: 10px;
+  }
+
+  .tui-place-holder__label {
+    color: #999;
+    font-weight: 400;
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .tui-place-holder__button {
+    margin: 20px;
+    background-color: #0365f9;
+    border-radius: 31px;
+    color: #fff;
+    cursor: pointer;
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+    font-family: PingFangSC-Medium;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 12px 36px;
+    text-align: center;
+    user-select: none;
+  }
+}

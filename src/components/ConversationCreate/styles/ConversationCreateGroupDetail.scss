@@ -1,0 +1,68 @@
+@use "../../../styles/colors/color-theme" as *;
+
+.tui-conversation-create-group-detail {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+  overflow-y: scroll;
+
+  @include theme() {
+    color: get(text-color-primary);
+  }
+
+  .create-group-box {
+    padding: 10px 0;
+  }
+
+  .input-group-text {
+    font-size: 14px;
+  }
+
+  .create-group-name {
+    .input-group-name {
+      font-weight: 700;
+      font-size: 14px;
+    }
+  }
+
+  .input-group-title {
+    width: 106px;
+    font-size: 14px;
+  }
+
+  .create-group-illustrate {
+    font-size: 12px;
+    text-align: justify;
+    padding-left: 8px;
+  }
+
+  .create-group-portrait {
+    .create-group-portrait-title {
+      font-weight: 600;
+      font-size: 14px;
+      padding: 20px 0 20px 8px;
+    }
+
+    .create-group-portrait-info-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      margin-bottom: 10px;
+      padding: 0 10px;
+
+      .create-group-portrait-info {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        // width: calc((100% - 10px) / 6);
+        padding: 6px;
+        box-sizing: border-box;
+
+        &-nick {
+          font-size: 12px;
+          margin-top: 6px;
+        }
+      }
+    }
+  }
+}

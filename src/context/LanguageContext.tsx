@@ -6,6 +6,7 @@ import {
   PropsWithChildren,
 } from 'react';
 import { useTranslation } from 'react-i18next';
+import { TUITranslateService } from '@tencentcloud/chat-uikit-engine';
 
 interface LanguageContextType {
   language: string;

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import TencentCloudChat, { Conversation, Friend, Profile } from '@tencentcloud/chat';
+import { StoreName, TUIStore, TUIUserService, IConversationModel } from '@tencentcloud/chat-uikit-engine';
+import TencentCloudChat, { Friend, Profile } from '@tencentcloud/chat';
 import { strChineseFirstPy } from '../static/word';
-import { useProfile } from '../../../hooks';
 
 export const useConversationCreate = (
-  chat: any,
-  conversationList: Conversation[],
+  conversationList: IConversationModel[],
   setFriendListResultHandler?: (
     newFriendListResult: object,
     setFriendListResult: React.Dispatch<React.SetStateAction<{ string: object[] }>>
@@ -20,30 +19,27 @@ export const useConversationCreate = (
     }
     return strChineseFirstPy.charAt(uni - 19968);
   };
-  const queryFriendList = async () => {
+  const queryFriendList = async (friendList: Friend[]) => {
     const frequentlyConversationProfile = conversationList.filter(
-      (item: Conversation) => item?.type === TencentCloudChat.TYPES.CONV_C2C,
-    ).slice(0, 5).map((item: Conversation) => item?.userProfile);
-    const { code, data } = await chat?.getFriendList() || {};
-    if (code === 0) {
-      const sortResult = handleData(
-        data.map((item: Friend) => item.profile),
-        frequentlyConversationProfile,
-      );
-      setFriendListSortResult(sortResult);
-      if (setFriendListResultHandler) {
-        setFriendListResultHandler(sortResult, setFriendListSortResult);
-      }
+      (item: IConversationModel) => item?.type === TencentCloudChat.TYPES.CONV_C2C,
+    ).slice(0, 5).map((item: IConversationModel) => item?.userProfile);
+    const sortResult = handleData(
+      friendList?.map((item: Friend) => item.profile),
+      frequentlyConversationProfile,
+    );
+    setFriendListSortResult(sortResult);
+    if (setFriendListResultHandler) {
+      setFriendListResultHandler(sortResult, setFriendListSortResult);
     }
   };
-  const handleData = (profileList: Profile[], frequentlyConversationProfile?: any) => {
+  function handleData(profileList: Profile[], frequentlyConversationProfile?: any) {
     const sortResult: any = {
       '#': [],
     };
     for (let i = 65; i <= 90; i += 1) {
       sortResult[String.fromCharCode(i)] = [];
     }
-    profileList.forEach((profile) => {
+    profileList?.forEach((profile) => {
       const { nick, userID } = profile;
       const first = getFirstLetter(nick || userID);
       if (first >= 'a' && first <= 'z') {
@@ -58,21 +54,20 @@ export const useConversationCreate = (
       sortResult[key].sort((a: any, b: any) => {
         const { nick: aNick, userID: aUserID } = a;
         const { nick: bNick, userID: bUserID } = b;
-        if (aNick || aUserID < bNick || bUserID) {
-          return 1;
-        } if (aNick || aUserID === bNick || bUserID) {
+        if (aNick || aUserID <= bNick || bUserID) {
           return 1;
         }
         return -1;
       });
     });
     return sortResult;
-  };
-  const { getUserProfile } = useProfile(chat);
+  }
+  // const { getUserProfile } = useProfile();
   const getFriendListSortSearchResult = async (searchValue: string) => {
     if (!searchValue) return friendListSortResult;
-    const { data: profileList } = await getUserProfile([searchValue]);
-
+    const { data } = await TUIUserService.getUserProfile({
+      userIDList: [searchValue],
+    });
     const result: any = {};
     let isIncludes = false;
     Object.keys(friendListSortResult).forEach((key) => {
@@ -97,11 +92,23 @@ export const useConversationCreate = (
     if (process.env?.REACT_APP_ONLINE === 'TencentCloudDemo') {
       return result;
     }
-    return !isIncludes ? handleData(profileList) : result;
+    return !isIncludes ? handleData(data) : result;
   };
+
+  function onFriendListUpdated(list: Friend[]) {
+    queryFriendList(list);
+  }
+
   useEffect(() => {
-    queryFriendList();
-  }, [chat]);
+    TUIStore.watch(StoreName.FRIEND, {
+      friendList: onFriendListUpdated,
+    });
+    return () => {
+      TUIStore.unwatch(StoreName.FRIEND, {
+        friendList: onFriendListUpdated,
+      });
+    };
+  }, []);
   return {
     getFirstLetter,
     queryFriendList,

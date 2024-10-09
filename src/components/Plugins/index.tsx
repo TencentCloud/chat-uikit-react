@@ -9,23 +9,27 @@ import { usePluginsElement } from './hooks';
 import './styles/index.scss';
 
 export interface PluginsProps {
-  plugins?: Array<any>,
-  showNumber?: number,
-  MoreIcon?: any,
-  className?: string,
-  customClass?: string,
-  style?: any,
-  root?: any,
-  handleVisible?: (isVisible:any) => void,
-  showMore?: boolean,
+  plugins?: any[];
+  showNumber?: number;
+  MoreIcon?: any;
+  className?: string;
+  customClass?: string;
+  style?: any;
+  root?: any;
+  handleVisible?: (isVisible: any) => void;
+  showMore?: boolean;
+}
+
+export interface IPluginsRef {
+  closeMore?: () => void;
 }
 
 function PluginsWithContext<T extends PluginsProps>(
-  props:PropsWithChildren<T>,
- // eslint-disable-next-line 
+  props: PropsWithChildren<T>,
+  // eslint-disable-next-line
  // @ts-ignore
   ref,
-):React.ReactElement {
+): React.ReactElement {
   const {
     plugins = [],
     showNumber,
@@ -72,12 +76,12 @@ function PluginsWithContext<T extends PluginsProps>(
       });
     }
   };
-// eslint-disable-next-line
+  // eslint-disable-next-line
 // @ts-ignore
   return (
     ((showPicker && showPicker.length > 0) || (elements && elements?.length > 0)) && (
       <ul className={`plugin ${className}`}>
-        {showPicker && showPicker?.length > 0 && showPicker.map((Item, index:number) => {
+        {showPicker && showPicker?.length > 0 && showPicker.map((Item, index: number) => {
           const key = `${Item}${index}`;
           return (
             <li className="plugin-item" key={key}>
@@ -86,38 +90,38 @@ function PluginsWithContext<T extends PluginsProps>(
           );
         })}
         {
-        elements && elements?.length > 0 && (
-          <div className="plugin-popup" ref={pluginRef}>
-            <div role="menuitem" tabIndex={0} className="more" onClick={handleShow}>
-              {
-                !MoreIcon && <Icon width={20} height={20} type={IconTypes.ADD} />
-              }
-              {
-                MoreIcon && MoreIcon
-              }
+          elements && elements?.length > 0 && (
+            <div className="plugin-popup" ref={pluginRef}>
+              <div role="menuitem" tabIndex={0} className="more" onClick={handleShow}>
+                {
+                  !MoreIcon && <Icon width={20} height={20} type={IconTypes.ADD} />
+                }
+                {
+                  MoreIcon && MoreIcon
+                }
+              </div>
+              <Popup
+                className={`plugin-popup-box ${customClass}`}
+                style={style}
+                show={show}
+                close={handleShow}
+                root={root}
+                handleVisible={pluginHandleVisible}
+              >
+                <ul>
+                  {elements.map((Item, index: number) => {
+                    const key = `${Item}${index}`;
+                    return (
+                      <li className="plugin-item" key={key}>
+                        {Item}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </Popup>
             </div>
-            <Popup
-              className={`plugin-popup-box ${customClass}`}
-              style={style}
-              show={show}
-              close={handleShow}
-              root={root}
-              handleVisible={pluginHandleVisible}
-            >
-              <ul>
-                {elements.map((Item, index:number) => {
-                  const key = `${Item}${index}`;
-                  return (
-                    <li className="plugin-item" key={key}>
-                      {Item}
-                    </li>
-                  );
-                })}
-              </ul>
-            </Popup>
-          </div>
-        )
-      }
+          )
+        }
       </ul>
     )
   );

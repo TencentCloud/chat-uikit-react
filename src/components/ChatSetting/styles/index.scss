@@ -1,0 +1,103 @@
+@use "../../../styles/colors/color-theme" as *;
+
+.tui-manage {
+  display: flex;
+  flex-direction: column;
+  width: 22%;
+  max-width: 300px;
+  min-width: 200px;
+
+  @include theme() {
+    background-color: get(bg-color-operate);
+    color: get(text-color-primary);
+    border-left: 1px solid get(stroke-color-primary);
+  }
+
+  .red {
+    color: #ff584c !important;
+  }
+
+  .tui-manage-title {
+    display: flex;
+    align-items: center;
+    padding: 24px 10px;
+
+    span {
+      margin-right: 10px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+  }
+
+  .tui-manage-container {
+    .tui-manage-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .info-avatar {
+        margin-top: 40px;
+        margin-bottom: 20px;
+      }
+
+      .info-name {
+        text-align: center;
+        font-weight: 700;
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .info-id {
+        font-size: 16px;
+        margin-bottom: 30px;
+        text-align: center;
+        @include theme() {
+          color: get(text-color-secondary);
+        }
+      }
+    }
+
+    .tui-manage-handle {
+      .manage-handle-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+
+        @include theme() {
+          background: get(bg-color-operate);
+        }
+
+        &:nth-child(2) {
+          margin-top: 10px;
+          cursor: pointer;
+        }
+
+        .manage-handle-title {
+          font-size: 16px;
+
+          @include theme() {
+            color: get(text-color-primary);
+          }
+        }
+      }
+    }
+  }
+}
+
+.tui-manage.tui-h5-manage {
+  border-left: none;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  z-index: 1;
+
+  @include theme() {
+    background: get(bg-color-operate);
+  }
+}

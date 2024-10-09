@@ -1,0 +1,22 @@
+@use "../../styles/colors/color-theme" as *;
+
+.uikit-conversation-search {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+
+  @include theme() {
+    background-color: get(bg-color-operate);
+    color: get(text-color-primary);
+  }
+
+  &.uikit-conversation-search--active {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+}

@@ -1,0 +1,46 @@
+@use "../../../styles/colors/color-theme" as *;
+
+.tui-chat-header {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  @include theme() {
+    background-color: get(bg-color-operate);
+  }
+
+  &-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-content {
+    flex: 1;
+    padding: 0 8px;
+  }
+
+  .call-btn-container {
+    display: flex;
+    margin-right: 10px;
+
+    .call-btn {
+      margin-right: 16px;
+    }
+  }
+
+  .title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+
+    @include theme() {
+      color: get(text-color-primary);
+    }
+  }
+
+  .system {
+    height: 32px;
+  }
+}

@@ -1,0 +1,29 @@
+@use "../../styles/colors/color-theme" as *;
+
+.uikit-chat-list {
+  flex: 1;
+  box-sizing: border-box;
+  overflow: hidden;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  text-align: initial;
+
+  @include theme() {
+    background-color: get(bg-color-operate);
+    color: get(text-color-primary);
+  }
+
+  .uikit-chat-list__header--searching {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .uikit-chat-list__header--creating {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+}

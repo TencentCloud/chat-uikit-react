@@ -1,0 +1,137 @@
+@use "../../styles/colors/color-theme" as *;
+
+.uikit-conversation-preview {
+  display: flex;
+  align-items: center;
+  border: none;
+  height: 64px;
+  cursor: pointer;
+  line-height: 17px;
+  padding: 0 20px;
+  flex: 0 0 auto;
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font-family: PingFangSC-Medium;
+
+  @include theme() {
+    background-color: get(list-color-default);
+    color: get(text-color-primary);
+  }
+
+  &:hover {
+    @include theme() {
+      background-color: get(list-color-hover);
+    }
+  }
+
+  &.uikit-conversation-preview--mobile {
+    padding: 0 10px;
+  }
+
+  &.uikit-conversation-preview--pin {
+    @include theme() {
+      background-color: get(list-color-hover);
+    }
+  }
+
+  &.uikit-conversation-preview--active {
+    @include theme() {
+      background-color: get(list-color-active);
+    }
+
+    .uikit-conversation-preview__title {
+      @include theme() {
+        color: get(text-color-link);
+      }
+    }
+  }
+
+  &.uikit-conversation-preview--unread {
+    .uikit-conversation-preview__unread {
+      color: #fff;
+
+      @include theme() {
+        background-color: get(text-color-error);
+      }
+    }
+  }
+
+  .uikit-conversation-preview__content {
+    flex: 1 1 auto;
+    text-align: left;
+    margin-left: 10px;
+    min-width: 0;
+
+    .uikit-conversation-preview__title {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 17px;
+      padding: 1px 0;
+      width: 100%;
+
+      @include theme() {
+        color: get(text-color-primary);
+      }
+
+      .uikit-conversation-preview__title--normal {
+        @include theme() {
+          color: get(text-color-primary);
+        }
+      }
+
+      .uikit-conversation-preview__title--highlight {
+        @include theme() {
+          color: get(text-color-link);
+        }
+      }
+    }
+
+    .uikit-conversation-preview__abstract {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 14px;
+      padding: 1px 0;
+
+      @include theme() {
+        color: get(text-color-secondary);
+      }
+    }
+  }
+
+  .uikit-conversation-preview__external {
+    text-align: right;
+    flex: 0 1 auto;
+    display: flex;
+    flex-direction: column;
+
+    .uikit-conversation-preview__unread {
+      box-sizing: border-box;
+      height: 16px;
+      border-radius: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2px 5px;
+      font-size: 11px;
+      font-weight: 700;
+      margin: 2px 0 2px auto;
+    }
+
+    .uikit-conversation-preview__time {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 14px;
+      padding: 1px 0;
+      text-wrap: nowrap;
+
+      @include theme() {
+        color: get(text-color-secondary);
+      }
+    }
+  }
+}

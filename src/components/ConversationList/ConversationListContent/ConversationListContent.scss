@@ -1,0 +1,16 @@
+@use "../../../styles/colors/color-theme" as *;
+
+.uikit-chat-list__container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden auto;
+  box-sizing: border-box;
+  min-width: 0;
+  text-align: initial;
+
+  @include theme() {
+    background-color: get(bg-color-operate);
+    color: get(text-color-primary);
+  }
+}

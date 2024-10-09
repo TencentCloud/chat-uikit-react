@@ -5,20 +5,21 @@ import React, {
 import './styles/index.scss';
 import { Icon, IconTypes } from '../Icon';
 
-export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix' | 'type'>
-{
-  className?: string,
-  customClassName?: string,
-  placeholder?: string,
-  clearable?: boolean,
-  prefix?: React.ReactNode,
-  suffix?: React.ReactNode,
-  value?: InputHTMLAttributes<HTMLInputElement>['value'],
-  border?: '' | 'bottom',
-  disabled?: boolean,
-  maxLength?: number,
-  onKeyDown?: (options?: object) => void
+export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix' | 'type'> {
+  className?: string;
+  inputClassName?: string;
+  placeholder?: string;
+  clearable?: boolean;
+  prefix?: React.ReactNode;
+  suffix?: React.ReactNode;
+  value?: InputHTMLAttributes<HTMLInputElement>['value'];
+  border?: '' | 'bottom';
+  disabled?: boolean;
+  maxLength?: number;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 export interface InputRef {
   focus: (options?: object) => void;
@@ -28,8 +29,8 @@ export interface InputRef {
 export const Input = React.forwardRef<InputRef, InputProps>(
   (props: InputProps, ref): React.ReactElement => {
     const {
-      className = "",
-      customClassName = "",
+      className = '',
+      inputClassName = '',
       placeholder,
       clearable = false,
       prefix,
@@ -38,14 +39,14 @@ export const Input = React.forwardRef<InputRef, InputProps>(
       onBlur,
       onFocus,
       onKeyDown,
-      value: propsValue = "",
-      border = "",
+      value: propsValue = '',
+      border = '',
       disabled = false,
       maxLength = undefined,
     } = props;
 
     const [focused, setFocused] = useState<boolean>(false);
-    const enterCodeList = ["Enter", "NumpadEnter"];
+    const enterCodeList = ['Enter', 'NumpadEnter'];
     const [value, setValue] = useState(propsValue);
     const inputRef = useRef<HTMLInputElement>(null);
     const handleFocus = (e: any) => {
@@ -66,7 +67,7 @@ export const Input = React.forwardRef<InputRef, InputProps>(
       setValue('');
       focus();
       const currentTarget = inputRef?.current?.cloneNode(
-        true
+        true,
       ) as HTMLInputElement;
       const event = Object.create(e, {
         target: { value: currentTarget },
@@ -103,7 +104,7 @@ export const Input = React.forwardRef<InputRef, InputProps>(
           <input
             maxLength={maxLength}
             disabled={disabled}
-            className={`tui-kit-input ${customClassName}`}
+            className={`tui-kit-input ${inputClassName}`}
             placeholder={placeholder}
             ref={inputRef}
             value={value}
@@ -114,9 +115,9 @@ export const Input = React.forwardRef<InputRef, InputProps>(
           />
           {suffix}
           {(clearable && value)
-          && <Icon type={IconTypes.CLEAR} height={13} width={13} onClick={(e: any) => {clearInput(e)}} />}
+          && <Icon type={IconTypes.CLEAR} height={13} width={13} onClick={(e: any) => { clearInput(e); }} />}
         </div>
       </div>
     );
-  }
+  },
 );

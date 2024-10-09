@@ -1,3 +1,9 @@
+## [2.2.8] (2024-09-27)
+
+#### feat
+* feat: Rename UIKit components to Chat, ConversationList, ChatSetting, Contact, and Profile.
+* feat: Support Custom ConversationList
+
 ## [2.2.7] (2024-09-13)
 
 #### feat

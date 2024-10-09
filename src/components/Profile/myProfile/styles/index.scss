@@ -1,0 +1,32 @@
+@use "../../../../styles/colors/color-theme" as *;
+
+.profile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+
+  @include theme() {
+    background-color: get(bg-color-operate);
+  }
+
+  .profile-content {
+    display: flex;
+    align-items: center;
+
+    .profile-name {
+      font-weight: 600;
+      margin-left: 10px;
+      font-size: 14px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 200px;
+      overflow: hidden;
+
+      @include theme() {
+        color: get(text-color-primary);
+      }
+    }
+  }
+}

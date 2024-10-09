@@ -1,31 +1,56 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import './styles/index.scss';
-import { Conversation } from '@tencentcloud/chat';
-import { Icon, IconTypes } from '../Icon';
-import { ConversationCreateUserSelectList } from './ConversationCreateUserSelectList';
-import { ConversationCreatGroupDetail } from './ConversationCreatGroupDetail';
-import { useUIKit } from '../../context';
-import { useConversation } from '../../hooks';
+import { CreateGroupParams, IConversationModel, TUIConversationService } from '@tencentcloud/chat-uikit-engine';
+import cs from 'classnames';
 
-export interface ConversationCreateProps {
-  className?: string,
-  setConversationCreated: React.Dispatch<React.SetStateAction<boolean>>,
-  conversationList?: Array<Conversation>
+import { Icon, IconTypes } from '../Icon';
+import { ConversationCreateButton } from './ConversationCreateButton';
+import { ConversationCreateUserSelectList } from './ConversationCreateUserSelectList';
+import { ConversationCreateGroupDetail } from './ConversationCreateGroupDetail';
+
+import './styles/index.scss';
+
+export interface IConversationCreateProps {
+  visible?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+  onBeforeCreateConversation?: (params: string | CreateGroupParams) => string | CreateGroupParams;
+  onConversationCreated?: (conversation: IConversationModel) => void;
+  onChangeCreateModelVisible: (visible: boolean) => void;
+  conversationList?: IConversationModel[];
 }
 export enum PageStateTypes {
-  USER_SELECT='Next',
-  CREATE_DETAIL='Create',
-  GROUP_TYPE='GroupType',
+  USER_SELECT = 'Next',
+  CREATE_DETAIL = 'Create',
+  GROUP_TYPE = 'GroupType',
 }
-export function ConversationCreate<T extends ConversationCreateProps>(props:T) {
-  const { className = '', setConversationCreated, conversationList = [] } = props;
+export function ConversationCreate<T extends IConversationCreateProps>(props: T) {
+  const {
+    visible = true,
+    className,
+    style,
+    onChangeCreateModelVisible,
+    conversationList = [],
+    onBeforeCreateConversation,
+    onConversationCreated,
+  } = props;
   const { t } = useTranslation();
+
+  const [showCreateModel, setShowCreateModel] = useState(false);
   const [isCreateGroup, setIsCreateGroup] = useState(false);
   const [pageState, setPageState] = useState<PageStateTypes>(PageStateTypes.USER_SELECT);
   const [selectList, setSelectList] = useState([]);
-  const { chat } = useUIKit();
-  const { createConversation } = useConversation(chat);
+
+  const _onConversationCreated = (conversation: IConversationModel) => {
+    setShowCreateModel(false);
+    resetCreatePageState();
+    TUIConversationService.switchConversation(conversation.conversationID);
+    onConversationCreated?.(conversation);
+  };
+
+  useEffect(() => {
+    onChangeCreateModelVisible(showCreateModel);
+  }, [onChangeCreateModelVisible, showCreateModel]);
 
   const back = () => {
     if (isCreateGroup) {
@@ -43,39 +68,69 @@ export function ConversationCreate<T extends ConversationCreateProps>(props:T) {
         default:
       }
     } else {
-      setConversationCreated(false);
+      setShowCreateModel(false);
+      resetCreatePageState();
     }
   };
-  return useMemo(() => (
-    <>
-      <div className="tui-conversation-create-header">
-        <Icon onClick={back} type={IconTypes.BACK} width={9} height={16} />
-        <div className="title">{ t(!isCreateGroup ? 'TUIConversation.Start chat' : 'TUIConversation.Add Participants')}</div>
+
+  function resetCreatePageState() {
+    setIsCreateGroup(false);
+    setPageState(PageStateTypes.USER_SELECT);
+    setSelectList([]);
+  }
+
+  return useMemo(() => {
+    if (!visible) {
+      return null;
+    }
+
+    return (
+      <div
+        className={cs(
+          'uikit-conversation-create-container',
+          className,
+        )}
+        style={style}
+      >
+        {!showCreateModel && (
+          <ConversationCreateButton
+            onClick={() => setShowCreateModel(true)}
+          />
+        )}
+        {showCreateModel && (
+          <div className="tui-conversation-create">
+            <div className="tui-conversation-create-header">
+              <Icon onClick={back} type={IconTypes.BACK} width={9} height={16} />
+              <div className="title">{t(!isCreateGroup ? 'TUIConversation.Start chat' : 'TUIConversation.Add Participants')}</div>
+            </div>
+            {
+              pageState === PageStateTypes.USER_SELECT
+                ? (
+                    <ConversationCreateUserSelectList
+                      isCreateGroup={isCreateGroup}
+                      setIsCreateGroup={setIsCreateGroup}
+                      selectList={selectList}
+                      setSelectList={setSelectList as React.Dispatch<React.SetStateAction<any[]>>}
+                      conversationList={conversationList}
+                      onBeforeCreateConversation={onBeforeCreateConversation}
+                      onConversationCreated={_onConversationCreated}
+                      setPageState={setPageState}
+                    />
+                  )
+                : (
+                    <ConversationCreateGroupDetail
+                      pageState={pageState}
+                      setPageState={setPageState}
+                      profileList={selectList.map((item: any) => item?.profile)}
+                      onBeforeCreateConversation={onBeforeCreateConversation}
+                      onConversationCreated={_onConversationCreated}
+                    />
+                  )
+            }
+          </div>
+        )}
       </div>
-      {pageState === PageStateTypes.USER_SELECT ? (
-        <ConversationCreateUserSelectList
-          isCreateGroup={isCreateGroup}
-          setIsCreateGroup={setIsCreateGroup}
-          className={className}
-          selectList={selectList}
-          // eslint-disable-next-line
-          // @ts-ignore
-          setSelectList={setSelectList}
-          conversationList={conversationList}
-          setConversationCreated={setConversationCreated}
-          setPageState={setPageState}
-        />
-      ) : (
-        <ConversationCreatGroupDetail
-          pageState={pageState}
-          setPageState={setPageState}
-          profileList={selectList.map((item: any) => item?.profile)}
-          // eslint-disable-next-line
-          // @ts-ignore
-          createConversation={createConversation}
-          setConversationCreated={setConversationCreated}
-        />
-      )}
-    </>
-  ), [isCreateGroup, selectList, pageState]);
+
+    );
+  }, [visible, className, showCreateModel, isCreateGroup, pageState, selectList, conversationList, onBeforeCreateConversation]);
 }
