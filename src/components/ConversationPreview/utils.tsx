@@ -1,31 +1,89 @@
-import React from 'react';
-import TencentCloudChat, { Conversation, Group, Profile } from '@tencentcloud/chat';
+import TUIChatEngine, { IConversationModel } from '@tencentcloud/chat-uikit-engine';
+import { formatEmojiString } from '../MessageElement/utils/emojiMap';
+import { Conversation, Profile } from '@tencentcloud/chat';
 import { defaultGroupAvatarWork, defaultUserAvatar } from '../Avatar';
-import { formatEmojiString } from '../TUIMessage/utils/emojiMap';
-import { getTimeStamp } from '../utils';
 
-interface TProfile extends Profile, Group {}
-export const getMessageProfile = (conversation: Conversation): TProfile => {
+interface IMessageProfile {
+  name?: string;
+  nick?: string;
+  groupID?: string;
+  userID?: string;
+  avatar?: string;
+}
+
+export const generateHighlightTitle = (
+  conversation: IConversationModel,
+  highlightMatchString?: string,
+): Array<{ text: string; isHighlight: boolean }> => {
+  const titleString = conversation.getShowName();
+  if (!highlightMatchString) return [{ text: titleString, isHighlight: false }];
+  const matchLowerCaseString = highlightMatchString.toLowerCase();
+  const titleList = titleString.split(new RegExp(`(${highlightMatchString})`, 'gi'))
+    .map((item: string) => { return { text: item, isHighlight: item.toLowerCase() === matchLowerCaseString }; });
+  return titleList;
+};
+
+export const getLatestMessagePreview = (
+  conversation: IConversationModel,
+  myProfile?: Profile,
+) => {
+  const { lastMessage, type } = conversation;
+  if (!lastMessage) {
+    return '';
+  }
+  const {
+    fromAccount, nick, nameCard, isRevoked,
+  } = lastMessage;
+  let { messageForShow } = lastMessage;
+  if (lastMessage.type === TUIChatEngine.TYPES.MSG_CUSTOM && lastMessage.payload?.description) {
+    messageForShow = lastMessage.payload.description;
+  }
+  let from = '';
+  switch (type) {
+    case TUIChatEngine.TYPES.CONV_GROUP:
+      from = lastMessage?.fromAccount === myProfile?.userID ? 'You' : `${nameCard || nick || fromAccount || ''}`;
+      from = `${from ? `${from}:` : ''}`;
+      break;
+    case TUIChatEngine.TYPES.CONV_C2C:
+      from = isRevoked ? 'you ' : '';
+      break;
+    default:
+  }
+  return (
+    <div style={{
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+    }}
+    >
+      <span>{from}</span>
+      <span>{lastMessage.isRevoked ? 'recalled a message' : formatEmojiString(messageForShow, 1)}</span>
+    </div>
+  );
+};
+
+// The following is compatible with old versions
+export const getMessageProfile = (conversation: IConversationModel | Conversation): IMessageProfile => {
   // eslint-disable-next-line
   // @ts-ignore
   if (!conversation) return null;
-  let result = {};
+  let result: IMessageProfile = {};
   const { type, groupProfile, userProfile } = conversation;
   switch (type) {
-    case TencentCloudChat.TYPES.CONV_C2C:
+    case TUIChatEngine.TYPES.CONV_C2C:
       result = userProfile;
       break;
-    case TencentCloudChat.TYPES.CONV_GROUP:
+    case TUIChatEngine.TYPES.CONV_GROUP:
       result = groupProfile;
       break;
-    case TencentCloudChat.TYPES.CONV_SYSTEM:
     default:
+      break;
   }
-  return result as TProfile;
+  return result;
 };
 
 export const getDisplayTitle = (
-  conversation: Conversation,
+  conversation: IConversationModel,
   searchValue?: string,
   highlightColor = '#147AFF',
 ): string | React.ReactElement => {
@@ -35,11 +93,11 @@ export const getDisplayTitle = (
   const { type, remark } = conversation;
   let title = '';
   switch (type) {
-    case TencentCloudChat.TYPES.CONV_C2C:
-      title = remark || nick || userID;
+    case TUIChatEngine.TYPES.CONV_C2C:
+      title = remark || nick || userID || '';
       break;
-    case TencentCloudChat.TYPES.CONV_GROUP:
-      title = name || groupID;
+    case TUIChatEngine.TYPES.CONV_GROUP:
+      title = name || groupID || '';
       break;
     default:
       title = '';
@@ -66,16 +124,17 @@ export const getDisplayTitle = (
   };
   return !searchValue ? title : handleTitle(title);
 };
-export const getDisplayImage = (conversation: Conversation) => {
+
+export const getDisplayImage = (conversation: IConversationModel) => {
   const { type } = conversation;
   const { avatar } = getMessageProfile(conversation);
   let displayImage = avatar;
   if (!avatar) {
     switch (type) {
-      case TencentCloudChat.TYPES.CONV_C2C:
+      case TUIChatEngine.TYPES.CONV_C2C:
         displayImage = defaultUserAvatar;
         break;
-      case TencentCloudChat.TYPES.CONV_GROUP:
+      case TUIChatEngine.TYPES.CONV_GROUP:
         displayImage = defaultGroupAvatarWork;
         break;
       default:
@@ -83,45 +142,4 @@ export const getDisplayImage = (conversation: Conversation) => {
     }
   }
   return displayImage;
-};
-export const getDisplayMessage = (
-  conversation: Conversation,
-  myProfile: Profile,
-  language?: string,
-) => {
-  const { lastMessage, type } = conversation;
-  const {
-    fromAccount, nick, nameCard, isRevoked,
-  } = lastMessage;
-  let { messageForShow } = lastMessage;
-  if (lastMessage.type === TencentCloudChat.TYPES.MSG_CUSTOM && lastMessage.payload?.description) {
-    messageForShow = lastMessage.payload.description;
-  }
-  let from = '';
-  switch (type) {
-    case TencentCloudChat.TYPES.CONV_GROUP:
-      from = lastMessage?.fromAccount === myProfile?.userID ? 'You' : `${nameCard || nick || fromAccount || ''}`;
-      from = `${from ? `${from}:` : ''}`;
-      break;
-    case TencentCloudChat.TYPES.CONV_C2C:
-      from = isRevoked ? 'you ' : '';
-      break;
-    default:
-  }
-  return (
-    <div style={{
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
-    }}
-    >
-      <span>{from}</span>
-      <span>{lastMessage.isRevoked ? 'recalled a message' : formatEmojiString(messageForShow, 1)}</span>
-    </div>
-  );
-};
-
-export const getDisplayTime = (conversation: Conversation, language: string) => {
-  const { lastMessage } = conversation;
-  return getTimeStamp(lastMessage.lastTime * 1000, language);
 };

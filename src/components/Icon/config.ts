@@ -41,6 +41,7 @@ import IconVectorUrl from './images/vector.png';
 import IconUnvectorUrl from './images/unvector.png';
 import IconVoiceUrl from './images/voice.png';
 import IconAddCircleUrl from './images/add-friend.svg';
+import IconMuteUrl from './images/mute.svg';
 import IconVideoCallUrl from './images/video-call.svg';
 import IconVoiceCallUrl from './images/voice-call.svg';
 
@@ -231,6 +232,14 @@ export const ICON_CONFIG: IconConfig = {
   [IconTypes.ADDFRIEND]: {
     url: IconAddCircleUrl,
     className: 'tui-kit-icon-add-friend',
+  },
+  [IconTypes.LOADING]: {
+    url: '',
+    className: 'tui-kit-icon-loading',
+  },
+  [IconTypes.MUTE]: {
+    url: IconMuteUrl,
+    className: 'tui-kit-icon-mute',
   },
   [IconTypes.VIDEOCALL]: {
     url: IconVideoCallUrl,

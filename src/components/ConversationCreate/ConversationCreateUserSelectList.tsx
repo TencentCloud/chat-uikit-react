@@ -1,26 +1,25 @@
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Conversation, Profile } from '@tencentcloud/chat';
-import {
-  TUIConversationService,
-} from '@tencentcloud/chat-uikit-engine';
+import { Profile } from '@tencentcloud/chat';
 import { Input } from '../Input';
 import { Icon, IconTypes } from '../Icon';
 import { ConversationCreateSelectView, ConversationCreateSelectViewProps } from './ConversationCreateSelectView';
 import { Avatar, defaultUserAvatar } from '../Avatar';
 import { useConversationCreate } from './hooks/useConversationCreate';
-import { useUIKit, useUIManager } from '../../context';
+import { createC2CConversation } from '../../hooks/useConversation';
+import { useUIKit } from '../../context';
 import { PageStateTypes } from './ConversationCreate';
-import { useConversation } from '../../hooks';
 import { Toast } from '../Toast';
+import { IConversationModel } from '@tencentcloud/chat-uikit-engine';
 
-export interface ConversationCreateUserSelectListProps extends ConversationCreateSelectViewProps{
-  isCreateGroup: boolean,
-  setIsCreateGroup: React.Dispatch<React.SetStateAction<boolean>>,
-  setConversationCreated: React.Dispatch<React.SetStateAction<boolean>>,
-  className: string,
-  conversationList: Array<Conversation>,
-  setPageState: React.Dispatch<React.SetStateAction<PageStateTypes>>,
+export interface ConversationCreateUserSelectListProps extends ConversationCreateSelectViewProps {
+  isCreateGroup: boolean;
+  setIsCreateGroup: React.Dispatch<React.SetStateAction<boolean>>;
+  className?: string;
+  conversationList: IConversationModel[];
+  setPageState: React.Dispatch<React.SetStateAction<PageStateTypes>>;
+  onBeforeCreateConversation?: (userID: string) => void;
+  onConversationCreated?: (conversation: IConversationModel) => void;
 }
 export function ConversationCreateUserSelectList(props: ConversationCreateUserSelectListProps) {
   const {
@@ -30,20 +29,19 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
     className,
     conversationList,
     setIsCreateGroup,
-    setConversationCreated,
     setPageState,
+    onBeforeCreateConversation,
+    onConversationCreated,
   } = props;
   const { t } = useTranslation();
   const [searchValue, setSearchValue] = useState('');
   const { chat } = useUIKit();
-  const { setActiveConversation } = useUIManager();
   const [friendList, setFriendList] = useState<any>({});
   const {
     getFriendListSortSearchResult,
-  } = useConversationCreate(chat, conversationList, (newFriendListResult) => {
+  } = useConversationCreate(conversationList, (newFriendListResult) => {
     setFriendList(newFriendListResult);
   });
-  const { createConversation } = useConversation(chat);
   const userCheckedList = useRef(new Map());
   const searchValueChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -55,7 +53,7 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
     userCheckedList.current.clear();
     setSelectList([]);
   };
-  const getUserChecked = (userID:string, dom: HTMLElement) => {
+  const getUserChecked = (userID: string, dom: HTMLElement) => {
     if (!dom) return;
     if (!userCheckedList.current.has(userID)) {
       userCheckedList.current.set(userID, []);
@@ -75,17 +73,21 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
     if (checked) {
       selectList.push({ profile, domList });
     } else {
-      selectList.splice(selectList.findIndex((item) => item.profile.userID === userID), 1);
+      selectList.splice(selectList.findIndex(item => item.profile.userID === userID), 1);
     }
     setSelectList([...selectList]);
   };
-  const createC2CConversation = async (profile: Profile) => {
+
+  const _createConversation = async (profile: Profile) => {
     if (isCreateGroup) return;
     const { userID } = profile;
-    const conversation = await createConversation(`C2C${userID}`);
-    setConversationCreated(false);
-    setActiveConversation(conversation);
-    TUIConversationService.switchConversation(conversation?.conversationID);
+    const params = onBeforeCreateConversation?.(userID);
+    createC2CConversation(userID)
+      .then((conversation: IConversationModel) => {
+        onConversationCreated?.(conversation);
+      }).catch((error) => {
+        Toast({ text: error.message, type: 'error' });
+      });
   };
   const next = () => {
     if (selectList && selectList.length === 0) {
@@ -113,11 +115,11 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
           <div className="tui-user-name active">{t('TUIConversation.New group chat')}</div>
         </div>
       )}
-      <div className={`tui-conversation-create ${className}`}>
-        <div className="tui-conversation-create-container">
+      <div className={`tui-conversation-create-select-list-container ${className}`}>
+        <div className="tui-conversation-create-select-list">
           <div className="tui-group-container">
             {Object.keys(friendList).map(
-              (key) => friendList[key].length !== 0 && (
+              key => friendList[key].length !== 0 && (
                 <div className="tui-group-box" key={key}>
                   <div className="title">{key}</div>
                   {friendList[key].map((profile: Profile, index: number) => {
@@ -128,8 +130,8 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
                         className="tui-user tui-user-checkbox-label"
                         htmlFor={`userChecked-${key}-${userID}`}
                         key={userID}
-                        onClick={(e) => {
-                          createC2CConversation(profile);
+                        onClick={() => {
+                          _createConversation(profile);
                         }}
                       >
                         <Avatar size={30} image={avatar || defaultUserAvatar} />

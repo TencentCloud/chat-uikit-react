@@ -5,16 +5,16 @@ import './styles/conversationCreateSelectView.scss';
 import { Icon, IconTypes } from '../Icon';
 
 interface ValueProps {
-  profile: Profile,
-  domList: Array<HTMLInputElement>,
+  profile: Profile;
+  domList: HTMLInputElement[];
 }
-export interface ConversationCreateSelectViewProps{
-  selectList: Array<ValueProps>,
-  setSelectList: React.Dispatch<React.SetStateAction<Array<ValueProps>>>,
+export interface ConversationCreateSelectViewProps {
+  selectList: ValueProps[];
+  setSelectList: React.Dispatch<React.SetStateAction<ValueProps[]>>;
 }
-export function ConversationCreateSelectView(props:ConversationCreateSelectViewProps) {
+export function ConversationCreateSelectView(props: ConversationCreateSelectViewProps) {
   const { selectList, setSelectList } = props;
-  const close = (domList:Array<HTMLInputElement>, index: number) => {
+  const close = (domList: HTMLInputElement[], index: number) => {
     // eslint-disable-next-line no-param-reassign
     domList.forEach((dom: HTMLInputElement) => { dom.checked = false; });
     selectList.splice(index, 1);

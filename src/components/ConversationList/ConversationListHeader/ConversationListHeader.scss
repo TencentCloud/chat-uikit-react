@@ -1,0 +1,28 @@
+@use "../../../styles/colors/color-theme" as *;
+
+.uikit-chat-list__header {
+  display: flex;
+  overflow: hidden;
+  flex-direction: row;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  min-width: 0;
+
+  @include theme() {
+    background-color: get(bg-color-operate);
+    color: get(text-color-primary);
+  }
+
+  .uikit-conversation-search + .uikit-conversation-create-container .uikit-conversation-create-button {
+    margin-left: 0;
+  }
+
+  .uikit-chat-list__header__left,
+  .uikit-chat-list__header__right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+}

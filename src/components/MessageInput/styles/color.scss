@@ -1,0 +1,40 @@
+@use "../../../styles/colors/color-theme" as *;
+
+.tui-message-input {
+  @include theme() {
+    background-color: get(bg-color-operate);
+  }
+
+  .tui-kit-input-box--focus {
+    @include theme() {
+      outline: 1px solid get(text-color-link);
+    }
+  }
+
+  .input-box {
+    @include theme() {
+      background-color: get(bg-color-input);
+      border: 1px solid get(stroke-color-primary);
+    }
+  }
+}
+
+.input-plugin-popup {
+  &-box {
+    border-radius: 16px;
+
+    @include theme() {
+      background-color: get(dropdown-color-default);
+      box-shadow: 0 0 10px 0 get(shadow-color);
+    }
+  }
+}
+
+.input-icon {
+  width: 20px;
+  height: 20px;
+
+  @include theme() {
+    color: get(text-color-primary);
+  }
+}

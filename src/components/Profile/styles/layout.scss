@@ -1,0 +1,120 @@
+@use "../../../styles/colors/color-theme" as *;
+
+.tui-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+
+  @include theme() {
+    color: get(text-color-primary);
+  }
+
+  &-header {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+
+    h1 {
+      font-size: 16px;
+      font-weight: 600;
+      padding: 0 11px;
+    }
+  }
+
+  &-main {
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 10px 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &-avatar {
+    margin: 13px 0;
+    position: relative;
+  }
+
+  .displayFlex {
+    display: flex;
+  }
+
+  &-nick {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+
+    .show {
+      padding-left: 25px;
+    }
+  }
+
+  &-ID {
+    margin: 6px 0;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+
+    @include theme() {
+      color: get(text-color-secondary);
+    }
+
+    h5 {
+      margin: 0;
+    }
+  }
+
+  &-list {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+
+    &-item {
+      padding: 0;
+      cursor: pointer;
+
+      h4 {
+        font-size: 16px;
+        margin: 10px 0;
+      }
+    }
+  }
+
+  &-div-with-edit {
+    height: auto !important;
+
+    @include theme() {
+      border-bottom: 1px solid get(stroke-color-primary);
+    }
+  }
+
+  &-edit {
+    border-bottom: none !important;
+  }
+}
+
+.tui-profile-birthday {
+  .react-date-picker__wrapper {
+    display: none !important;
+  }
+
+  .react-date-picker__calendar {
+    position: static !important;
+
+    .react-calendar__navigation {
+      height: 20px !important;
+      margin-bottom: 0;
+    }
+  }
+
+  &-calendar {
+    border: none !important;
+  }
+}

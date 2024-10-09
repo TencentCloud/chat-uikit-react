@@ -3,23 +3,23 @@ import { Icon, IconTypes } from '../Icon';
 import './styles/index.scss';
 
 export interface AvatarProps {
-  image?: string | null,
+  image?: string | null;
   /** click event handler */
-  onClick?: (event: React.BaseSyntheticEvent) => void,
+  onClick?: (event: React.BaseSyntheticEvent) => void;
   /** mouseOver event handler */
-  onMouseOver?: (event: React.BaseSyntheticEvent) => void,
+  onMouseOver?: (event: React.BaseSyntheticEvent) => void;
   /** Size in pixels
    * @default 32px
    */
-  size?: number,
+  size?: number;
   /** Shape of the avatar - circle, rounded or square
    * @default circle
    */
   shape?: 'circle' | 'rounded' | 'square';
-  update?: (url:string) => void,
-  list?: Array<string>,
+  update?: (url: string) => void;
+  list?: string[];
 }
-export function Avatar<T extends AvatarProps>(props:T):React.ReactElement {
+export function Avatar<T extends AvatarProps>(props: T): React.ReactElement {
   const {
     image,
     size = 32,
@@ -65,7 +65,7 @@ export function Avatar<T extends AvatarProps>(props:T):React.ReactElement {
     setIsEdit(!isEdit);
   };
 
-  const handleUpdate = (value:string) => {
+  const handleUpdate = (value: string) => {
     toggle();
     update && update(value);
   };
@@ -86,27 +86,29 @@ export function Avatar<T extends AvatarProps>(props:T):React.ReactElement {
       tabIndex={0}
       onClick={onClick}
     >
-      {image && !error ? (
-        <img
-          className={`avatar-image ${loaded ? 'avatar-image-loaded' : ''}`}
-          onError={() => setError(true)}
-          onLoad={() => setLoaded(true)}
-          alt={image}
-          src={image}
-        />
-      ) : (
-        <div
-          className={`tui-kit-avatar ${shape}`}
-          style={{
-            flexBasis: `${size}px`,
-            height: `${size}px`,
-            objectFit: 'cover',
-            width: `${size}px`,
-            backgroundColor: 'black',
-            borderRadius: `${shape === 'circle' ? '50%' : '4px'}`,
-          }}
-        />
-      )}
+      {image && !error
+        ? (
+            <img
+              className={`avatar-image ${loaded ? 'avatar-image-loaded' : ''}`}
+              onError={() => setError(true)}
+              onLoad={() => setLoaded(true)}
+              alt={image}
+              src={image}
+            />
+          )
+        : (
+            <div
+              className={`tui-kit-avatar ${shape}`}
+              style={{
+                flexBasis: `${size}px`,
+                height: `${size}px`,
+                objectFit: 'cover',
+                width: `${size}px`,
+                backgroundColor: 'black',
+                borderRadius: `${shape === 'circle' ? '50%' : '4px'}`,
+              }}
+            />
+          )}
       {
         update && (
           <div className={`tui-kit-avatar-edit ${isEdit ? 'displayFlex' : ''}`} role="button" tabIndex={0} onClick={toggle}>
@@ -118,7 +120,7 @@ export function Avatar<T extends AvatarProps>(props:T):React.ReactElement {
         update && isEdit && (
           <ul
             className="tui-kit-avatar-list"
-            // eslint-disable-next-line 
+            // eslint-disable-next-line
             // @ts-ignore
             ref={avatarListRef}
             style={{
@@ -126,7 +128,7 @@ export function Avatar<T extends AvatarProps>(props:T):React.ReactElement {
             }}
           >
             {
-              list.map((item:string, index:number) => {
+              list.map((item: string, index: number) => {
                 const key = `${item}${index}`;
                 return (
                   <li

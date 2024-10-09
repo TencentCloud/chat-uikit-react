@@ -1,0 +1,15 @@
+@use "../../../styles/colors/color-theme" as *;
+
+.uikit-conversation-search-result {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: auto;
+
+  @include theme() {
+    background-color: get(bg-color-operate);
+    color: get(text-color-primary);
+  }
+}

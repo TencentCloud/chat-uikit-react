@@ -1,2 +1,3 @@
-export * from './ConversationSearchInput';
-export * from './ConversationSearchResult';
+export * from './ConversationSearchInput/ConversationSearchInput';
+export * from './ConversationSearchResult/ConversationSearchResult';
+export * from './ConversationSearch';

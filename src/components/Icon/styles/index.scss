@@ -1,3 +1,5 @@
+@use "../../../styles/colors/color-theme" as *;
+
 $primary-color: royalblue;
 
 .tui-kit-icon {
@@ -6,25 +8,58 @@ $primary-color: royalblue;
   align-items: center;
   cursor: pointer;
   position: relative;
+  user-select: none;
+
   .icon-image {
     width: 100%;
   }
-  &:hover{
+
+  &:hover {
     color: $primary-color;
-    border-color: currentColor;
+    border-color: currentcolor;
   }
-  &::after{
-    content: '';
+
+  &::after {
+    content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
     opacity: 0;
     box-shadow: 0 0 0 6px $primary-color;
-    transition: .3s;
+    transition: 0.3s;
   }
-  &:active::after{
+
+  &:active::after {
     box-shadow: none;
     opacity: 0.4;
     transition: 0s;
+  }
+}
+
+.tui-kit-icon-loading {
+  cursor: wait;
+  border-radius: 100%;
+  animation: circle infinite 1s linear;
+
+  @include theme() {
+    border: 3px solid get(text-color-disable);
+    border-top-color: transparent;
+  }
+
+  &:hover {
+    @include theme() {
+      border: 3px solid get(text-color-disable);
+      border-top-color: transparent;
+    }
+  }
+}
+
+@keyframes circle {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }

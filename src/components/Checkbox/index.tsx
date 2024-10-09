@@ -4,21 +4,21 @@ import { Icon, IconTypes } from '../Icon';
 import './styles/index.scss';
 
 interface onChangeParams {
-  checked?: boolean,
-  value?: any,
+  checked?: boolean;
+  value?: any;
 }
 
 interface SelectProps {
-  checked?: boolean,
-  className?: string,
-  onChange?: (data?: onChangeParams) => void,
-  value?: any,
-  id?: string,
+  checked?: boolean;
+  className?: string;
+  onChange?: (data?: onChangeParams) => void;
+  value?: any;
+  id?: string;
 }
 
 export function Checkbox<
-T extends SelectProps
->(props:React.PropsWithChildren<T>) {
+  T extends SelectProps,
+>(props: React.PropsWithChildren<T>) {
   const {
     checked: propsChecked = false,
     className,

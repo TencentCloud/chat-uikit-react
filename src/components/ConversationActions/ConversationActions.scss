@@ -1,0 +1,45 @@
+@use "../../styles/colors/color-theme" as *;
+
+.uikit-conversation-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1 1;
+
+  .uikit-conversation-actions__container {
+    top: 0;
+    right: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 10%);
+    bottom: initial;
+    padding: 14px 0;
+    box-sizing: border-box;
+    text-align: start;
+    white-space: nowrap;
+
+    .uikit-conversation-actions__item {
+      font-size: 16px;
+      /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+      font-family: PingFangSC-Medium;
+      line-height: 19px;
+      padding: 6px 16px;
+      cursor: pointer;
+      font-weight: 500;
+      box-sizing: border-box;
+
+      &:hover {
+        @include theme() {
+          background-color: get(dropdown-color-active);
+        }
+      }
+    }
+
+    .uikit-conversation-actions__item--delete {
+      @include theme() {
+        color: get(text-color-error);
+      }
+    }
+  }
+
+  .uikit-conversation-actions__popup-icon {
+    transform: scale(1.5);
+  }
+}

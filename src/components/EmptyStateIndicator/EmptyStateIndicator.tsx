@@ -1,12 +1,11 @@
 import React, { PropsWithChildren } from 'react';
 
-export interface EmptyStateIndicatorProps{
+export interface EmptyStateIndicatorProps {
   /** List Type: conversation | message */
   listType?: 'conversation' | 'message' | 'chat';
 }
 
-function UnMemoizedEmptyStateIndicator
-<T extends EmptyStateIndicatorProps>(props: PropsWithChildren<T>) {
+function UnMemoizedEmptyStateIndicator<T extends EmptyStateIndicatorProps>(props: PropsWithChildren<T>) {
   const { listType } = props;
 
   if (listType === 'conversation') { return <p role="listitem">You have no conversation currently</p>; }

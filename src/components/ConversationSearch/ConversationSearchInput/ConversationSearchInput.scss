@@ -1,0 +1,13 @@
+@use "../../../styles/colors/color-theme" as *;
+
+.uikit-conversation-search-input {
+  height: 36px;
+  align-self: stretch;
+  margin: 10px;
+  box-sizing: border-box;
+
+  @include theme() {
+    background-color: get(bg-color-operate);
+    color: get(text-color-primary);
+  }
+}

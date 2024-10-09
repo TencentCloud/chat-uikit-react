@@ -2,18 +2,17 @@ import { useEffect, useState } from 'react';
 import {
   t,
   isPC,
-  TUIChat,
+  Chat,
   i18next,
-  TUIManage,
-  TUIProfile,
-  TUIContact,
+  ChatSetting,
+  Profile,
+  Contact,
   UIKitProvider,
-  TUIChatHeader,
-  TUIMessageList,
-  TUIContactInfo,
-  TUIMessageInput,
-  TUIConversation,
-  TUIConversationList,
+  ChatHeader,
+  MessageList,
+  ContactInfo,
+  MessageInput,
+  ConversationList,
 } from '@tencentcloud/chat-uikit-react';
 import {
   StoreName,
@@ -210,7 +209,7 @@ export default function SampleChat(props: ISampleChatProps) {
         <UIKitProvider language={currentLng.value} theme={'light'}>
           <TUICallKit style={callStyle} />
           <div className="sample-chat-left-container">
-            <TUIProfile className="sample-chat-profile" />
+            <Profile className="sample-chat-profile" />
             <div className="sample-chat-tab">
               {tabbarList.map((item: any) => {
                 return (
@@ -238,30 +237,28 @@ export default function SampleChat(props: ISampleChatProps) {
               })}
             </div>
             {moduleValue === "chats" && (
-              <TUIConversation>
-                <TUIConversationList />
-              </TUIConversation>
+               <ConversationList />
             )}
-            {moduleValue === "contacts" && <TUIContact />}
+            {moduleValue === "contacts" && <Contact />}
           </div>
           {moduleValue === "chats" && (
             <>
-              <TUIChat callButtonClicked={callButtonClicked}>
-                <TUIChatHeader enableCall={true} />
-                <TUIMessageList />
-                <TUIMessageInput />
-              </TUIChat>
-              <TUIManage></TUIManage>
+              <Chat callButtonClicked={callButtonClicked}>
+                <ChatHeader enableCall={true} />
+                <MessageList />
+                <MessageInput />
+              </Chat>
+              <ChatSetting />
             </>
           )}
           {moduleValue === "contacts" && (
-            <TUIContact>
-              <TUIContactInfo
+            <Contact>
+              <ContactInfo
                 showChats={() => {
                   setModuleValue("chats");
                 }}
-              ></TUIContactInfo>
-            </TUIContact>
+              ></ContactInfo>
+            </Contact>
           )}
 
         </UIKitProvider>
@@ -272,20 +269,18 @@ export default function SampleChat(props: ISampleChatProps) {
           <TUICallKit />
           {!currentConversationID && (
             <div className="sample-chat-h5-container">
-              <TUIProfile className="sample-chat-h5-profile" />
-              <TUIConversation>
-                <TUIConversationList/>
-              </TUIConversation>
+              <Profile className="sample-chat-h5-profile" />
+              <ConversationList />
             </div>
           )}
           {currentConversationID && (
             <>
-              <TUIChat callButtonClicked={callButtonClicked}>
-                <TUIChatHeader enableCall={true}/>
-                <TUIMessageList />
-                <TUIMessageInput />
-              </TUIChat>
-              <TUIManage></TUIManage>
+              <Chat callButtonClicked={callButtonClicked}>
+                <ChatHeader enableCall={true}/>
+                <MessageList />
+                <MessageInput />
+              </Chat>
+              <ChatSetting />
             </>
           )}
         </UIKitProvider>
