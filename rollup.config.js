@@ -42,7 +42,7 @@ export default [
       terser(),
     ],
     external: ['react', 'date-fns', 'tslib', 'react-date-picker', 'i18next', 'react-i18next', '@tencentcloud/tui-core',
-      '@tencentcloud/chat', '@tencentcloud/chat-uikit-engine', '@tencentcloud/universal-api', '@tencentcloud/call-uikit-react'],
+      '@tencentcloud/chat', '@tencentcloud/chat-uikit-engine', '@tencentcloud/universal-api', '@tencentcloud/call-uikit-react', 'classnames'],
   },
   {
     ...getBaseConfig(),
