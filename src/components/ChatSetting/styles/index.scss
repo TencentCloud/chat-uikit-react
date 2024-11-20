@@ -1,4 +1,4 @@
-@use "../../../styles/colors/color-theme" as *;
+@use "~@tencentcloud/uikit-base-component-react/dist/styles/theme/util" as *;
 
 .tui-manage {
   display: flex;
@@ -51,6 +51,7 @@
         font-size: 16px;
         margin-bottom: 30px;
         text-align: center;
+
         @include theme() {
           color: get(text-color-secondary);
         }

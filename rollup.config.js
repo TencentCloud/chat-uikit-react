@@ -18,19 +18,19 @@ export default [
       postcss({
         extract: true,
         minimize: true,
-        plugins: [
-          autoprefixer(),
-        ],
+        plugins: [autoprefixer()],
       }),
       copy({
-        targets: [{
-          src: [
-            'src/assets/fonts/iconfont.ttf',
-            'src/assets/fonts/iconfont.woff',
-            'src/assets/fonts/iconfont.woff2',
-          ],
-          dest: ['dist/cjs/assets/fonts', 'dist/esm/assets/fonts'],
-        }],
+        targets: [
+          {
+            src: [
+              'src/assets/fonts/iconfont.ttf',
+              'src/assets/fonts/iconfont.woff',
+              'src/assets/fonts/iconfont.woff2',
+            ],
+            dest: ['dist/cjs/assets/fonts', 'dist/esm/assets/fonts'],
+          },
+        ],
       }),
       peerDepsExternal(),
       resolve(),
@@ -41,8 +41,21 @@ export default [
       }),
       terser(),
     ],
-    external: ['react', 'date-fns', 'tslib', 'react-date-picker', 'i18next', 'react-i18next', '@tencentcloud/tui-core',
-      '@tencentcloud/chat', '@tencentcloud/chat-uikit-engine', '@tencentcloud/universal-api', '@tencentcloud/call-uikit-react', 'classnames'],
+    external: [
+      '@tencentcloud/uikit-base-component-react',
+      'react',
+      'date-fns',
+      'tslib',
+      'react-date-picker',
+      'i18next',
+      'react-i18next',
+      '@tencentcloud/tui-core',
+      '@tencentcloud/chat',
+      '@tencentcloud/chat-uikit-engine',
+      '@tencentcloud/universal-api',
+      '@tencentcloud/call-uikit-react',
+      'classnames',
+    ],
   },
   {
     ...getBaseConfig(),
@@ -58,9 +71,7 @@ export default [
 
 function getBaseConfig() {
   return {
-    input: [
-      './src/index.ts',
-    ],
+    input: ['./src/index.ts'],
     output: [
       {
         preserveModules: true,
@@ -74,7 +85,6 @@ function getBaseConfig() {
         dir: './dist/cjs/',
         format: 'cjs',
         exports: 'auto',
-        // sourcemap: true,
       },
     ],
   };

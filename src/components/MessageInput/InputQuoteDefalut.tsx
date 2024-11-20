@@ -6,15 +6,15 @@ import { useTUIChatActionContext } from '../../context';
 import { Icon, IconTypes } from '../Icon';
 import { MESSAGE_OPERATE } from '../../constants';
 import { useHandleQuoteMessage } from './hooks/useHandleQuoteMessage';
-import { formatEmojiString } from '../MessageElement/utils/emojiMap';
+import { transformTextWithEmojiKeyToName } from '../MessageElement/utils/decodeText';
 
 interface InputQuoteProps {
-  message?: Message
+  message?: Message;
 }
 
-export function InputQuoteDefalut <T extends InputQuoteProps>(
-  props:PropsWithChildren<T>,
-):React.ReactElement {
+export function InputQuoteDefalut<T extends InputQuoteProps>(
+  props: PropsWithChildren<T>,
+): React.ReactElement {
   const {
     message: propsMessage,
   } = props;
@@ -36,7 +36,7 @@ export function InputQuoteDefalut <T extends InputQuoteProps>(
     <div className="input-quote">
       <div className="input-quote-content">
         <label htmlFor="input-quote-content">{message?.nick || message?.from}</label>
-        <span>{formatEmojiString(context?.messageAbstract, 1)}</span>
+        <span>{transformTextWithEmojiKeyToName(context?.messageAbstract)}</span>
       </div>
       <Icon className="icon" width={12} height={12} type={IconTypes.CLOSE} onClick={handleClose} />
     </div>

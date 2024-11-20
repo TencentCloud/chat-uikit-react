@@ -1,3 +1,8 @@
+## [2.3.1] (2024-11-20)
+
+#### feat
+* feat: Upgrade emoji resources to compatible with other platform (e.g. react native).
+
 ## [2.3.0] (2024-10-11)
 
 ## [2.2.9] (2024-10-09)

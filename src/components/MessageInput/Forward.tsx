@@ -1,7 +1,7 @@
 import React, {
   PropsWithChildren, useCallback, useEffect, useState,
 } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { Conversation, Message } from '@tencentcloud/chat';
 import { useTUIChatActionContext } from '../../context';
 import './styles/index.scss';
@@ -29,7 +29,7 @@ export function Forward<T extends TUIForwardToProps>(
   const {
     handleForward: propsHandleForward,
   } = props;
-  const { t } = useTranslation();
+  const { t } = useUIKit();
   const [selectList, setSelectList] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [searchValue, setSearchValue] = useState('');

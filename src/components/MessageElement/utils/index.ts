@@ -1,5 +1,4 @@
 import TencentCloudChat, { Conversation, Group, Message } from '@tencentcloud/chat';
-import { decodeText } from './decodeText';
 import constant, { MESSAGE_STATUS } from '../../../constants';
 import { JSONStringToParse } from '../../utils';
 
@@ -188,10 +187,7 @@ function handleTipGrpUpdated(message: Message) {
 
 // Parsing and handling text message display
 export function handleTextMessageShowContext(item: any) {
-  const options = {
-    text: decodeText(item.payload),
-  };
-  return options;
+  return item.getMessageContent();
 }
 
 // Parsing and handling face message display

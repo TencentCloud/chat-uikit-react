@@ -4,9 +4,8 @@ import {
   TUIChatService,
 } from '@tencentcloud/chat-uikit-engine';
 import { MESSAGE_OPERATE } from '../../../constants';
-import {
-  useTUIChatStateContext, useUIKit,
-} from '../../../context';
+import { useTUIChatStateContext } from '../../../context';
+import { useUIManagerStore } from '../../../store';
 
 export function useHandleForwardMessage(msg?: Message) {
   const {
@@ -14,7 +13,7 @@ export function useHandleForwardMessage(msg?: Message) {
   } = useTUIChatStateContext('TUIMessageInputDefault');
 
   const [conversationList, setConversationList] = useState([]);
-  const { chat } = useUIKit('TUIChat');
+  const { chat } = useUIManagerStore();
 
   const message = msg || (operateData && operateData[MESSAGE_OPERATE.FORWARD]);
 

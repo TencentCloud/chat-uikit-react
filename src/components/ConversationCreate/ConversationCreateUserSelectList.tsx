@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { Profile } from '@tencentcloud/chat';
 import { Input } from '../Input';
 import { Icon, IconTypes } from '../Icon';
@@ -7,7 +7,7 @@ import { ConversationCreateSelectView, ConversationCreateSelectViewProps } from 
 import { Avatar, defaultUserAvatar } from '../Avatar';
 import { useConversationCreate } from './hooks/useConversationCreate';
 import { createC2CConversation } from '../../hooks/useConversation';
-import { useUIKit } from '../../context';
+import { useUIManagerStore } from '../../store';
 import { PageStateTypes } from './ConversationCreate';
 import { Toast } from '../Toast';
 import { IConversationModel } from '@tencentcloud/chat-uikit-engine';
@@ -33,9 +33,9 @@ export function ConversationCreateUserSelectList(props: ConversationCreateUserSe
     onBeforeCreateConversation,
     onConversationCreated,
   } = props;
-  const { t } = useTranslation();
+  const { t } = useUIKit();
   const [searchValue, setSearchValue] = useState('');
-  const { chat } = useUIKit();
+  const { chat } = useUIManagerStore();
   const [friendList, setFriendList] = useState<any>({});
   const {
     getFriendListSortSearchResult,

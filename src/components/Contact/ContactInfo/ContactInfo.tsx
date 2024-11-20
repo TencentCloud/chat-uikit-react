@@ -1,7 +1,7 @@
 import React, {
   PropsWithChildren,
 } from 'react';
-import { useUIManager } from '../../../context';
+import { useUIManagerStore } from '../../../store';
 import { isH5 } from '../../../utils/env';
 import { FriendInfo } from './friendInfo';
 import { BlockInfo } from './blockInfo';
@@ -18,7 +18,7 @@ export function UnMemoizedContactInfo<T extends TUIContactInfoProps>(
   props: PropsWithChildren<T>,
 ): React.ReactElement {
   const { showChats } = props;
-  const { contactData } = useUIManager('TUIContact');
+  const { contactData } = useUIManagerStore('TUIContact');
   if (!contactData?.type) {
     return (<> </>);
   }

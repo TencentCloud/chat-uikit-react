@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { Friend } from '@tencentcloud/chat';
 import { TUIConversationService, IConversationModel } from '@tencentcloud/chat-uikit-engine';
-import { useUIKit, useUIManager } from '../../../context';
+import { useUIManagerStore } from '../../../store';
 import { BasicInfo } from './basicInfo';
 import { Switch } from '../../Switch';
 import useContactInfo from './hooks/useContactInfo';
@@ -11,16 +11,16 @@ import '../index.scss';
 
 interface Props {
   friend: Friend;
-  showChats?: () => void,
+  showChats?: () => void;
 }
 export function UnMemoizedFriendInfo<T extends Props>(
   props: T,
 ): React.ReactElement {
-  const { chat } = useUIKit();
+  const { chat } = useUIManagerStore();
   const {
     contactData, setActiveContact, setActiveConversation,
-  } = useUIManager('TUIContact');
-  const { t } = useTranslation();
+  } = useUIManagerStore('TUIContact');
+  const { t } = useUIKit();
   const { friend, showChats } = props;
   const { userID, profile, remark } = friend;
   const [isEditName, setIsEditRemark] = useState('');
@@ -64,7 +64,7 @@ export function UnMemoizedFriendInfo<T extends Props>(
     TUIConversationService.switchConversation(conversationID).then(
       (conversationModel: IConversationModel) => {
         setActiveConversation(conversationModel.getConversation());
-      }
+      },
     );
   };
 

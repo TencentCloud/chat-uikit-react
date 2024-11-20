@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { Profile } from '@tencentcloud/chat';
 import { CreateGroupParams, IConversationModel } from '@tencentcloud/chat-uikit-engine';
 import { Input } from '../Input';
@@ -16,7 +16,7 @@ import {
 } from '../Avatar';
 import { PageStateTypes } from './ConversationCreate';
 import { ConversationGroupTypeInfo, GroupType, typeInfoList } from './ConversationGroupTypeInfo';
-import { useUIManager } from '../../context';
+import { useUIManagerStore } from '../../store';
 import { createGroupConversation } from '../../hooks/useConversation';
 
 export interface ConversationCreateGroupDetailProps {
@@ -34,8 +34,8 @@ export function ConversationCreateGroupDetail(props: ConversationCreateGroupDeta
     onBeforeCreateConversation,
     onConversationCreated,
   } = props;
-  const { t } = useTranslation();
-  const { setActiveConversation, myProfile } = useUIManager();
+  const { t } = useUIKit();
+  const { setActiveConversation, myProfile } = useUIManagerStore();
   const temp = [...profileList];
   myProfile && temp.unshift(myProfile);
   const name = temp.map(item => item.nick || item.userID).toString();

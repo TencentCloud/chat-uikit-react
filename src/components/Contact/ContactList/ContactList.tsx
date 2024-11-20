@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import TencentCloudChat from '@tencentcloud/chat';
 import { isH5 } from '../../../utils/env';
-import { useUIManager, useTUIContactContext } from '../../../context';
+import { useTUIContactContext } from '../../../context';
+import { useUIManagerStore } from '../../../store';
 import useContactInfo from '../ContactInfo/hooks/useContactInfo';
 import useTUIContact from '../hooks/useTUIContact';
 import { Avatar, defaultUserAvatar } from '../../Avatar';
@@ -19,8 +20,8 @@ interface RenderContactListProps {
 }
 
 function UnMemoizedContactList<T>(): React.ReactElement {
-  const { setActiveContact } = useUIManager();
-  const { t } = useTranslation();
+  const { setActiveContact } = useUIManagerStore();
+  const { t } = useUIKit();
   const {
     isShowContactList, friendList, blocklistProfile, friendApplicationList,
   } = useTUIContactContext('TUIContactList');

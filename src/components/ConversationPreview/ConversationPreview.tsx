@@ -2,12 +2,12 @@
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
 import cs from 'classnames';
 import { IConversationModel } from '@tencentcloud/chat-uikit-engine';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { Icon, IconTypes } from '../Icon';
 import { Avatar as DefaultAvatar, type AvatarProps } from '../Avatar';
 import { ConversationActions as DefaultConversationActions, type IConversationActionsConfig, type IConversationActionsProps } from '../ConversationActions';
 import { useConversationList } from '../../context/ConversationListContext';
-import { useUIManager } from '../../context/UIManagerContext';
-import { useUIKit } from '../../context';
+import { useUIManagerStore } from '../../store';
 import useLongPress from '../../hooks/useLongPress';
 import useMouseHover from '../../hooks/useMouseHover';
 import { generateHighlightTitle, getLatestMessagePreview } from './utils';
@@ -92,7 +92,7 @@ function ConversationPreviewAbstract(props: {
   conversation: IConversationModel;
 }): string | JSX.Element {
   const { conversation } = props;
-  const { myProfile } = useUIManager();
+  const { myProfile } = useUIManagerStore();
   return (
     <div className="uikit-conversation-preview__abstract">
       {getLatestMessagePreview(conversation, myProfile)}

@@ -1,4 +1,4 @@
-@use "../../../styles/colors/color-theme" as *;
+@use "~@tencentcloud/uikit-base-component-react/dist/styles/theme/util" as *;
 
 .tui-kit-input-box {
   //width: 100%;
@@ -6,7 +6,7 @@
   align-items: center;
   border-radius: 10px;
   padding: 0 8px;
-  height: 36px;
+  height: 38px;
   box-sizing: border-box;
 
   @include theme() {

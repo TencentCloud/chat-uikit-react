@@ -1,8 +1,8 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Profile } from '@tencentcloud/chat';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { TUIConversationService } from '@tencentcloud/chat-uikit-engine';
-import { useUIManager } from '../../../context';
+import { useUIManagerStore } from '../../../store';
 import { Icon, IconTypes } from '../../Icon';
 import { isH5 } from '../../../utils/env';
 
@@ -15,11 +15,11 @@ export function UnMemoizedBasicInfo<T extends Props>(
   props: T,
 ): React.ReactElement {
   const { profile } = props;
-  const { t } = useTranslation();
+  const { t } = useUIKit();
   const {
     userID, nick, selfSignature, avatar,
   } = profile;
-  const { setActiveContact } = useUIManager('TUIContact');
+  const { setActiveContact } = useUIManagerStore('TUIContact');
   const back = () => {
     TUIConversationService.switchConversation('');
     setActiveContact();
@@ -27,12 +27,12 @@ export function UnMemoizedBasicInfo<T extends Props>(
   return (
     <div className="tui-contact-info-header">
       {isH5 && (
-      <Icon
-        width={9}
-        height={16}
-        type={IconTypes.BACK}
-        onClick={back}
-      />
+        <Icon
+          width={9}
+          height={16}
+          type={IconTypes.BACK}
+          onClick={back}
+        />
       )}
       <div className="header-container">
         <div className="header-container-avatar">

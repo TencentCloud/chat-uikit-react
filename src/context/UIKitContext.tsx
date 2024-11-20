@@ -1,12 +1,8 @@
 import { PropsWithChildren, useState, useContext, createContext, useEffect } from 'react';
-import type {
-  ChatSDK,
-  Conversation,
-} from '@tencentcloud/chat';
 import { TUILogin } from '@tencentcloud/tui-core';
 import { ThemeProvider, useTheme } from './ThemeContext';
 import { LanguageProvider, useLanguage } from './LanguageContext';
-import { UIManagerProvider } from './UIManagerContext';
+import type { ChatSDK, Conversation } from '@tencentcloud/chat';
 
 interface UIKitContextType {
   chat: ChatSDK;
@@ -47,9 +43,7 @@ function UIKitProvider(props: PropsWithChildren<UIKitProviderProps>) {
     <LanguageProvider language={language}>
       <ThemeProvider theme={theme} colors={colors}>
         <UIKitContext.Provider value={value}>
-          <UIManagerProvider activeConversation={activeConversation} customClasses={customClasses}>
-            {children}
-          </UIManagerProvider>
+          {children}
         </UIKitContext.Provider>
       </ThemeProvider>
     </LanguageProvider>

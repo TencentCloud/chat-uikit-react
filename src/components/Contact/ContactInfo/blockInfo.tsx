@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Profile } from '@tencentcloud/chat';
-import { useUIManager } from '../../../context';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { BasicInfo } from './basicInfo';
 import { Switch } from '../../Switch';
+import { useUIManagerStore } from '../../../store';
 import useContactInfo from './hooks/useContactInfo';
 
 interface Props {
@@ -13,8 +13,8 @@ export function UnMemoizedBlockInfo<T extends Props>(
   props: T,
 ): React.ReactElement {
   const { profile } = props;
-  const { contactData, setActiveContact } = useUIManager('TUIContact');
-  const { t } = useTranslation();
+  const { contactData, setActiveContact } = useUIManagerStore('TUIContact');
+  const { t } = useUIKit();
   const [isAddToBlocklist, setIsAddToBlocklist] = useState(false);
 
   const {

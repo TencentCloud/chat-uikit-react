@@ -1,11 +1,11 @@
 import React, { PropsWithChildren, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import {
   TUIContactContextProvider,
   TUIContactContextValue,
 } from '../../context/ContactContext';
 import { isH5 } from '../../utils/env';
-import { useUIManager } from '../../context';
+import { useUIManagerStore } from '../../store';
 import useTUIContact from './hooks/useTUIContact';
 import { ContactList } from './ContactList/ContactList';
 import { ContactSearch } from '../ContactSearch/ContactSearch';
@@ -16,8 +16,8 @@ export function UnMemoizedContact<T>(
   props: PropsWithChildren<T>,
 ): React.ReactElement {
   const { children } = props;
-  const { t } = useTranslation();
-  const { setActiveContact } = useUIManager('TUIContact');
+  const { t } = useUIKit();
+  const { setActiveContact } = useUIManagerStore('TUIContact');
   const [isShowAddFriend, setShowAddFriend] = useState(false);
   const addFriend = () => {
     setActiveContact();

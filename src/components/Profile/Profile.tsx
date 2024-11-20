@@ -4,7 +4,7 @@ import { MyProfile } from './myProfile/index';
 import './styles/index.scss';
 import { useMyProfile } from './hooks';
 import { TUIProfileDefault } from './ProfileDefault';
-import { useUIManager } from '../../context';
+import { useUIManagerStore } from '../../store';
 
 interface TUIProfileProps {
   className?: string;
@@ -21,7 +21,7 @@ function UnMemoizedProfile<T extends TUIProfileProps>(
 
   const { myProfile, updateMyProfile } = useMyProfile();
 
-  const { setTUIProfileShow, TUIProfileShow } = useUIManager('TUIProfile');
+  const { setTUIProfileShow, TUIProfileShow } = useUIManagerStore('TUIProfile');
 
   const TUIProfileUIComponent = PropTUIProfile || TUIProfileDefault;
 

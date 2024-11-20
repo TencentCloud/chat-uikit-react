@@ -1,10 +1,10 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-date-picker';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import TencentCloudChat, { Profile } from '@tencentcloud/chat';
 import { UpdateMyProfileParams } from '@tencentcloud/chat-uikit-engine';
 import { isH5 } from '../../utils/env';
-import { useUIManager } from '../../context';
+import { useUIManagerStore } from '../../store';
 
 import { Avatar } from '../Avatar';
 import { DivWithEdit } from '../DivWithEdit';
@@ -72,8 +72,8 @@ function TUIProfileDefaultWithContext<T extends TUIProfileDefaultProps>(
     update,
   } = props;
 
-  const { t } = useTranslation();
-  const { setTUIProfileShow } = useUIManager('TUIProfileDefault');
+  const { t } = useUIKit();
+  const { setTUIProfileShow } = useUIManagerStore('TUIProfileDefault');
 
   const [isEditName, setIsEditName] = useState('');
 

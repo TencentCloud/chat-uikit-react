@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { Message } from '@tencentcloud/chat';
-import { useTUIMessageContext, useUIKit } from '../../context';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
+import { useTUIMessageContext } from '../../context';
 import { getTimeStamp } from '../utils';
 
 export interface MessageContextProps {

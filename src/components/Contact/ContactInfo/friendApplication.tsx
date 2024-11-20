@@ -1,7 +1,7 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import TencentCloudChat, { FriendApplication } from '@tencentcloud/chat';
-import { useUIManager } from '../../../context';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
+import { useUIManagerStore } from '../../../store';
 import { Avatar, defaultUserAvatar } from '../../Avatar';
 import useContactInfo from './hooks/useContactInfo';
 
@@ -11,8 +11,8 @@ interface Props {
 export function UnMemoizedFriendApplication<T extends Props>(
   props: T,
 ): React.ReactElement {
-  const { setActiveContact } = useUIManager('TUIContact');
-  const { t } = useTranslation();
+  const { setActiveContact } = useUIManagerStore('TUIContact');
+  const { t } = useUIKit();
   const { application } = props;
   const {
     userID,

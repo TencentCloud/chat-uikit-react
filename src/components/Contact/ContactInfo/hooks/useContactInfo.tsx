@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import TencentCloudChat from '@tencentcloud/chat';
 import { Toast } from '../../../Toast';
-import { useUIKit } from '../../../../context';
+import { useUIManagerStore } from '../../../../store';
 
 function useContactInfo() {
-  const { chat } = useUIKit('useContactInfo');
+  const { chat } = useUIManagerStore();
 
   const removeFromBlocklist = useCallback((userID: string) => {
     chat.removeFromBlacklist({

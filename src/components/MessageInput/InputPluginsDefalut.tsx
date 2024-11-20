@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import './styles/index.scss';
 
 import { EmojiPicker } from './EmojiPicker';
@@ -15,7 +15,7 @@ export function InputPluginsDefalut(): React.ReactElement {
     sendUploadMessage,
     pluginConfig: propsPluginConfig,
   } = useTUIMessageInputContext('TUIMessageInputDefault');
-  const { t } = useTranslation();
+  const { t } = useUIKit();
 
   const { TUIMessageInputConfig } = useTUIChatStateContext('TUIMessageInput');
 

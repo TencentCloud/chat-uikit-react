@@ -1,6 +1,6 @@
 {
   "name": "@tencentcloud/chat-uikit-react",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "license": "MIT",
@@ -17,7 +17,7 @@
   "scripts": {
     "build": "rimraf dist && rollup -c",
     "start": "rimraf dist && rollup -c -w",
-    "clean": "rimraf -g ./dist node_modules examples/*/node_modules",
+    "clean": "rimraf -g **/dist **/node_modules **/package-lock.json",
     "prepare": "husky install"
   },
   "homepage": "https://www.tencentcloud.com/document/product/1047/45912",
@@ -70,12 +70,14 @@
     "@tencentcloud/chat": "latest",
     "@tencentcloud/chat-uikit-engine": "latest",
     "@tencentcloud/tui-core": "latest",
+    "@tencentcloud/uikit-base-component-react": "^0.0.1",
     "@tencentcloud/universal-api": "latest",
     "classnames": "^2.5.1",
     "date-fns": "^2.29.3",
     "react-date-picker": "^9.0.0",
     "react-dom": "^18.2.0",
-    "rollup-plugin-copy": "^3.5.0"
+    "rollup-plugin-copy": "^3.5.0",
+    "zustand": "^5.0.0"
   },
   "peerDependencies": {
     "date-fns": "^2.29.3",

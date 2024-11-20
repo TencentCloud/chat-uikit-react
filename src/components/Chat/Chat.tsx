@@ -10,7 +10,7 @@ import TUIChatEngine, {
   StoreName,
 } from '@tencentcloud/chat-uikit-engine';
 import { JSONStringToParse } from '../utils';
-import { useUIKit, useUIManager } from '../../context';
+import { useUIManagerStore } from '../../store';
 import { TUIChatStateContextProvider } from '../../context/ChatStateContext';
 import { TUIChatActionProvider } from '../../context/ChatActionContext';
 import { ComponentProvider, UnknowPorps } from '../../context/ComponentContext';
@@ -80,8 +80,8 @@ function UnMemoizedChat<T extends TUIChatProps>(
     EmptyPlaceholder = <EmptyStateIndicator listType="chat" />,
   } = props;
 
-  const { chat } = useUIKit();
-  const { conversation: contextConversation } = useUIManager('TUIChat');
+  const { chat } = useUIManagerStore();
+  const { conversation: contextConversation } = useUIManagerStore('TUIChat');
 
   const conversation = propsConversation || contextConversation;
 

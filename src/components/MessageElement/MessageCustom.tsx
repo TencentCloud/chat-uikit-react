@@ -1,11 +1,11 @@
 import React, { PropsWithChildren } from 'react';
 import TencentCloudChat from '@tencentcloud/chat';
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { JSONStringToParse } from '../utils';
 import { isCallMessage } from './utils';
 import type { MessageContextProps } from './MessageText';
 import { useComponentContext, useTUIChatActionContext } from '../../context';
-import { useUIManager } from '../../context';
+import { useUIManagerStore } from '../../store';
 import { CallMessage } from '@tencentcloud/call-uikit-react';
 import { startCall } from '../Chat/utils';
 
@@ -17,10 +17,10 @@ function MessageCustomWithContext<T extends MessageContextProps>(
     message,
     children,
   } = props;
-  const { t } = useTranslation();
+  const { t } = useUIKit();
   const { callButtonClicked } = useTUIChatActionContext('TUIChat');
   const { MessageCustomPlugins } = useComponentContext('MessageCustom');
-  const { conversation } = useUIManager('MessageCustom');
+  const { conversation } = useUIManagerStore('MessageCustom');
   const handleContext = (data: any) => {
     if (data.data === 'Hyperlink') {
       const extension = JSONStringToParse(data?.extension);

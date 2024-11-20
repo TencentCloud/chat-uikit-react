@@ -1,17 +1,17 @@
 import React, { PropsWithChildren, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import TencentCloudChat from '@tencentcloud/chat';
 import { MESSAGE_FLOW, MESSAGE_OPERATE } from '../../constants';
 import { useTUIChatActionContext } from '../../context';
 import type { MessageContextProps } from './MessageText';
 
-function MessageRevokeWithContext <T extends MessageContextProps>(
+function MessageRevokeWithContext<T extends MessageContextProps>(
   props: PropsWithChildren<T>,
-):React.ReactElement {
+): React.ReactElement {
   const {
     message,
   } = props;
-  const { t } = useTranslation();
+  const { t } = useUIKit();
   const { operateMessage } = useTUIChatActionContext('MessageRevokeWithContext');
 
   const handleRevoke = useCallback(() => {
@@ -41,7 +41,7 @@ function MessageRevokeWithContext <T extends MessageContextProps>(
 const MemoizedMessageRevoke = React.memo(MessageRevokeWithContext) as
 typeof MessageRevokeWithContext;
 
-export function MessageRevoke(props:MessageContextProps):React.ReactElement {
+export function MessageRevoke(props: MessageContextProps): React.ReactElement {
   return (
     <MemoizedMessageRevoke {...props} />
   );

@@ -1,5 +1,4 @@
 export * from './UIKitContext';
-export * from './UIManagerContext';
 export * from './ChatStateContext';
 export * from './ChatActionContext';
 export * from './MessageContext';
