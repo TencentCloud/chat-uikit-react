@@ -17,7 +17,7 @@ import {
   type IConversationModel,
 } from '@tencentcloud/chat-uikit-engine';
 import type { IGroupModel } from '@tencentcloud/chat-uikit-engine';
-import { useUIKit } from './UIKitContext';
+import { useUIManagerStore } from '../store';
 
 type blockData = {
   type: 'block';
@@ -66,20 +66,20 @@ type UIManagerContextType = {
 };
 
 type UIManagerProviderProps = {
-  customClasses: string;
   activeConversation: Conversation;
 };
+
+console.warn('UIManagerContext has been deprecated.');
 
 const UIManagerContext = React.createContext<UIManagerContextType | null>(null);
 
 function UIManagerProvider(props: PropsWithChildren<Partial<UIManagerProviderProps>>) {
   const {
-    customClasses,
     activeConversation,
     children,
   } = props;
 
-  const { chat } = useUIKit();
+  const { chat } = useUIManagerStore();
 
   const [conversation, setConversation] = useState<Conversation | undefined>(activeConversation);
   const [contactData, setContactData] = useState<UseContactParams>();
@@ -148,7 +148,7 @@ function UIManagerProvider(props: PropsWithChildren<Partial<UIManagerProviderPro
   );
 }
 
-const useUIManager = (componentName?: string) => {
+const useUIManager = (_componentName?: string) => {
   const context = useContext(UIManagerContext);
   if (!context) {
     throw new Error('useUIManager must be used within a UIManagerProvider');

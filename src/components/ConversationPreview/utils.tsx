@@ -1,7 +1,7 @@
 import TUIChatEngine, { IConversationModel } from '@tencentcloud/chat-uikit-engine';
-import { formatEmojiString } from '../MessageElement/utils/emojiMap';
 import { Conversation, Profile } from '@tencentcloud/chat';
 import { defaultGroupAvatarWork, defaultUserAvatar } from '../Avatar';
+import { transformTextWithEmojiKeyToName } from '../MessageElement/utils/decodeText';
 
 interface IMessageProfile {
   name?: string;
@@ -57,7 +57,7 @@ export const getLatestMessagePreview = (
     }}
     >
       <span>{from}</span>
-      <span>{lastMessage.isRevoked ? 'recalled a message' : formatEmojiString(messageForShow, 1)}</span>
+      <span>{lastMessage.isRevoked ? 'recalled a message' : transformTextWithEmojiKeyToName(messageForShow)}</span>
     </div>
   );
 };

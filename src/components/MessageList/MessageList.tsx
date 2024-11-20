@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { Message } from '@tencentcloud/chat';
 import {
   useTUIChatStateContext,
@@ -30,7 +30,7 @@ function TUIMessageListWithContext<T extends MessageListProps>(
     className: propsClassName,
   } = props;
 
-  const { t } = useTranslation();
+  const { t } = useUIKit();
   const [ulElement, setUlElement] = useState<HTMLUListElement | null>(null);
   const [firstRender, setFirstRender] = useState<boolean>(false);
   const {

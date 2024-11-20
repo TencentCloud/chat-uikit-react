@@ -1,6 +1,6 @@
 // ConversationActions.tsx
 import React, { useRef, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { IConversationModel } from '@tencentcloud/chat-uikit-engine';
 import cs from 'classnames';
 
@@ -78,7 +78,7 @@ const ConversationActions = (props: IConversationActionsProps) => {
     style,
   } = props;
 
-  const { t } = useTranslation();
+  const { t } = useUIKit();
   const pluginsRef = useRef<IPluginsRef>(null);
   const [conversationActions, setConversationActions] = React.useState<Record<string, IConversationActionItem>>({});
 

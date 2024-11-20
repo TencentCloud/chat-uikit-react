@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { Icon, IconTypes } from '../../Icon';
 import { Input, InputProps } from '../../Input';
 import classNames from 'classnames';
@@ -18,7 +18,7 @@ function ConversationSearchInput(props: IConversationSearchInputProps) {
     onFocus,
     onBlur,
   } = props;
-  const { t } = useTranslation();
+  const { t } = useUIKit();
   return (
     <Input
       className={classNames(

@@ -6,17 +6,17 @@ import React, {
 import {
   TUIChatService,
 } from '@tencentcloud/chat-uikit-engine';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { CONSTANT_DISPATCH_TYPE, MESSAGE_OPERATE, MESSAGE_TYPE_NAME } from '../../../constants';
 import {
   useTUIChatActionContext,
-  useUIKit,
 } from '../../../context';
+import { useUIManagerStore } from '../../../store';
 import { enableSampleTaskStatus } from '../../utils';
-import { formatEmojiString } from '../../MessageElement/utils/emojiMap';
 import { useHandleQuoteMessage } from './useHandleQuoteMessage';
+import { transformTextWithEmojiNameToKey } from '../../MessageElement/utils/decodeText';
 import type { IbaseStateProps, ICursorPos } from './useMessageInputState';
 import { filesData } from './useUploadPicker';
-import { de } from 'date-fns/locale';
 
 interface useMessageInputTextProps extends IbaseStateProps {
   focus?: boolean;
@@ -33,7 +33,8 @@ export const useMessageInputText = (props: useMessageInputTextProps) => {
     sendUploadMessage,
   } = props;
 
-  const { chat } = useUIKit();
+  const { t } = useUIKit();
+  const { chat } = useUIManagerStore();
   const { operateMessage, setFirstSendMessage } = useTUIChatActionContext('TUIMessageInput');
 
   const { cloudCustomData } = useHandleQuoteMessage();
@@ -63,7 +64,7 @@ export const useMessageInputText = (props: useMessageInputTextProps) => {
     }
     const options: any = {
       payload: {
-        text: formatEmojiString(state.text),
+        text: transformTextWithEmojiNameToKey(state.text),
       },
     };
     if (cloudCustomData.messageReply) {
@@ -87,11 +88,11 @@ export const useMessageInputText = (props: useMessageInputTextProps) => {
 
   const handleKeyDown = useCallback(
     (event?: React.KeyboardEvent<EventTarget>) => {
-      if (!event?.ctrlKey && event?.code && enterCodeList.indexOf(event?.code) > -1 && event.keyCode === 13) {
+      if (!event?.ctrlKey && event?.code && enterCodeList.indexOf(event?.code) > -1 && event.key === 'Enter') {
         event?.preventDefault();
         handleSubmit(event);
       }
-      if (event?.ctrlKey && enterCodeList.indexOf(event?.code) > -1 && event.keyCode === 13) {
+      if (event?.ctrlKey && enterCodeList.indexOf(event?.code) > -1 && event.key === 'Enter') {
         dispatch({
           type: CONSTANT_DISPATCH_TYPE.SET_TEXT,
           getNewText: (text: string) => `${text}\n`,
@@ -136,22 +137,27 @@ export const useMessageInputText = (props: useMessageInputTextProps) => {
 
   const insertText = useCallback(
     (textToInsert: string) => {
+      const insertEmojiName = t(`Emoji.${textToInsert}`) || '';
+      const cursorStart = state.cursorPos?.start || 0;
+      const cursorEnd = state.cursorPos?.end || 0;
       dispatch({
         type: CONSTANT_DISPATCH_TYPE.SET_TEXT,
-        getNewText: (text: string) => `${text.slice(0, state?.cursorPos?.start || 0)}${textToInsert}${text.slice(state?.cursorPos?.start || 0)}`,
+        getNewText: (text: string) => {
+          return `${text.slice(0, cursorStart)}${insertEmojiName}${text.slice(cursorStart)}`;
+        },
       });
       dispatch({
         type: CONSTANT_DISPATCH_TYPE.SET_CURSOR_POS,
         value: {
-          start: state?.cursorPos?.start && state.cursorPos.start + textToInsert.length,
-          end: state?.cursorPos?.end && state.cursorPos.end + textToInsert.length,
+          start: cursorStart + insertEmojiName.length,
+          end: cursorEnd + insertEmojiName.length,
         },
       });
       textareaRef?.current?.focus({
         preventScroll: true,
       });
     },
-    [textareaRef, state],
+    [textareaRef, state.cursorPos],
   );
 
   const setText = useCallback(

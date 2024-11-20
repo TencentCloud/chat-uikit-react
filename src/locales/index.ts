@@ -1,6 +1,4 @@
-import i18next from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import { TUITranslateService } from '@tencentcloud/chat-uikit-engine';
+import { i18next } from '@tencentcloud/uikit-base-component-react';
 import { message as enMessage } from './en-US/index';
 import { message as zhMessage } from './zh-CN/index';
 import { message as jaMessage } from './ja-JP/index';
@@ -25,22 +23,6 @@ const resources: Record<string, any> = {
   },
 };
 
-i18next.use(initReactI18next).init({
-  resources,
-  lng: 'en-US',
-  interpolation: {
-    escapeValue: false,
-  },
-});
-
-const engineLocaleResources = {
-  'en-US': enMessage,
-  'zh-CN': zhMessage,
-  'ja-JP': jaMessage,
-  'ko-KR': koMessage,
-};
-TUITranslateService.provideLanguages(engineLocaleResources);
-TUITranslateService.useI18n('en-US');
-
-const { t } = i18next;
-export { i18next, t };
+for (const [lng, resource] of Object.entries(resources)) {
+  i18next.addResourceBundle(lng, 'translation', resource.translation, true, false);
+}

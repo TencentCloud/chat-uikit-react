@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Profile } from '@tencentcloud/chat';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import useContactInfo from './hooks/useContactInfo';
 import { BasicInfo } from './basicInfo';
 import { DivWithEdit } from '../../DivWithEdit';
@@ -13,7 +13,7 @@ export function UnMemoizedAddFriendInfo<T extends Props>(
 ): React.ReactElement {
   const { profile } = props;
   const { userID } = profile;
-  const { t } = useTranslation();
+  const { t } = useUIKit();
   const [isEditName, setIsEditRemark] = useState('');
   const [remark, setRemark] = useState('');
   const [wording, setWording] = useState('');
@@ -36,7 +36,7 @@ export function UnMemoizedAddFriendInfo<T extends Props>(
     setIsSendAddFriend(true);
   };
 
-  const editText = (data?:any) => {
+  const editText = (data?: any) => {
     setRemark(data?.value);
     setIsEditRemark('');
   };
@@ -47,39 +47,41 @@ export function UnMemoizedAddFriendInfo<T extends Props>(
   return (
     <>
       <BasicInfo profile={profile} />
-      {!isSendedAdd ? (
-        <div className="tui-contact-info-content">
-          <div className="content-item-wording">
-            <p className="content-item-label">{t('TUIContact.Enter the verification info')}</p>
-            <textarea className="content-item-wording-text" value={wording} onChange={(e: any) => {handleChange(e)}} />
-          </div>
-          <div className="content-item">
-            <p className="content-item-label">{t('TUIContact.remark')}</p>
-            <DivWithEdit
-              name="remark"
-              className="content-item-text"
-              value={remark}
-              type="text"
-              toggle={handleSetEditRemark}
-              isEdit={isEditName === 'remark'}
-              confirm={editText}
-              close={() => {
-                setIsEditRemark('');
-              }}
-            />
-          </div>
-          <div className="content-btn-container">
-            <div className="content-item-btn confirm-btn" role="button" tabIndex={0} onClick={addFriendHandler}>{t('TUIContact.Send application')}</div>
-          </div>
-        </div>
-      ) : (
-        <div className="tui-contact-info-content">
-          <div className="content-item">
-            <p className="content-item-label">{t('TUIContact.verification info')}</p>
-            <p className="content-item-text">{wording}</p>
-          </div>
-        </div>
-      )}
+      {!isSendedAdd
+        ? (
+            <div className="tui-contact-info-content">
+              <div className="content-item-wording">
+                <p className="content-item-label">{t('TUIContact.Enter the verification info')}</p>
+                <textarea className="content-item-wording-text" value={wording} onChange={(e: any) => { handleChange(e); }} />
+              </div>
+              <div className="content-item">
+                <p className="content-item-label">{t('TUIContact.remark')}</p>
+                <DivWithEdit
+                  name="remark"
+                  className="content-item-text"
+                  value={remark}
+                  type="text"
+                  toggle={handleSetEditRemark}
+                  isEdit={isEditName === 'remark'}
+                  confirm={editText}
+                  close={() => {
+                    setIsEditRemark('');
+                  }}
+                />
+              </div>
+              <div className="content-btn-container">
+                <div className="content-item-btn confirm-btn" role="button" tabIndex={0} onClick={addFriendHandler}>{t('TUIContact.Send application')}</div>
+              </div>
+            </div>
+          )
+        : (
+            <div className="tui-contact-info-content">
+              <div className="content-item">
+                <p className="content-item-label">{t('TUIContact.verification info')}</p>
+                <p className="content-item-text">{wording}</p>
+              </div>
+            </div>
+          )}
     </>
   );
 }

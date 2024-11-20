@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { CreateGroupParams, IConversationModel, TUIConversationService } from '@tencentcloud/chat-uikit-engine';
 import cs from 'classnames';
 
@@ -34,7 +34,7 @@ export function ConversationCreate<T extends IConversationCreateProps>(props: T)
     onBeforeCreateConversation,
     onConversationCreated,
   } = props;
-  const { t } = useTranslation();
+  const { t } = useUIKit();
 
   const [showCreateModel, setShowCreateModel] = useState(false);
   const [isCreateGroup, setIsCreateGroup] = useState(false);

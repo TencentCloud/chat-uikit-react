@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { useTUIMessageInputContext } from '../../context/MessageInputContext';
 import { Icon, IconTypes } from '../Icon';
 import { Popup } from '../Popup';
 import {
-  emojiUrl, emojiName, emojiMap,
+  emojiBaseUrl, emojiUrlMap,
   // bigEmojiList, faceUrl, IBigEmojiListItem,
 } from '../MessageElement/utils/emojiMap';
 
 import type { EmojiData } from './hooks';
 
-export function EmojiPicker():React.ReactElement {
+export function EmojiPicker(): React.ReactElement {
   const [show, setShow] = useState(false);
   const [index, setIndex] = useState(0);
   const [className, setClassName] = useState('');
+
+  const { t } = useUIKit();
 
   const handleShow = () => {
     setShow(!show);
@@ -53,19 +56,18 @@ export function EmojiPicker():React.ReactElement {
       >
         <ul className="face-list">
           {
-            index === 0 && emojiName.map((item:string, emojiIndex:number) => {
-              const key = item + emojiIndex;
+            index === 0 && Object.keys(emojiUrlMap).map((emojiKey: string) => {
               return (
                 <li
                   role="menuitem"
                   className="face-list-item"
-                  key={key}
+                  key={emojiKey}
                   onClick={handleSelectEmoji}
                 >
                   <img
-                    src={`${emojiUrl + emojiMap[item]}`}
-                    alt=""
-                    data-data={item}
+                    src={emojiBaseUrl + emojiUrlMap[emojiKey]}
+                    alt={t(`Emoji.${emojiKey}`)}
+                    data-data={emojiKey}
                   />
                 </li>
               );

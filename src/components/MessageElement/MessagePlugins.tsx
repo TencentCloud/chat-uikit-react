@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import TencentCloudChat from '@tencentcloud/chat';
 import './styles/index.scss';
 
@@ -39,7 +39,7 @@ export function MessagePlugins<T extends MessagePluginsProps>(
     config: propsPluginConfig,
   } = props;
 
-  const { t } = useTranslation();
+  const { t } = useUIKit();
   const [className, setClassName] = useState('');
   const [popStyle, setPopStyle] = useState({});
   const pluginsRef = useRef<IPluginsRef>();
@@ -114,7 +114,7 @@ export function MessagePlugins<T extends MessagePluginsProps>(
     },
     message,
     isShow: pluginConfig.revoke.isShow
-    && (message?.status === MESSAGE_STATUS.SUCCESS && message.flow === MESSAGE_FLOW.OUT),
+      && (message?.status === MESSAGE_STATUS.SUCCESS && message.flow === MESSAGE_FLOW.OUT),
     relateMessageType: pluginConfig.revoke.relateMessageType,
   });
 

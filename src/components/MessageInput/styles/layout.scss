@@ -1,4 +1,4 @@
-@use "../../../styles/colors/color-theme" as *;
+@use "~@tencentcloud/uikit-base-component-react/dist/styles/theme/util" as *;
 
 // message input styles
 .tui-message-input {
@@ -161,7 +161,7 @@ ul li {
 
   &:hover {
     @include theme() {
-      color: get(text-color-hover);
+      color: get(text-color-primary);
       background-color: get(dropdown-color-hover);
     }
   }

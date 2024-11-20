@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useState } from 'react';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { MESSAGE_OPERATE } from '../../constants';
 import { useTUIChatStateContext } from '../../context';
 import { isPC } from '../../utils/env';
 import { useTUIMessageInputContext } from '../../context/MessageInputContext';
-import { formatEmojiString } from '../MessageElement/utils/emojiMap';
+import { transformTextWithEmojiKeyToName } from '../MessageElement/utils/decodeText';
 
 export function TUIMessageInputDefault(): React.ReactElement {
   const {
@@ -18,7 +18,7 @@ export function TUIMessageInputDefault(): React.ReactElement {
     setText,
     setCursorPos,
   } = useTUIMessageInputContext('TUIMessageInputDefault');
-  const { t } = useTranslation();
+  const { t } = useUIKit();
   const {
     operateData,
   } = useTUIChatStateContext('TUIMessageInputDefault');
@@ -26,7 +26,7 @@ export function TUIMessageInputDefault(): React.ReactElement {
   // operateData
   useEffect(() => {
     if (operateData && operateData[MESSAGE_OPERATE.REVOKE]) {
-      setText && setText(formatEmojiString(operateData[MESSAGE_OPERATE.REVOKE].payload.text, 1));
+      setText && setText(transformTextWithEmojiKeyToName(operateData[MESSAGE_OPERATE.REVOKE].payload.text));
     }
   }, [operateData]);
 

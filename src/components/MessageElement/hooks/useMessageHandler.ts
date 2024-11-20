@@ -1,11 +1,13 @@
 import { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { Message } from '@tencentcloud/chat';
 import { TUIStore } from '@tencentcloud/chat-uikit-engine';
 import { CONSTANT_DISPATCH_TYPE, MESSAGE_FLOW, MESSAGE_OPERATE } from '../../../constants';
 import { enableSampleTaskStatus } from '../../utils';
-import { useTUIChatActionContext, useUIKit } from '../../../context';
+import { useTUIChatActionContext } from '../../../context';
+import { useUIManagerStore } from '../../../store';
 import { Toast } from '../../Toast';
+import { transformTextWithEmojiKeyToName } from '../utils/decodeText';
 
 interface MessageHandlerProps {
   handleError?: (error: any) => void;
@@ -23,8 +25,8 @@ export const useMessageHandler = (props: MessageHandlerProps) => {
     operateMessage,
     revokeMessage,
   } = useTUIChatActionContext('useDeleteHandler');
-  const { t } = useTranslation();
-  const { chat } = useUIKit('useDeleteHandler');
+  const { t } = useUIKit();
+  const { chat } = useUIManagerStore();
 
   const handleDelMessage = useCallback(async (event?: any) => {
     event.preventDefault();
@@ -66,9 +68,10 @@ export const useMessageHandler = (props: MessageHandlerProps) => {
 
   const handleCopyMessage = useCallback((event?: any) => {
     event.preventDefault();
+    const copyText = transformTextWithEmojiKeyToName(message?.payload.text);
     if (navigator.clipboard) {
       // clipboard api
-      navigator.clipboard.writeText(message?.payload.text);
+      navigator.clipboard.writeText(copyText);
     } else {
       const textarea = document.createElement('textarea');
       document.body.appendChild(textarea);
@@ -76,7 +79,7 @@ export const useMessageHandler = (props: MessageHandlerProps) => {
       textarea.style.position = 'fixed';
       textarea.style.clip = 'rect(0 0 0 0)';
       textarea.style.top = '10px';
-      textarea.value = message?.payload.text;
+      textarea.value = copyText;
       // select
       textarea.select();
       // copy

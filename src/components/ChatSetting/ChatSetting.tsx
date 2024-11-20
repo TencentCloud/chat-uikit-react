@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Conversation } from '@tencentcloud/chat';
 import { TUIStore } from '@tencentcloud/chat-uikit-engine';
-import './styles/index.scss';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { Icon, IconTypes } from '../Icon';
 import { Avatar, defaultGroupAvatarWork, defaultUserAvatar } from '../Avatar';
 import { Switch } from '../Switch';
-import { useUIManager } from '../../context';
+import { useUIManagerStore } from '../../store';
 import { isH5, isPC } from '../../utils/env';
 import { getMessageProfile } from '../ConversationPreview/utils';
+import type { IConversationModel } from '@tencentcloud/chat-uikit-engine';
+
+import './styles/index.scss';
 
 function UnMemoizedChatSetting<T>(
 ): React.ReactElement {
-  const { t } = useTranslation();
-  const [conversation, setConversation] = useState<Conversation>();
+  const { t } = useUIKit();
+  const [conversation, setConversation] = useState<IConversationModel>();
   const [profile, setProfile] = useState<any>();
   const [isPinned, setIsPinned] = useState<boolean>(false);
   const [forceUpdateCount, setForceUpdateCount] = useState(0);
@@ -22,7 +23,7 @@ function UnMemoizedChatSetting<T>(
     setActiveConversation,
     TUIManageShow,
     setTUIManageShow,
-  } = useUIManager('TUIManage');
+  } = useUIManagerStore('TUIManage');
 
   const pinChatChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsPinned(e.target.checked);

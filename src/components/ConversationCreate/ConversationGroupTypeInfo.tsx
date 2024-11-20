@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { TUIChatEngine } from '@tencentcloud/chat-uikit-engine';
 import './styles/conversationGroupTypeInfo.scss';
 import { PageStateTypes } from './ConversationCreate';
@@ -27,7 +27,7 @@ export const typeInfoList: Array<{ type: GroupType; name: string; des: string }>
 export function ConversationGroupTypeInfo(props: ConversationGroupTypeInfoProps) {
   const { groupType, setGroupType, setPageState } = props;
 
-  const { t } = useTranslation();
+  const { t } = useUIKit();
   const selectGroupType = (type: GroupType) => {
     setGroupType(type);
     setPageState(PageStateTypes.CREATE_DETAIL);

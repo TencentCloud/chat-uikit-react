@@ -3,38 +3,33 @@ import {
   PropsWithChildren,
   useCallback,
 } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useUIKit } from '@tencentcloud/uikit-base-component-react';
 import { TUIChatService } from '@tencentcloud/chat-uikit-engine';
-import { emojiEnKey } from '../../MessageElement/utils/emojiMap';
 import type { IbaseStateProps } from './useMessageInputState';
 
 export interface EmojiData {
-  index: number,
-  data: string,
+  index: number;
+  data: string;
 }
 
 interface useEmojiPickerProps extends IbaseStateProps {
-  textareaRef?: MutableRefObject<HTMLTextAreaElement | undefined>,
-  insertText?: (textToInsert: string) => void
+  textareaRef?: MutableRefObject<HTMLTextAreaElement | undefined>;
+  insertText?: (textToInsert: string) => void;
 }
 
-export function useEmojiPicker<T extends useEmojiPickerProps>(props:PropsWithChildren<T>) {
+export function useEmojiPicker<T extends useEmojiPickerProps>(props: PropsWithChildren<T>) {
   const {
     textareaRef,
     insertText,
   } = props;
 
-  const { i18n } = useTranslation();
+  const { language } = useUIKit();
 
-  const onSelectEmoji = (emoji:EmojiData) => {
-    if (i18n.language === 'zh-CN') {
-      insertText && insertText(emoji.data);
-    } else {
-      insertText && insertText(emojiEnKey[emoji.data]);
-    }
-  };
+  const onSelectEmoji = useCallback((emoji: EmojiData) => {
+    insertText && insertText(emoji.data);
+  }, [insertText, language]);
 
-  const sendFaceMessage = useCallback((emoji:EmojiData) => {
+  const sendFaceMessage = useCallback((emoji: EmojiData) => {
     TUIChatService.sendFaceMessage({ payload: emoji });
   }, []);
 
