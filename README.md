@@ -21,6 +21,9 @@
 </tr>
 </table>
 
+## Integrating chat-uikit-react
+This tutorial shows how you can build a chat application in just 10 minutes by integrating chat-uikit-react
+[<img src="https://web.sdk.qcloud.com/im/assets/images/build_react_chat.png" width="800"/>](https://www.youtube.com/watch?v=o0PcxpGl66Y)
 
 ## Core Capabilities
 
