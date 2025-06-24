@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import type { RefObject } from 'react';
 
@@ -14,8 +14,19 @@ export default function useHover<T extends HTMLElement = HTMLElement>(
     setValue(false);
   };
 
-  elementRef.current?.addEventListener('mouseenter', handleMouseEnter);
-  elementRef.current?.addEventListener('mouseleave', handleMouseLeave);
+  useEffect(() => {
+    const node = elementRef?.current;
+    if (node) {
+      node.addEventListener('mouseenter', handleMouseEnter);
+      node.addEventListener('mouseleave', handleMouseLeave);
+    }
+    return () => {
+      if (node) {
+        node.removeEventListener('mouseenter', handleMouseEnter);
+        node.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
+  }, [elementRef.current]);
 
   return value;
 }
