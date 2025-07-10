@@ -1,7 +1,0 @@
-@use "~@tencentcloud/uikit-base-component-react/dist/styles/theme/util" as *;
-
-.tui-profile {
-  @include theme() {
-    background: get(bg-color-operate);
-  }
-}
