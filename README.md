@@ -51,28 +51,30 @@ This tutorial shows how you can build a chat application in just 10 minutes by i
 ![](https://github.com/user-attachments/assets/1ce0bdc2-2770-4006-b480-8c0e7d89271f)
 3. After creation, you can see the status, service version, SDKAppID, creation time, tag, and expiration time of the new app on the overview page of the console.
 
-### Step 2. Obtain the SDKAppID and SECRETKEY
+### Step 2. Obtain the SDKAppID and UserSig
 1. Click the target app card to go to the basic configuration page of the app.
-2. In the Basic info area, click `Display key`, and then copy and save the key information, which is SECRETKEY.
+2. In the Basic info area, click `Display key`, and then copy and save the key information, which is `SDKSecretKey`.
 ![](https://github.com/user-attachments/assets/26c1f583-cc2a-4f19-b952-6ca7ebccf27f)
+3. Goto [UserSig Tools](https://console.trtc.io/usersig) to generate UserSig, you need to set the `SDKAppID` and `SDKSecretKey`, you will get the `userSig`.
+
+> More information about UserSig, please refer to [Secure authentication with UserSig](https://trtc.io/document/34385?product=chat?product=chat&menulabel=uikit&platform=web)
 
 ### Step 3. Download the source code and install dependencies
 ```
 # Please run the following code in the terminal.
 $ git clone https://github.com/TencentCloud/chat-uikit-react
 # Go to the project  
-$ cd chat-uikit-react/examples/sample-chat
+$ cd chat-uikit-react
 # Install dependencies of the demo and build chat-uikit-react
 $ npm install
 ```
-### Step 4. Configure
-1. Open the `examples/sample-chat` project and locate the `GenerateTestUserSig.js` file in `./examples/sample-chat/src/debug/GenerateTestUserSig.js`.
-2. Set the `SDKAppID` and `SECRETKEY` obtained at Step 2.
-![](https://github.com/user-attachments/assets/57858e6d-6dad-4c99-bb69-b32b5f78f813)
+### Step 4. Configure Login Info
+1. Open the `src/pages/ChatGithub/index.tsx` file.
+2. Set the `loginInfo` with the `SDKAppID` and `userID` and `userSig` obtained at Step 2.
 
 ### Step 5. Run the demo
 ```
-$ npm run start
+$ npm run dev
 ```
 
 ## Send your first message
@@ -90,4 +92,3 @@ Join a Tencent Cloud Chat developer group for Reliable technical support & Produ
 - WhatsApp group (EN): [join](https://chat.whatsapp.com/Gfbxk7rQBqc8Rz4pzzP27A)
 - Telegram group (ZH): [join](https://t.me/tencent_imsdk)
 - WhatsApp group (ZH): [join](https://chat.whatsapp.com/IVa11ZkVmKTEwSWsAzSyik)
-

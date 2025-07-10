@@ -1,3 +1,17 @@
+## [3.0.0] (2025-07-09)
+
+#### feat
+* feat: Architecture refactoring - Introduce tuikit-atomicx-react as the underlying component library.
+* feat: Support global search (Search) with three search modes (STANDARD, EMBEDDED, MINI).
+* feat: Support read receipts.
+* feat: Support conversation management (ChatSetting).
+* feat: Support AppBuilder configuration for themes and component features.
+
+#### chore
+* chore: Optimize message list scrolling experience.
+* chore: Optimize mouse hover state management.
+* chore: Optimize conversation operations and message operations user experience.
+
 ## [2.3.1] (2024-11-20)
 
 #### feat

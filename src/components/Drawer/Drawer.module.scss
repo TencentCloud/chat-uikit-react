@@ -1,0 +1,78 @@
+.drawer__wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.drawer__mask {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: auto;
+}
+
+.drawer__mask--open {
+  opacity: 1;
+}
+
+.drawer__mask--close {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.drawer {
+  position: fixed;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  will-change: transform;
+  pointer-events: auto;
+}
+
+// 右侧弹出
+.drawer--right {
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 360px;
+  transform: translateX(100%);
+}
+.drawer--right.drawer--open {
+  transform: translateX(0);
+}
+.drawer--right.drawer--close {
+  transform: translateX(100%);
+}
+
+// 左侧弹出
+.drawer--left {
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 360px;
+  transform: translateX(-100%);
+}
+.drawer--left.drawer--open {
+  transform: translateX(0);
+}
+.drawer--left.drawer--close {
+  transform: translateX(-100%);
+}
+
+// 底部弹出
+.drawer--bottom {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 320px;
+  transform: translateY(100%);
+}
+.drawer--bottom.drawer--open {
+  transform: translateY(0);
+}
+.drawer--bottom.drawer--close {
+  transform: translateY(100%);
+}
