@@ -1,90 +1,47 @@
 {
-  "name": "@tencentcloud/chat-uikit-react",
-  "version": "2.3.1",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "license": "MIT",
-  "keywords": [
-    "react",
-    "chat",
-    "im",
-    "messaging",
-    "conversation",
-    "typescript",
-    "tencentcloud",
-    "uikit"
-  ],
+  "name": "sample-chat",
+  "version": "3.0.0",
+  "private": true,
+  "homepage": "./",
   "scripts": {
-    "build": "rimraf dist && rollup -c",
-    "start": "rimraf dist && rollup -c -w",
-    "clean": "rimraf -g **/dist **/node_modules **/package-lock.json",
-    "prepare": "husky install"
-  },
-  "homepage": "https://www.tencentcloud.com/document/product/1047/45912",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/TencentCloud/chat-uikit-react.git"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.19.1",
-    "@babel/preset-env": "^7.19.1",
-    "@babel/preset-react": "^7.18.6",
-    "@babel/preset-typescript": "^7.18.6",
-    "@rollup/plugin-babel": "^5.3.1",
-    "@rollup/plugin-commonjs": "^22.0.2",
-    "@rollup/plugin-node-resolve": "^14.1.0",
-    "@rollup/plugin-typescript": "^8.5.0",
-    "@rollup/plugin-url": "^7.0.0",
-    "@stylistic/eslint-plugin": "^2.3.0",
-    "@stylistic/stylelint-config": "^1.0.1",
-    "@types/node": "^20.10.5",
-    "@types/react": "^18.0.20",
-    "@typescript-eslint/eslint-plugin": "^5.36.2",
-    "@typescript-eslint/parser": "^5.36.2",
-    "autoprefixer": "^10.4.11",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.57.0",
-    "eslint-config-react-app": "^7.0.1",
-    "eslint-import-resolver-typescript": "^3.5.1",
-    "eslint-plugin-react-refresh": "^0.4.9",
-    "husky": "^8.0.3",
-    "lint-staged": "^15.2.7",
-    "postcss": "^8.4.16",
-    "react": "^18.2.0",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.79.0",
-    "rollup-plugin-dts": "^4.2.2",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-terser": "^7.0.2",
-    "sass": "^1.77.8",
-    "stylelint": "^16.7.0",
-    "stylelint-config-recommended-scss": "^14.1.0",
-    "stylelint-config-standard": "^36.0.1",
-    "tslib": "^2.4.1",
-    "typescript": "^4.8.3",
-    "typescript-eslint": "^7.16.0"
+    "dev": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
-    "@tencentcloud/call-uikit-react": "latest",
-    "@tencentcloud/chat": "latest",
+    "@tencentcloud/call-uikit-react": "3.3.9",
+    "@tencentcloud/chat": "^3.5.2",
     "@tencentcloud/chat-uikit-engine": "latest",
+    "@tencentcloud/chat-uikit-react": "^4.0.0",
     "@tencentcloud/tui-core": "latest",
-    "@tencentcloud/uikit-base-component-react": "^0.0.1",
-    "@tencentcloud/universal-api": "latest",
-    "classnames": "^2.5.1",
-    "date-fns": "^2.29.3",
-    "react-date-picker": "^9.0.0",
-    "react-dom": "^18.2.0",
-    "rollup-plugin-copy": "^3.5.0",
-    "zustand": "^5.0.0"
+    "@tencentcloud/uikit-base-component-react": "latest",
+    "@tencentcloud/uikit-base-widget-react": "latest",
+    "aegis-web-sdk": "^1.39.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-router-dom": "6",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.8.3",
+    "web-vitals": "^2.1.4"
   },
-  "peerDependencies": {
-    "date-fns": "^2.29.3",
-    "i18next": "^23.7.11",
-    "react": "^18.2.0",
-    "react-date-picker": "^9.0.0",
-    "react-i18next": "^13.5.0",
-    "tslib": "^2.4.1"
+  "devDependencies": {
+    "@craco/craco": "^7.1.0",
+    "@types/node": "^16.11.59",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "vconsole": "^3.15.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
