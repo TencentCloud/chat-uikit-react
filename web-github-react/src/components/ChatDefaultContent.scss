@@ -1,0 +1,47 @@
+@use "@tencentcloud/uikit-base-component-react/dist/styles/theme/util" as *; 
+
+.welcome {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding-left: 40px;
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  background-size: cover;
+  background-position-x: -17px;
+  background-position-y: 173px;
+
+
+  @include theme() {
+   background-color: get(bg-color-operate);
+  }
+  
+  .welcome-title {
+    font-size: 1.75rem;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+
+    @include theme() {
+      color: get(text-color-primary);
+    }
+
+    .logo {
+      width: 65px;
+      padding: 0 10px;
+    }
+  }
+  
+  .welcome-content {
+    padding-top: 1.88rem;
+    max-width: 393px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+
+    @include theme() {
+      color: get(text-color-secondary);
+    }
+  }
+} 
