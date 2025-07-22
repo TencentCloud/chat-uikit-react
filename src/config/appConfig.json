@@ -3,61 +3,23 @@
     "mode": "light",
     "primaryColor": "#1C66E5"
   },
-  "button": {
-    "color": "#1C66E5",
-    "radius": "3px",
-    "size": "large"
-  },
-  "toast": {
-    "radius": "8px",
-    "showIcon": true,
-    "showClose": false
-  },
-  "icon": {
-    "size": "medium"
-  },
-  "dialog": {
-    "radius": "8px"
-  },
-  "messageBox": {
-    "type": ""
-  },
   "conversationList": {
     "enableCreateConversation": true,
-    "conversationActionList": [
-      "delete",
-       "mute",
-       "pin",
-       "markUnread"
-    ]
+    "conversationActionList": [ "delete", "mute", "pin", "markUnread"]
   },
   "messageList": {
-    "alignment": "right",
-    "messageAggregationTime": 300,
+    "alignment": "two-sided",
     "enableReadReceipt": false,
-    "messageActionList": [
-      "copy",
-      "recall",
-      "quote",
-      "forward",
-      "delete"
-    ]
+    "messageActionList": [ "copy", "recall", "quote", "forward", "delete"]
   },
   "messageInput": {
-    "autoFocus": true,
-    "disabled": false,
-    "disableMention": true,
-    "enableTypingStatus": true,
-    "hideSendButton": true,
-    "placeholder": "请输入...",
+    "hideSendButton": false,
     "attachmentPickerMode": "collapsed"
   },
   "search": {
     "hideSearch": false
   },
   "avatar": {
-    "size": "large",
-    "shape": "circular",
-    "isOnline": true
+    "shape": "circular"
   }
 }
