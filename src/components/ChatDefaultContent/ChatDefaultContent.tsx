@@ -1,9 +1,9 @@
 import React from 'react';
 import './ChatDefaultContent.scss';
-import logoIcon from "../assets/image/logo.svg";
+import logoIcon from "../../assets/image/logo.svg";
 import { useUIKit } from '@tencentcloud/chat-uikit-react';
 
-const ChatDefaultContent: React.FC = () => {
+export const ChatDefaultContent: React.FC = () => {
   const { t } = useUIKit();
   return (
     <div className="welcome">

@@ -1,0 +1,40 @@
+@use "@tencentcloud/uikit-base-component-react/dist/styles/theme/util" as *; 
+
+.contact-header--h5 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 12px 38px 12px 12px;
+  gap: 10px;
+  @include theme() {
+    color: get(text-color-secondary);
+    background-color: get(bg-color-operate);
+  }
+
+  .icon-btn {
+    flex: 0 0 auto;
+    border: none;
+    padding: 4px;
+    margin: 0;
+    background: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background-color .2s ease;
+    cursor: pointer;
+
+    @include theme() {
+      color: get(text-color-link);
+      background-color: get(dropdown-color-default);
+    }
+  }
+
+  .contact-title {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+}

@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useUIKit } from '@tencentcloud/uikit-base-component-react';
+import { useEffect, useState } from 'react';
+import { IconMessage, IconUser, useUIKit } from '@tencentcloud/uikit-base-component-react';
 import {
   Chat,
   ChatSetting,
@@ -13,10 +13,14 @@ import {
   useUIOpenControlState,
   useLoginState,
   LoginStatus,
+  ContactList,
+  useUIManagerState,
+  ContactGroupItem,
+  ContactInfo,
 } from '@tencentcloud/chat-uikit-react';
 import { TUIConversationService, TUIStore, StoreName } from "@tencentcloud/chat-uikit-engine";
 import { TUICallKit, TUICallKitServer } from '@tencentcloud/call-uikit-react';
-import ChatDefaultContent from '../../components/ChatDefaultContent';
+import { ChatDefaultContent, Tab, TabList } from '../../components';
 import { reportEvent, REPORT_KEY } from '../../utils/aegis';
 import '../../locales';
 
@@ -35,10 +39,12 @@ export default function SampleChat() {
 
   const { language, setLanguage } = useUIKit();
   const { status } = useLoginState(loginInfo);
+  const [activeTab, setActiveTab] = useState('chats');
 
   const {
     isChatSettingOpen,
     isChatSearchOpen,
+    isProfileOpen,
   } = useUIOpenControlState();
 
   useEffect(() => {
@@ -73,6 +79,10 @@ export default function SampleChat() {
     const conversationProfile = await TUIConversationService.getConversationProfile(conversationID)
   }
 
+  const enterChat = () => {
+    setActiveTab('chats');
+  }
+
   const callStyle: React.CSSProperties = {
     position: 'fixed',
     top: '50%',
@@ -86,20 +96,42 @@ export default function SampleChat() {
         <TUICallKit style={callStyle} />
         <div className="sample-chat-left-container">
           <Profile />
-          <ConversationList />
+          {
+            !isProfileOpen && (
+              <TabList activeTab={activeTab} onChange={setActiveTab}>
+                <Tab tabId="chats" label="Chats" Icon={<IconMessage size='24px' />} />
+                <Tab tabId="contacts" label="Contacts"  Icon={<IconUser size='24px' />} />
+              </TabList>
+            )
+          }
+          {activeTab === 'chats' ? (
+            <ConversationList />
+          ) : (
+            <ContactList />
+          )}
         </div>
-        <Chat PlaceholderEmpty={<ChatDefaultContent />}>
-          <ChatHeader />
-          <MessageList />
-          <MessageInput />
-        </Chat>
-        {isChatSettingOpen && <ChatSetting />}
-        {
-          isChatSearchOpen &&
-          <Search
-            className='chat-history-search'
-            variant={VariantType.EMBEDDED} />
-        }
+        {activeTab === 'chats' &&
+        <>
+          <Chat PlaceholderEmpty={<ChatDefaultContent />}>
+            <ChatHeader />
+            <MessageList />
+            <MessageInput />
+          </Chat>
+          {isChatSettingOpen && <ChatSetting />}
+          {
+            isChatSearchOpen &&
+            <Search
+              className='chat-history-search'
+              variant={VariantType.EMBEDDED} />
+          }
+        </>}
+        {activeTab === 'contacts' && 
+         <ContactInfo
+          PlaceholderEmpty={<ChatDefaultContent />}
+          onSendMessage={enterChat}
+          onEnterGroup={enterChat}
+        />}
+
     </div>
   );
 

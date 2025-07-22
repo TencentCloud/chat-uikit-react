@@ -1,0 +1,28 @@
+@use "@tencentcloud/uikit-base-component-react/dist/styles/theme/util" as *;
+
+.tab {
+  flex: 1;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 100%;
+  text-align: center;
+
+
+  @include theme() {
+    color: get(text-color-secondary);
+    &:hover {
+      color: get(text-color-primary);
+    }
+    &.active {
+      color: get(text-color-link);
+    }
+  }
+}

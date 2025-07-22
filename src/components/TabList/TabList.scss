@@ -1,0 +1,12 @@
+@use "@tencentcloud/uikit-base-component-react/dist/styles/theme/util" as *;
+
+.tab-list {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  @include theme() {
+    background: get(bg-color-operate);
+  }
+}
