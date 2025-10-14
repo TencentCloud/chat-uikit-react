@@ -2,20 +2,13 @@ import { useEffect, useState } from 'react';
 import { IconMessage, IconUser, useUIKit } from '@tencentcloud/uikit-base-component-react';
 import {
   Chat,
-  ChatSetting,
-  Profile,
   ChatHeader,
   MessageList,
   MessageInput,
   ConversationList,
-  Search,
-  VariantType,
-  useUIOpenControlState,
   useLoginState,
   LoginStatus,
   ContactList,
-  useUIManagerState,
-  ContactGroupItem,
   ContactInfo,
 } from '@tencentcloud/chat-uikit-react';
 import { TUIConversationService, TUIStore, StoreName } from "@tencentcloud/chat-uikit-engine";
@@ -40,12 +33,6 @@ export default function SampleChat() {
   const { language, setLanguage } = useUIKit();
   const { status } = useLoginState(loginInfo);
   const [activeTab, setActiveTab] = useState('chats');
-
-  const {
-    isChatSettingOpen,
-    isChatSearchOpen,
-    isProfileOpen,
-  } = useUIOpenControlState();
 
   useEffect(() => {
     TUIStore.watch(StoreName.APP, {
@@ -95,15 +82,10 @@ export default function SampleChat() {
     <div className="sample-chat">
         <TUICallKit style={callStyle} />
         <div className="sample-chat-left-container">
-          <Profile />
-          {
-            !isProfileOpen && (
-              <TabList activeTab={activeTab} onChange={setActiveTab}>
-                <Tab tabId="chats" label="Chats" Icon={<IconMessage size='24px' />} />
-                <Tab tabId="contacts" label="Contacts"  Icon={<IconUser size='24px' />} />
-              </TabList>
-            )
-          }
+          <TabList activeTab={activeTab} onChange={setActiveTab}>
+            <Tab tabId="chats" label="Chats" Icon={<IconMessage size='24px' />} />
+            <Tab tabId="contacts" label="Contacts"  Icon={<IconUser size='24px' />} />
+          </TabList>
           {activeTab === 'chats' ? (
             <ConversationList />
           ) : (
@@ -117,15 +99,8 @@ export default function SampleChat() {
             <MessageList />
             <MessageInput />
           </Chat>
-          {isChatSettingOpen && <ChatSetting />}
-          {
-            isChatSearchOpen &&
-            <Search
-              className='chat-history-search'
-              variant={VariantType.EMBEDDED} />
-          }
         </>}
-        {activeTab === 'contacts' && 
+        {activeTab === 'contacts' &&
          <ContactInfo
           PlaceholderEmpty={<ChatDefaultContent />}
           onSendMessage={enterChat}

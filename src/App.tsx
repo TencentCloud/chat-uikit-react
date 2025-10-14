@@ -4,7 +4,7 @@ import appConfig from './config/appConfig.json';
 
 function App() {
   return (
-    <UIKitProvider appConfig={appConfig} language='en-US'>
+    <UIKitProvider appConfig={appConfig}>
       <div className='App'>
         <AppRoutes />
       </div>
