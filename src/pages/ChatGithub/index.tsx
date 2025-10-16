@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IconMessage, IconUser, useUIKit } from '@tencentcloud/uikit-base-component-react';
 import {
   Chat,
@@ -11,10 +11,8 @@ import {
   ContactList,
   ContactInfo,
 } from '@tencentcloud/chat-uikit-react';
-import { TUIConversationService, TUIStore, StoreName } from "@tencentcloud/chat-uikit-engine";
-import { TUICallKit, TUICallKitServer } from '@tencentcloud/call-uikit-react';
+import { TUICallKit } from '@trtc/calls-uikit-react';
 import { ChatDefaultContent, Tab, TabList } from '../../components';
-import { reportEvent, REPORT_KEY } from '../../utils/aegis';
 import '../../locales';
 
 import './index.scss';
@@ -33,38 +31,6 @@ export default function SampleChat() {
   const { language, setLanguage } = useUIKit();
   const { status } = useLoginState(loginInfo);
   const [activeTab, setActiveTab] = useState('chats');
-
-  useEffect(() => {
-    TUIStore.watch(StoreName.APP, {
-      tasks: onTasksUpdated,
-    });
-    return () => {
-      TUIStore.unwatch(StoreName.APP, {
-        tasks: onTasksUpdated,
-      });
-    };
-  }, [])
-
-  function onTasksUpdated(tasks: Record<string, boolean>) {
-    if (tasks.sendMessage) {
-      reportEvent({ actionKey: REPORT_KEY.SEND_FIRST_MESSAGE });
-    }
-  }
-
-  useEffect(() => {
-    if (status === LoginStatus.SUCCESS) {
-      createChat();
-      TUICallKitServer.setLanguage('en');
-    }
-  }, [status])
-
-  async function createChat() {
-    // 1v1 chat: conversationID = `C2C${userID}`
-    // group chat: conversationID = `GROUP${groupID}`
-    const userID = 'administrator'; // userID: Recipient of the Message userID, Get it from Step 5
-    const conversationID = `C2C${userID}`;
-    const conversationProfile = await TUIConversationService.getConversationProfile(conversationID)
-  }
 
   const enterChat = () => {
     setActiveTab('chats');
@@ -106,7 +72,6 @@ export default function SampleChat() {
           onSendMessage={enterChat}
           onEnterGroup={enterChat}
         />}
-
     </div>
   );
 

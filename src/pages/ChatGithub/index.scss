@@ -26,6 +26,7 @@
 
     &-left-container {
       max-width: 350px;
+      min-width: 350px;
       display: flex;
       flex-direction: column;
       height: 100%;
